@@ -1,0 +1,37 @@
+.Views {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+.Views-selectors {
+  position: absolute;
+  top: 5em;
+  left: 1em;
+  right: 1em;
+  z-index: 10;
+}
+
+.Views-selectors a {
+  font-size: 120%;
+  margin: 0 2em;
+}
+
+.Views-content {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  z-index: 0;
+}
+
+.Views-paddedContent {
+  position: absolute;
+  top: 8em;
+  left: 1em;
+  right: 1em;
+  text-align: center;
+}
