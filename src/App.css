@@ -1,5 +1,5 @@
 .App {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -21,6 +21,22 @@
 .App-footer {
   position: absolute;
   left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 1em 2em;
+  text-align: center;
+}
+
+.App-footer .left {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  padding: 1em 2em;
+  text-align: left;
+}
+
+.App-footer .right {
+  position: absolute;
   right: 0;
   bottom: 0;
   padding: 1em 2em;

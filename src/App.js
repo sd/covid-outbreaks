@@ -1,6 +1,7 @@
 import React from 'react';
 import './App.css';
 import Views from './components/Views'
+import DataLoader from './components/DataLoader'
 
 function App() {
   return (
@@ -12,9 +13,14 @@ function App() {
         <Views />
       </div>
       <footer className="App-footer">
-        By Sebastián Delmont
-        {' • '}
-        <a href='https://twitter.com/sd'>@sd</a>
+        <div className="left">
+          <DataLoader />
+        </div>
+        <div className="right">
+          By Sebastián Delmont
+          {' • '}
+          <a href='https://twitter.com/sd'>@sd</a>
+        </div>
       </footer>
     </div>
   );

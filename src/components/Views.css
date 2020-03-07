@@ -1,5 +1,5 @@
 .Views {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -20,7 +20,7 @@
 }
 
 .Views-content {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -28,10 +28,12 @@
   z-index: 0;
 }
 
-.Views-paddedContent {
-  position: absolute;
+.Views-content .paddedContent {
+  position: fixed;
   top: 8em;
   left: 1em;
   right: 1em;
+  bottom: 3em;
+  overflow: auto;
   text-align: center;
 }
