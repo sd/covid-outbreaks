@@ -8,9 +8,9 @@
 
 .Views-selectors {
   position: absolute;
-  top: 5em;
-  left: 1em;
+  top: 1.5em;
   right: 1em;
+  text-align: right;
   z-index: 10;
 }
 
@@ -30,7 +30,7 @@
 
 .Views-content .paddedContent {
   position: fixed;
-  top: 8em;
+  top: 4em;
   left: 1em;
   right: 1em;
   bottom: 3em;

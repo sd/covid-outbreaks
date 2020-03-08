@@ -1,0 +1,14 @@
+.OutbreakSparkline-day {
+  display: inline-block;
+  line-height: 2px;
+}
+
+.OutbreakSparkline-one {
+  content: '•';
+  color: #F00;
+}
+
+.OutbreakSparkline-zero {
+  content: '•';
+  color: #777;
+}

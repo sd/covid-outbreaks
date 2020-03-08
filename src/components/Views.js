@@ -21,12 +21,12 @@ class Views extends Component {
     return (
       <div className='Views'>
         <div className='Views-selectors'>
-          <a href='#view=map' onClick={showMapView}>
+          {/* <a href='#view=map' onClick={showMapView}>
             Map
           </a>
           <a href='#view=table' onClick={showTableView}>
             Table
-          </a>
+          </a> */}
         </div>
         <div className='Views-content'>
           <SelectedView />

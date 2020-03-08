@@ -1,3 +1,11 @@
 .TableView {
-  border: 1px solid red;
+  position: fixed;
+  top: 4em;
+  left: 0;
+  right: 0;
+  bottom: 3em;
+  padding: 0em 1em;
+  overflow: auto;
+  text-align: center;
 }
+

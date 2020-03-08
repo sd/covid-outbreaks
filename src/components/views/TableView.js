@@ -2,28 +2,29 @@ import React from 'react'
 import { connect } from 'react-redux'
 
 import './TableView.css'
+import OutbreakSparkline from '../charts/OutbreakSparkline'
 
-const TableView = ({loading, loaded, data}) => {
+const TableView = ({loading, loaded, data, allDates}) => {
   if (loaded) {
     return (
-      <div className='TableView paddedContent'>
+      <div className='TableView'>
         <div className='TableView-content'>
           <h2>Table View</h2>
 
           <table className='TableView-table'>
             <thead>
               <tr>
-                <th>#</th>
-                <th>Province/State</th>
-                <th>Country/Region</th>
+                <th>Per Day</th>
+                <th>Deaths</th>
+                <th>Name</th>
               </tr>
             </thead>
             <tbody>
-              {data.map((row, index) => (
+              {data.filter(d => d.totalDeaths > 1).map((entry, index) => (
                 <tr key={index}>
-                  <td>{index}</td>
-                  <td>{row['Province/State']}</td>
-                  <td>{row['Country/Region']}</td>
+                  <td><OutbreakSparkline dataPoints={entry.deaths} allDates={allDates} /></td>
+                  <td>{entry.totalDeaths}</td>
+                  <td>{entry.emoji} {entry.name}</td>
                 </tr>
               ))}
             </tbody>
@@ -46,7 +47,8 @@ const TableView = ({loading, loaded, data}) => {
 const mapStateToProps = (state, ownProps) => ({
   loading: state.csseDeaths.loading,
   loaded: state.csseDeaths.loaded,
-  data: state.csseDeaths.data
+  data: state.csseDeaths.data,
+  allDates: state.csseDeaths.allDates
 })
 
 const mapDispatchToProps = (dispatch) => ({
