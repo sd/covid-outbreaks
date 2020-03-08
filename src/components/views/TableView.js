@@ -13,7 +13,7 @@ const TableView = ({loading, loaded, data, allDates}) => {
 
           <table className='TableView-table' cellSpacing={0}>
             <tbody>
-              {data.filter(d => d.totalDeaths > 1).map((entry, index) => (
+              {data.filter(d => d.totalDeaths > 0).map((entry, index) => (
                 <tr key={index} className='TableView-row'>
                   <td><OutbreakSparkline dataPoints={entry.deaths} allDates={allDates} /></td>
                   <td valign='bottom' align='right'>{entry.totalDeaths}&nbsp;&nbsp;</td>

@@ -37,11 +37,11 @@ export function fetchDataDispatcher(dispatch) {
         let country = raw['Country/Region']
         let province = raw['Province/State']
 
-        if (COUNTRY_ALIASES[country]) {
-          country = COUNTRY_ALIASES[country]
-        }
+        country = COUNTRY_ALIASES[country] || country
 
         let name = [country, province].filter(x => x).join(' > ')
+
+        name = OUTBREAK_ALIASES[name] || name
 
         let entry = processedData[name] || {
           name,
@@ -84,6 +84,36 @@ const COUNTRY_ALIASES = {
   'US': 'USA',
 }
 
+const OUTBREAK_ALIASES = {
+  'USA > King County, WA': 'USA > WA > Seattle Metro',
+  'USA > Snohomish County, WA': 'USA > WA > Seattle Metro',
+  'China > Henan': 'China > Other',
+  'China > Beijing': 'China > Other',
+  'China > Guangdong': 'China > Other',
+  'China > Heilongjiang': 'China > Other',
+  'China > Anhui': 'China > Other',
+  'China > Chongqing': 'China > Other',
+  'China > Hainan': 'China > Other',
+  'China > Hebei': 'China > Other',
+  'China > Shandong': 'China > Other',
+  'China > Hunan': 'China > Other',
+  'China > Shanghai': 'China > Other',
+  'China > Sichuan': 'China > Other',
+  'China > Tianjin': 'China > Other',
+  'China > Xinjiang': 'China > Other',
+  'China > Gansu': 'China > Other',
+  'China > Guangxi': 'China > Other',
+  'China > Guizhou': 'China > Other',
+  'China > Yunnan': 'China > Other',
+  'China > Fujian': 'China > Other',
+  'China > Inner Mongolia': 'China > Other',
+  'China > Jiangxi': 'China > Other',
+  'China > Jilin': 'China > Other',
+  'China > Liaoning': 'China > Other',
+  'China > Shaanxi': 'China > Other',
+  'China > Zhejiang': 'China > Other'
+}
+
 const EXTRA_ATTRIBUTES = {
   'China': { emoji: '🇨🇳'},
   'China > Hubei': { name: 'China > Hubei (Wuhan)', emoji: '🇨🇳'},
@@ -99,6 +129,10 @@ const EXTRA_ATTRIBUTES = {
   'Iraq': { emoji: '🇮🇶' },
   'Thailand': { emoji: '🇹🇭' },
   'Australia': { emoji: '🇦🇺' },
+  'Philippines': { emoji: '🇵🇭' },
+  'Switzerland': { emoji: '🇨🇭' },
+  'Netherlands': { emoji: '🇳🇱' },
+  'San Marino': { emoji: '🇸🇲' },
   'UK': { name: 'United Kingdom', emoji: '🇬🇧' },
   'Others > Diamond Princess cruise ship': { name: 'Diamond Princess', emoji: '🛳', type: 'other' }
 }
