@@ -22,6 +22,8 @@ function App() {
           Visualization by Sebastián Delmont
           {' • '}
           <a href='https://twitter.com/sd'>@sd</a>
+          {' • '}
+          <a href='https://github.com/sd/covid-outbreaks'>github</a>
         </div>
       </footer>
     </div>
