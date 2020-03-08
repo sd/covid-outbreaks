@@ -14,7 +14,7 @@ const viewComponents = {
 class Views extends Component {
 
   render() {
-    const {view, showMapView, showTableView} = this.props
+    const { view } = this.props
 
     let SelectedView = viewComponents[view] || viewComponents.default
 

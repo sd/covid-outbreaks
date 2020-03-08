@@ -1,27 +1,24 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import withSizes from 'react-sizes'
 
 import './TableView.css'
-import OutbreakSparkline from '../charts/OutbreakSparkline'
+import OutbreakSparklineSVG from '../charts/OutbreakSparklineSVG'
 
-const TableView = ({loading, loaded, data, allDates}) => {
+const TableView = ({loading, loaded, data, allDates, windowWidth}) => {
   if (loaded) {
     return (
       <div className='TableView'>
         <div className='TableView-content'>
-          {/* <h2>Table View</h2> */}
 
-          <table className='TableView-table' cellSpacing={0}>
-            <tbody>
-              {data.filter(d => d.totalDeaths > 0).map((entry, index) => (
-                <tr key={index} className='TableView-row'>
-                  <td><OutbreakSparkline dataPoints={entry.deaths} allDates={allDates} /></td>
-                  <td valign='bottom' align='right'>{entry.totalDeaths}&nbsp;&nbsp;</td>
-                  <td valign='bottom' align='left'>{entry.emoji} {entry.name}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+          {data.filter(d => d.totalDeaths > 0).map((entry, index) => (
+            <div key={index} className='TableView-row'>
+              <OutbreakSparklineSVG dataPoints={entry.deaths} allDates={allDates} />
+              <div className='TableView-caption'>
+                {entry.name}&nbsp;&nbsp;&nbsp;{entry.emoji}&nbsp;&nbsp;{entry.totalDeaths}
+              </div>
+            </div>
+          ))}
         </div>
       </div>
     )
@@ -47,7 +44,13 @@ const mapStateToProps = (state, ownProps) => ({
 const mapDispatchToProps = (dispatch) => ({
 })
 
-export default connect(
+const ConnectedTableView = connect(
   mapStateToProps,
   mapDispatchToProps
 )(TableView)
+
+const ConnectedWithSizesTableView = withSizes(
+  ({ width }) => ({ windowWidth: width })
+)(ConnectedTableView)
+
+export default ConnectedWithSizesTableView

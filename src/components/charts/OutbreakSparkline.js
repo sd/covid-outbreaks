@@ -22,7 +22,7 @@ const OutbreakSparkline = ({dataPoints, allDates}) => {
     return (
       <div className='OutbreakSparkline'>
         {allDates.map((date, index)=> (
-          <OutbreakSparklineOneDay key={index} count={dataPoints[date]} />
+          <OutbreakSparklineOneDay key={index} index={index} count={dataPoints[date]} />
         ))}
       </div>
     )

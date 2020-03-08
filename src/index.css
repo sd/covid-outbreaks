@@ -24,3 +24,24 @@ a:hover, a:active {
   color: #ff6;
 }
 
+@media only screen and (max-width: 600px) {
+  .blockUnder600px {
+    display: block;
+  }
+  .hideUnder600px {
+    display: none;
+  }
+}
+
+@media only screen and (max-width: 900px) {
+  .blockUnder900px {
+    display: block;
+  }
+  .hideUnder900px {
+    display: none;
+  }
+}
+
+
+
+

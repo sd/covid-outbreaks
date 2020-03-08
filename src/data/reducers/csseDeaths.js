@@ -25,7 +25,7 @@ export function reducer (state = initialState, action) {
   }
 }
 
-export function fetchDataDispatcher(dispatch) {
+export function fetchDataDispatcher (dispatch) {
   dispatch({type: 'CSSE_DEATHS.LOAD.BEGIN'})
   return d3CSV(SOURCE_URL)
     .then(data => {
@@ -37,8 +37,9 @@ export function fetchDataDispatcher(dispatch) {
         let country = raw['Country/Region']
         let province = raw['Province/State']
 
-        country = COUNTRY_ALIASES[country] || country
+        let originalName = [country, province].filter(x => x).join(' > ')
 
+        country = COUNTRY_ALIASES[country] || country
         let name = [country, province].filter(x => x).join(' > ')
 
         name = OUTBREAK_ALIASES[name] || name
@@ -55,10 +56,15 @@ export function fetchDataDispatcher(dispatch) {
         }
 
         let previousDeaths = 0
+        let newDeaths, totalDeathsSoFar
         allDates.forEach(d => {
-          const totalDeathsSoFar = parseInt(raw[d], 10)
-          const newDeaths = totalDeathsSoFar - previousDeaths
+          totalDeathsSoFar = parseInt(raw[d], 10)
+          newDeaths = totalDeathsSoFar - previousDeaths
           previousDeaths = totalDeathsSoFar
+
+          if (DATA_OVERRIDES[originalName] && DATA_OVERRIDES[originalName][d] && DATA_OVERRIDES[originalName][d].deaths !== undefined) {
+            newDeaths = DATA_OVERRIDES[originalName][d].deaths
+          }
 
           entry.deaths[d] = (entry.deaths[d] || 0) + newDeaths
           entry.totalDeaths = entry.totalDeaths + newDeaths
@@ -137,5 +143,17 @@ const EXTRA_ATTRIBUTES = {
   'Others > Diamond Princess cruise ship': { name: 'Diamond Princess', emoji: '🛳', type: 'other' }
 }
 
+const DATA_OVERRIDES = {
+  'Mainland China > Hubei': {
+    '1/29/20': { deaths: 37 / 2 },
+    '1/30/20': { deaths: 37 / 2 },
+    '2/12/20': { deaths: 242 / 2 },
+    '2/13/20': { deaths: 242 / 2 },
+    '2/21/20': { deaths: 202 / 2 },
+    '2/22/20': { deaths: 202 / 2 },
+    '2/23/20': { deaths: 149 / 2 },
+    '2/24/20': { deaths: 149 / 2 }
+  }
+}
 export default reducer
 

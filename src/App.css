@@ -17,7 +17,16 @@
 .App-header h1 {
   margin: 0;
   text-align: center;
+  color: #fff;
+  font-weight: bolder;
 }
+
+.App-header h1 light {
+  font-weight: lighter !important;
+  color: #ddd;
+}
+
+
 
 .App-footer {
   position: absolute;
@@ -26,20 +35,6 @@
   bottom: 0;
   padding: 1em 2em;
   text-align: center;
+  background-color: #222;
 }
 
-.App-footer .left {
-  position: absolute;
-  left: 0;
-  bottom: 0;
-  padding: 1em 2em;
-  text-align: left;
-}
-
-.App-footer .right {
-  position: absolute;
-  right: 0;
-  bottom: 0;
-  padding: 1em 2em;
-  text-align: right;
-}
