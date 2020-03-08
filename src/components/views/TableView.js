@@ -9,22 +9,22 @@ const TableView = ({loading, loaded, data, allDates}) => {
     return (
       <div className='TableView'>
         <div className='TableView-content'>
-          <h2>Table View</h2>
+          {/* <h2>Table View</h2> */}
 
           <table className='TableView-table'>
             <thead>
               <tr>
-                <th>Per Day</th>
-                <th>Deaths</th>
-                <th>Name</th>
+                <th>Deaths per day</th>
+                <th>Location</th>
+                <th></th>
               </tr>
             </thead>
             <tbody>
               {data.filter(d => d.totalDeaths > 1).map((entry, index) => (
                 <tr key={index}>
                   <td><OutbreakSparkline dataPoints={entry.deaths} allDates={allDates} /></td>
-                  <td>{entry.totalDeaths}</td>
-                  <td>{entry.emoji} {entry.name}</td>
+                  <td valign='bottom'>{entry.totalDeaths}</td>
+                  <td valign='bottom'>{entry.emoji} {entry.name}</td>
                 </tr>
               ))}
             </tbody>
