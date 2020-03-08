@@ -7,7 +7,10 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>COVID-19 Outbreaks: <light>deaths per day</light></h1>
+        <h1>
+          <span className='blockUnder600px'>COVID-19 Outbreaks</span><span className='hideUnder600px'>:&nbsp;</span>
+          <span className='blockUnder600px'><light>deaths per day</light></span>
+        </h1>
       </header>
       <div className="App-content">
         <Views />

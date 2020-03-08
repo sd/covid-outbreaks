@@ -5,6 +5,10 @@ import withSizes from 'react-sizes'
 import './TableView.css'
 import OutbreakSparklineSVG from '../charts/OutbreakSparklineSVG'
 
+function numberWithCommas (x) {
+  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+}
+
 const TableView = ({loading, loaded, data, allDates, windowWidth}) => {
   if (loaded) {
     return (
@@ -15,7 +19,7 @@ const TableView = ({loading, loaded, data, allDates, windowWidth}) => {
             <div key={index} className='TableView-row'>
               <OutbreakSparklineSVG dataPoints={entry.deaths} allDates={allDates} />
               <div className='TableView-caption'>
-                {entry.name}&nbsp;&nbsp;&nbsp;{entry.emoji}&nbsp;&nbsp;{entry.totalDeaths}
+                {entry.name}&nbsp;&nbsp;&nbsp;{entry.emoji}&nbsp;&nbsp;<b>{numberWithCommas(entry.totalDeaths)}</b>
               </div>
             </div>
           ))}
