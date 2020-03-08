@@ -1,10 +1,10 @@
 import { combineReducers } from 'redux'
 import ui from './ui'
-import csseDeaths from './csseDeaths'
+import csseData from './csseData'
 
 const rootReducer = combineReducers({
   ui,
-  csseDeaths
+  csseData
 })
 
 export default rootReducer

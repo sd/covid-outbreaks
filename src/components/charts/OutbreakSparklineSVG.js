@@ -4,25 +4,31 @@ const SVG_STYLES = {
   default: {
     markerWidth: 8,
     markerHeight: 2,
-    radius: 1
+    radius: 1.1
   },
   emptyMarker: {
-    fill: '#666',
+    fill: '#444',
   },
   deathMarker: {
     fill: '#F00',
+  },
+  caseMarker: {
+    fill: '#606050',
+    radius: 4,
+    multiplier: 100
   }
 }
 
-const OutbreakSparklineSVG = ({dataPoints, allDates}) => {
+const OutbreakSparklineSVG = ({entry, allDates}) => {
   const deathMarkerStyle = {...SVG_STYLES.default, ...SVG_STYLES.deathMarker}
+  const caseMarkerStyle = {...SVG_STYLES.default, ...SVG_STYLES.caseMarker}
   const emptyMarkerStyle = {...SVG_STYLES.default, ...SVG_STYLES.emptyMarker}
 
   let width = allDates.length * SVG_STYLES.default.markerWidth
-  let maxDataPoint = Math.max(...allDates.map(d => dataPoints[d]), 0)
-  let height = (maxDataPoint + 1) * deathMarkerStyle.markerHeight
+  let maxDataPoint = Math.max(...allDates.map(d => entry.deaths[d]), ...allDates.map(d => entry.cases[d] / SVG_STYLES.caseMarker.multiplier), 0)
+  let height = (maxDataPoint + 1) * SVG_STYLES.default.markerHeight
 
-  if (dataPoints) {
+  if (entry.deaths) {
     return (
       <div className='OutbreakSparkline'>
         <svg width={'100%'} viewBox={`0 0 ${width} ${height}`}>
@@ -30,12 +36,24 @@ const OutbreakSparklineSVG = ({dataPoints, allDates}) => {
             <OutbreakSparklineOneDaySVG
               key={index}
               dayIndex={index}
-              count={dataPoints[date]}
+              count={Math.round(entry.cases[date] / SVG_STYLES.caseMarker.multiplier)}
               xOffset={0}
               yOffset={0}
               height={height}
-              deathMarkerStyle={deathMarkerStyle}
-              emptyMarkerStyle={emptyMarkerStyle}
+              markerStyle={caseMarkerStyle}
+              zeroMarkerStyle={undefined}
+            />
+          ))}
+          {allDates.map((date, index)=> (
+            <OutbreakSparklineOneDaySVG
+              key={index}
+              dayIndex={index}
+              count={entry.deaths[date]}
+              xOffset={0}
+              yOffset={0}
+              height={height}
+              markerStyle={deathMarkerStyle}
+              zeroMarkerStyle={emptyMarkerStyle}
             />
           ))}
         </svg>
@@ -46,25 +64,22 @@ const OutbreakSparklineSVG = ({dataPoints, allDates}) => {
   }
 }
 
-const OutbreakSparklineOneDaySVG = ({dayIndex, count, xOffset, yOffset, height, deathMarkerStyle, emptyMarkerStyle}) => {
+const OutbreakSparklineOneDaySVG = ({dayIndex, count, xOffset, yOffset, height, markerStyle, zeroMarkerStyle}) => {
   let markers = []
-  let style = deathMarkerStyle
+  let style = markerStyle
 
   if (count === 0) {
     count = 1
-    style = emptyMarkerStyle
+    style = zeroMarkerStyle
   }
 
-  const xPadding = (style.markerWidth - (2 * style.radius)) / 2;
-  const yPadding = (style.markerHeight - (2 * style.radius)) / 2;
-
-  if (count > 0) {
+  if (count > 0 && style) {
     for (let i = 0; i < count; i++) {
       markers.push(
         <circle
           key={i}
-          cx={xOffset + (dayIndex * style.markerWidth) + xPadding}
-          cy={yOffset + height - ((i + 1) * style.markerHeight) - yPadding}
+          cx={xOffset + (dayIndex * style.markerWidth) + (style.markerWidth / 2)}
+          cy={yOffset + height - ((i + 1) * style.markerHeight) - (style.markerHeight / 2)}
           r={style.radius}
           stroke={style.stroke}
           fill={style.fill}

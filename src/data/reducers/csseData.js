@@ -1,6 +1,7 @@
 import { csv as d3CSV } from 'd3-fetch'
 
-const SOURCE_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'
+const CASES_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
+const DEATHS_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'
 
 const initialState = {
   loaded: false,
@@ -11,13 +12,13 @@ const initialState = {
 
 export function reducer (state = initialState, action) {
   switch(action.type) {
-    case 'CSSE_DEATHS.LOAD.BEGIN':
+    case 'CSSE_DATA.LOAD.BEGIN':
       return { ...state, loading: true, error: undefined, errorMessage: '' }
 
-    case 'CSSE_DEATHS.LOAD.SUCCESS':
+    case 'CSSE_DATA.LOAD.SUCCESS':
       return { ...state, loading: false, loaded: true, data: action.data, allDates: action.allDates }
 
-    case 'CSSE_DEATHS.LOAD.FAILURE':
+    case 'CSSE_DATA.LOAD.FAILURE':
       return { ...state, loading: false, loaded: false, error: action.error, errorMessage: action.errorMessage }
 
     default:
@@ -25,63 +26,75 @@ export function reducer (state = initialState, action) {
   }
 }
 
+function processOneFile (fieldName, totalFieldName, rawData, allDates, processedData ) {
+  rawData.forEach(raw => {
+    let country = raw['Country/Region']
+    let province = raw['Province/State']
+
+    let originalName = [country, province].filter(x => x).join(' > ')
+
+    country = COUNTRY_ALIASES[country] || country
+    let name = [country, province].filter(x => x).join(' > ')
+
+    name = OUTBREAK_ALIASES[name] || name
+    name = (EXTRA_ATTRIBUTES[name] && EXTRA_ATTRIBUTES[name].name) || name
+
+    let entry = processedData[name] || {
+      name,
+      type: province ? 'province' : 'country',
+      lat: raw['Lat'],
+      lon: raw['Long'],
+      ...EXTRA_ATTRIBUTES[country],
+      ...EXTRA_ATTRIBUTES[name],
+    }
+
+    entry[fieldName] = entry[fieldName] || {}
+
+    // if( name.match(/Hubei/)) debugger
+
+    let previousCount = 0
+    let newCount, totalCountSoFar
+    allDates.forEach(d => {
+      totalCountSoFar = parseInt(raw[d], 10)
+      newCount = totalCountSoFar - previousCount
+      previousCount = totalCountSoFar
+
+      if (DATA_OVERRIDES[originalName] && DATA_OVERRIDES[originalName][d] && DATA_OVERRIDES[originalName][d][fieldName] !== undefined) {
+        newCount = DATA_OVERRIDES[originalName][d][fieldName]
+      }
+
+      entry[fieldName][d] = (entry[fieldName][d] || 0) + newCount
+      entry[totalFieldName] = (entry[totalFieldName] || 0) + newCount
+    })
+
+    processedData[entry.name] = entry
+  })
+
+  return processedData
+}
+
 export function fetchDataDispatcher (dispatch) {
-  dispatch({type: 'CSSE_DEATHS.LOAD.BEGIN'})
-  return d3CSV(SOURCE_URL)
-    .then(data => {
-      const allDates =  Object.keys(data[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
+  dispatch({type: 'CSSE_DATA.LOAD.BEGIN'})
+  return Promise.all([d3CSV(CASES_URL), d3CSV(DEATHS_URL)])
+    .then(results => {
+      let caseData = results[0]
+      let deathData = results[1]
+
+      const allDates =  Object.keys(caseData[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
 
       let processedData = {}
 
-      data.forEach(raw => {
-        let country = raw['Country/Region']
-        let province = raw['Province/State']
+      processedData = processOneFile('cases', 'totalCases', caseData, allDates, processedData)
+      processedData = processOneFile('deaths', 'totalDeaths', deathData, allDates, processedData)
 
-        let originalName = [country, province].filter(x => x).join(' > ')
+      let sortedData = Object.keys(processedData).map(k => processedData[k])
+      sortedData = sortedData.sort((a, b) => (b.totalDeaths - a.totalDeaths))
 
-        country = COUNTRY_ALIASES[country] || country
-        let name = [country, province].filter(x => x).join(' > ')
-
-        name = OUTBREAK_ALIASES[name] || name
-
-        let entry = processedData[name] || {
-          name,
-          type: province ? 'province' : 'country',
-          lat: raw['Lat'],
-          lon: raw['Long'],
-          deaths: {},
-          totalDeaths: 0,
-          ...EXTRA_ATTRIBUTES[country],
-          ...EXTRA_ATTRIBUTES[name],
-        }
-
-        let previousDeaths = 0
-        let newDeaths, totalDeathsSoFar
-        allDates.forEach(d => {
-          totalDeathsSoFar = parseInt(raw[d], 10)
-          newDeaths = totalDeathsSoFar - previousDeaths
-          previousDeaths = totalDeathsSoFar
-
-          if (DATA_OVERRIDES[originalName] && DATA_OVERRIDES[originalName][d] && DATA_OVERRIDES[originalName][d].deaths !== undefined) {
-            newDeaths = DATA_OVERRIDES[originalName][d].deaths
-          }
-
-          entry.deaths[d] = (entry.deaths[d] || 0) + newDeaths
-          entry.totalDeaths = entry.totalDeaths + newDeaths
-        })
-
-        processedData[entry.name] = entry
-      })
-
-      processedData = Object.keys(processedData).map(k => processedData[k])
-      processedData = processedData.sort((a, b) => (b.totalDeaths - a.totalDeaths))
-
-      dispatch({type: 'CSSE_DEATHS.LOAD.SUCCESS', data: processedData, allDates})
-      return processedData
+      dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', data: sortedData, allDates})
+      return sortedData
     })
     .catch(error => {
-      debugger
-      dispatch({type: 'CSSE_DEATHS.LOAD.FAILURE', error})
+      dispatch({type: 'CSSE_DATA.LOAD.FAILURE', error})
     })
 }
 

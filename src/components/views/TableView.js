@@ -15,9 +15,9 @@ const TableView = ({loading, loaded, data, allDates, windowWidth}) => {
       <div className='TableView'>
         <div className='TableView-content'>
 
-          {data.filter(d => d.totalDeaths > 0).map((entry, index) => (
+          {data.filter(d => d.totalCases > 100).map((entry, index) => (
             <div key={index} className='TableView-row'>
-              <OutbreakSparklineSVG dataPoints={entry.deaths} allDates={allDates} />
+              <OutbreakSparklineSVG entry={entry} allDates={allDates} />
               <div className='TableView-caption'>
                 {entry.name}&nbsp;&nbsp;&nbsp;{entry.emoji}&nbsp;&nbsp;<b>{numberWithCommas(entry.totalDeaths)}</b>
               </div>
@@ -39,10 +39,10 @@ const TableView = ({loading, loaded, data, allDates, windowWidth}) => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  loading: state.csseDeaths.loading,
-  loaded: state.csseDeaths.loaded,
-  data: state.csseDeaths.data,
-  allDates: state.csseDeaths.allDates
+  loading: state.csseData.loading,
+  loaded: state.csseData.loaded,
+  data: state.csseData.data,
+  allDates: state.csseData.allDates
 })
 
 const mapDispatchToProps = (dispatch) => ({

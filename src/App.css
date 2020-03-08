@@ -12,11 +12,11 @@
   padding: 1em 1em;
   background-color: #222;
   flex: 0;
+  text-align: center;
 }
 
 .App-header h1 {
   margin: 0;
-  text-align: center;
   color: #fff;
   font-weight: bolder;
 }

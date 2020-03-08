@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { fetchDataDispatcher } from '../data/reducers/csseDeaths'
+import { fetchDataDispatcher } from '../data/reducers/csseData'
 
 class DataLoader extends Component {
   componentDidMount() {
@@ -24,11 +24,11 @@ class DataLoader extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  loading: state.csseDeaths.loading,
-  loaded: state.csseDeaths.loaded,
-  errorMessage: state.csseDeaths.errorMessage,
-  data: state.csseDeaths.data,
-  allDates: state.csseDeaths.allDates
+  loading: state.csseData.loading,
+  loaded: state.csseData.loaded,
+  errorMessage: state.csseData.errorMessage,
+  data: state.csseData.data,
+  allDates: state.csseData.allDates
 })
 
 const mapDispatchToProps = (dispatch) => ({
