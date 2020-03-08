@@ -7,7 +7,7 @@ function App() {
   return (
     <div className="App">
       <header className="App-header">
-        <h1>COVID-19 Outbreaks</h1>
+        <h1>COVID-19 Outbreaks, deaths per day</h1>
       </header>
       <div className="App-content">
         <Views />
@@ -17,7 +17,9 @@ function App() {
           <DataLoader />
         </div>
         <div className="right">
-          By Sebastián Delmont
+          Data from <a href='https://github.com/CSSEGISandData/COVID-19'>John Hopkins Univeristy</a>
+          &nbsp;&nbsp;&nbsp;&nbsp;
+          Visualization by Sebastián Delmont
           {' • '}
           <a href='https://twitter.com/sd'>@sd</a>
         </div>

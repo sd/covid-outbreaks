@@ -14,7 +14,7 @@ class DataLoader extends Component {
     if (loading) {
       return <span>Loading Data...</span>
     } else if (loaded) {
-      return <span>Data Loaded! {data.length} records, last date: {allDates[allDates.length - 1]}</span>
+      return <span>{data.length} records, most recent date: {allDates[allDates.length - 1]}</span>
     } else if (errorMessage) {
       return <span>Error loading data {errorMessage}</span>
     } else {
