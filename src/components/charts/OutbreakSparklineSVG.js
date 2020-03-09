@@ -2,18 +2,19 @@ import React, { Fragment } from 'react'
 
 const SVG_STYLES = {
   default: {
-    markerWidth: 8,
+    markerWidth: 9,
     markerHeight: 2,
     radius: 1.2
   },
   emptyMarker: {
-    fill: '#444',
+    fill: '#333',
+    radius: 0.5
   },
   deathMarker: {
     fill: '#F00',
   },
   caseMarker: {
-    fill: '#555555',
+    fill: '#5a5a5a',
     radius: 3.0,
     multiplier: 100
   }
@@ -74,21 +75,29 @@ const OutbreakSparklineOneDaySVG = ({dayIndex, count, xOffset, yOffset, height, 
   }
 
   let rounded = Math.round(count)
+
+  let radiusScale
   if (rounded < count) {
-    rounded = count - rounded
-    count = count + 1
+    radiusScale = (count - rounded)
+
+    if (radiusScale < 0.1) radiusScale = 0.3
+    else if (radiusScale < 0.5) radiusScale = 0.5
+    else if (radiusScale < 0.7) radiusScale = 0.7
   } else {
-    rounded = 1
+    radiusScale = 1
   }
 
   if (count > 0 && style) {
+    let radius
     for (let i = 0; i < count; i++) {
+      radius = style.radius * (i < (count - 1) ? 1 : radiusScale)
+
       markers.push(
         <circle
           key={i}
           cx={xOffset + (dayIndex * style.markerWidth) + (style.markerWidth / 2)}
           cy={yOffset + height - ((i + 1) * style.markerHeight) - (style.markerHeight / 2)}
-          r={style.radius * (i < count - 1 ? 1 : rounded)}
+          r={radius}
           stroke={style.stroke}
           fill={style.fill}
           strokeWidth={style.strokeWidth}
