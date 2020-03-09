@@ -64,7 +64,7 @@ function processOneFile (fieldName, rawData, allDates, processedData ) {
       }
 
       entry[fieldName][d] = (entry[fieldName][d] || 0) + newCount
-      entry[`${fieldName}Total`] = (entry[`${fieldName}Total`] || 0) + newCount
+      entry[`${fieldName}Total`] = totalCountSoFar
       entry[`${fieldName}Last`] = newCount
     })
 
