@@ -116,11 +116,35 @@ const COUNTRY_ALIASES = {
 const OUTBREAK_ALIASES = {
   'USA > King County, WA': 'USA > Seattle Metro',
   'USA > Snohomish County, WA': 'USA > Seattle Metro',
-  'USA > Westchester County, NY': 'USA > New York City Metro',
+  'USA > Pierce County, WA': 'USA > Seattle Metro',
+
   'USA > New York County, NY': 'USA > New York City Metro',
-  'USA > Los Angeles, CA': 'USA > Los Angeles Metro',
-  'USA > Contra Costa County, CA': 'USA > Los Angeles Metro',
-  'USA > Santa Clara County, CA': 'USA > Los Angeles Metro',
+  'USA > Westchester County, NY': 'USA > New York City Metro',
+  'USA > Nassau County, NY': 'USA > New York City Metro',
+  'USA > Suffolk County, NY': 'USA > New York City Metro',
+  'USA > Rockland County, NY': 'USA > New York City Metro',
+  'USA > Bergen County, NJ': 'USA > New York City Metro',
+  'USA > Hudson County, NJ': 'USA > New York City Metro',
+
+  'USA > Los Angeles, CA': 'USA > CA > Los Angeles Metro',
+  'USA > Contra Costa County, CA': 'USA > CA > Los Angeles Metro',
+
+  'USA > Santa Clara County, CA': 'USA > CA > San Jose Metro',
+  'USA > San Francisco County, CA': 'USA > CA > San Francisco Metro',
+
+  'USA > Lee County, FL': 'USA > FL > Lee County (Fort Myers)',
+  'USA > Santa Rosa County, FL': 'USA > FL > Santa Rosa County (Pensacola)',
+
+  'USA > Placer County, CA': 'USA > CA > Placer County (Sacramento)',
+
+  'USA > Suffolk County, MA': 'USA > Boston Metro',
+  'USA > Norfolk County, MA': 'USA > Boston Metro',
+  'USA > Middlesex County, MA': 'USA > Boston Metro',
+
+  'USA > Cook County, IL': 'USA > Chicago Metro',
+
+  'USA > Washington County, OR': 'USA > OR > Portland Metro',
+
   'China > Hubei': 'China > Hubei (Wuhan)',
   'China > Henan': 'China > Other',
   'China > Beijing': 'China > Other',

@@ -23,7 +23,7 @@ const TableView = ({loading, loaded, data, allDates, windowWidth}) => {
       }
     })
 
-    data = data.filter(d => d.casesTotal > 10)
+    // data = data.filter(d => d.casesTotal > 10)
 
     return (
       <div className='TableView'>
