@@ -6,16 +6,31 @@ import './TableView.css'
 import OutbreakSparklineSVG from '../charts/OutbreakSparklineSVG'
 
 function numberWithCommas (x) {
-  return x.toString().replace(/\B(?<!\.\d*)(?=(\d{3})+(?!\d))/g, ",");
+  return x
 }
 
 const TableView = ({loading, loaded, data, allDates, windowWidth}) => {
   if (loaded) {
+    data = data.sort((a, b) => {
+      if (b.deathsLast !== a.deathsLast) {
+        return (b.deathsLast - a.deathsLast)
+      } else if (b.deathsTotal !== a.deathsTotal) {
+        return (b.deathsTotal - a.deathsTotal)
+      } else if (b.casesTotal !== a.casesTotal) {
+        return (b.casesTotal - a.casesTotal)
+      } else {
+        return b.name < a.name ? 1 : -1
+      }
+    })
+
+    data = data.filter(d => d.casesTotal > 10)
+
     return (
       <div className='TableView'>
         <div className='TableView-content'>
+          <h3>Sorted by number of new deaths in the last day</h3>
 
-          {data.filter(d => d.totalCases > 10).map((entry, index) => (
+          {data.map((entry, index) => (
             <div key={index} className='TableView-row'>
               <OutbreakSparklineSVG entry={entry} allDates={allDates} />
               <div className='TableView-caption'>
@@ -30,14 +45,14 @@ const TableView = ({loading, loaded, data, allDates, windowWidth}) => {
                 {entry.emoji}
                 &nbsp;&nbsp;
                 {
-                  entry.totalDeaths > 0
+                  entry.deathsTotal > 0
                   ? <span>
-                      {numberWithCommas(entry.deaths[allDates[allDates.length - 1]])} new deaths
+                      {numberWithCommas(entry.deathsLast)} new deaths
                       &nbsp;&nbsp;
-                      <b>{numberWithCommas(entry.totalDeaths)} total</b>
+                      <b>{numberWithCommas(entry.deathsTotal)} total</b>
                     </span>
                   : <span>
-                      {numberWithCommas(entry.totalCases)} total cases
+                      {numberWithCommas(entry.casesTotal)} total cases
                       &nbsp;&nbsp;
                       <b>0 deaths</b>
                     </span>

@@ -26,7 +26,7 @@ export function reducer (state = initialState, action) {
   }
 }
 
-function processOneFile (fieldName, totalFieldName, rawData, allDates, processedData ) {
+function processOneFile (fieldName, rawData, allDates, processedData ) {
   rawData.forEach(raw => {
     let country = raw['Country/Region']
     let province = raw['Province/State']
@@ -64,7 +64,8 @@ function processOneFile (fieldName, totalFieldName, rawData, allDates, processed
       }
 
       entry[fieldName][d] = (entry[fieldName][d] || 0) + newCount
-      entry[totalFieldName] = (entry[totalFieldName] || 0) + newCount
+      entry[`${fieldName}Total`] = (entry[`${fieldName}Total`] || 0) + newCount
+      entry[`${fieldName}Last`] = newCount
     })
 
     processedData[entry.name] = entry
@@ -84,15 +85,15 @@ export function fetchDataDispatcher (dispatch) {
 
       let processedData = {}
 
-      processedData = processOneFile('cases', 'totalCases', caseData, allDates, processedData)
-      processedData = processOneFile('deaths', 'totalDeaths', deathData, allDates, processedData)
+      processedData = processOneFile('cases', caseData, allDates, processedData)
+      processedData = processOneFile('deaths', deathData, allDates, processedData)
 
       let sortedData = Object.keys(processedData).map(k => processedData[k])
       sortedData = sortedData.sort((a, b) => {
-        if (b.totalDeaths !== a.totalDeaths) {
-          return (b.totalDeaths - a.totalDeaths)
-        } else if (b.totalCases !== a.totalCases) {
-          return (b.totalCases - a.totalCases)
+        if (b.deathsTotal !== a.deathsTotal) {
+          return (b.deathsTotal - a.deathsTotal)
+        } else if (b.casesTotal !== a.casesTotal) {
+          return (b.casesTotal - a.casesTotal)
         } else {
           return b.name < a.name ? 1 : -1
         }
@@ -101,9 +102,10 @@ export function fetchDataDispatcher (dispatch) {
       dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', data: sortedData, allDates})
       return sortedData
     })
-    .catch(error => {
-      dispatch({type: 'CSSE_DATA.LOAD.FAILURE', error})
-    })
+    // .catch(error => {
+    //   debugger
+    //   dispatch({type: 'CSSE_DATA.LOAD.FAILURE', error})
+    // })
 }
 
 const COUNTRY_ALIASES = {
