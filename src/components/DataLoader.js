@@ -9,7 +9,7 @@ class DataLoader extends Component {
   }
 
   render() {
-    const { loading, loaded, errorMessage, data, allDates } = this.props
+    const { loading, loaded, errorMessage, allDates } = this.props
 
     if (loading) {
       return <span>Loading Data...</span>
@@ -27,7 +27,6 @@ const mapStateToProps = (state, ownProps) => ({
   loading: state.csseData.loading,
   loaded: state.csseData.loaded,
   errorMessage: state.csseData.errorMessage,
-  data: state.csseData.data,
   allDates: state.csseData.allDates
 })
 

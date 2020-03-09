@@ -88,7 +88,15 @@ export function fetchDataDispatcher (dispatch) {
       processedData = processOneFile('deaths', 'totalDeaths', deathData, allDates, processedData)
 
       let sortedData = Object.keys(processedData).map(k => processedData[k])
-      sortedData = sortedData.sort((a, b) => (b.totalDeaths - a.totalDeaths))
+      sortedData = sortedData.sort((a, b) => {
+        if (b.totalDeaths !== a.totalDeaths) {
+          return (b.totalDeaths - a.totalDeaths)
+        } else if (b.totalCases !== a.totalCases) {
+          return (b.totalCases - a.totalCases)
+        } else {
+          return b.name < a.name ? 1 : -1
+        }
+      })
 
       dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', data: sortedData, allDates})
       return sortedData
@@ -104,8 +112,13 @@ const COUNTRY_ALIASES = {
 }
 
 const OUTBREAK_ALIASES = {
-  'USA > King County, WA': 'USA > WA > Seattle Metro',
-  'USA > Snohomish County, WA': 'USA > WA > Seattle Metro',
+  'USA > King County, WA': 'USA > Seattle Metro',
+  'USA > Snohomish County, WA': 'USA > Seattle Metro',
+  'USA > Westchester County, NY': 'USA > New York City Metro',
+  'USA > New York County, NY': 'USA > New York City Metro',
+  'USA > Los Angeles, CA': 'USA > Los Angeles Metro',
+  'USA > Contra Costa County, CA': 'USA > Los Angeles Metro',
+  'USA > Santa Clara County, CA': 'USA > Los Angeles Metro',
   'China > Hubei': 'China > Hubei (Wuhan)',
   'China > Henan': 'China > Other',
   'China > Beijing': 'China > Other',
@@ -132,44 +145,57 @@ const OUTBREAK_ALIASES = {
   'China > Liaoning': 'China > Other',
   'China > Shaanxi': 'China > Other',
   'China > Zhejiang': 'China > Other',
-  'China > Zhejiang': 'China > Other',
+  'China > Jiangsu': 'China > Other',
+  'China > Ningxia': 'China > Other',
+  'China > Shanxi': 'China > Other',
+  'China > Qinghai': 'China > Other',
   'Others > Diamond Princess cruise ship': 'Diamond Princess',
   'Hong Kong > Hong Kong': 'Hong Kong',
   'Taiwan > Taiwan': 'Taiwan',
-  'USA > Grand Princess Cruise Ship': 'USA > Other'
+  'USA > Grand Princess Cruise Ship': 'USA > Other',
+  'USA > Unassigned Location (From Diamond Princess)': 'USA > Other',
+  'UK': 'United Kingdom'
 }
 
 const EXTRA_ATTRIBUTES = {
-  'China': { emoji: '🇨🇳'},
-  'China > Hubei': { name: 'China > Hubei (Wuhan)', emoji: '🇨🇳'},
-  'Hong Kong': { name: 'Hong Kong', emoji: '🇭🇰'},
-  'Taiwan': { name: 'Taiwan', emoji: '🇹🇼'},
-  'USA': { emoji: '🇺🇸' },
-  'Iran': { emoji: '🇮🇷' },
-  'Italy': { emoji: '🇮🇹' },
-  'Spain': { emoji: '🇪🇸' },
-  'France': { emoji: '🇫🇷' },
-  'Japan': { emoji: '🇯🇵' },
-  'South Korea': { emoji: '🇰🇷' },
-  'Iraq': { emoji: '🇮🇶' },
-  'Thailand': { emoji: '🇹🇭' },
-  'Australia': { emoji: '🇦🇺' },
-  'Philippines': { emoji: '🇵🇭' },
-  'Switzerland': { emoji: '🇨🇭' },
-  'Netherlands': { emoji: '🇳🇱' },
-  'San Marino': { emoji: '🇸🇲' },
-  'Singapore': { emoji: '🇸🇬' },
-  'Malaysia': { emoji: '🇲🇾'},
-  'Canada': { emoji: '🇨🇦' },
-  'Germany': { emoji: '🇩🇪' },
-  'United Arab Emirates': { emoji: '🇦🇪' },
-  'India': { emoji: '🇮🇳' },
-  'Sweden': { emoji: '🇸🇪' },
+  'China': { emoji: '🇨🇳', link: 'https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_outbreak_in_mainland_China' },
+  'China > Hubei (Wuhan)': { emoji: '🇨🇳', link: 'https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_outbreak_in_mainland_China' },
+  'Hong Kong': { emoji: '🇭🇰', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Hong_Kong' },
+  'Taiwan': { emoji: '🇹🇼', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Taiwan' },
+  'USA': { emoji: '🇺🇸', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' },
+  'Iran': { emoji: '🇮🇷', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iran' },
+  'Italy': { emoji: '🇮🇹', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy' },
+  'Spain': { emoji: '🇪🇸', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain' },
+  'France': { emoji: '🇫🇷', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_France' },
+  'Japan': { emoji: '🇯🇵', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Japan' },
+  'South Korea': { emoji: '🇰🇷', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_South_Korea' },
+  'United Kingdom': { emoji: '🇬🇧', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Kingdom' },
+  'Iraq': { emoji: '🇮🇶', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iraq' },
+  'Thailand': { emoji: '🇹🇭', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Thailand' },
+  'Australia': { emoji: '🇦🇺', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Australia' },
+  'Philippines': { emoji: '🇵🇭', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_Philippines' },
+  'Switzerland': { emoji: '🇨🇭', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Switzerland' },
+  'Netherlands': { emoji: '🇳🇱', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_Netherlands' },
+  'San Marino': { emoji: '🇸🇲', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_San_Marino' },
+  'Singapore': { emoji: '🇸🇬', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Singapore' },
+  'Malaysia': { emoji: '🇲🇾', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Malaysia'},
+  'Canada': { emoji: '🇨🇦', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Canada' },
+  'Germany': { emoji: '🇩🇪', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Germany' },
+  'United Arab Emirates': { emoji: '🇦🇪', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Arab_Emirates' },
+  'India': { emoji: '🇮🇳', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_India' },
+  'Sweden': { emoji: '🇸🇪', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Sweden' },
   'Belgium': { emoji: '🇧🇪' },
   'Lebanon': { emoji: '🇱🇧' },
   'Bahrain': { emoji: '🇧🇭' },
-  'UK': { name: 'United Kingdom', emoji: '🇬🇧' },
-  'Diamond Princess': { name: 'Diamond Princess', emoji: '🛳', type: 'other' }
+  'Egypt': { emoji: '🇪🇬', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Egypt' },
+  'Vietnam': { emoji: '🇻🇳' },
+  'Finland': { emoji: '🇫🇮' },
+  'Kuwait': { emoji: '🇰🇼' },
+  'Austria': { emoji: '🇦🇹' },
+  'Greece': { emoji: '🇬🇷' },
+  'Norway': { emoji: '🇳🇴' },
+  'Iceland': { emoji: '🇮🇸' },
+  'Diamond Princess': { name: 'Diamond Princess', emoji: '🛳', type: 'other', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_on_cruise_ships#Diamond_Princess' }
 }
 
 const DATA_OVERRIDES = {

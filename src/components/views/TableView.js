@@ -15,17 +15,33 @@ const TableView = ({loading, loaded, data, allDates, windowWidth}) => {
       <div className='TableView'>
         <div className='TableView-content'>
 
-          {data.filter(d => d.totalCases > 20).map((entry, index) => (
+          {data.filter(d => d.totalCases > 10).map((entry, index) => (
             <div key={index} className='TableView-row'>
               <OutbreakSparklineSVG entry={entry} allDates={allDates} />
               <div className='TableView-caption'>
-                {entry.name}
+                <b>
+                  {
+                    entry.link
+                    ? <a href={entry.link}>{entry.name}</a>
+                    : entry.name
+                  }
+                </b>
                 &nbsp;&nbsp;&nbsp;
                 {entry.emoji}
-                &nbsp;&nbsp;&nbsp;&nbsp;
-                {numberWithCommas(entry.deaths[allDates[allDates.length - 1]])} new deaths
                 &nbsp;&nbsp;
-                <b>{numberWithCommas(entry.totalDeaths)} total</b>
+                {
+                  entry.totalDeaths > 0
+                  ? <span>
+                      {numberWithCommas(entry.deaths[allDates[allDates.length - 1]])} new deaths
+                      &nbsp;&nbsp;
+                      <b>{numberWithCommas(entry.totalDeaths)} total</b>
+                    </span>
+                  : <span>
+                      {numberWithCommas(entry.totalCases)} total cases
+                      &nbsp;&nbsp;
+                      <b>0 deaths</b>
+                    </span>
+                }
               </div>
             </div>
           ))}

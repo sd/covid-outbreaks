@@ -4,7 +4,7 @@ const SVG_STYLES = {
   default: {
     markerWidth: 8,
     markerHeight: 2,
-    radius: 1.1
+    radius: 1.2
   },
   emptyMarker: {
     fill: '#444',
@@ -13,8 +13,8 @@ const SVG_STYLES = {
     fill: '#F00',
   },
   caseMarker: {
-    fill: '#606050',
-    radius: 4,
+    fill: '#555555',
+    radius: 3.0,
     multiplier: 100
   }
 }
@@ -36,7 +36,7 @@ const OutbreakSparklineSVG = ({entry, allDates}) => {
             <OutbreakSparklineOneDaySVG
               key={index}
               dayIndex={index}
-              count={Math.round(entry.cases[date] / SVG_STYLES.caseMarker.multiplier)}
+              count={entry.cases[date] / SVG_STYLES.caseMarker.multiplier}
               xOffset={0}
               yOffset={0}
               height={height}
@@ -73,6 +73,14 @@ const OutbreakSparklineOneDaySVG = ({dayIndex, count, xOffset, yOffset, height, 
     style = zeroMarkerStyle
   }
 
+  let rounded = Math.round(count)
+  if (rounded < count) {
+    rounded = count - rounded
+    count = count + 1
+  } else {
+    rounded = 1
+  }
+
   if (count > 0 && style) {
     for (let i = 0; i < count; i++) {
       markers.push(
@@ -80,7 +88,7 @@ const OutbreakSparklineOneDaySVG = ({dayIndex, count, xOffset, yOffset, height, 
           key={i}
           cx={xOffset + (dayIndex * style.markerWidth) + (style.markerWidth / 2)}
           cy={yOffset + height - ((i + 1) * style.markerHeight) - (style.markerHeight / 2)}
-          r={style.radius}
+          r={style.radius * (i < count - 1 ? 1 : rounded)}
           stroke={style.stroke}
           fill={style.fill}
           strokeWidth={style.strokeWidth}

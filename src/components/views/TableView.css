@@ -16,3 +16,12 @@
   border-top: 1px solid #999;
   text-align: right;
 }
+
+.TableView-caption a, .TableView-caption a:link {
+  color: #FFF;
+  text-decoration: underline;
+}
+
+.TableView-caption a:active, .TableView-caption a:visited {
+  color: #FFF;
+}
