@@ -15,7 +15,7 @@ const TableView = ({loading, loaded, data, allDates, windowWidth}) => {
       <div className='TableView'>
         <div className='TableView-content'>
 
-          {data.filter(d => d.totalCases > 100).map((entry, index) => (
+          {data.filter(d => d.totalCases > 20).map((entry, index) => (
             <div key={index} className='TableView-row'>
               <OutbreakSparklineSVG entry={entry} allDates={allDates} />
               <div className='TableView-caption'>

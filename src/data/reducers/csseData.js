@@ -106,6 +106,7 @@ const COUNTRY_ALIASES = {
 const OUTBREAK_ALIASES = {
   'USA > King County, WA': 'USA > WA > Seattle Metro',
   'USA > Snohomish County, WA': 'USA > WA > Seattle Metro',
+  'China > Hubei': 'China > Hubei (Wuhan)',
   'China > Henan': 'China > Other',
   'China > Beijing': 'China > Other',
   'China > Guangdong': 'China > Other',
@@ -130,14 +131,19 @@ const OUTBREAK_ALIASES = {
   'China > Jilin': 'China > Other',
   'China > Liaoning': 'China > Other',
   'China > Shaanxi': 'China > Other',
-  'China > Zhejiang': 'China > Other'
+  'China > Zhejiang': 'China > Other',
+  'China > Zhejiang': 'China > Other',
+  'Others > Diamond Princess cruise ship': 'Diamond Princess',
+  'Hong Kong > Hong Kong': 'Hong Kong',
+  'Taiwan > Taiwan': 'Taiwan',
+  'USA > Grand Princess Cruise Ship': 'USA > Other'
 }
 
 const EXTRA_ATTRIBUTES = {
   'China': { emoji: '🇨🇳'},
   'China > Hubei': { name: 'China > Hubei (Wuhan)', emoji: '🇨🇳'},
-  'Hong Kong > Hong Kong': { name: 'Hong Kong', emoji: '🇭🇰'},
-  'Taiwan > Taiwan': { name: 'Taiwan', emoji: '🇹🇼'},
+  'Hong Kong': { name: 'Hong Kong', emoji: '🇭🇰'},
+  'Taiwan': { name: 'Taiwan', emoji: '🇹🇼'},
   'USA': { emoji: '🇺🇸' },
   'Iran': { emoji: '🇮🇷' },
   'Italy': { emoji: '🇮🇹' },
@@ -152,8 +158,18 @@ const EXTRA_ATTRIBUTES = {
   'Switzerland': { emoji: '🇨🇭' },
   'Netherlands': { emoji: '🇳🇱' },
   'San Marino': { emoji: '🇸🇲' },
+  'Singapore': { emoji: '🇸🇬' },
+  'Malaysia': { emoji: '🇲🇾'},
+  'Canada': { emoji: '🇨🇦' },
+  'Germany': { emoji: '🇩🇪' },
+  'United Arab Emirates': { emoji: '🇦🇪' },
+  'India': { emoji: '🇮🇳' },
+  'Sweden': { emoji: '🇸🇪' },
+  'Belgium': { emoji: '🇧🇪' },
+  'Lebanon': { emoji: '🇱🇧' },
+  'Bahrain': { emoji: '🇧🇭' },
   'UK': { name: 'United Kingdom', emoji: '🇬🇧' },
-  'Others > Diamond Princess cruise ship': { name: 'Diamond Princess', emoji: '🛳', type: 'other' }
+  'Diamond Princess': { name: 'Diamond Princess', emoji: '🛳', type: 'other' }
 }
 
 const DATA_OVERRIDES = {

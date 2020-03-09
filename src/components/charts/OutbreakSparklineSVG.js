@@ -26,7 +26,7 @@ const OutbreakSparklineSVG = ({entry, allDates}) => {
 
   let width = allDates.length * SVG_STYLES.default.markerWidth
   let maxDataPoint = Math.max(...allDates.map(d => entry.deaths[d]), ...allDates.map(d => entry.cases[d] / SVG_STYLES.caseMarker.multiplier), 0)
-  let height = (maxDataPoint + 1) * SVG_STYLES.default.markerHeight
+  let height = (maxDataPoint + 1) * SVG_STYLES.default.markerHeight + 10
 
   if (entry.deaths) {
     return (
