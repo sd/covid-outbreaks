@@ -19,7 +19,13 @@ const TableView = ({loading, loaded, data, allDates, windowWidth}) => {
             <div key={index} className='TableView-row'>
               <OutbreakSparklineSVG entry={entry} allDates={allDates} />
               <div className='TableView-caption'>
-                {entry.name}&nbsp;&nbsp;&nbsp;{entry.emoji}&nbsp;&nbsp;<b>{numberWithCommas(entry.totalDeaths)}</b>
+                {entry.name}
+                &nbsp;&nbsp;&nbsp;
+                {entry.emoji}
+                &nbsp;&nbsp;&nbsp;&nbsp;
+                {numberWithCommas(entry.deaths[allDates[allDates.length - 1]])} new deaths
+                &nbsp;&nbsp;
+                <b>{numberWithCommas(entry.totalDeaths)} total</b>
               </div>
             </div>
           ))}
