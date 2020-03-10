@@ -9,12 +9,19 @@ class DataLoader extends Component {
   }
 
   render() {
-    const { loading, loaded, errorMessage, lastDate } = this.props
+    const { loading, loaded, errorMessage, lastDate, lastPreliminaryDate } = this.props
 
     if (loading) {
       return <span>Loading Data...</span>
     } else if (loaded) {
-      return <span>Most recent date: {lastDate}</span>
+      return (
+        <span>
+          <span>Most recent date: {lastDate}</span>
+          {lastPreliminaryDate &&
+            <span>{' • '}preliminary for {lastPreliminaryDate}</span>
+          }
+        </span>
+      )
     } else if (errorMessage) {
       return <span>Error loading data {errorMessage}</span>
     } else {
@@ -27,7 +34,8 @@ const mapStateToProps = (state, ownProps) => ({
   loading: state.csseData.loading,
   loaded: state.csseData.loaded,
   errorMessage: state.csseData.errorMessage,
-  lastDate: state.csseData.lastDate
+  lastDate: state.csseData.lastDate,
+  lastPreliminaryDate: state.csseData.lastPreliminaryDate
 })
 
 const mapDispatchToProps = (dispatch) => ({

@@ -1,6 +1,10 @@
 import React, { Fragment } from 'react'
 
 const SVG_STYLES = {
+  weekLines: {
+    stroke: '#555',
+    strokeWidth: 0.6,
+  },
   emptyMarker: {
     fill: '#444',
     markerWidth: 9,
@@ -39,6 +43,18 @@ const OutbreakSparklineSVG = ({entry, allDates}) => {
     return (
       <div className='OutbreakSparkline'>
         <svg width={'100%'} viewBox={`0 0 ${width} ${height}`}>
+          {allDates.map((date, index) => (
+            (index % 7 === 0) &&
+              <line
+                key={`line_${index}`}
+                x1={index * SVG_STYLES.emptyMarker.markerWidth}
+                y1={0}
+                x2={index * SVG_STYLES.emptyMarker.markerWidth}
+                y2={height}
+                strokeWidth={SVG_STYLES.weekLines.strokeWidth}
+                stroke={SVG_STYLES.weekLines.stroke}
+              />
+          ))}
           {allDates.map((date, index) => (
             <OutbreakSparklineOneDaySVG
               key={`empty_${date}`}

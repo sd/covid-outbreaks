@@ -16,10 +16,10 @@ const initialState = {
 export function reducer (state = initialState, action) {
   switch(action.type) {
     case 'CSSE_DATA.LOAD.BEGIN':
-      return { ...state, loading: true, error: undefined, errorMessage: '', lastDate: undefined }
+      return { ...state, loading: true, error: undefined, errorMessage: '', lastDate: undefined, lastPreliminaryDate: undefined }
 
     case 'CSSE_DATA.LOAD.SUCCESS':
-      return { ...state, loading: false, loaded: true, data: action.data, allDates: action.allDates, lastDate: action.lastDate }
+      return { ...state, loading: false, loaded: true, data: action.data, allDates: action.allDates, lastDate: action.lastDate, lastPreliminaryDate: action.lastPreliminaryDate }
 
     case 'CSSE_DATA.LOAD.FAILURE':
       return { ...state, loading: false, loaded: false, error: action.error, errorMessage: action.errorMessage }
@@ -60,7 +60,7 @@ function processOneFile (fieldName, rawData, allDates, processedData ) {
     // if( name.match(/Hubei/)) debugger
 
     let previousCount = 0
-    let newCount, totalCountSoFar
+    let newCount, totalCountSoFar, newPrelimCount
     allDates.forEach(d => {
       if (raw[d] !== undefined) {
         totalCountSoFar = parseInt(raw[d], 10)
@@ -75,13 +75,17 @@ function processOneFile (fieldName, rawData, allDates, processedData ) {
         entry[fieldName][d] = (entry[fieldName][d] || 0) + newCount
       } else {
         if (PRELIMINARY_DATA[d] && PRELIMINARY_DATA[d][originalName] && PRELIMINARY_DATA[d][originalName][fieldName]) {
-          entry[`${fieldName}Preliminary`][d] = PRELIMINARY_DATA[d][originalName][fieldName]
-          entry[`${fieldName}PreliminaryTotal`] = (entry[`${fieldName}PreliminaryTotal`] || 0) + PRELIMINARY_DATA[d][originalName][fieldName]
+          newPrelimCount = PRELIMINARY_DATA[d][originalName][fieldName]
+          entry[`${fieldName}Preliminary`][d] = newPrelimCount
+          entry[`${fieldName}PreliminaryTotal`] = (entry[`${fieldName}PreliminaryTotal`] || 0) + newPrelimCount
         }
       }
     })
     entry[`${fieldName}Total`] = (entry[`${fieldName}Total`] || 0) + totalCountSoFar
     entry[`${fieldName}Latest`] = (entry[`${fieldName}Latest`] || 0) + newCount
+
+    entry[`${fieldName}TotalWithPreliminary`] = (entry[`${fieldName}Total`] || 0) + (entry[`${fieldName}PreliminaryTotal`] || 0)
+    entry[`${fieldName}LatestOrPreliminary`] = (entry[`${fieldName}LatestOrPreliminary`] || 0) + (entry[`${fieldName}Latest`] || newPrelimCount || 0)
 
     processedData[entry.name] = entry
   })
@@ -98,10 +102,15 @@ export function fetchDataDispatcher (dispatch) {
 
       let allDates = Object.keys(caseData[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
       let lastDate = allDates[allDates.length - 1]
+      let lastPreliminaryDate = lastDate
 
       if (PRELIMINARY_DATA) {
         let dates = Object.keys(PRELIMINARY_DATA).filter(k => k.match(/\d+\/\d+\/\d+/))
         allDates = [...allDates, ...dates.filter(d => allDates.indexOf(d) < 0)]
+        lastPreliminaryDate = allDates[allDates.length - 1]
+        if (lastPreliminaryDate === lastDate) {
+          lastPreliminaryDate = lastDate
+        }
       }
 
       let processedData = {}
@@ -120,7 +129,7 @@ export function fetchDataDispatcher (dispatch) {
         }
       })
 
-      dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', data: sortedData, allDates, lastDate})
+      dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', data: sortedData, allDates, lastDate, lastPreliminaryDate})
       return sortedData
     })
     // .catch(error => {
@@ -131,14 +140,14 @@ export function fetchDataDispatcher (dispatch) {
 
 const DATA_OVERRIDES = {
   'Mainland China > Hubei': {
-    '1/29/20': { deaths: 37 / 2 },
-    '1/30/20': { deaths: 37 / 2 },
+    '1/29/20': { deaths: (37 / 2) - 0.5 },
+    '1/30/20': { deaths: (37 / 2) + 0.5 },
     '2/12/20': { deaths: 242 / 2 },
     '2/13/20': { deaths: 242 / 2 },
     '2/21/20': { deaths: 202 / 2 },
     '2/22/20': { deaths: 202 / 2 },
-    '2/23/20': { deaths: 149 / 2 },
-    '2/24/20': { deaths: 149 / 2 }
+    '2/23/20': { deaths: (149 / 2) + 0.5 },
+    '2/24/20': { deaths: (149 / 2) - 0.5 }
   }
 }
 export default reducer

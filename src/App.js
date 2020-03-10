@@ -15,11 +15,11 @@ function App() {
       <footer className="App-footer">
         <span className='blockUnder900px'>
           <span className='blockUnder600px'>
-            Data from <a href='https://github.com/CSSEGISandData/COVID-19'>John Hopkins Univeristy</a>
+            <DataLoader />
           </span>
           <span className='hideUnder600px'>{' • '}</span>
           <span className='blockUnder600px'>
-            <DataLoader />
+            Data from <a href='https://github.com/CSSEGISandData/COVID-19'>John Hopkins Univeristy</a>
           </span>
         </span>
         <span className='hideUnder900px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>

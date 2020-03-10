@@ -5,12 +5,12 @@ function sortEntriesByDeathsLatest(a, b, { pinPositions }) {
     return -1
   } else if (pinPositions[b.name]) {
     return 1
-  } else if (b.deathsLatest !== a.deathsLatest) {
-    return b.deathsLatest - a.deathsLatest
-  } else if (b.deathsTotal !== a.deathsTotal) {
-    return b.deathsTotal - a.deathsTotal
-  } else if (b.casesTotal !== a.casesTotal) {
-    return b.casesTotal - a.casesTotal
+  } else if (b.deathsLatestOrPreliminary !== a.deathsLatestOrPreliminary) {
+    return b.deathsLatestOrPreliminary - a.deathsLatestOrPreliminary
+  } else if (b.deathsTotalWithPreliminary !== a.deathsTotalWithPreliminary) {
+    return b.deathsTotalWithPreliminary - a.deathsTotalWithPreliminary
+  } else if (b.casesTotalWithPreliminary !== a.casesTotalWithPreliminary) {
+    return b.casesTotalWithPreliminary - a.casesTotalWithPreliminary
   } else {
     return b.name < a.name ? 1 : -1
   }
@@ -23,12 +23,12 @@ function sortEntriesByDeathsTotal(a, b, { pinPositions }) {
     return -1
   } else if (pinPositions[b.name]) {
     return 1
-  } else if (b.deathsTotal !== a.deathsTotal) {
-    return b.deathsTotal - a.deathsTotal
-  } else if (b.deathsLatest !== a.deathsLatest) {
-    return b.deathsLatest - a.deathsLatest
-  } else if (b.casesTotal !== a.casesTotal) {
-    return b.casesTotal - a.casesTotal
+  } else if (b.deathsTotalWithPreliminary !== a.deathsTotalWithPreliminary) {
+    return b.deathsTotalWithPreliminary - a.deathsTotalWithPreliminary
+  } else if (b.deathsLatestOrPreliminary !== a.deathsLatestOrPreliminary) {
+    return b.deathsLatestOrPreliminary - a.deathsLatestOrPreliminary
+  } else if (b.casesTotalWithPreliminary !== a.casesTotalWithPreliminary) {
+    return b.casesTotalWithPreliminary - a.casesTotalWithPreliminary
   } else {
     return b.name < a.name ? 1 : -1
   }
@@ -41,14 +41,14 @@ function sortEntriesByCasesLatest(a, b, { pinPositions }) {
     return -1
   } else if (pinPositions[b.name]) {
     return 1
-  } else if (b.casesLatest !== a.casesLatest) {
-    return b.casesLatest - a.casesLatest
-  } else if (b.casesTotal !== a.casesTotal) {
-    return b.casesTotal - a.casesTotal
-  } else if (b.deathsLatest !== a.deathsLatest) {
-    return b.deathsLatest - a.deathsLatest
-  } else if (b.deathsTotal !== a.deathsTotal) {
-    return b.deathsTotal - a.deathsTotal
+  } else if (b.casesLatestOrPreliminary !== a.casesLatestOrPreliminary) {
+    return b.casesLatestOrPreliminary - a.casesLatestOrPreliminary
+  } else if (b.casesTotalWithPreliminary !== a.casesTotalWithPreliminary) {
+    return b.casesTotalWithPreliminary - a.casesTotalWithPreliminary
+  } else if (b.deathsLatestOrPreliminary !== a.deathsLatestOrPreliminary) {
+    return b.deathsLatestOrPreliminary - a.deathsLatestOrPreliminary
+  } else if (b.deathsTotalWithPreliminary !== a.deathsTotalWithPreliminary) {
+    return b.deathsTotalWithPreliminary - a.deathsTotalWithPreliminary
   } else {
     return b.name < a.name ? 1 : -1
   }
@@ -61,14 +61,14 @@ function sortEntriesByCasesTotal(a, b, { pinPositions }) {
     return -1
   } else if (pinPositions[b.name]) {
     return 1
-  } else if (b.casesTotal !== a.casesTotal) {
-    return b.casesTotal - a.casesTotal
-  } else if (b.casesLatest !== a.casesLatest) {
-    return b.casesLatest - a.casesLatest
-  } else if (b.deathsTotal !== a.deathsTotal) {
-    return b.deathsTotal - a.deathsTotal
-  } else if (b.deathsLatest !== a.deathsLatest) {
-    return b.deathsLatest - a.deathsLatest
+  } else if (b.casesTotalWithPreliminary !== a.casesTotalWithPreliminary) {
+    return b.casesTotalWithPreliminary - a.casesTotalWithPreliminary
+  } else if (b.casesLatestOrPreliminary !== a.casesLatestOrPreliminary) {
+    return b.casesLatestOrPreliminary - a.casesLatestOrPreliminary
+  } else if (b.deathsTotalWithPreliminary !== a.deathsTotalWithPreliminary) {
+    return b.deathsTotalWithPreliminary - a.deathsTotalWithPreliminary
+  } else if (b.deathsLatestOrPreliminary !== a.deathsLatestOrPreliminary) {
+    return b.deathsLatestOrPreliminary - a.deathsLatestOrPreliminary
   } else {
     return b.name < a.name ? 1 : -1
   }
