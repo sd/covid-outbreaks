@@ -1,12 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import classNames from 'classnames'
+
+import formatNumber from '../../utils/formatNumber'
 
 import './TableView.css'
 import OutbreakSparklineSVG from '../charts/OutbreakSparklineSVG'
+import OutbreakTable from '../charts/OutbreakTable'
 
-function numberWithCommas (x) {
-  return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-}
 
 function compareEntries(a, b, pinPosition) {
   if (pinPosition[b.name] &&  pinPosition[a.name]) {
@@ -36,6 +37,11 @@ const TableView = ({
       pinned.forEach((n, i) => { pinPosition[n] = (i + 1) })
     }
 
+    let expandPosition = {}
+    if (expanded) {
+      expanded.forEach((n, i) => { expandPosition[n] = (i + 1) })
+    }
+
     data = data.sort((a, b) => compareEntries(a, b, pinPosition))
 
     // data = data.filter(d => d.casesTotal > 10)
@@ -46,14 +52,20 @@ const TableView = ({
           <h3>Sorted by number of new deaths in the last day</h3>
 
           {data.map((entry, index) => (
-            <div key={entry.name} className='TableView-row'>
+            <div key={entry.name} className={classNames('TableView-row', { pinned: pinPosition[entry.name], expanded: expandPosition[entry.name] })}>
               <OutbreakSparklineSVG entry={entry} allDates={allDates} />
               <div className='TableView-caption'>
                 <div className='TableView-tools'>
                   {
                     pinPosition[entry.name]
-                    ? <button className='activated' onClick={ () => unpinEntry(entry) }>Pinned to top</button>
+                    ? <button className='activated' onClick={ () => unpinEntry(entry) }>pinned to top</button>
                     : <button onClick={ () => pinEntry(entry) }>pin</button>
+                  }
+                  &nbsp;&nbsp;&nbsp;
+                  {
+                    expandPosition[entry.name]
+                    ? <button className='activated' onClick={ () => collapseEntry(entry) }>hide data</button>
+                    : <button onClick={ () => expandEntry(entry) }>show more</button>
                   }
                 </div>
                 <b>
@@ -69,17 +81,22 @@ const TableView = ({
                 {
                   entry.deathsTotal > 0
                   ? <span>
-                      {numberWithCommas(entry.deathsLast)} new deaths
+                      {formatNumber(entry.deathsLast)} new deaths
                       &nbsp;&nbsp;
-                      <b>{numberWithCommas(entry.deathsTotal)} total</b>
+                      <b>{formatNumber(entry.deathsTotal)} total</b>
                     </span>
                   : <span>
-                      {numberWithCommas(entry.casesTotal)} total cases
+                      {formatNumber(entry.casesTotal)} total cases
                       &nbsp;&nbsp;
                       <b>0 deaths</b>
                     </span>
                 }
               </div>
+              {expandPosition[entry.name] && (
+                <div className='TableView-more'>
+                  <OutbreakTable entry={entry} allDates={allDates} />
+                </div>
+              )}
             </div>
           ))}
         </div>
@@ -109,7 +126,7 @@ const mapDispatchToProps = (dispatch) => ({
   pinEntry: (entry) => dispatch({ type: 'UI.PIN_ENTRY', value: entry.name }),
   unpinEntry: (entry) => dispatch({ type: 'UI.UNPIN_ENTRY', value: entry.name }),
   expandEntry: (entry) => dispatch({ type: 'UI.EXPAND_ENTRY', value: entry.name }),
-  collapsEntry: (entry) => dispatch({ type: 'UI.COLLAPSE_ENTRY', value: entry.name })
+  collapseEntry: (entry) => dispatch({ type: 'UI.COLLAPSE_ENTRY', value: entry.name })
 })
 
 const ConnectedTableView = connect(

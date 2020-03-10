@@ -47,3 +47,48 @@
   cursor: pointer;
   color: #ff0;
 }
+
+.pinned .TableView-caption {
+  border-top: 2px solid #ff0;
+}
+
+.OutbreakTable table {
+  border-spacing: 0;
+  border-collapse: collapse;
+}
+
+.OutbreakTable th {
+  border-bottom: 1px solid #999;
+}
+
+.OutbreakTable th.deathsColumn, .OutbreakTable th.casesColumn {
+  text-align: right;
+  padding-right: 6px;
+  width: 60px;
+}
+
+.OutbreakTable td.deathsColumn, .OutbreakTable td.casesColumn {
+  text-align: right;
+  padding-right: 10px;
+  width: 60px;
+}
+
+.OutbreakTable th.dateColumn, .OutbreakTable tr.dateColumn {
+  padding-left: 6px;
+  padding-right: 6px;
+  width: 60px;
+}
+
+.OutbreakTable thead {
+  display: block;
+  width: 190px;
+}
+
+.OutbreakTable tbody {
+  display: block;
+  width: 230px;
+
+  max-height: 30vh;
+  overflow: auto;
+  /* border: 1px solid red; */
+}

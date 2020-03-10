@@ -7,14 +7,14 @@ const SVG_STYLES = {
     radius: 1.2
   },
   emptyMarker: {
-    fill: '#333',
+    fill: '#444',
     radius: 0.5
   },
   deathMarker: {
     fill: '#F00',
   },
   caseMarker: {
-    fill: '#5a5a5a',
+    fill: '#6a6a6a',
     radius: 3.0,
     multiplier: 100
   }
@@ -42,7 +42,7 @@ const OutbreakSparklineSVG = ({entry, allDates}) => {
               yOffset={0}
               height={height}
               markerStyle={caseMarkerStyle}
-              zeroMarkerStyle={undefined}
+              zeroMarkerStyle={emptyMarkerStyle}
             />
           ))}
           {allDates.map((date, index)=> (
@@ -54,7 +54,7 @@ const OutbreakSparklineSVG = ({entry, allDates}) => {
               yOffset={0}
               height={height}
               markerStyle={deathMarkerStyle}
-              zeroMarkerStyle={emptyMarkerStyle}
+              zeroMarkerStyle={undefined}
             />
           ))}
         </svg>

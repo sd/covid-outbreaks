@@ -25,7 +25,7 @@ function reducer (state = initialState, action) {
       return { ...state, expanded: [...(state.expanded || []).filter(e => e !== action.value), action.value] }
 
     case 'UI.COLLAPSE_ENTRY':
-        return { ...state, pinned: (state.pinned || []).filter(e => e !== action.value) }
+        return { ...state, expanded: (state.expanded || []).filter(e => e !== action.value) }
 
     default:
       return state

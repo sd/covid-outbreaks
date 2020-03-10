@@ -9,9 +9,7 @@ function arrayToString (array) {
 }
 
 function stringToArray (csv) {
-  console.log('stringToArray', csv)
   if (csv) {
-    console.log(csv.split('|'))
     return csv.split('|')
   } else {
     return []
