@@ -8,9 +8,9 @@ function filterRelevant (a, options) {
   } else if (options.sort === 'casesTotal') {
     return a.casesTotal > 0
   } else if (options.sort === 'deathsLatest') {
-    return a.deathsTotal > 0
+    return a.deathsTotal > 0 || a.deathsPreliminaryTotal > 0
   } else if (options.sort === 'deathsTotal') {
-    return a.deathsTotal > 0
+    return a.deathsTotal > 0 || a.deathsPreliminaryTotal > 0
   } else {
     return true
   }

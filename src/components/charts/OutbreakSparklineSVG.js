@@ -1,61 +1,72 @@
 import React, { Fragment } from 'react'
 
 const SVG_STYLES = {
-  default: {
-    markerWidth: 9,
-    markerHeight: 2,
-    radius: 1.2
-  },
   emptyMarker: {
     fill: '#444',
+    markerWidth: 9,
+    markerHeight: 2,
     radius: 0.5
   },
   deathMarker: {
     fill: '#F00',
+    markerWidth: 9,
+    markerHeight: 2,
+    radius: 1.2
+  },
+  preliminaryDeathMarker: {
+    fill: 'none',
+    stroke: '#e96',
+    strokeWidth: 0.6,
+    markerWidth: 9,
+    markerHeight: 2,
+    radius: 1.2
   },
   caseMarker: {
     fill: '#6a6a6a',
+    markerWidth: 9,
+    markerHeight: 2,
     radius: 3.0,
     multiplier: 100
   }
 }
 
 const OutbreakSparklineSVG = ({entry, allDates}) => {
-  const deathMarkerStyle = {...SVG_STYLES.default, ...SVG_STYLES.deathMarker}
-  const caseMarkerStyle = {...SVG_STYLES.default, ...SVG_STYLES.caseMarker}
-  const emptyMarkerStyle = {...SVG_STYLES.default, ...SVG_STYLES.emptyMarker}
-
-  let width = allDates.length * SVG_STYLES.default.markerWidth
-  let maxDataPoint = Math.max(...allDates.map(d => entry.deaths[d]), ...allDates.map(d => entry.cases[d] / SVG_STYLES.caseMarker.multiplier), 0)
-  let height = (maxDataPoint + 1) * SVG_STYLES.default.markerHeight + 10
+  let width = allDates.length * SVG_STYLES.emptyMarker.markerWidth
+  let maxDataPoint = Math.max(...allDates.map(d => entry.deaths[d] || entry.deathsPreliminary[d] || 0), ...allDates.map(d => (entry.cases[d] || 0) / SVG_STYLES.caseMarker.multiplier), 0)
+  let height = (maxDataPoint + 1) * SVG_STYLES.emptyMarker.markerHeight + 10
 
   if (entry.deaths) {
     return (
       <div className='OutbreakSparkline'>
         <svg width={'100%'} viewBox={`0 0 ${width} ${height}`}>
-          {allDates.map((date, index)=> (
+          {allDates.map((date, index) => (
             <OutbreakSparklineOneDaySVG
-              key={index}
+              key={`empty_${date}`}
               dayIndex={index}
-              count={entry.cases[date] / SVG_STYLES.caseMarker.multiplier}
-              xOffset={0}
-              yOffset={0}
+              count={1}
               height={height}
-              markerStyle={caseMarkerStyle}
-              zeroMarkerStyle={emptyMarkerStyle}
+              markerStyle={SVG_STYLES.emptyMarker}
             />
           ))}
+          {allDates.map((date, index) => (
+            entry.cases[date] &&
+              <OutbreakSparklineOneDaySVG
+                key={`cases_${date}`}
+                dayIndex={index}
+                count={entry.cases[date] / SVG_STYLES.caseMarker.multiplier}
+                height={height}
+                markerStyle={SVG_STYLES.caseMarker}
+              />
+          ))}
           {allDates.map((date, index)=> (
-            <OutbreakSparklineOneDaySVG
-              key={index}
-              dayIndex={index}
-              count={entry.deaths[date]}
-              xOffset={0}
-              yOffset={0}
-              height={height}
-              markerStyle={deathMarkerStyle}
-              zeroMarkerStyle={undefined}
-            />
+            (entry.deaths[date] || entry.deathsPreliminary[date]) &&
+              <OutbreakSparklineOneDaySVG
+                key={`deaths_${date}`}
+                dayIndex={index}
+                count={entry.deaths[date] || entry.deathsPreliminary[date]}
+                height={height}
+                markerStyle={entry.deaths[date] !== undefined ? SVG_STYLES.deathMarker : SVG_STYLES.preliminaryDeathMarker}
+              />
           ))}
         </svg>
       </div>
@@ -65,14 +76,9 @@ const OutbreakSparklineSVG = ({entry, allDates}) => {
   }
 }
 
-const OutbreakSparklineOneDaySVG = ({dayIndex, count, xOffset, yOffset, height, markerStyle, zeroMarkerStyle}) => {
+const OutbreakSparklineOneDaySVG = ({dayIndex, count, xOffset = 0, yOffset = 0, height, markerStyle}) => {
   let markers = []
   let style = markerStyle
-
-  if (count === 0) {
-    count = 1
-    style = zeroMarkerStyle
-  }
 
   let rounded = Math.round(count)
 
@@ -111,4 +117,28 @@ const OutbreakSparklineOneDaySVG = ({dayIndex, count, xOffset, yOffset, height, 
   )
 }
 
+export const OutbreakSparklineSampleMarker = ({type}) => {
+  let style = SVG_STYLES[type]
+
+  if (style) {
+    return (
+      <svg
+        style={{ height: '2ex', width: '2ex', position: 'relative', top: '0.5ex' }}
+        viewBox={`0 0 ${style.markerWidth} ${style.markerHeight}`}
+      >
+        <circle
+          cx={(style.markerWidth / 2)}
+          cy={(style.markerHeight / 2)}
+          r={style.radius}
+          stroke={style.stroke}
+          fill={style.fill}
+          strokeWidth={style.strokeWidth}
+        />
+      </svg>
+    )
+  } else {
+    return null
+  }
+
+}
 export default OutbreakSparklineSVG

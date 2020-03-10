@@ -3,6 +3,10 @@
   text-align: center;
 }
 
+.TableView-header {
+  margin-bottom: 2em;
+}
+
 .TableView-row {
   width: 100%;
   min-width: 200px;

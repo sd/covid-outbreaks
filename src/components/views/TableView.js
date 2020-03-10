@@ -6,10 +6,10 @@ import SelectionPopup from '../../components/shared/SelectionPopup'
 import formatNumber from '../../utils/formatNumber'
 
 import './TableView.css'
-import OutbreakSparklineSVG from '../charts/OutbreakSparklineSVG'
+import OutbreakSparklineSVG, { OutbreakSparklineSampleMarker } from '../charts/OutbreakSparklineSVG'
 import OutbreakTable from '../charts/OutbreakTable'
-import { viewOptionsForSorting, SORTER_TYPES, SORTER_DESCRIPTIONS } from '../../data/sorters'
-import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../../data/filters'
+import { viewOptionsForSorting, SORTER_TYPES, SORTER_DESCRIPTIONS } from '../../store/sorters'
+import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../../store/filters'
 
 const TableView = ({
   loading, loaded, data, allDates,
@@ -18,7 +18,6 @@ const TableView = ({
   isExpanded, expandEntry, collapseEntry
 }) => {
   if (loaded) {
-    console.log(sort, filter)
     let viewOptions = { pinPositions }
     viewOptions = viewOptionsForSorting(sort, viewOptions)
     viewOptions = viewOptionsForFiltering(filter, viewOptions)
@@ -28,7 +27,7 @@ const TableView = ({
 
     return (
       <div className='TableView'>
-        <div className='TableView-content'>
+        <div className='TableView-header'>
           <h3>
             <SelectionPopup
               selected={viewOptions.filter}
@@ -47,11 +46,20 @@ const TableView = ({
             />
           </h3>
           <div>
-            <span className='blockUnder900px'>Red: deaths, one dot per case.</span>
-            <span className='hideUnder900px'>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <span className='blockUnder900px'>Gray: confirmed cases, but at a 1:100 scale.</span>
+            <span className='blockUnder600px'>
+              <OutbreakSparklineSampleMarker type='deathMarker' /> 1 death
+            </span>
+            <span className='hideUnder600px'>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span className='blockUnder600px'>
+              <OutbreakSparklineSampleMarker type='preliminaryDeathMarker' /> (preliminary data)
+            </span>
+            <span className='hideUnder600px'>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+            <span className='blockUnder600px'>
+              <OutbreakSparklineSampleMarker type='caseMarker' /> 100 cases
+            </span>
           </div>
-
+        </div>
+        <div className='TableView-content'>
           {data.map((entry, index) => (
             <div key={entry.name} className={classNames('TableView-row', { pinned: pinPositions[entry.name], expanded: isExpanded[entry.name] })}>
 
@@ -89,10 +97,17 @@ const TableView = ({
                     ? <span>
                         <span className='segment'>{formatNumber(entry.deathsLatest)} new deaths</span>
                         <span className='segment'><b>{formatNumber(entry.deathsTotal)} total</b></span>
+                        {entry.deathsPreliminaryTotal > 0 && (
+                          <span className='segment preliminary'><b>+ {formatNumber(entry.deathsPreliminaryTotal)} prelim</b></span>
+                        )}
                       </span>
                     : <span>
                         <span className='segment'>{formatNumber(entry.casesTotal)} total cases</span>
-                        <span className='segment'><b>{formatNumber(entry.deathsTotal)} deaths</b></span>
+                        {
+                          entry.deathsPreliminaryTotal > 0
+                          ? <span className='segment preliminary'><b>{formatNumber(entry.deathsPreliminaryTotal)} deaths (prelim)</b></span>
+                          : <span className='segment'><b>{formatNumber(entry.deathsTotal)} deaths</b></span>
+                        }
                       </span>
                   }
                 </div>

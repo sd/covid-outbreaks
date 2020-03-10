@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
 
-import { fetchDataDispatcher } from '../data/reducers/csseData'
+import { fetchDataDispatcher } from '../store/reducers/csseData'
 
 class DataLoader extends Component {
   componentDidMount() {
@@ -9,12 +9,12 @@ class DataLoader extends Component {
   }
 
   render() {
-    const { loading, loaded, errorMessage, allDates } = this.props
+    const { loading, loaded, errorMessage, lastDate } = this.props
 
     if (loading) {
       return <span>Loading Data...</span>
     } else if (loaded) {
-      return <span>Most recent date: {allDates[allDates.length - 1]}</span>
+      return <span>Most recent date: {lastDate}</span>
     } else if (errorMessage) {
       return <span>Error loading data {errorMessage}</span>
     } else {
@@ -27,7 +27,7 @@ const mapStateToProps = (state, ownProps) => ({
   loading: state.csseData.loading,
   loaded: state.csseData.loaded,
   errorMessage: state.csseData.errorMessage,
-  allDates: state.csseData.allDates
+  lastDate: state.csseData.lastDate
 })
 
 const mapDispatchToProps = (dispatch) => ({
