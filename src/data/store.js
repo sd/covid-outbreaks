@@ -2,6 +2,7 @@ import { applyMiddleware, createStore } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
 import rootReducer from './reducers'
+import setupQueryStringSync from './queryString'
 
 export function configureStore (state) {
   const middlewares = [thunkMiddleware]
@@ -29,6 +30,8 @@ export function configureStore (state) {
   if (process.env.NODE_ENV !== 'production' && module.hot) {
     module.hot.accept('./reducers', () => store.replaceReducer(rootReducer))
   }
+
+  setupQueryStringSync(store)
 
   return store
 }

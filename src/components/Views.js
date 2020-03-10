@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { connect } from 'react-redux'
 
 import MapView from './views/MapView'
@@ -11,30 +11,26 @@ const viewComponents = {
   default: TableView
 }
 
-class Views extends Component {
+const Views = ({view}) => {
+  let SelectedView = viewComponents[view] || viewComponents.default
 
-  render() {
-    const { view } = this.props
-
-    let SelectedView = viewComponents[view] || viewComponents.default
-
-    return (
-      <div className='Views'>
-        <div className='Views-selectors'>
-          {/* <a href='#view=map' onClick={showMapView}>
-            Map
-          </a>
-          <a href='#view=table' onClick={showTableView}>
-            Table
-          </a> */}
-        </div>
-        <div className='Views-content'>
-          <SelectedView />
-        </div>
+  return (
+    <div className='Views'>
+      <div className='Views-selectors'>
+        {/* <a href='#view=map' onClick={showMapView}>
+          Map
+        </a>
+        <a href='#view=table' onClick={showTableView}>
+          Table
+        </a> */}
       </div>
-    )
-  }
+      <div className='Views-content'>
+        <SelectedView />
+      </div>
+    </div>
+  )
 }
+
 
 const mapStateToProps = (state, ownProps) => ({
   view: state.ui.view,

@@ -11,13 +11,13 @@
     "react-dom": "^16.13.0",
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.0",
-    "react-sizes": "^2.0.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
+    "redux-query-sync": "^0.1.9",
     "redux-thunk": "^2.3.0"
   },
   "scripts": {
-    "start": "react-scripts start",
+    "start": "PORT=3003 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject"

@@ -25,3 +25,25 @@
 .TableView-caption a:active, .TableView-caption a:visited {
   color: #FFF;
 }
+
+.TableView-tools {
+  float: left;
+  text-align: left;
+}
+
+.TableView-tools button {
+  display: inline;
+  border: 0px;
+  padding: 0px;
+  color: #883;
+  background-color: inherit;
+}
+
+.TableView-tools button.activated {
+  color: #ff0;
+}
+
+.TableView-tools button:hover {
+  cursor: pointer;
+  color: #ff0;
+}
