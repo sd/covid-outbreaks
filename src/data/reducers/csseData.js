@@ -1,5 +1,7 @@
 import { csv as d3CSV } from 'd3-fetch'
 
+import { OUTBREAK_ALIASES, OUTBREAK_ATTRIBUTES } from '../outbreakInfo'
+
 const CASES_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
 const DEATHS_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'
 
@@ -33,24 +35,23 @@ function processOneFile (fieldName, rawData, allDates, processedData ) {
 
     let originalName = [country, province].filter(x => x).join(' > ')
 
-    country = COUNTRY_ALIASES[country] || country
-
-    let name = [country, province].filter(x => x).join(' > ')
-
-    name = OUTBREAK_ALIASES[name] || name
-    name = (EXTRA_ATTRIBUTES[name] && EXTRA_ATTRIBUTES[name].name) || name
+    let name = OUTBREAK_ALIASES[originalName] || originalName
+    country = OUTBREAK_ALIASES[country] || country
 
     let entry = processedData[name] || {
       name,
-      otherNames: [name],
+      country,
+      otherNames: [],
       type: province ? 'province' : 'country',
       lat: raw['Lat'],
       lon: raw['Long'],
-      ...EXTRA_ATTRIBUTES[country],
-      ...EXTRA_ATTRIBUTES[name],
+      ...OUTBREAK_ATTRIBUTES[country],
+      ...OUTBREAK_ATTRIBUTES[name],
     }
 
-    entry.otherNames = [...entry.otherNames.filter(n => n !== originalName), originalName]
+    if (name !== originalName) {
+      entry.otherNames = [...entry.otherNames.filter(n => n !== originalName), originalName]
+    }
 
     entry[fieldName] = entry[fieldName] || {}
 
@@ -70,7 +71,7 @@ function processOneFile (fieldName, rawData, allDates, processedData ) {
       entry[fieldName][d] = (entry[fieldName][d] || 0) + newCount
     })
     entry[`${fieldName}Total`] = (entry[`${fieldName}Total`] || 0) + totalCountSoFar
-    entry[`${fieldName}Last`] = (entry[`${fieldName}Last`] || 0) + newCount
+    entry[`${fieldName}Latest`] = (entry[`${fieldName}Latest`] || 0) + newCount
 
     processedData[entry.name] = entry
   })
@@ -110,123 +111,6 @@ export function fetchDataDispatcher (dispatch) {
     //   debugger
     //   dispatch({type: 'CSSE_DATA.LOAD.FAILURE', error})
     // })
-}
-
-const COUNTRY_ALIASES = {
-  'Mainland China': 'China',
-  'US': 'USA',
-}
-
-const OUTBREAK_ALIASES = {
-  'USA > King County, WA': 'USA > WA > Seattle Metro',
-  'USA > Snohomish County, WA': 'USA > WA > Seattle Metro',
-  'USA > Pierce County, WA': 'USA > WA > Seattle Metro',
-  'USA > Grant County, WA': 'USA > WA > Yakima',
-
-  'USA > New York County, NY': 'USA > New York City Metro',
-  'USA > Westchester County, NY': 'USA > New York City Metro',
-  'USA > Nassau County, NY': 'USA > New York City Metro',
-  'USA > Suffolk County, NY': 'USA > New York City Metro',
-  'USA > Rockland County, NY': 'USA > New York City Metro',
-  'USA > Bergen County, NJ': 'USA > New York City Metro',
-  'USA > Hudson County, NJ': 'USA > New York City Metro',
-
-  'USA > Los Angeles, CA': 'USA > CA > Los Angeles Metro',
-  'USA > Contra Costa County, CA': 'USA > CA > Los Angeles Metro',
-
-  'USA > Santa Clara County, CA': 'USA > CA > San Jose Metro',
-  'USA > San Francisco County, CA': 'USA > CA > San Francisco Metro',
-
-  'USA > Lee County, FL': 'USA > FL > Fort Myers',
-  'USA > Santa Rosa County, FL': 'USA > FL > Pensacola',
-
-  'USA > Placer County, CA': 'USA > CA > Sacramento',
-
-  'USA > Suffolk County, MA': 'USA > MA > Boston Metro',
-  'USA > Norfolk County, MA': 'USA > MA > Boston Metro',
-  'USA > Middlesex County, MA': 'USA > MA > Boston Metro',
-
-  'USA > Cook County, IL': 'USA > IL > Chicago Metro',
-
-  'USA > Washington County, OR': 'USA > OR > Portland Metro',
-
-  'China > Hubei': 'China > Hubei (Wuhan)',
-  'China > Henan': 'China > Other',
-  'China > Beijing': 'China > Other',
-  'China > Guangdong': 'China > Other',
-  'China > Heilongjiang': 'China > Other',
-  'China > Anhui': 'China > Other',
-  'China > Chongqing': 'China > Other',
-  'China > Hainan': 'China > Other',
-  'China > Hebei': 'China > Other',
-  'China > Shandong': 'China > Other',
-  'China > Hunan': 'China > Other',
-  'China > Shanghai': 'China > Other',
-  'China > Sichuan': 'China > Other',
-  'China > Tianjin': 'China > Other',
-  'China > Xinjiang': 'China > Other',
-  'China > Gansu': 'China > Other',
-  'China > Guangxi': 'China > Other',
-  'China > Guizhou': 'China > Other',
-  'China > Yunnan': 'China > Other',
-  'China > Fujian': 'China > Other',
-  'China > Inner Mongolia': 'China > Other',
-  'China > Jiangxi': 'China > Other',
-  'China > Jilin': 'China > Other',
-  'China > Liaoning': 'China > Other',
-  'China > Shaanxi': 'China > Other',
-  'China > Zhejiang': 'China > Other',
-  'China > Jiangsu': 'China > Other',
-  'China > Ningxia': 'China > Other',
-  'China > Shanxi': 'China > Other',
-  'China > Qinghai': 'China > Other',
-  'Others > Diamond Princess cruise ship': 'Diamond Princess',
-  'Hong Kong > Hong Kong': 'Hong Kong',
-  'Taiwan > Taiwan': 'Taiwan',
-  'USA > Grand Princess Cruise Ship': 'USA > Other',
-  'USA > Unassigned Location (From Diamond Princess)': 'USA > Other',
-  'UK': 'United Kingdom'
-}
-
-const EXTRA_ATTRIBUTES = {
-  'China': { emoji: '🇨🇳', link: 'https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_outbreak_in_mainland_China' },
-  'China > Hubei (Wuhan)': { emoji: '🇨🇳', link: 'https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_outbreak_in_mainland_China' },
-  'Hong Kong': { emoji: '🇭🇰', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Hong_Kong' },
-  'Taiwan': { emoji: '🇹🇼', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Taiwan' },
-  'USA': { emoji: '🇺🇸', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' },
-  'Iran': { emoji: '🇮🇷', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iran' },
-  'Italy': { emoji: '🇮🇹', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy' },
-  'Spain': { emoji: '🇪🇸', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain' },
-  'France': { emoji: '🇫🇷', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_France' },
-  'Japan': { emoji: '🇯🇵', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Japan' },
-  'South Korea': { emoji: '🇰🇷', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_South_Korea' },
-  'United Kingdom': { emoji: '🇬🇧', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Kingdom' },
-  'Iraq': { emoji: '🇮🇶', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iraq' },
-  'Thailand': { emoji: '🇹🇭', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Thailand' },
-  'Australia': { emoji: '🇦🇺', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Australia' },
-  'Philippines': { emoji: '🇵🇭', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_Philippines' },
-  'Switzerland': { emoji: '🇨🇭', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Switzerland' },
-  'Netherlands': { emoji: '🇳🇱', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_Netherlands' },
-  'San Marino': { emoji: '🇸🇲', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_San_Marino' },
-  'Singapore': { emoji: '🇸🇬', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Singapore' },
-  'Malaysia': { emoji: '🇲🇾', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Malaysia'},
-  'Canada': { emoji: '🇨🇦', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Canada' },
-  'Germany': { emoji: '🇩🇪', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Germany' },
-  'United Arab Emirates': { emoji: '🇦🇪', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Arab_Emirates' },
-  'India': { emoji: '🇮🇳', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_India' },
-  'Sweden': { emoji: '🇸🇪', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Sweden' },
-  'Belgium': { emoji: '🇧🇪' },
-  'Lebanon': { emoji: '🇱🇧' },
-  'Bahrain': { emoji: '🇧🇭' },
-  'Egypt': { emoji: '🇪🇬', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Egypt' },
-  'Vietnam': { emoji: '🇻🇳' },
-  'Finland': { emoji: '🇫🇮' },
-  'Kuwait': { emoji: '🇰🇼' },
-  'Austria': { emoji: '🇦🇹' },
-  'Greece': { emoji: '🇬🇷' },
-  'Norway': { emoji: '🇳🇴' },
-  'Iceland': { emoji: '🇮🇸' },
-  'Diamond Princess': { name: 'Diamond Princess', emoji: '🛳', type: 'other', link: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_on_cruise_ships#Diamond_Princess' }
 }
 
 const DATA_OVERRIDES = {

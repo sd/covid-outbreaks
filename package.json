@@ -12,6 +12,7 @@
     "react-dom": "^16.13.0",
     "react-redux": "^7.2.0",
     "react-scripts": "3.4.0",
+    "reactjs-popup": "^1.5.0",
     "redux": "^4.0.5",
     "redux-devtools-extension": "^2.13.8",
     "redux-query-sync": "^0.1.9",

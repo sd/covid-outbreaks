@@ -1,0 +1,34 @@
+.Selection-trigger {
+  color: #cc2;
+  border-bottom: 1px dotted #cc2;
+  cursor: pointer;
+}
+
+.Selection-trigger:hover {
+  color: #ff0;
+  border-bottom: 1px solid #ff0;
+  cursor: pointer;
+}
+
+.Selection-content h4 {
+  margin: 0;
+  margin-bottom: 0.5em;
+}
+
+.Selection-options {
+  list-style-type: none;
+  font-size: 1em;
+  font-weight: normal;
+  margin: 0;
+  padding: 0;
+}
+
+.Selection-options li {
+  list-style-type: none;
+  padding: 0.5em;
+  cursor: pointer;
+}
+
+.Selection-options li:hover {
+  background-color: #666;
+}

@@ -9,29 +9,73 @@
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 20px;
+  margin-bottom: 1em;
+  clear: both;
 }
 
-.TableView-caption {
+.TableView-title {
   border-top: 1px solid #999;
-  text-align: right;
+  position: relative;
+  overflow: hidden
 }
 
-.TableView-caption a, .TableView-caption a:link {
+.TableView a, .TableView a:link {
   color: #FFF;
   text-decoration: underline;
 }
 
-.TableView-caption a:active, .TableView-caption a:visited {
+.TableView a:active, .TableView a:visited {
   color: #FFF;
 }
 
-.TableView-tools {
+.TableView-title .left {
   float: left;
   text-align: left;
+  margin-top: 0.2em;
 }
 
-.TableView-tools button {
+.TableView-title .right {
+  float: right;
+  text-align: right;
+  margin-top: 0.2em;
+}
+
+.TableView-title .center {
+  float: left;
+  text-align: center;
+}
+
+.TableView-title .segment {
+  display: inline-block;
+  white-space: nowrap;
+}
+
+.TableView-title .left .segment {
+  margin-right: 0.5em;
+}
+
+.TableView-title .right .segment {
+  margin-left: 0.5em;
+}
+
+.TableView-title .left { width: 20%; }
+.TableView-title .center { width: 60%; }
+.TableView-title .right { width: 20%; }
+
+@media only screen and (max-width: 600px) {
+  .TableView { padding: 0em 0.5em; }
+  .TableView-title .left { width: 33%; }
+  .TableView-title .center { width: 33%; }
+  .TableView-title .right { width: 33%; }
+}
+
+@media only screen and (max-width: 900px) {
+  .TableView-title .left { width: 25%; }
+  .TableView-title .center { width: 50%; }
+  .TableView-title .right { width: 25%; }
+}
+
+.TableView button {
   display: inline;
   border: 0px;
   padding: 0px;
@@ -39,16 +83,16 @@
   background-color: inherit;
 }
 
-.TableView-tools button.activated {
+.TableView button.activated {
   color: #ff0;
 }
 
-.TableView-tools button:hover {
+.TableView button:hover {
   cursor: pointer;
   color: #ff0;
 }
 
-.pinned .TableView-caption {
+.pinned .TableView-title {
   border-top: 2px solid #ff0;
 }
 

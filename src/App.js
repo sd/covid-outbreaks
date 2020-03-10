@@ -8,12 +8,6 @@ function App() {
     <div className="App">
       <header className="App-header">
         <h1>COVID-19 Outbreaks</h1>
-
-        <div>
-          <span className='blockUnder900px'>Red: deaths, one dot per case.</span>
-          <span className='hideUnder900px'>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-          <span className='blockUnder900px'>Gray: confirmed cases, but at a 1:100 scale.</span>
-        </div>
       </header>
       <div className="App-content">
         <Views />
