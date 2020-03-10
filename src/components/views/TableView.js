@@ -94,6 +94,18 @@ const TableView = ({
               </div>
               {expandPosition[entry.name] && (
                 <div className='TableView-more'>
+                  <div style={{float: 'right', textAlign: 'right'}}>
+                    {entry.otherNames && entry.otherNames.length > 1 && (
+                      <div>
+                        <br />
+                        <b>Includes data for</b><br/>
+                        {entry.otherNames.map(name =>
+                          <div key={name}>{name}</div>
+                        )}
+                      </div>
+                    )}
+                  </div>
+
                   <OutbreakTable entry={entry} allDates={allDates} />
                 </div>
               )}

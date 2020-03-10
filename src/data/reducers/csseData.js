@@ -34,6 +34,7 @@ function processOneFile (fieldName, rawData, allDates, processedData ) {
     let originalName = [country, province].filter(x => x).join(' > ')
 
     country = COUNTRY_ALIASES[country] || country
+
     let name = [country, province].filter(x => x).join(' > ')
 
     name = OUTBREAK_ALIASES[name] || name
@@ -41,12 +42,15 @@ function processOneFile (fieldName, rawData, allDates, processedData ) {
 
     let entry = processedData[name] || {
       name,
+      otherNames: [name],
       type: province ? 'province' : 'country',
       lat: raw['Lat'],
       lon: raw['Long'],
       ...EXTRA_ATTRIBUTES[country],
       ...EXTRA_ATTRIBUTES[name],
     }
+
+    entry.otherNames = [...entry.otherNames.filter(n => n !== originalName), originalName]
 
     entry[fieldName] = entry[fieldName] || {}
 
@@ -114,9 +118,10 @@ const COUNTRY_ALIASES = {
 }
 
 const OUTBREAK_ALIASES = {
-  'USA > King County, WA': 'USA > Seattle Metro',
-  'USA > Snohomish County, WA': 'USA > Seattle Metro',
-  'USA > Pierce County, WA': 'USA > Seattle Metro',
+  'USA > King County, WA': 'USA > WA > Seattle Metro',
+  'USA > Snohomish County, WA': 'USA > WA > Seattle Metro',
+  'USA > Pierce County, WA': 'USA > WA > Seattle Metro',
+  'USA > Grant County, WA': 'USA > WA > Yakima',
 
   'USA > New York County, NY': 'USA > New York City Metro',
   'USA > Westchester County, NY': 'USA > New York City Metro',
@@ -132,16 +137,16 @@ const OUTBREAK_ALIASES = {
   'USA > Santa Clara County, CA': 'USA > CA > San Jose Metro',
   'USA > San Francisco County, CA': 'USA > CA > San Francisco Metro',
 
-  'USA > Lee County, FL': 'USA > FL > Lee County (Fort Myers)',
-  'USA > Santa Rosa County, FL': 'USA > FL > Santa Rosa County (Pensacola)',
+  'USA > Lee County, FL': 'USA > FL > Fort Myers',
+  'USA > Santa Rosa County, FL': 'USA > FL > Pensacola',
 
-  'USA > Placer County, CA': 'USA > CA > Placer County (Sacramento)',
+  'USA > Placer County, CA': 'USA > CA > Sacramento',
 
-  'USA > Suffolk County, MA': 'USA > Boston Metro',
-  'USA > Norfolk County, MA': 'USA > Boston Metro',
-  'USA > Middlesex County, MA': 'USA > Boston Metro',
+  'USA > Suffolk County, MA': 'USA > MA > Boston Metro',
+  'USA > Norfolk County, MA': 'USA > MA > Boston Metro',
+  'USA > Middlesex County, MA': 'USA > MA > Boston Metro',
 
-  'USA > Cook County, IL': 'USA > Chicago Metro',
+  'USA > Cook County, IL': 'USA > IL > Chicago Metro',
 
   'USA > Washington County, OR': 'USA > OR > Portland Metro',
 
