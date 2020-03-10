@@ -1,10 +1,10 @@
 export const OUTBREAK_ALIASES = {
   'US': 'USA',
 
-  'US > King County, WA': 'USA > WA > Seattle Metro',
-  'US > Snohomish County, WA': 'USA > WA > Seattle Metro',
-  'US > Pierce County, WA': 'USA > WA > Seattle Metro',
-  'US > Grant County, WA': 'USA > WA > Yakima',
+  'US > King County, WA': 'USA > Seattle-Tacoma Metro',
+  'US > Snohomish County, WA': 'USA > Seattle-Tacoma Metro',
+  'US > Pierce County, WA': 'USA > Seattle-Tacoma Metro',
+  'US > Grant County, WA': 'USA > Yakima, WA',
 
   'US > New York County, NY': 'USA > New York City Metro',
   'US > Westchester County, NY': 'USA > New York City Metro',
@@ -13,25 +13,64 @@ export const OUTBREAK_ALIASES = {
   'US > Rockland County, NY': 'USA > New York City Metro',
   'US > Bergen County, NJ': 'USA > New York City Metro',
   'US > Hudson County, NJ': 'USA > New York City Metro',
+  'US > Fairfield County, CT': 'USA > New York City Metro',
 
-  'US > Los Angeles, CA': 'USA > CA > Los Angeles Metro',
-  'US > Contra Costa County, CA': 'USA > CA > Los Angeles Metro',
+  'US > Washington, D.C.': 'USA > Washington DC Metro Area',
+  'US > Montgomery County, MD': 'USA > Washington DC Metro Area',
+  'US > Fairfax County, VA': 'USA > Washington DC Metro Area',
 
-  'US > Santa Clara County, CA': 'USA > CA > San Jose Metro',
-  'US > San Francisco County, CA': 'USA > CA > San Francisco Metro',
+  'US > Harford County, MD': 'USA > Baltimore, MD',
 
-  'US > Lee County, FL': 'USA > FL > Fort Myers',
-  'US > Santa Rosa County, FL': 'USA > FL > Pensacola',
+  'US > Los Angeles, CA': 'USA > Los Angeles Metro',
+  'US > Contra Costa County, CA': 'USA > Los Angeles Metro',
+  'US > Orange County, CA': 'USA > Los Angeles Metro',
+  'US > Riverside, CA': 'USA > Los Angeles Metro',
 
-  'US > Placer County, CA': 'USA > CA > Sacramento',
+  'US > San Diego County, CA': 'USA > San Diego, CA',
 
-  'US > Suffolk County, MA': 'USA > MA > Boston Metro',
-  'US > Norfolk County, MA': 'USA > MA > Boston Metro',
-  'US > Middlesex County, MA': 'USA > MA > Boston Metro',
+  'US > Santa Clara County, CA': 'USA > Bay Area, CA',
+  'US > San Francisco County, CA': 'USA > Bay Area, CA',
+  'US > Sonoma County, CA': 'USA > Bay Area, CA',
+  'US > Alameda County, CA': 'USA > Bay Area, CA',
 
-  'US > Cook County, IL': 'USA > IL > Chicago Metro',
+  'US > Placer County, CA': 'USA > Sacramento, CA',
+  'US > Sacramento County, CA': 'USA > Sacramento, CA',
 
-  'US > Washington County, OR': 'USA > OR > Portland Metro',
+  'US > Fresno County, CA': 'USA > Fresno, CA',
+  'US > Madera County, CA': 'USA > Fresno, CA',
+
+  'US > Clark County, NV': 'USA > Las Vegas, NV',
+  'US > Washoe County, NV': 'USA > Reno, NV',
+
+  'US > Denver County, CO': 'USA > Denver, CO',
+
+  'US > Lee County, FL': 'USA > Fort Myers, FL',
+  'US > Santa Rosa County, FL': 'USA > Pensacola, FL',
+  'US > Broward County, FL': 'USA > Fort Lauderdale, FL',
+  'US > Manatee County, FL': 'USA > Sarasota, FL',
+
+
+  'US > Suffolk County, MA': 'USA > Boston, MA',
+  'US >  Norfolk County, MA': 'USA > Boston, MA',
+  'US > Norfolk County, MA': 'USA > Boston, MA',
+  'US > Middlesex County, MA': 'USA > Boston, MA',
+
+  'US > Cook County, IL': 'USA > Chicago, IL Metro',
+
+  'US > Washington County, OR': 'USA > Portland, OR',
+
+  'US > Honolulu County, HI': 'USA > Honolulu, HI',
+
+  'US > Harris County, TX': 'USA > Houston, TX',
+  'US > Fort Bend County, TX': 'USA > Houston, TX',
+
+  'US > Collin County, TX': 'USA > Plano, TX',
+
+  'US > Cobb County, GA': 'USA > Atlanta, GA',
+  'US > Fulton County, GA': 'USA > Atlanta, GA',
+  'US > Cherokee County, GA': 'USA > Atlanta, GA',
+
+  'US > Montgomery County, PA': 'USA > Philadelphia, PA',
 
   'US > Grand Princess Cruise Ship': 'USA > Other',
   'US > Unassigned Location (From Diamond Princess)': 'USA > Other',
