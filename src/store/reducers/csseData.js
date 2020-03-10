@@ -60,7 +60,7 @@ function processOneFile (fieldName, rawData, allDates, processedData ) {
     // if( name.match(/Hubei/)) debugger
 
     let previousCount = 0
-    let newCount, totalCountSoFar, newPrelimCount
+    let newCount = 0, totalCountSoFar = 0, newPrelimCount = 0
     allDates.forEach(d => {
       if (raw[d] !== undefined) {
         totalCountSoFar = parseInt(raw[d], 10)
@@ -85,7 +85,7 @@ function processOneFile (fieldName, rawData, allDates, processedData ) {
     entry[`${fieldName}Latest`] = (entry[`${fieldName}Latest`] || 0) + newCount
 
     entry[`${fieldName}TotalWithPreliminary`] = (entry[`${fieldName}Total`] || 0) + (entry[`${fieldName}PreliminaryTotal`] || 0)
-    entry[`${fieldName}LatestOrPreliminary`] = (entry[`${fieldName}LatestOrPreliminary`] || 0) + (entry[`${fieldName}Latest`] || newPrelimCount || 0)
+    entry[`${fieldName}LatestOrPreliminary`] = (entry[`${fieldName}LatestOrPreliminary`] || 0) + (newCount || newPrelimCount || 0)
 
     processedData[entry.name] = entry
   })
