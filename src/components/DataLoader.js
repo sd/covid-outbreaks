@@ -13,7 +13,7 @@ class DataLoader extends Component {
 
     if (loading) {
       return <span>Loading Data...</span>
-    } else if (loaded) {
+    } else if (loaded && false) {
       return (
         <span>
           <span>Most recent date: {lastDate}</span>

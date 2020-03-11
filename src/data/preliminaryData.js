@@ -2,9 +2,9 @@ export const PRELIMINARY_DATA = {
   total: {
     deaths:  {
       '3/11/20': {
-        'Spain': 47,
+        'Spain': 49,
         'Iran': 354,
-        'South Korea': 60,
+        'South Korea': 66,
         'Germany': 3,
         'Switzerland': 4,
         'Netherlands': 5,

@@ -19,7 +19,11 @@ function App() {
           </span>
           <span className='hideUnder600px'>{' • '}</span>
           <span className='blockUnder600px'>
-            Data from <a href='https://github.com/CSSEGISandData/COVID-19'>John Hopkins Univeristy</a>
+            Data from <a target='_blank' rel="noopener noreferrer" href='https://github.com/CSSEGISandData/COVID-19'>John Hopkins Univeristy</a>
+          </span>
+          <span className='hideUnder600px'>{' • '}</span>
+          <span className='blockUnder600px'>
+            Preliminary data from news reports, official sources and <a target='_blank' rel="noopener noreferrer" href='https://www.worldometers.info/coronavirus/#countries'>Worldometers</a>
           </span>
         </span>
         <span className='hideUnder900px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
