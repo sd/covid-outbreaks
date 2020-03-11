@@ -75,6 +75,11 @@ export const OUTBREAK_ALIASES = {
   'US > Grand Princess Cruise Ship': 'USA > Other',
   'US > Unassigned Location (From Diamond Princess)': 'USA > Other',
 
+  'US > Washington': false,
+
+  'Iran (Islamic Republic of)': false,
+  'Republic of Korea': false,
+
   'Mainland China': 'China',
 
   'Mainland China > Hubei': 'China > Hubei (Wuhan)',

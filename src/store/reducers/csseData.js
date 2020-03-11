@@ -36,58 +36,65 @@ function processOneFile (fieldName, rawData, allDates, processedData ) {
 
     let originalName = [country, province].filter(x => x).join(' > ')
 
-    let name = OUTBREAK_ALIASES[originalName] || originalName
-    country = OUTBREAK_ALIASES[country] || country
+    if (OUTBREAK_ALIASES[originalName] !== false) {
+      let name = OUTBREAK_ALIASES[originalName] || originalName
+      country = OUTBREAK_ALIASES[country] || country
 
-    let entry = processedData[name] || {
-      name,
-      country,
-      otherNames: [],
-      type: province ? 'province' : 'country',
-      lat: raw['Lat'],
-      lon: raw['Long'],
-      ...OUTBREAK_ATTRIBUTES[country],
-      ...OUTBREAK_ATTRIBUTES[name],
-    }
-
-    if (name !== originalName) {
-      entry.otherNames = [...entry.otherNames.filter(n => n !== originalName), originalName]
-    }
-
-    entry[fieldName] = entry[fieldName] || {}
-    entry[`${fieldName}Preliminary`] =entry[`${fieldName}Preliminary`] || {}
-
-    // if( name.match(/Hubei/)) debugger
-
-    let previousCount = 0
-    let newCount = 0, totalCountSoFar = 0, newPrelimCount = 0
-    allDates.forEach(d => {
-      if (raw[d] !== undefined) {
-        totalCountSoFar = parseInt(raw[d], 10)
-
-        newCount = totalCountSoFar - previousCount
-        previousCount = totalCountSoFar
-
-        if (DATA_OVERRIDES[originalName] && DATA_OVERRIDES[originalName][d] && DATA_OVERRIDES[originalName][d][fieldName] !== undefined) {
-          newCount = DATA_OVERRIDES[originalName][d][fieldName]
-        }
-
-        entry[fieldName][d] = (entry[fieldName][d] || 0) + newCount
-      } else {
-        if (PRELIMINARY_DATA[d] && PRELIMINARY_DATA[d][originalName] && PRELIMINARY_DATA[d][originalName][fieldName]) {
-          newPrelimCount = PRELIMINARY_DATA[d][originalName][fieldName]
-          entry[`${fieldName}Preliminary`][d] = newPrelimCount
-          entry[`${fieldName}PreliminaryTotal`] = (entry[`${fieldName}PreliminaryTotal`] || 0) + newPrelimCount
-        }
+      let entry = processedData[name] || {
+        name,
+        country,
+        otherNames: [],
+        type: province ? 'province' : 'country',
+        lat: raw['Lat'],
+        lon: raw['Long'],
+        ...OUTBREAK_ATTRIBUTES[country],
+        ...OUTBREAK_ATTRIBUTES[name],
       }
-    })
-    entry[`${fieldName}Total`] = (entry[`${fieldName}Total`] || 0) + totalCountSoFar
-    entry[`${fieldName}Latest`] = (entry[`${fieldName}Latest`] || 0) + newCount
 
-    entry[`${fieldName}TotalWithPreliminary`] = (entry[`${fieldName}Total`] || 0) + (entry[`${fieldName}PreliminaryTotal`] || 0)
-    entry[`${fieldName}LatestOrPreliminary`] = (entry[`${fieldName}LatestOrPreliminary`] || 0) + (newCount || newPrelimCount || 0)
+      if (name !== originalName) {
+        entry.otherNames = [...entry.otherNames.filter(n => n !== originalName), originalName]
+      }
 
-    processedData[entry.name] = entry
+      entry[fieldName] = entry[fieldName] || {}
+      entry[`${fieldName}Preliminary`] =entry[`${fieldName}Preliminary`] || {}
+
+      // if( name.match(/Hubei/)) debugger
+
+      let previousCount = 0
+      let newCount = 0, totalCountSoFar = 0, newPrelimCount = 0
+      allDates.forEach(d => {
+        if (raw[d] !== undefined) {
+          if (DATA_OVERRIDES[originalName] && DATA_OVERRIDES[originalName][d] && DATA_OVERRIDES[originalName][`${fieldName}Raw`]) {
+            totalCountSoFar = DATA_OVERRIDES[originalName][`${fieldName}Raw`]
+          } else {
+            totalCountSoFar = parseInt(raw[d], 10)
+          }
+
+
+          newCount = totalCountSoFar - previousCount
+          previousCount = totalCountSoFar
+
+          if (DATA_OVERRIDES[originalName] && DATA_OVERRIDES[originalName][d] && DATA_OVERRIDES[originalName][d][fieldName] !== undefined) {
+            newCount = DATA_OVERRIDES[originalName][d][fieldName]
+          }
+
+          entry[fieldName][d] = (entry[fieldName][d] || 0) + newCount
+        } else {
+          if (PRELIMINARY_DATA[d] && PRELIMINARY_DATA[d][originalName] && PRELIMINARY_DATA[d][originalName][fieldName]) {
+            newPrelimCount = PRELIMINARY_DATA[d][originalName][fieldName]
+            entry[`${fieldName}Preliminary`][d] = newPrelimCount
+            entry[`${fieldName}PreliminaryTotal`] = (entry[`${fieldName}PreliminaryTotal`] || 0) + newPrelimCount
+          }
+        }
+      })
+      entry[`${fieldName}Total`] = (entry[`${fieldName}Total`] || 0) + totalCountSoFar
+      entry[`${fieldName}Latest`] = (entry[`${fieldName}Latest`] || 0) + newCount
+
+      entry[`${fieldName}TotalWithPreliminary`] = (entry[`${fieldName}Total`] || 0) + (entry[`${fieldName}PreliminaryTotal`] || 0)
+      entry[`${fieldName}LatestOrPreliminary`] = (entry[`${fieldName}LatestOrPreliminary`] || 0) + (newCount || newPrelimCount || 0)
+
+      processedData[entry.name] = entry
+    }
   })
 
   return processedData
@@ -148,6 +155,12 @@ const DATA_OVERRIDES = {
     '2/22/20': { deaths: 202 / 2 },
     '2/23/20': { deaths: (149 / 2) + 0.5 },
     '2/24/20': { deaths: (149 / 2) - 0.5 }
+  },
+  'Iran': {
+    '3/10/20': { deathsRaw: 291, casesRaw: 8042 },
+  },
+  'South Korea': {
+    '3/10/20': { deathsRaw: 54, casesRaw: 7513 },
   }
 }
 export default reducer
