@@ -34,9 +34,8 @@ export const OUTBREAK_DATA_OVERLAYS = {
 
 export const OUTBREAK_ATTRIBUTES = {
   'China': { emoji: '🇨🇳', region: 'asia',
-    links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_outbreak_in_mainland_China' }},
-  'China > Hubei (Wuhan)': { emoji: '🇨🇳',
-    links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_outbreak_in_mainland_China' }},
+    links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_outbreak_in_mainland_China',
+             'Official Reports (NHC)': 'http://en.nhc.gov.cn/news.html' }},
   'Hong Kong': { emoji: '🇭🇰', region: 'asia',
     links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Hong_Kong' }},
   'Taiwan': { emoji: '🇹🇼', region: 'asia',
@@ -44,7 +43,8 @@ export const OUTBREAK_ATTRIBUTES = {
   'Japan': { emoji: '🇯🇵', region: 'asia',
     links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Japan' }},
   'South Korea': { emoji: '🇰🇷', region: 'asia',
-    links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_South_Korea' }},
+    links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_South_Korea',
+             'Official Reports': 'https://www.cdc.go.kr/board/board.es?mid=a30402000000&bid=0030' }},
   'Thailand': { emoji: '🇹🇭', region: 'asia',
     links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Thailand' }},
   'Singapore': { emoji: '🇸🇬', region: 'asia',
@@ -69,7 +69,8 @@ export const OUTBREAK_ATTRIBUTES = {
   'Canada': { emoji: '🇨🇦', region: 'americas',
     links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Canada' }},
   'USA': { emoji: '🇺🇸', region: 'americas',
-    links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }},
+    links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States',
+             'Official Reports (CDC)': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html' }},
   'Mexico': { emoji: '🇲🇽', region: 'americas' },
   'Argentina': { emoji: '🇦🇷', region: 'americas' },
   'Brazil': { emoji: '🇧🇷', region: 'americas' },
@@ -92,7 +93,8 @@ export const OUTBREAK_ATTRIBUTES = {
   'Saint Barthelemy': { emoji: '🇫🇷', region: 'americas' },
 
   'Iran': { emoji: '🇮🇷', region: 'middle east',
-    links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iran' }},
+    links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iran',
+            'Islamic Republic News Agency': 'https://en.irna.ir/service/news' }},
   'Israel': { emoji: '🇮🇱', region: 'middle east' },
   'Palestine': { emoji: '🇵🇸', region: 'middle east' },
   'Kuwait': { emoji: '🇰🇼', region: 'middle east' },
@@ -127,13 +129,15 @@ export const OUTBREAK_ATTRIBUTES = {
   'New Zealand': { emoji: '🇳🇿', region: 'oceania' },
 
   'Italy': { emoji: '🇮🇹', region: 'europe',
-    links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy' }},
+    links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy',
+             'Official Reports (Protezione Civile)': 'http://www.protezionecivile.gov.it/web/guest/media-comunicazione/comunicati-stampa' }},
   'Spain': { emoji: '🇪🇸', region: 'europe',
     links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain',
-             'Ministerio de Sanidad': 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm' }},
+             'Official Reports (Ministerio de Sanidad)': 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm' }},
   'Portugal': { emoji: '🇵🇹', region: 'europe' },
   'France': { emoji: '🇫🇷', region: 'europe',
-    links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_France' }},
+    links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_France',
+             'Official Reports (Santé publique France)': 'https://www.santepubliquefrance.fr/maladies-et-traumatismes/maladies-et-infections-respiratoires/infection-a-coronavirus/articles/infection-au-nouveau-coronavirus-sars-cov-2-covid-19-france-et-monde' }},
   'United Kingdom': { emoji: '🇬🇧', region: 'europe',
     links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Kingdom' }},
   'Philippines': { emoji: '🇵🇭', region: 'asia',
@@ -207,7 +211,7 @@ export function findAggregateMapping (name) {
 
     parts = name.match(/Mainland China > (.*)/)
     if (parts) {
-      if (parts[2] === 'Hubei') return 'China > Hubei (Wuhan)'
+      if (parts[1].indexOf('Hubei') >= 0) return 'China > Hubei (Wuhan)'
       else return 'China > Other'
     }
   }

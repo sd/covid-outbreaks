@@ -171,7 +171,7 @@ function processOneFile (fieldName, rawData, entries ) {
 
         entry.preliminaryDaily[fieldName][d] = daily
         entry.latestPreliminaryTotal[fieldName] = entry.latestPreliminaryTotal[fieldName] + daily
-        entry.latestPreliminaryDaily[fieldName] = entry.latestDaily[fieldName] + daily
+        entry.latestPreliminaryDaily[fieldName] = (entry.latestPreliminaryDaily[fieldName || 0]) + daily
       }
     })
 
