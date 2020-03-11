@@ -130,7 +130,7 @@ export const OUTBREAK_ATTRIBUTES = {
 
   'Italy': { emoji: '🇮🇹', region: 'europe',
     links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy',
-             'Official Reports (Protezione Civile)': 'http://www.protezionecivile.gov.it/web/guest/media-comunicazione/comunicati-stampa' }},
+             'Official Reports (Protezione Civile)': 'http://www.protezionecivile.gov.it/media-communication/press-release' }},
   'Spain': { emoji: '🇪🇸', region: 'europe',
     links: { 'Wikipedia Outbreak Page': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain',
              'Official Reports (Ministerio de Sanidad)': 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm' }},

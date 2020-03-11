@@ -4,7 +4,7 @@ export const PRELIMINARY_DATA = {
       '3/11/20': {
         'Spain': 49,
         'Iran': 354,
-        'South Korea': 66,
+        'South Korea': 60,
         'Germany': 3,
         'Switzerland': 4,
         'Netherlands': 5,
@@ -14,6 +14,8 @@ export const PRELIMINARY_DATA = {
         'Albania': 1,
         'Panama': 1,
         'USA > South Dakota': 1,
+        'Japan': 12,
+        'Italy': 827
       }
     }
   },
