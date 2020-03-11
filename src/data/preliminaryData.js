@@ -17,6 +17,7 @@ export const PRELIMINARY_DATA = {
         'Japan': 15,
         'Italy': 827,
         'Sweden': 1,
+        'USA > Washington': 24
       }
     }
   },
