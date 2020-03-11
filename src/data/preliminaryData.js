@@ -8,14 +8,15 @@ export const PRELIMINARY_DATA = {
         'Germany': 3,
         'Switzerland': 4,
         'Netherlands': 5,
-        'Belgium': 1,
+        'Belgium': 3,
         'Lebanon': 2,
         'Indonesia': 1,
         'Albania': 1,
         'Panama': 1,
         'USA > South Dakota': 1,
-        'Japan': 12,
-        'Italy': 827
+        'Japan': 15,
+        'Italy': 827,
+        'Sweden': 1,
       }
     }
   },
