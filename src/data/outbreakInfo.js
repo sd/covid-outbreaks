@@ -76,9 +76,15 @@ export const OUTBREAK_ATTRIBUTES = {
              'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }},
   'USA > California': { emoji: '🇺🇸', region: 'americas',
-  links: { 'CA Dept. Public of Health': 'https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/nCoV2019.aspx',
-           'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
-           'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }},
+    links: { 'CA Dept. Public of Health': 'https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/nCoV2019.aspx',
+             'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }},
+  'USA > New York': { emoji: '🇺🇸', region: 'americas',
+     links: { 'NY Dept. of Health': 'https://www.health.ny.gov/diseases/communicable/coronavirus/',
+          'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
+          'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }},
+
+
   'Mexico': { emoji: '🇲🇽', region: 'americas' },
   'Argentina': { emoji: '🇦🇷', region: 'americas' },
   'Brazil': { emoji: '🇧🇷', region: 'americas' },
