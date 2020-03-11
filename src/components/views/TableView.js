@@ -12,7 +12,7 @@ import { viewOptionsForSorting, SORTER_TYPES, SORTER_DESCRIPTIONS } from '../../
 import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../../store/filters'
 
 const TableView = ({
-  loading, loaded, data, allDates, lastDate,
+  loading, loaded, data, allDates, lastDate, lastPreliminaryDate,
   sort, setSort, filter, setFilter,
   pinPositions, pinEntry, unpinEntry,
   isExpanded, expandEntry, collapseEntry
@@ -52,14 +52,20 @@ const TableView = ({
               {' as of '}
               {formatDateMonthDD(lastDate)}
             </span>
-
+            {lastPreliminaryDate &&
+              <span className='segment blockUnder600px preliminary'>
+              { ' (preliminary for ' }
+              {formatDateMonthDD(lastPreliminaryDate)}
+              )
+            </span>
+           }
           </h3>
           <div>
             <span className='blockUnder600px'>
               <OutbreakSparklineSampleMarker type='deathMarker' /> 1 death
             </span>
             <span className='hideUnder600px'>&nbsp;&nbsp;&nbsp;&nbsp;</span>
-            <span className='blockUnder600px'>
+            <span className='blockUnder600px' className='preliminary'>
               <OutbreakSparklineSampleMarker type='preliminaryDeathMarker' /> (preliminary data)
             </span>
             <span className='hideUnder600px'>&nbsp;&nbsp;&nbsp;&nbsp;</span>
@@ -97,30 +103,25 @@ const TableView = ({
                 <div className='totals'>
                   {
                     entry.latestTotal.deaths > 0
-                    ? <>
-                        <div className='segment'>{formatNumber(entry.latestCount.deaths)} new deaths</div>
-                        <div className='segment'><b>{formatNumber(entry.latestTotal.deaths)} total</b></div>
-                        {entry.deathsPreliminaryTotal > 0 && (
-                          <div className='segment preliminary'><b>+ {formatNumber(entry.deathsPreliminaryTotal)} prelim</b></div>
-                        )}
-                      </>
-                    : <>
-                        <div className='segment'>{formatNumber(entry.latestTotal.cases)} total cases</div>
-                        {
-                          entry.deathsPreliminaryTotal > 0
-                          ? <div className='segment preliminary'><b>{formatNumber(entry.deathsPreliminaryTotal)} deaths (prelim)</b></div>
-                          : <div className='segment'><b>{formatNumber(entry.latestTotal.deaths)} deaths</b></div>
-                        }
-                      </>
+                    ? <div className='segment'>{formatNumber(entry.latestDaily.deaths)} new deaths</div>
+                    : <div className='segment'>{formatNumber(entry.latestTotal.cases)} total cases</div>
                   }
+                  <div className='segment'><b>
+                    {formatNumber(entry.latestTotal.deaths)} total
+                    {entry.latestPreliminaryTotal.deaths !== entry.latestTotal.deaths && (
+                      <span className='preliminary'>{' +'}{formatNumber(entry.latestPreliminaryDaily.deaths)}</span>
+                    )}
+                  </b></div>
                 </div>
               </div>
               {isExpanded[entry.name] && (
                 <div className='TableView-more'>
-                  {entry.wikipedia && (
+                  {entry.links  && (
                     <section>
                       <b>Links:&nbsp;&nbsp;</b>
-                      <a href={entry.wikipedia}>Wikipedia Outbreak Page</a>
+                      {Object.keys(entry.links).map(key =>
+                        <span key={key}><a href={entry.links[key]} target='_blank' rel="noopener noreferrer">{key}</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      )}
                     </section>
                   )}
 
@@ -160,6 +161,7 @@ const mapStateToProps = (state, ownProps) => ({
   data: state.csseData.data,
   allDates: state.csseData.allDates,
   lastDate: state.csseData.lastDate,
+  lastPreliminaryDate: state.csseData.lastPreliminaryDate,
   sort: state.ui.sort,
   filter: state.ui.filter,
   pinPositions: state.ui.pinPositions,

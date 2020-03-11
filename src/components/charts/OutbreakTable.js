@@ -9,15 +9,15 @@ const OutbreakTable = ({entry, allDates}) => {
   let reversedDates = [...allDates]
   reversedDates.reverse()
 
-  if (entry.counts.deaths) {
+  if (entry.daily.deaths) {
     return (
       <div className='OutbreakTable'>
         <div className='OutbreakTable-values' >
           {reversedDates.map((date, index)=> (
             <div key={date} className='row'>
               <div className='date'>{formatDateMonDD(date)}</div>
-              <div className='cases'>{formatNumber(entry.counts.cases[date])}</div>
-              <div className='deaths'>{formatNumber(entry.counts.deaths[date])}</div>
+              <div className='cases'>{formatNumber(entry.daily.cases[date])}</div>
+              <div className='deaths'>{formatNumber(entry.daily.deaths[date])}</div>
             </div>
           ))}
         </div>

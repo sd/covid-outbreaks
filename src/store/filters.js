@@ -4,13 +4,13 @@ function filterAll (a, options) {
 
 function filterRelevant (a, options) {
   if (options.sort === 'casesLatest') {
-    return a.latestTotal.deaths > 0
+    return a.latestPreliminaryTotal.cases > 0
   } else if (options.sort === 'casesTotal') {
-    return a.latestTotal.cases > 0
+    return a.latestPreliminaryTotal.cases > 0
   } else if (options.sort === 'deathsLatest') {
-    return a.latestTotal.deaths > 0 || a.deathsPreliminaryTotal > 0
+    return a.latestPreliminaryTotal.deaths > 0
   } else if (options.sort === 'deathsTotal') {
-    return a.latestTotal.deaths > 0 || a.deathsPreliminaryTotal > 0
+    return a.latestPreliminaryTotal.deaths > 0
   } else {
     return true
   }

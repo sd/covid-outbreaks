@@ -1,9 +1,16 @@
 export const PRELIMINARY_DATA = {
-  deaths: {
-    total:  {
-      '3/10/20': {
-        'Italy': 100
+  total: {
+    deaths:  {
+      '3/11/20': {
+        'Spain': 47
       }
     }
-  }
+  },
+  daily: {
+    deaths:  {
+      '3/11/20': {
+      }
+    }
+  },
+
 }

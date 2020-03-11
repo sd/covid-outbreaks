@@ -115,3 +115,7 @@
 .TableView-more section {
   margin-top: 1em;
 }
+
+.TableView .preliminary {
+  color: #e96;
+}

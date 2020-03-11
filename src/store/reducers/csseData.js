@@ -1,7 +1,7 @@
 import { csv as d3CSV } from 'd3-fetch'
 
 import { OUTBREAK_ATTRIBUTES, findAggregateMapping, findOverlayMapping } from '../../data/outbreakInfo'
-// import { PRELIMINARY_DATA } from '../../data/preliminaryData'
+import { PRELIMINARY_DATA } from '../../data/preliminaryData'
 
 const CASES_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
 const DEATHS_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'
@@ -19,7 +19,7 @@ export function reducer (state = initialState, action) {
       return { ...state, loading: true, error: undefined, errorMessage: '', lastDate: undefined, lastPreliminaryDate: undefined }
 
     case 'CSSE_DATA.LOAD.SUCCESS':
-      return { ...state, loading: false, loaded: true, data: action.data, allDates: action.allDates, lastDate: action.lastDate, lastPreliminaryDate: action.lastPreliminaryDate }
+      return { ...state, loading: false, loaded: true, ...action.payload }
 
     case 'CSSE_DATA.LOAD.FAILURE':
       return { ...state, loading: false, loaded: false, error: action.error, errorMessage: action.errorMessage }
@@ -104,14 +104,23 @@ function prepareEntries (data, fieldName, entries) {
     entry.totals = entry.totals || {}
     entry.totals[fieldName] = {}
 
-    entry.counts = entry.counts || {}
-    entry.counts[fieldName] = {}
+    entry.daily = entry.daily || {}
+    entry.daily[fieldName] = {}
+
+    entry.preliminaryDaily = entry.preliminaryDaily || {}
+    entry.preliminaryDaily[fieldName] = {}
 
     entry.latestTotal = entry.latestTotal || {}
     entry.latestTotal[fieldName] = 0
 
-    entry.latestCount = entry.latestCount || {}
-    entry.latestCount[fieldName] = 0
+    entry.latestPreliminaryTotal = entry.latestPreliminaryTotal || {}
+    entry.latestPreliminaryTotal[fieldName] = 0
+
+    entry.latestDaily = entry.latestDaily || {}
+    entry.latestDaily[fieldName] = 0
+
+    entry.latestPreliminaryDaily = entry.latestPreliminaryDaily || {}
+    entry.latestPreliminaryDaily[fieldName] = 0
 
     entries[entry.name] = entry
   })
@@ -127,23 +136,51 @@ function processOneFile (fieldName, rawData, entries ) {
 
   entries = prepareEntries(data, fieldName, entries)
 
+  let dates = data.dates
+  let preliminaryDates = []
+
+  if (PRELIMINARY_DATA.total[fieldName]) {
+    preliminaryDates = Object.keys(PRELIMINARY_DATA.total[fieldName]).filter(d => dates.indexOf(d) < 0)
+  }
+
   let row, entry
 
   data.names.forEach(name => {
     row = data.rows[name]
     entry = entries[name]
 
-    data.dates.forEach(d => {
+    dates.forEach(d => {
       entry.totals[fieldName][d] = row[d]
-      entry.counts[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
+      entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
       entry.latestTotal[fieldName] = entry.totals[fieldName][d]
-      entry.latestCount[fieldName] = entry.counts[fieldName][d]
+      entry.latestDaily[fieldName] = entry.daily[fieldName][d]
     })
+
+    entry.latestPreliminaryTotal[fieldName] = entry.latestTotal[fieldName]
+
+    preliminaryDates.forEach(d => {
+      if (PRELIMINARY_DATA.total[fieldName][d][entry.name]) {
+        let total = PRELIMINARY_DATA.total[fieldName][d][entry.name]
+        let daily = total - entry.latestTotal[fieldName]
+
+        entry.preliminaryDaily[fieldName][d] = daily
+        entry.latestPreliminaryTotal[fieldName] = entry.latestPreliminaryTotal[fieldName] + daily
+        entry.latestPreliminaryDaily[fieldName] = (entry.latestPreliminaryDaily[fieldName] || 0) + daily
+      } else if (PRELIMINARY_DATA.daily[fieldName][d][entry.name]) {
+        let daily = PRELIMINARY_DATA.daily[fieldName][d][entry.name]
+
+        entry.preliminaryDaily[fieldName][d] = daily
+        entry.latestPreliminaryTotal[fieldName] = entry.latestPreliminaryTotal[fieldName] + daily
+        entry.latestPreliminaryDaily[fieldName] = entry.latestDaily[fieldName] + daily
+      }
+    })
+
+    entry.latestPreliminaryDaily[fieldName] = entry.latestPreliminaryDaily[fieldName] || entry.latestDaily[fieldName]
 
     entries[entry.name] = entry
   })
 
-  return { entries, names: data.names, dates: data.dates }
+  return { entries, names: data.names, dates: data.dates, preliminaryDates }
 }
 
 export function fetchDataDispatcher (dispatch) {
@@ -158,10 +195,11 @@ export function fetchDataDispatcher (dispatch) {
 
       let data = Object.keys(deathsResults.entries).map(k => deathsResults.entries[k])
 
-      let allDates = deathsResults.dates
-      let lastDate = allDates[allDates.length - 1]
+      let allDates = [...deathsResults.dates, ...deathsResults.preliminaryDates]
+      let lastDate = deathsResults.dates[deathsResults.dates.length - 1]
+      let lastPreliminaryDate = deathsResults.preliminaryDates[deathsResults.preliminaryDates.length - 1]
 
-      dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', data, allDates, lastDate})
+      dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', payload: { data, allDates, lastDate, lastPreliminaryDate }})
       return data
     })
     // .catch(error => {
