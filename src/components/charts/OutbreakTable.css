@@ -27,6 +27,10 @@
   display: inline-block;
 }
 
+.OutbreakTable .date {
+  white-space: nowrap;
+}
+
 .OutbreakTable .cases {
   color: #777;
 }

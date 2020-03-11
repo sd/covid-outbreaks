@@ -2,7 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import classNames from 'classnames'
 import SelectionPopup from '../../components/shared/SelectionPopup'
-
+import { formatDateMonthDD } from '../../utils/dateFormats'
 import formatNumber from '../../utils/formatNumber'
 
 import './TableView.css'
@@ -12,7 +12,7 @@ import { viewOptionsForSorting, SORTER_TYPES, SORTER_DESCRIPTIONS } from '../../
 import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../../store/filters'
 
 const TableView = ({
-  loading, loaded, data, allDates,
+  loading, loaded, data, allDates, lastDate,
   sort, setSort, filter, setFilter,
   pinPositions, pinEntry, unpinEntry,
   isExpanded, expandEntry, collapseEntry
@@ -48,6 +48,11 @@ const TableView = ({
                 onSelect={(option) => setSort(option)}
               />
             </span>
+            <span className='segment blockUnder600px'>
+              {' as of '}
+              {formatDateMonthDD(lastDate)}
+            </span>
+
           </h3>
           <div>
             <span className='blockUnder600px'>
@@ -154,6 +159,7 @@ const mapStateToProps = (state, ownProps) => ({
   loaded: state.csseData.loaded,
   data: state.csseData.data,
   allDates: state.csseData.allDates,
+  lastDate: state.csseData.lastDate,
   sort: state.ui.sort,
   filter: state.ui.filter,
   pinPositions: state.ui.pinPositions,

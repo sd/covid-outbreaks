@@ -1,6 +1,7 @@
 import React from 'react'
 
 import formatNumber from '../../utils/formatNumber'
+import { formatDateMonDD } from '../../utils/dateFormats'
 
 import './OutbreakTable.css'
 
@@ -14,7 +15,7 @@ const OutbreakTable = ({entry, allDates}) => {
         <div className='OutbreakTable-values' >
           {reversedDates.map((date, index)=> (
             <div key={date} className='row'>
-              <div className='date'>{date}</div>
+              <div className='date'>{formatDateMonDD(date)}</div>
               <div className='cases'>{formatNumber(entry.counts.cases[date])}</div>
               <div className='deaths'>{formatNumber(entry.counts.deaths[date])}</div>
             </div>

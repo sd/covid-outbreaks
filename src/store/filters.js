@@ -73,7 +73,7 @@ export const FILTER_ALIASES = {
 }
 
 export const FILTER_DESCRIPTIONS = {
-  relevant: 'Relevant outbreaks',
+  relevant: 'Important outbreaks',
   americas: 'Outbreaks in The Americas',
   europe: 'Outbreaks in Europe',
   africa: 'Outbreaks in Africa',
