@@ -2,31 +2,34 @@ import React from 'react'
 
 import formatNumber from '../../utils/formatNumber'
 
+import './OutbreakTable.css'
+
+const EMS_PER_COLUMN = 5
 const OutbreakTable = ({entry, allDates}) => {
   let reversedDates = [...allDates]
   reversedDates.reverse()
 
-  if (entry.deaths) {
+  let valuesWidth = allDates.length * EMS_PER_COLUMN
+
+  if (entry.counts.deaths) {
     return (
       <div className='OutbreakTable'>
-        <table>
-          <thead>
-            <tr>
-              <th className='dateColumn'>Date</th>
-              <th className='casesColumn'>Cases</th>
-              <th className='deathsColumn'>Deaths</th>
-            </tr>
-          </thead>
-          <tbody>
-            {reversedDates.map((date, index)=> (
-              <tr key={date}>
-                <td className='dateColumn'>{date}</td>
-                <td className='casesColumn'>{formatNumber(entry.cases[date])}</td>
-                <td className='deathsColumn'>{formatNumber(entry.deaths[date])}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
+        <div className='OutbreakTable-values' >
+          {reversedDates.map((date, index)=> (
+            <div className='row'>
+              <div className='date'>{date}</div>
+              <div className='cases'>{formatNumber(entry.counts.cases[date])}</div>
+              <div className='deaths'>{formatNumber(entry.counts.deaths[date])}</div>
+            </div>
+          ))}
+        </div>
+        <div className='OutbreakTable-headers'>
+          <div className='row'>
+            <div className='date'>Date</div>
+            <div className='cases'>Cases</div>
+            <div className='deaths'>Deaths</div>
+          </div>
+        </div>
       </div>
     )
   } else {

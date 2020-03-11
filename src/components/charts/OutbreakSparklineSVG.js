@@ -36,10 +36,15 @@ const SVG_STYLES = {
 
 const OutbreakSparklineSVG = ({entry, allDates}) => {
   let width = allDates.length * SVG_STYLES.emptyMarker.markerWidth
-  let maxDataPoint = Math.max(...allDates.map(d => entry.deaths[d] || entry.deathsPreliminary[d] || 0), ...allDates.map(d => (entry.cases[d] || 0) / SVG_STYLES.caseMarker.multiplier), 0)
+
+  let maxDataPoint = Math.max(
+    ...allDates.map(d => entry.counts.deaths[d] || 0),
+    ...allDates.map(d => (entry.counts.cases[d] || 0) / SVG_STYLES.caseMarker.multiplier)
+    , 0
+  )
   let height = (maxDataPoint + 1) * SVG_STYLES.emptyMarker.markerHeight + 10
 
-  if (entry.deaths) {
+  if (entry.counts.deaths) {
     return (
       <div className='OutbreakSparkline'>
         <svg width={'100%'} viewBox={`0 0 ${width} ${height}`}>
@@ -65,23 +70,23 @@ const OutbreakSparklineSVG = ({entry, allDates}) => {
             />
           ))}
           {allDates.map((date, index) => (
-            entry.cases[date] &&
+            entry.counts.cases[date] &&
               <OutbreakSparklineOneDaySVG
                 key={`cases_${date}`}
                 dayIndex={index}
-                count={entry.cases[date] / SVG_STYLES.caseMarker.multiplier}
+                count={entry.counts.cases[date] / SVG_STYLES.caseMarker.multiplier}
                 height={height}
                 markerStyle={SVG_STYLES.caseMarker}
               />
           ))}
           {allDates.map((date, index)=> (
-            (entry.deaths[date] || entry.deathsPreliminary[date]) &&
+            (entry.counts.deaths[date]) &&
               <OutbreakSparklineOneDaySVG
                 key={`deaths_${date}`}
                 dayIndex={index}
-                count={entry.deaths[date] || entry.deathsPreliminary[date]}
+                count={entry.counts.deaths[date]}
                 height={height}
-                markerStyle={entry.deaths[date] !== undefined ? SVG_STYLES.deathMarker : SVG_STYLES.preliminaryDeathMarker}
+                markerStyle={entry.counts.deaths[date] !== undefined ? SVG_STYLES.deathMarker : SVG_STYLES.preliminaryDeathMarker}
               />
           ))}
         </svg>

@@ -5,12 +5,12 @@ function sortEntriesByDeathsLatest(a, b, { pinPositions }) {
     return -1
   } else if (pinPositions[b.name]) {
     return 1
-  } else if (b.deathsLatestOrPreliminary !== a.deathsLatestOrPreliminary) {
-    return b.deathsLatestOrPreliminary - a.deathsLatestOrPreliminary
-  } else if (b.deathsTotalWithPreliminary !== a.deathsTotalWithPreliminary) {
-    return b.deathsTotalWithPreliminary - a.deathsTotalWithPreliminary
-  } else if (b.casesTotalWithPreliminary !== a.casesTotalWithPreliminary) {
-    return b.casesTotalWithPreliminary - a.casesTotalWithPreliminary
+  } else if (b.latestCount.deaths !== a.latestCount.deaths) {
+    return b.latestCount.deaths - a.latestCount.deaths
+  } else if (b.latestTotal.deaths !== a.latestTotal.deaths) {
+    return b.latestTotal.deaths - a.latestTotal.deaths
+  } else if (b.latestTotal.cases !== a.latestTotal.cases) {
+    return b.latestTotal.cases - a.latestTotal.cases
   } else {
     return b.name < a.name ? 1 : -1
   }
@@ -23,12 +23,12 @@ function sortEntriesByDeathsTotal(a, b, { pinPositions }) {
     return -1
   } else if (pinPositions[b.name]) {
     return 1
-  } else if (b.deathsTotalWithPreliminary !== a.deathsTotalWithPreliminary) {
-    return b.deathsTotalWithPreliminary - a.deathsTotalWithPreliminary
-  } else if (b.deathsLatestOrPreliminary !== a.deathsLatestOrPreliminary) {
-    return b.deathsLatestOrPreliminary - a.deathsLatestOrPreliminary
-  } else if (b.casesTotalWithPreliminary !== a.casesTotalWithPreliminary) {
-    return b.casesTotalWithPreliminary - a.casesTotalWithPreliminary
+  } else if (b.latestTotal.deaths !== a.latestTotal.deaths) {
+    return b.latestTotal.deaths - a.latestTotal.deaths
+  } else if (b.latestCount.deaths !== a.latestCount.deaths) {
+    return b.latestCount.deaths - a.latestCount.deaths
+  } else if (b.latestTotal.cases !== a.latestTotal.cases) {
+    return b.latestTotal.cases - a.latestTotal.cases
   } else {
     return b.name < a.name ? 1 : -1
   }
@@ -41,14 +41,14 @@ function sortEntriesByCasesLatest(a, b, { pinPositions }) {
     return -1
   } else if (pinPositions[b.name]) {
     return 1
-  } else if (b.casesLatestOrPreliminary !== a.casesLatestOrPreliminary) {
-    return b.casesLatestOrPreliminary - a.casesLatestOrPreliminary
-  } else if (b.casesTotalWithPreliminary !== a.casesTotalWithPreliminary) {
-    return b.casesTotalWithPreliminary - a.casesTotalWithPreliminary
-  } else if (b.deathsLatestOrPreliminary !== a.deathsLatestOrPreliminary) {
-    return b.deathsLatestOrPreliminary - a.deathsLatestOrPreliminary
-  } else if (b.deathsTotalWithPreliminary !== a.deathsTotalWithPreliminary) {
-    return b.deathsTotalWithPreliminary - a.deathsTotalWithPreliminary
+  } else if (b.latestCount.cases !== a.latestCount.cases) {
+    return b.latestCount.cases - a.latestCount.cases
+  } else if (b.latestTotal.cases !== a.latestTotal.cases) {
+    return b.latestTotal.cases - a.latestTotal.cases
+  } else if (b.latestCount.deaths !== a.latestCount.deaths) {
+    return b.latestCount.deaths - a.latestCount.deaths
+  } else if (b.latestTotal.deaths !== a.latestTotal.deaths) {
+    return b.latestTotal.deaths - a.latestTotal.deaths
   } else {
     return b.name < a.name ? 1 : -1
   }
@@ -61,14 +61,14 @@ function sortEntriesByCasesTotal(a, b, { pinPositions }) {
     return -1
   } else if (pinPositions[b.name]) {
     return 1
-  } else if (b.casesTotalWithPreliminary !== a.casesTotalWithPreliminary) {
-    return b.casesTotalWithPreliminary - a.casesTotalWithPreliminary
-  } else if (b.casesLatestOrPreliminary !== a.casesLatestOrPreliminary) {
-    return b.casesLatestOrPreliminary - a.casesLatestOrPreliminary
-  } else if (b.deathsTotalWithPreliminary !== a.deathsTotalWithPreliminary) {
-    return b.deathsTotalWithPreliminary - a.deathsTotalWithPreliminary
-  } else if (b.deathsLatestOrPreliminary !== a.deathsLatestOrPreliminary) {
-    return b.deathsLatestOrPreliminary - a.deathsLatestOrPreliminary
+  } else if (b.latestTotal.cases !== a.latestTotal.cases) {
+    return b.latestTotal.cases - a.latestTotal.cases
+  } else if (b.latestCount.cases !== a.latestCount.cases) {
+    return b.latestCount.cases - a.latestCount.cases
+  } else if (b.latestTotal.deaths !== a.latestTotal.deaths) {
+    return b.latestTotal.deaths - a.latestTotal.deaths
+  } else if (b.latestCount.deaths !== a.latestCount.deaths) {
+    return b.latestCount.deaths - a.latestCount.deaths
   } else {
     return b.name < a.name ? 1 : -1
   }
@@ -122,7 +122,7 @@ export const SORTER_DESCRIPTIONS = {
   deathsLatest: "Latest Deaths",
 }
 
-export const SORTER_TYPES = ['deathsLatest', 'deathsTotal', 'casesTotal', 'name']
+export const SORTER_TYPES = ['deathsLatest', 'deathsTotal', 'name']
 
 export function viewOptionsForSorting(sort, moreOptions) {
   sort = SORTER_ALIASES[sort] || SORTER_ALIASES.default

@@ -17,12 +17,6 @@
   clear: both;
 }
 
-.TableView-title {
-  border-top: 1px solid #999;
-  position: relative;
-  overflow: hidden
-}
-
 .TableView a, .TableView a:link {
   color: #FFF;
   text-decoration: underline;
@@ -32,19 +26,25 @@
   color: #FFF;
 }
 
-.TableView-title .left {
-  float: left;
+.TableView-title {
+  border-top: 1px solid #999;
+  display: grid;
+}
+
+.TableView-title .tools {
   text-align: left;
+  grid-area: tools;
   margin-top: 0.2em;
 }
 
-.TableView-title .right {
-  float: right;
+.TableView-title .totals {
+  grid-area: totals;
   text-align: right;
   margin-top: 0.2em;
 }
 
-.TableView-title .center {
+.TableView-title .name {
+  grid-area: name;
   float: left;
   text-align: center;
 }
@@ -54,23 +54,33 @@
   white-space: nowrap;
 }
 
-.TableView-title .left .segment {
-  margin-right: 0.5em;
+.TableView-title .tools .segment {
+  margin-right: 2em;
 }
 
-.TableView-title .right .segment {
+.TableView-title .totals .segment {
   margin-left: 0.5em;
 }
 
-.TableView-title .left { width: 20%; }
-.TableView-title .center { width: 60%; }
-.TableView-title .right { width: 20%; }
+.TableView-title {
+  grid-template-columns: 9em auto 9em;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "tools name totals";
+}
+.TableView-title .name { text-align: center }
+.TableView-title .tools { text-align: left }
 
 @media only screen and (max-width: 600px) {
-  .TableView { padding: 0em 0.5em; }
-  .TableView-title .left { width: 33%; }
-  .TableView-title .center { width: 33%; }
-  .TableView-title .right { width: 33%; }
+  .TableView-title {
+    grid-template-columns: auto 15em;
+    grid-template-rows: auto;
+    grid-template-areas:
+      "name   totals"
+      "tools  totals";
+  }
+  .TableView-title .name { text-align: left }
+  .TableView-title .tools { text-align: left }
 }
 
 @media only screen and (max-width: 900px) {
@@ -100,43 +110,12 @@
   border-top: 2px solid #ff0;
 }
 
-.OutbreakTable table {
-  border-spacing: 0;
-  border-collapse: collapse;
+.TableView-more {
+  margin-top: 1em;
+  margin-bottom: 6em;
+  text-align: left;
 }
 
-.OutbreakTable th {
-  border-bottom: 1px solid #999;
-}
-
-.OutbreakTable th.deathsColumn, .OutbreakTable th.casesColumn {
-  text-align: right;
-  padding-right: 6px;
-  width: 60px;
-}
-
-.OutbreakTable td.deathsColumn, .OutbreakTable td.casesColumn {
-  text-align: right;
-  padding-right: 10px;
-  width: 60px;
-}
-
-.OutbreakTable th.dateColumn, .OutbreakTable tr.dateColumn {
-  padding-left: 6px;
-  padding-right: 6px;
-  width: 60px;
-}
-
-.OutbreakTable thead {
-  display: block;
-  width: 190px;
-}
-
-.OutbreakTable tbody {
-  display: block;
-  width: 230px;
-
-  max-height: 30vh;
-  overflow: auto;
-  /* border: 1px solid red; */
+.TableView-more section {
+  margin-top: 1em;
 }

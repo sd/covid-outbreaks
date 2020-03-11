@@ -1,0 +1,33 @@
+.OutbreakTable {
+  display: flex;
+  flex-direction: row;
+}
+
+.OutbreakTable-values {
+  text-align: center;
+  display: inline-block;
+  overflow: auto;
+  flex: 1;
+
+  display: flex;
+  flex-direction: row-reverse;
+}
+
+.OutbreakTable-headers {
+  font-weight: bold;
+  text-align: left;
+  display: inline-block;
+}
+
+.OutbreakTable-values .row {
+  padding-right: 1em;
+  display: inline-block;
+}
+
+.OutbreakTable .cases {
+  color: #777;
+}
+
+.OutbreakTable .deaths {
+  color: #f99;
+}

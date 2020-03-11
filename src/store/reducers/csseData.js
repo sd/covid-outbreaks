@@ -1,6 +1,6 @@
 import { csv as d3CSV } from 'd3-fetch'
 
-import { OUTBREAK_ALIASES, OUTBREAK_ATTRIBUTES } from '../../data/outbreakInfo'
+import { OUTBREAK_ALIASES, OUTBREAK_ATTRIBUTES, OUTBREAK_DATA_AGGREGATES, OUTBREAK_DATA_OVERLAYS } from '../../data/outbreakInfo'
 import { PRELIMINARY_DATA } from '../../data/preliminaryData'
 
 const CASES_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
@@ -29,75 +29,121 @@ export function reducer (state = initialState, action) {
   }
 }
 
-function processOneFile (fieldName, rawData, allDates, processedData ) {
-  rawData.forEach(raw => {
-    let country = raw['Country/Region']
-    let province = raw['Province/State']
+/* ================================================================================================================== */
 
-    let originalName = [country, province].filter(x => x).join(' > ')
+function parseRawData (rawData, overrides) {
+  overrides = overrides || {}
 
-    if (OUTBREAK_ALIASES[originalName] !== false) {
-      let name = OUTBREAK_ALIASES[originalName] || originalName
-      country = OUTBREAK_ALIASES[country] || country
+  let dates = Object.keys(rawData[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
+  let rows = {}
+  let sources = {}
+  let name
 
-      let entry = processedData[name] || {
-        name,
-        country,
-        otherNames: [],
-        type: province ? 'province' : 'country',
-        lat: raw['Lat'],
-        lon: raw['Long'],
-        ...OUTBREAK_ATTRIBUTES[country],
-        ...OUTBREAK_ATTRIBUTES[name],
+  rawData.forEach(rawRow => {
+    name = [rawRow['Country/Region'], rawRow['Province/State']].filter(x => x).join(' > ')
+    rows[name] = {}
+
+    dates.forEach(d => {
+      if (overrides[name] && (overrides[name][d] || overrides[name][d] === 0)) {
+        rows[name][d] = overrides[name][d]
+      } else if (rawRow[d] || rawRow[d] === '0') {
+        rows[name][d] = parseInt(rawRow[d], 10)
       }
+    })
+  })
 
-      if (name !== originalName) {
-        entry.otherNames = [...entry.otherNames.filter(n => n !== originalName), originalName]
-      }
+  return { dates, rows, names: Object.keys(rows), sources }
+}
 
-      entry[fieldName] = entry[fieldName] || {}
-      entry[`${fieldName}Preliminary`] =entry[`${fieldName}Preliminary`] || {}
+function combineRows (data, combinationMethod, combinationRules) {
+  let targetName
+  let row
+  let rows = {}
+  let sources = data.sources
 
-      // if( name.match(/Hubei/)) debugger
-
-      let previousCount = 0
-      let newCount = 0, totalCountSoFar = 0, newPrelimCount = 0
-      allDates.forEach(d => {
-        if (raw[d] !== undefined) {
-          if (DATA_OVERRIDES[originalName] && DATA_OVERRIDES[originalName][d] && DATA_OVERRIDES[originalName][`${fieldName}Raw`]) {
-            totalCountSoFar = DATA_OVERRIDES[originalName][`${fieldName}Raw`]
-          } else {
-            totalCountSoFar = parseInt(raw[d], 10)
-          }
-
-
-          newCount = totalCountSoFar - previousCount
-          previousCount = totalCountSoFar
-
-          if (DATA_OVERRIDES[originalName] && DATA_OVERRIDES[originalName][d] && DATA_OVERRIDES[originalName][d][fieldName] !== undefined) {
-            newCount = DATA_OVERRIDES[originalName][d][fieldName]
-          }
-
-          entry[fieldName][d] = (entry[fieldName][d] || 0) + newCount
-        } else {
-          if (PRELIMINARY_DATA[d] && PRELIMINARY_DATA[d][originalName] && PRELIMINARY_DATA[d][originalName][fieldName]) {
-            newPrelimCount = PRELIMINARY_DATA[d][originalName][fieldName]
-            entry[`${fieldName}Preliminary`][d] = newPrelimCount
-            entry[`${fieldName}PreliminaryTotal`] = (entry[`${fieldName}PreliminaryTotal`] || 0) + newPrelimCount
-          }
+  data.names.forEach(name => {
+    targetName = combinationRules[name]
+    if (targetName) {
+      row = rows[targetName] || {}
+      data.dates.forEach(d => {
+        if (data.rows[name][d] || data.rows[name][d] === 0) {
+          row[d] = combinationMethod(row[d],data.rows[name][d])
         }
       })
-      entry[`${fieldName}Total`] = (entry[`${fieldName}Total`] || 0) + totalCountSoFar
-      entry[`${fieldName}Latest`] = (entry[`${fieldName}Latest`] || 0) + newCount
-
-      entry[`${fieldName}TotalWithPreliminary`] = (entry[`${fieldName}Total`] || 0) + (entry[`${fieldName}PreliminaryTotal`] || 0)
-      entry[`${fieldName}LatestOrPreliminary`] = (entry[`${fieldName}LatestOrPreliminary`] || 0) + (newCount || newPrelimCount || 0)
-
-      processedData[entry.name] = entry
+      data.sources[targetName] = (data.sources[targetName] || []).concat(name)
+      rows[targetName] = row
+    } else {
+      rows[name] = data.rows[name]
     }
   })
 
-  return processedData
+  return {dates: data.dates, sources, rows, names: Object.keys(rows)}
+}
+
+function prepareEntries (data, fieldName, entries) {
+  entries = entries || {}
+
+  let sources, nameParts, entry
+
+  Object.keys(data.rows).forEach(name => {
+    sources = data.sources[name]
+
+    nameParts = name.split(' > ')
+
+    entry = entries[name] || {
+      name,
+      country: nameParts[0],
+      type: nameParts[1] ? 'province' : 'country',
+      ...OUTBREAK_ATTRIBUTES[nameParts[0]],
+      ...OUTBREAK_ATTRIBUTES[name]
+    }
+
+    entry.sources = entry.sources || {}
+    entry.sources[fieldName] = sources
+
+    entry.totals = entry.totals || {}
+    entry.totals[fieldName] = {}
+
+    entry.counts = entry.counts || {}
+    entry.counts[fieldName] = {}
+
+    entry.latestTotal = entry.latestTotal || {}
+    entry.latestTotal[fieldName] = 0
+
+    entry.latestCount = entry.latestCount || {}
+    entry.latestCount[fieldName] = 0
+
+    entries[entry.name] = entry
+  })
+
+  return entries
+}
+
+function processOneFile (fieldName, rawData, entries ) {
+  let data
+  data = parseRawData(rawData, DATA_OVERRIDES[fieldName])
+  data = combineRows(data, (a, b) => (a || 0) + (b || 0), OUTBREAK_DATA_AGGREGATES)
+  data = combineRows(data, (a, b) => (a || b), OUTBREAK_DATA_OVERLAYS)
+
+  entries = prepareEntries(data, fieldName, entries)
+
+  let row, entry
+
+  data.names.forEach(name => {
+    row = data.rows[name]
+    entry = entries[name]
+
+    data.dates.forEach(d => {
+      entry.totals[fieldName][d] = row[d]
+      entry.counts[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
+      entry.latestTotal[fieldName] = entry.totals[fieldName][d]
+      entry.latestCount[fieldName] = entry.counts[fieldName][d]
+    })
+
+    entries[entry.name] = entry
+  })
+
+  return { entries, names: data.names, dates: data.dates }
 }
 
 export function fetchDataDispatcher (dispatch) {
@@ -107,37 +153,16 @@ export function fetchDataDispatcher (dispatch) {
       let caseData = results[0]
       let deathData = results[1]
 
-      let allDates = Object.keys(caseData[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
+      let casesResults = processOneFile('cases', caseData, {})
+      let deathsResults = processOneFile('deaths', deathData, casesResults.entries)
+
+      let data = Object.keys(deathsResults.entries).map(k => deathsResults.entries[k])
+
+      let allDates = deathsResults.dates
       let lastDate = allDates[allDates.length - 1]
-      let lastPreliminaryDate = lastDate
 
-      if (PRELIMINARY_DATA) {
-        let dates = Object.keys(PRELIMINARY_DATA).filter(k => k.match(/\d+\/\d+\/\d+/))
-        allDates = [...allDates, ...dates.filter(d => allDates.indexOf(d) < 0)]
-        lastPreliminaryDate = allDates[allDates.length - 1]
-        if (lastPreliminaryDate === lastDate) {
-          lastPreliminaryDate = lastDate
-        }
-      }
-
-      let processedData = {}
-
-      processedData = processOneFile('cases', caseData, allDates, processedData)
-      processedData = processOneFile('deaths', deathData, allDates, processedData)
-
-      let sortedData = Object.keys(processedData).map(k => processedData[k])
-      sortedData = sortedData.sort((a, b) => {
-        if (b.deathsTotal !== a.deathsTotal) {
-          return (b.deathsTotal - a.deathsTotal)
-        } else if (b.casesTotal !== a.casesTotal) {
-          return (b.casesTotal - a.casesTotal)
-        } else {
-          return b.name < a.name ? 1 : -1
-        }
-      })
-
-      dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', data: sortedData, allDates, lastDate, lastPreliminaryDate})
-      return sortedData
+      dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', data, allDates, lastDate})
+      return data
     })
     // .catch(error => {
     //   debugger
@@ -146,22 +171,24 @@ export function fetchDataDispatcher (dispatch) {
 }
 
 const DATA_OVERRIDES = {
-  'Mainland China > Hubei': {
-    '1/29/20': { deaths: (37 / 2) - 0.5 },
-    '1/30/20': { deaths: (37 / 2) + 0.5 },
-    '2/12/20': { deaths: 242 / 2 },
-    '2/13/20': { deaths: 242 / 2 },
-    '2/21/20': { deaths: 202 / 2 },
-    '2/22/20': { deaths: 202 / 2 },
-    '2/23/20': { deaths: (149 / 2) + 0.5 },
-    '2/24/20': { deaths: (149 / 2) - 0.5 }
-  },
-  'Iran': {
-    '3/10/20': { deathsRaw: 291, casesRaw: 8042 },
-  },
-  'South Korea': {
-    '3/10/20': { deathsRaw: 54, casesRaw: 7513 },
+  deaths: {
+    'Mainland China > Hubei': {
+      // '1/29/20': 125 + (37 / 2) - 0.5,
+      // '1/30/20': 162 + (37 / 2) + 0.5,
+      // '2/12/20': 1068 + (242 / 2),
+      // '2/13/20': 1310 + (242 / 2),
+      // '2/21/20': 2144 + (202 / 2),
+      // '2/22/20': 2346 + (202 / 2),
+      // '2/23/20': 2346 + (149 / 2) + 0.5,
+      // '2/24/20': 2495 + (149 / 2) - 0.5
+    }
   }
+  // 'Iran': {
+  //   '3/10/20': { deathsRaw: 291, casesRaw: 8042 },
+  // },
+  // 'South Korea': {
+  //   '3/10/20': { deathsRaw: 54, casesRaw: 7513 },
+  // }
 }
 export default reducer
 

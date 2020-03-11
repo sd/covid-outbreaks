@@ -66,7 +66,7 @@ const TableView = ({
               <OutbreakSparklineSVG entry={entry} allDates={allDates} />
 
               <div className='TableView-title'>
-                <div className='left'>
+                <div className='tools'>
                   {
                     pinPositions[entry.name]
                     ? <button className='segment activated' onClick={ () => unpinEntry(entry) }>pinned to top</button>
@@ -79,54 +79,54 @@ const TableView = ({
                   }
                 </div>
 
-                <div className='center'>
-                  <b>
-                    {
-                      entry.link
-                      ? <a href={entry.link}>{entry.name}</a>
-                      : entry.name
-                    }
-                  </b>
-                  &nbsp;&nbsp;&nbsp;
+                <div className='name'>
+                  <b>{entry.name}</b>
+                  &nbsp;&nbsp;
                   {entry.emoji}
                 </div>
 
-                <div className='right'>
+                <div className='totals'>
                   {
-                    entry.deathsTotal > 0
-                    ? <span>
-                        <span className='segment'>{formatNumber(entry.deathsLatest)} new deaths</span>
-                        <span className='segment'><b>{formatNumber(entry.deathsTotal)} total</b></span>
+                    entry.latestTotal.deaths > 0
+                    ? <>
+                        <div className='segment'>{formatNumber(entry.latestCount.deaths)} new deaths</div>
+                        <div className='segment'><b>{formatNumber(entry.latestTotal.deaths)} total</b></div>
                         {entry.deathsPreliminaryTotal > 0 && (
-                          <span className='segment preliminary'><b>+ {formatNumber(entry.deathsPreliminaryTotal)} prelim</b></span>
+                          <div className='segment preliminary'><b>+ {formatNumber(entry.deathsPreliminaryTotal)} prelim</b></div>
                         )}
-                      </span>
-                    : <span>
-                        <span className='segment'>{formatNumber(entry.casesTotal)} total cases</span>
+                      </>
+                    : <>
+                        <div className='segment'>{formatNumber(entry.latestTotal.cases)} total cases</div>
                         {
                           entry.deathsPreliminaryTotal > 0
-                          ? <span className='segment preliminary'><b>{formatNumber(entry.deathsPreliminaryTotal)} deaths (prelim)</b></span>
-                          : <span className='segment'><b>{formatNumber(entry.deathsTotal)} deaths</b></span>
+                          ? <div className='segment preliminary'><b>{formatNumber(entry.deathsPreliminaryTotal)} deaths (prelim)</b></div>
+                          : <div className='segment'><b>{formatNumber(entry.latestTotal.deaths)} deaths</b></div>
                         }
-                      </span>
+                      </>
                   }
                 </div>
               </div>
               {isExpanded[entry.name] && (
                 <div className='TableView-more'>
-                  <div style={{float: 'right', textAlign: 'right'}}>
-                    {entry.otherNames && entry.otherNames.length > 1 && (
-                      <div>
-                        <br />
-                        <b>Includes data for</b><br/>
-                        {entry.otherNames.map(name =>
-                          <div key={name}>{name}</div>
-                        )}
-                      </div>
-                    )}
-                  </div>
+                  {entry.wikipedia && (
+                    <section>
+                      <b>Links:&nbsp;&nbsp;</b>
+                      <a href={entry.wikipedia}>Wikipedia Outbreak Page</a>
+                    </section>
+                  )}
 
-                  <OutbreakTable entry={entry} allDates={allDates} />
+                  <section>
+                    <OutbreakTable entry={entry} allDates={allDates} />
+                  </section>
+
+                  {entry.sources.deaths && (
+                    <section>
+                      <b>Includes data labeled as&nbsp;&nbsp;</b>
+                      {entry.sources.deaths.map(name =>
+                        <span key={name}>{name}&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                      )}
+                    </section>
+                  )}
                 </div>
               )}
             </div>
