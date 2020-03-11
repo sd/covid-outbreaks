@@ -7,13 +7,13 @@ const SVG_STYLES = {
   },
   emptyMarker: {
     fill: '#444',
-    markerWidth: 9,
+    markerWidth: 12,
     markerHeight: 2,
     radius: 0.5
   },
   deathMarker: {
     fill: '#F00',
-    markerWidth: 9,
+    markerWidth: 12,
     markerHeight: 2,
     radius: 1.2
   },
@@ -21,13 +21,13 @@ const SVG_STYLES = {
     fill: 'none',
     stroke: '#e96',
     strokeWidth: 0.6,
-    markerWidth: 9,
+    markerWidth: 12,
     markerHeight: 2,
     radius: 1.2
   },
   caseMarker: {
     fill: '#6a6a6a',
-    markerWidth: 9,
+    markerWidth: 12,
     markerHeight: 2,
     radius: 3.0,
     multiplier: 100

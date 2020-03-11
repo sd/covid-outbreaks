@@ -29,21 +29,25 @@ const TableView = ({
       <div className='TableView'>
         <div className='TableView-header'>
           <h3>
-            <SelectionPopup
-              selected={viewOptions.filter}
-              options={FILTER_TYPES}
-              descriptions={FILTER_DESCRIPTIONS}
-              title='Filtering options'
-              onSelect={(option) => setFilter(option)}
-            />
-            {' sorted by '}
-            <SelectionPopup
-              selected={viewOptions.sort}
-              options={SORTER_TYPES}
-              descriptions={SORTER_DESCRIPTIONS}
-              title='Sorting options'
-              onSelect={(option) => setSort(option)}
-            />
+            <span className='segment blockUnder600px'>
+              <SelectionPopup
+                selected={viewOptions.filter}
+                options={FILTER_TYPES}
+                descriptions={FILTER_DESCRIPTIONS}
+                title='Filtering options'
+                onSelect={(option) => setFilter(option)}
+              />
+            </span>
+            <span className='segment blockUnder600px'>
+              {' sorted by '}
+              <SelectionPopup
+                selected={viewOptions.sort}
+                options={SORTER_TYPES}
+                descriptions={SORTER_DESCRIPTIONS}
+                title='Sorting options'
+                onSelect={(option) => setSort(option)}
+              />
+            </span>
           </h3>
           <div>
             <span className='blockUnder600px'>
@@ -80,9 +84,9 @@ const TableView = ({
                 </div>
 
                 <div className='name'>
-                  <b>{entry.name}</b>
-                  &nbsp;&nbsp;
                   {entry.emoji}
+                  &nbsp;&nbsp;
+                  <b>{entry.name}</b>
                 </div>
 
                 <div className='totals'>

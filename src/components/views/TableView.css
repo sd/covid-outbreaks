@@ -29,18 +29,17 @@
 .TableView-title {
   border-top: 1px solid #999;
   display: grid;
+  margin-top: 0.2em;
 }
 
 .TableView-title .tools {
   text-align: left;
   grid-area: tools;
-  margin-top: 0.2em;
 }
 
 .TableView-title .totals {
   grid-area: totals;
   text-align: right;
-  margin-top: 0.2em;
 }
 
 .TableView-title .name {
@@ -49,16 +48,13 @@
   text-align: center;
 }
 
-.TableView-title .segment {
-  display: inline-block;
-  white-space: nowrap;
-}
-
 .TableView-title .tools .segment {
-  margin-right: 2em;
+  display: inline-block;
+  padding: 0.3em 1em 0.3em 0;
 }
 
 .TableView-title .totals .segment {
+  display: block;
   margin-left: 0.5em;
 }
 
@@ -70,10 +66,13 @@
 }
 .TableView-title .name { text-align: center }
 .TableView-title .tools { text-align: left }
+.TableView-title .tools .segment {
+  display: block;
+}
 
 @media only screen and (max-width: 600px) {
   .TableView-title {
-    grid-template-columns: auto 15em;
+    grid-template-columns: auto 9em;
     grid-template-rows: auto;
     grid-template-areas:
       "name   totals"
@@ -81,12 +80,9 @@
   }
   .TableView-title .name { text-align: left }
   .TableView-title .tools { text-align: left }
-}
-
-@media only screen and (max-width: 900px) {
-  .TableView-title .left { width: 25%; }
-  .TableView-title .center { width: 50%; }
-  .TableView-title .right { width: 25%; }
+  .TableView-title .tools .segment {
+    display: inline-block;
+  }
 }
 
 .TableView button {

@@ -1,7 +1,7 @@
 import { csv as d3CSV } from 'd3-fetch'
 
-import { OUTBREAK_ALIASES, OUTBREAK_ATTRIBUTES, OUTBREAK_DATA_AGGREGATES, OUTBREAK_DATA_OVERLAYS } from '../../data/outbreakInfo'
-import { PRELIMINARY_DATA } from '../../data/preliminaryData'
+import { OUTBREAK_ATTRIBUTES, findAggregateMapping, findOverlayMapping } from '../../data/outbreakInfo'
+// import { PRELIMINARY_DATA } from '../../data/preliminaryData'
 
 const CASES_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
 const DEATHS_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'
@@ -62,7 +62,7 @@ function combineRows (data, combinationMethod, combinationRules) {
   let sources = data.sources
 
   data.names.forEach(name => {
-    targetName = combinationRules[name]
+    targetName = combinationRules(name)
     if (targetName) {
       row = rows[targetName] || {}
       data.dates.forEach(d => {
@@ -122,8 +122,8 @@ function prepareEntries (data, fieldName, entries) {
 function processOneFile (fieldName, rawData, entries ) {
   let data
   data = parseRawData(rawData, DATA_OVERRIDES[fieldName])
-  data = combineRows(data, (a, b) => (a || 0) + (b || 0), OUTBREAK_DATA_AGGREGATES)
-  data = combineRows(data, (a, b) => (a || b), OUTBREAK_DATA_OVERLAYS)
+  data = combineRows(data, (a, b) => (a || 0) + (b || 0), findAggregateMapping)
+  data = combineRows(data, (a, b) => (a || b), findOverlayMapping)
 
   entries = prepareEntries(data, fieldName, entries)
 

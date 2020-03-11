@@ -4,19 +4,16 @@ import formatNumber from '../../utils/formatNumber'
 
 import './OutbreakTable.css'
 
-const EMS_PER_COLUMN = 5
 const OutbreakTable = ({entry, allDates}) => {
   let reversedDates = [...allDates]
   reversedDates.reverse()
-
-  let valuesWidth = allDates.length * EMS_PER_COLUMN
 
   if (entry.counts.deaths) {
     return (
       <div className='OutbreakTable'>
         <div className='OutbreakTable-values' >
           {reversedDates.map((date, index)=> (
-            <div className='row'>
+            <div key={date} className='row'>
               <div className='date'>{date}</div>
               <div className='cases'>{formatNumber(entry.counts.cases[date])}</div>
               <div className='deaths'>{formatNumber(entry.counts.deaths[date])}</div>

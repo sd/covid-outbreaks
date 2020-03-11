@@ -1,84 +1,203 @@
+export function findAggregateMapping (name) {
+  if (OUTBREAK_DATA_AGGREGATES[name]) {
+    return OUTBREAK_DATA_AGGREGATES[name]
+  } else {
+    let parts
+
+    parts = name.match(/US > (.*), (\w\w)/)
+    if (parts && US_STATES[parts[2]]) {
+      return `USA > ${US_STATES[parts[2]]}`
+    }
+  }
+
+  return false
+}
+
+export function findOverlayMapping (name) {
+  if (OUTBREAK_DATA_OVERLAYS[name]) {
+    return OUTBREAK_DATA_OVERLAYS[name]
+  } else {
+    let parts
+
+    parts = name.match(/US > ([^,]+)$/)
+    if (parts) {
+      return `USA > ${parts[1]}`
+    }
+  }
+
+  return false
+}
+
+const US_STATES = {
+  'AL': 'Alabama',
+  'AK': 'Alaska',
+  'AZ': 'Arizona',
+  'CA': 'California',
+  'CO': 'Colorado',
+  'CT': 'Connecticut',
+  'DC': 'D.C.',
+  'FL': 'Florida',
+  'GA': 'Georgia',
+  'HI': 'Hawaii',
+  'IL': 'Illinois',
+  'IN': 'Indiana',
+  'IA': 'Iowa',
+  'LA': 'Louisiana',
+  'KS': 'Kansas',
+  'KY': 'Kentucky',
+  'ME': 'Maine',
+  'MA': 'Massachusetts',
+  'MD': 'Maryland',
+  'MN': 'Minnesota',
+  'MO': 'Missouri',
+  'NE': 'Nebraska',
+  'NV': 'Nevada',
+  'NH': 'New Hampshire',
+  'NJ': 'New Jersey',
+  'NY': 'New York',
+  'NC': 'North Carolina',
+  'ND': 'North Dakota',
+  'OH': 'Ohio',
+  'OK': 'Oklahoma',
+  'OR': 'Oregon',
+  'PA': 'Pennsylvania',
+  'RI': 'Rhode Island',
+  'SC': 'South Carolina',
+  'SD': 'South Dakota',
+  'TN': 'Tennessee',
+  'TX': 'Texas',
+  'UT': 'Utah',
+  'VT': 'Vermont',
+  'VA': 'Virginia',
+  'WA': 'Washington',
+  'WI': 'Wisconsin',
+}
+
 export const OUTBREAK_DATA_AGGREGATES = {
 
-  'Hong Kong > Hong Kong': 'Hong Kong',
+  'Hong Kong > Hong Kong': 'China > Other',
+  'Hong Kong SAR > Hong Kong': 'China > Other',
   'Taiwan > Taiwan': 'Taiwan',
-  'Macau > Macau': 'Macau',
-
+  'Taipei and environs > Taiwan': 'Taiwan',
+  'Macau > Macau': 'China > Other',
+  'Macao SAR > Macau': 'China > Other',
+  'occupied Palestinian territory': 'Palestine',
   'UK': 'United Kingdom',
+  'Russian Federation': 'Russia',
+  'Republic of Moldova': 'Moldova',
+  'Holy See': 'Vatican City',
 
-  'Others > Diamond Princess cruise ship': 'Diamond Princess',
+  'Others > Diamond Princess cruise ship': 'Diamond Princess (out of Japan)',
+  'US > Diamond Princess': 'Diamond Princess (out of Japan)',
+  'US > Grand Princess': 'Grand Princess (out of US)',
 
-  'US > King County, WA': 'USA > Washington',
-  'US > Snohomish County, WA': 'USA > Washington',
-  'US > Pierce County, WA': 'USA > Washington',
-  'US > Grant County, WA': 'USA > Washington',
+  // 'US > Pinal County, AZ': 'USA > Arizona',
+  // 'US > Maricopa County, AZ': 'USA > Arizona',
 
-  'US > New York County, NY': 'USA > New York',
-  'US > Westchester County, NY': 'USA > New York',
-  'US > Nassau County, NY': 'USA > New York',
-  'US > Suffolk County, NY': 'USA > New York',
-  'US > Rockland County, NY': 'USA > New York',
+  // 'US > Los Angeles, CA': 'USA > California',
+  // 'US > Contra Costa County, CA': 'USA > California',
+  // 'US > Orange County, CA': 'USA > California',
+  // 'US > Riverside, CA': 'USA > California',
+  // 'US > San Mateo, CA': 'USA > California',
+  // 'US > San Diego County, CA': 'USA > California',
+  // 'US > Santa Clara County, CA': 'USA > California',
+  // 'US > San Francisco County, CA': 'USA > California',
+  // 'US > Sonoma County, CA': 'USA > California',
+  // 'US > Alameda County, CA': 'USA > California',
+  // 'US > Placer County, CA': 'USA > California',
+  // 'US > Sacramento County, CA': 'USA > California',
+  // 'US > Fresno County, CA': 'USA > California',
+  // 'US > Madera County, CA': 'USA > California',
+  // 'US > Riverside County, CA': 'USA > California',
+  // 'US > Solano, CA': 'USA > California',
 
-  'US > Bergen County, NJ': 'USA > New Jersey',
-  'US > Hudson County, NJ': 'USA > New Jersey',
+  // 'US > Denver County, CO': 'USA > Colorado',
+  // 'US > Douglas County, CO': 'USA > Colorado',
+  // 'US > Arapahoe, CO': 'USA > Colorado',
+  // 'US > Eagle, CO': 'USA > Colorado',
+  // 'US > Larimer, CO': 'USA > Colorado',
 
-  'US > Fairfield County, CT': 'USA > Connecticut',
+  // 'US > Fairfield County, CT': 'USA > Connecticut',
 
-  'US > Washington, D.C.': 'USA > D.C.',
-  'US > Montgomery County, MD': 'USA > Maryland',
-  'US > Fairfax County, VA': 'USA > Virginia',
+  // 'US > Washington, D.C.': 'USA > D.C.',
 
-  'US > Harford County, MD': 'USA > Maryland',
+  // 'US > Lee County, FL': 'USA > Florida',
+  // 'US > Santa Rosa County, FL': 'USA > Florida',
+  // 'US > Broward County, FL': 'USA > Florida',
+  // 'US > Manatee County, FL': 'USA > Florida',
+  // 'US > Hillsborough, FL': 'USA > Florida',
 
-  'US > Los Angeles, CA': 'USA > California',
-  'US > Contra Costa County, CA': 'USA > California',
-  'US > Orange County, CA': 'USA > California',
-  'US > Riverside, CA': 'USA > California',
+  // 'US > Cobb County, GA': 'USA > Georgia',
+  // 'US > Fulton County, GA': 'USA > Georgia',
+  // 'US > Cherokee County, GA': 'USA > Georgia',
+  // 'US > Dekalb, GA': 'USA > Georgia',
 
-  'US > San Diego County, CA': 'USA > California',
+  // 'US > Honolulu County, HI': 'USA > Hawaii',
 
-  'US > Santa Clara County, CA': 'USA > California',
-  'US > San Francisco County, CA': 'USA > California',
-  'US > Sonoma County, CA': 'USA > California',
-  'US > Alameda County, CA': 'USA > California',
+  // 'US > Cook County, IL': 'USA > Illinois',
 
-  'US > Placer County, CA': 'USA > California',
-  'US > Sacramento County, CA': 'USA > California',
+  // 'US > Johnson County, IA': 'USA > Iowa',
 
-  'US > Fresno County, CA': 'USA > California',
-  'US > Madera County, CA': 'USA > California',
+  // 'US > Kendricks County, IN': 'USA > Indiana',
 
-  'US > Clark County, NV': 'USA > Nevada',
-  'US > Washoe County, NV': 'USA > Nevada',
+  // 'US > Fayette County, KY': 'USA > Kentucky',
 
-  'US > Denver County, CO': 'USA > Colorado',
+  // 'US > Montgomery County, MD': 'USA > Maryland',
+  // 'US > Harford County, MD': 'USA > Maryland',
+  // 'US > Prince George, MD': 'USA > Maryland',
 
-  'US > Lee County, FL': 'USA > Florida',
-  'US > Santa Rosa County, FL': 'USA > Florida',
-  'US > Broward County, FL': 'USA > Florida',
-  'US > Manatee County, FL': 'USA > Florida',
+  // 'US > Suffolk County, MA': 'USA > Massachusetts',
+  // 'US >  Norfolk County, MA': 'USA > Massachusetts',
+  // 'US > Norfolk County, MA': 'USA > Massachusetts',
+  // 'US > Middlesex County, MA': 'USA > Massachusetts',
+  // 'US > Berkshire County, MA': 'USA > Massachusetts',
 
-  'US > Suffolk County, MA': 'USA > Massachusetts',
-  'US >  Norfolk County, MA': 'USA > Massachusetts',
-  'US > Norfolk County, MA': 'USA > Massachusetts',
-  'US > Middlesex County, MA': 'USA > Massachusetts',
+  // 'US > Clark County, NV': 'USA > Nevada',
+  // 'US > Washoe County, NV': 'USA > Nevada',
 
-  'US > Cook County, IL': 'USA > Illinois',
+  // 'US > Douglas County, NE': 'USA > Nebraska',
 
-  'US > Washington County, OR': 'USA > Oregon',
+  // 'US > Grafton County, NH': 'USA > New Hampshire',
 
-  'US > Honolulu County, HI': 'USA > Hawaii',
+  // 'US > Bergen County, NJ': 'USA > New Jersey',
+  // 'US > Hudson County, NJ': 'USA > New Jersey',
+  // 'US > Burlington, NJ': 'USA > New Jersey',
+  // 'US > Monmouth, NJ': 'USA > New Jersey',
 
-  'US > Harris County, TX': 'USA > Texas',
-  'US > Fort Bend County, TX': 'USA > Texas',
+  // 'US > New York County, NY': 'USA > New York',
+  // 'US > Westchester County, NY': 'USA > New York',
+  // 'US > Wetchester County, NY': 'USA > New York',
+  // 'US > Nassau County, NY': 'USA > New York',
+  // 'US > Suffolk County, NY': 'USA > New York',
+  // 'US > Rockland County, NY': 'USA > New York',
 
-  'US > Collin County, TX': 'USA > Texas',
+  // 'US > Camden County, NC': 'USA > North Carolina',
+  // 'US > Wake County, NC': 'USA > North Carolina',
 
-  'US > Cobb County, GA': 'USA > Georgia',
-  'US > Fulton County, GA': 'USA > Georgia',
-  'US > Cherokee County, GA': 'USA > Georgia',
+  // 'US > Cuyahoga County, OH': 'USA > Ohio',
+  // 'US > Cuyahoga, OH': 'USA > Ohio',
 
-  'US > Montgomery County, PA': 'USA > Pennsilvania',
+  // 'US > Washington County, OR': 'USA > Oregon',
+  // 'US > Jackson County, OR': 'USA > Oregon',
+
+  // 'US > Montgomery County, PA': 'USA > Pennsilvania',
+
+  // 'US > providence County, RI': 'USA > Rhode Island',
+
+  // 'US > Camden County, SC': 'USA > South Carolina',
+
+  // 'US > Harris County, TX': 'USA > Texas',
+  // 'US > Fort Bend County, TX': 'USA > Texas',
+  // 'US > Collin County, TX': 'USA > Texas',
+
+  // 'US > Fairfax County, VA': 'USA > Virginia',
+
+  // 'US > King County, WA': 'USA > Washington',
+  // 'US > Snohomish County, WA': 'USA > Washington',
+  // 'US > Pierce County, WA': 'USA > Washington',
+  // 'US > Grant County, WA': 'USA > Washington',
+
+  // 'US > Dane, WI': 'USA > Wisconsin',
 
   'Mainland China > Hubei': 'China > Hubei (Wuhan)',
   'Mainland China > Henan': 'China > Other',
@@ -113,26 +232,51 @@ export const OUTBREAK_DATA_AGGREGATES = {
 }
 
 export const OUTBREAK_DATA_OVERLAYS = {
-  'US > Washington': 'USA > Washington',
-  'US > Minnesota': 'USA > Minnesota',
-  'US > New York': 'USA > New York',
-  'US > New Jersey': 'USA > New Jersey',
-  'US > Texas': 'USA > Texas',
-  'US > Pennsilvania': 'USA > Pennsilvania',
-  'US > Georgia': 'USA > Georgia',
-  'US > Hawaii': 'USA > Hawaii',
-  'US > Oregon': 'USA > Oregon',
-  'US > Illinois': 'USA > Illinois',
-  'US > Massachusetts': 'USA > Massachusetts',
-  'US > Florida': 'USA > Florida',
-  'US > Colorado': 'USA > Colorado',
-  'US > Nevada': 'USA > Nevada',
-  'US > California': 'USA > California',
-  'US > Maryland': 'USA > Maryland',
-  'US > Virginia': 'USA > Virginia',
-  'US > D.C.': 'USA > D.C.',
+  'US > Washington, D.C.': 'USA > D.C.',
+
+  // 'US > Alabama': 'USA > Alabama',
+  // 'US > Alaska': 'USA > Alaska',
+  // 'US > Arizona': 'USA > Arizona',
+  // 'US > California': 'USA > California',
+  // 'US > Colorado': 'USA > Colorado',
+  // 'US > Connecticut': 'USA > Connecticut',
+  // 'US > D.C.': 'USA > D.C.',
+  // 'US > District of Columbia': 'USA > D.C.',
+  // 'US > Florida': 'USA > Florida',
+  // 'US > Georgia': 'USA > Georgia',
+  // 'US > Hawaii': 'USA > Hawaii',
+  // 'US > Illinois': 'USA > Illinois',
+  // 'US > Indiana': 'USA > Indiana',
+  // 'US > Iowa': 'USA > Iowa',
+  // 'US > Kentucky': 'USA > Kentucky',
+  // 'US > Maine': 'USA > Maine',
+  // 'US > Massachusetts': 'USA > Massachusetts',
+  // 'US > Maryland': 'USA > Maryland',
+  // 'US > Minnesota': 'USA > Minnesota',
+  // 'US > Nebraska': 'USA > Nebraska',
+  // 'US > Nevada': 'USA > Nevada',
+  // 'US > New Hampshire': 'USA > New Hampshire',
+  // 'US > New Jersey': 'USA > New Jersey',
+  // 'US > New York': 'USA > New York',
+  // 'US > North Carolina': 'USA > North Carolina',
+  // 'US > North Dakota': 'USA > North Dakota',
+  // 'US > Ohio': 'USA > Ohio',
+  // 'US > Oklahoma': 'USA > Oklahoma',
+  // 'US > Oregon': 'USA > Oregon',
+  // 'US > Pennsylvania': 'USA > Pennsylvania',
+  // 'US > Rhode Island': 'USA > Rhode Island',
+  // 'US > South Carolina': 'USA > South Carolina',
+  // 'US > South Dakota': 'USA > South Dakota',
+  // 'US > Tennessee': 'USA > Tennessee',
+  // 'US > Texas': 'USA > Texas',
+  // 'US > Utah': 'USA > Utah',
+  // 'US > Vermont': 'USA > Vermont',
+  // 'US > Virginia': 'USA > Virginia',
+  // 'US > Washington': 'USA > Washington',
+  // 'US > Wisconsin': 'USA > Wisconsin',
+
   'Iran (Islamic Republic of)': 'Iran',
-  'Republic of Korea': 'South Korea'
+  'Republic of Korea': 'South Korea',
 }
 
 export const OUTBREAK_ATTRIBUTES = {
@@ -178,7 +322,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'Dominican Republic': { emoji: '🇩🇴', region: 'americas' },
   'French Guiana': { emoji: '🇬🇫', region: 'americas' },
   'Martinique': { emoji: '🇲🇶', region: 'americas' },
-  'St. Martin': { emoji: '🇸🇽', region: 'americas' },
+  'Saint Martin': { emoji: '🇸🇽', region: 'americas' },
   'Saint Barthelemy': { emoji: '🇫🇷', region: 'americas' },
 
   'Iran': { emoji: '🇮🇷', region: 'middle east', wikipedia: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iran' },
@@ -242,6 +386,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'Greece': { emoji: '🇬🇷', region: 'europe' },
   'Norway': { emoji: '🇳🇴', region: 'europe' },
   'Iceland': { emoji: '🇮🇸', region: 'europe' },
+  'Moldova': { emoji: '🇲🇩', region: 'europe' },
   'Denmark': { emoji: '🇩🇰', region: 'europe' },
   'Faroe Islands': { emoji: '🇫🇴', region: 'europe' },
   'Czech Republic': { emoji: '🇨🇿', region: 'europe' },
@@ -255,12 +400,12 @@ export const OUTBREAK_ATTRIBUTES = {
   'Gibraltar': { emoji: '🇬🇮', region: 'europe' },
   'Liechtenstein': { emoji: '🇱🇮', region: 'europe' },
   'Lithuania': { emoji: '🇱🇹', region: 'europe' },
-  'Moldova': { emoji: '🇲🇩', region: 'europe' },
   'Monaco': { emoji: '🇲🇨', region: 'europe' },
   'Serbia': { emoji: '🇷🇸', region: 'europe' },
   'Vatican City': { emoji: '🇻🇦', region: 'europe' },
   'Ukraine': { emoji: '🇺🇦', region: 'europe' },
 
 
-  'Diamond Princess': { name: 'Diamond Princess', emoji: '🛳', region: 'other', type: 'other', wikipedia: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_on_cruise_ships#Diamond_Princess' }
+  'Diamond Princess (out of Japan)': { emoji: '🛳', region: 'other', type: 'other', wikipedia: 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_on_cruise_ships#Diamond_Princess' },
+  'Grand Princess (out of US)': { emoji: '🛳', region: 'other', type: 'other' }
 }

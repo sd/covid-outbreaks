@@ -16,7 +16,7 @@ const SelectionPopup = ({options, descriptions, title, selected, onSelect}) => {
         backgroundColor: '#444',
         color: '#DDD',
         border: '1px solid #000',
-        minWidth: '20em'
+        minWidth: '15em'
       }}
       trigger={<span className='Selection-trigger'>{description}</span>}
     >
