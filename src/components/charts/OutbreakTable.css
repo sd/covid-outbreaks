@@ -6,6 +6,8 @@
 .OutbreakTable-values {
   text-align: center;
   display: inline-block;
+  padding-bottom: 0.7em;
+
   overflow: auto;
   flex: 1;
 
@@ -14,6 +16,7 @@
 }
 
 .OutbreakTable-headers {
+  padding-left: 1em;
   font-weight: bold;
   text-align: left;
   display: inline-block;
