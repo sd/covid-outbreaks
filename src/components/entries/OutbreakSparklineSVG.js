@@ -50,7 +50,7 @@ const OutbreakSparklineSVG = ({entry, allDates}) => {
       <div className='OutbreakSparkline'>
         <svg width={'100%'} viewBox={`0 0 ${width} ${height}`}>
           {allDates.map((date, index) => (
-            (index % 7 === 0) &&
+            ((index + 2) % 7 === 0) && /* + 2 moves the lines to a monday */
               <line
                 key={`line_${index}`}
                 x1={index * SVG_STYLES.emptyMarker.markerWidth}

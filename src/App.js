@@ -1,44 +1,60 @@
 import React from 'react';
 import './App.css';
-import Views from './components/Views'
-import DataLoader from './components/DataLoader'
+import withSizes from 'react-sizes'
+import classNames from 'classnames'
 
-function App() {
+import DataLoader from './components/DataLoader'
+import ViewControls from './components/ViewControls'
+import MarkerLegend from './components/MarkerLegend'
+import TableView from './components/TableView'
+
+function App({ isMobile, isTablet, isDesktop }) {
+  const dataSources = (
+    <div className='dataSources'>
+      Data from <a target='_blank' rel="noopener noreferrer" href='https://github.com/CSSEGISandData/COVID-19'>John Hopkins Univeristy</a>,
+      { isMobile && <br /> }
+      news reports, official sources and <a target='_blank' rel="noopener noreferrer" href='https://www.worldometers.info/coronavirus/#countries'>Worldometers</a>.
+    </div>
+  )
+
   return (
     <div className="App">
-      <header className="App-header">
-        <h1>COVID-19 Outbreaks</h1>
+      <header className={classNames('App-header', { mobile: isMobile, tablet: isTablet, desktop: isDesktop })}>
+        <h1>
+          <img src='covid-128.png' alt='*' className='logo' />
+          COVID-19 Outbreaks
+        </h1>
+        <MarkerLegend />
       </header>
+
       <div className="App-content">
-        <Views />
+        {isMobile && dataSources}
+
+        <ViewControls />
+
+        <DataLoader />
+
+        <TableView />
       </div>
+
       <footer className="App-footer">
-        <span className='blockUnder900px'>
-          <span className='blockUnder600px'>
-            <DataLoader />
-          </span>
-          <span className='hideUnder600px'>{' • '}</span>
-          <span className='blockUnder600px'>
-            Data from <a target='_blank' rel="noopener noreferrer" href='https://github.com/CSSEGISandData/COVID-19'>John Hopkins Univeristy</a>
-          </span>
-          <span className='hideUnder600px'>{' • '}</span>
-          <span className='blockUnder600px'>
-            Preliminary data from news reports, official sources and <a target='_blank' rel="noopener noreferrer" href='https://www.worldometers.info/coronavirus/#countries'>Worldometers</a>
-          </span>
-        </span>
-        <span className='hideUnder900px'>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <span className='blockUnder900px'>
-          <span className='blockUnder600px'>
-            Visualization by Sebastián Delmont
-            {' • '}
-            <a href='https://twitter.com/sd'>@sd</a>
-            {' • '}
-            <a href='https://github.com/sd/covid-outbreaks'>github</a>
-          </span>
-        </span>
+        {!isMobile && dataSources}
+        <div className='credits'>
+          Visualization by Sebastián Delmont
+          {' • '}
+          <a href='https://twitter.com/sd'>@sd</a>
+          {' • '}
+          <a href='https://github.com/sd/covid-outbreaks'>github</a>
+        </div>
       </footer>
     </div>
   );
 }
 
-export default App;
+const mapSizesToProps = ({ width }) => ({
+  isMobile: width < 480,
+  isTablet: width >= 480 && width < 1024,
+  isDesktop: width >= 1024
+})
+
+export default withSizes(mapSizesToProps)(App);
