@@ -238,7 +238,7 @@ export function findAggregateMapping (name) {
 
     parts = name.match(/US > (.*), (\w\w)/)
     if (parts && US_STATES[parts[2]]) {
-      return false
+      return 'ignore'
       // return `USA > ${US_STATES[parts[2]]}`
     }
 

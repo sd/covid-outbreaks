@@ -7,7 +7,7 @@ import { formatDateMonthDD } from '../utils/dateFormats'
 import { viewOptionsForSorting, SORTER_TYPES, SORTER_DESCRIPTIONS } from '../store/sorters'
 import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../store/filters'
 
-const ViewControls = ({lastDate, lastPreliminaryDate, sort, setSort, filter, setFilter}) => {
+const ViewControls = ({lastDate, lastPreliminaryDate, sort, setSort, filter, setFilter, isMobile}) => {
   let viewOptions = {}
   viewOptions = viewOptionsForSorting(sort, viewOptions)
   viewOptions = viewOptionsForFiltering(filter, viewOptions)
@@ -35,17 +35,19 @@ const ViewControls = ({lastDate, lastPreliminaryDate, sort, setSort, filter, set
           onSelect={(option) => setSort(option)}
         />
       </span>
-      <span className='segment date'>
-        {' as of '}
-        {formatDateMonthDD(lastDate)}
-      </span>
-      {lastPreliminaryDate && (
-        <span className='segment preliminary preliminaryDate'>
-          { ' (preliminary for ' }
-          {formatDateMonthDD(lastPreliminaryDate)}
-          { ')' })
+      <span className='segment'>
+        <span className='date'>
+          {' as of '}
+          {formatDateMonthDD(lastDate)}
         </span>
-      )}
+        {lastPreliminaryDate && (
+          <span className='preliminary preliminaryDate'>
+            { isMobile ? ' (+ prelim. ' : ' (preliminary for ' }
+            {formatDateMonthDD(lastPreliminaryDate)}
+            { ')' }
+          </span>
+        )}
+      </span>
     </div>
   )
 }

@@ -200,7 +200,7 @@ export function fetchDataDispatcher (dispatch) {
       let casesResults = processOneFile('cases', caseData, {})
       let deathsResults = processOneFile('deaths', deathData, casesResults.entries)
 
-      let data = Object.keys(deathsResults.entries).map(k => deathsResults.entries[k])
+      let data = Object.keys(deathsResults.entries).filter(k => k !== 'ignore').map(k => deathsResults.entries[k])
 
       let allDates = [...deathsResults.dates, ...deathsResults.preliminaryDates]
       let lastDate = deathsResults.dates[deathsResults.dates.length - 1]

@@ -13,7 +13,7 @@ function App({ isMobile, isTablet, isDesktop }) {
     <div className='dataSources'>
       Data from <a target='_blank' rel="noopener noreferrer" href='https://github.com/CSSEGISandData/COVID-19'>John Hopkins Univeristy</a>,
       { isMobile && <br /> }
-      news reports, official sources and <a target='_blank' rel="noopener noreferrer" href='https://www.worldometers.info/coronavirus/#countries'>Worldometers</a>.
+      <a target='_blank' rel="noopener noreferrer" href='https://www.worldometers.info/coronavirus/#countries'>Worldometers</a> and other sources.
     </div>
   )
 
@@ -30,7 +30,7 @@ function App({ isMobile, isTablet, isDesktop }) {
       <div className="App-content">
         {isMobile && dataSources}
 
-        <ViewControls />
+        <ViewControls isMobile={isMobile} />
 
         <DataLoader />
 
