@@ -4,7 +4,7 @@ export const PRELIMINARY_DATA = {
       '3/12/20': {
         'Italy': 1016,
         'Iran (Islamic Republic of)': 429,
-        // 'France': 48,
+        'France': 61,
         'South Korea': 66,
         'Spain': 86,
         'Japan': 17,
