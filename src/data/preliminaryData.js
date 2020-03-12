@@ -2,7 +2,7 @@ export const PRELIMINARY_DATA = {
   total: {
     deaths:  {
       '3/12/20': {
-        // 'Italy': 827,
+        'Italy': 1016,
         'Iran': 429,
         // 'France': 48,
         'South Korea': 66,
@@ -13,6 +13,13 @@ export const PRELIMINARY_DATA = {
         'United Kingdom': 10,
         // 'USA > Washington': 24,
         'Austria': 1,
+        'Greece': 1,
+        'Iraq': 8,
+        'Lebanon': 3,
+        'Guyana': 1,
+        'Azerbaijan': 1,
+        'Algeria': 1,
+
       }
     }
   },
