@@ -2,31 +2,31 @@ export const PRELIMINARY_DATA = {
   total: {
     deaths:  {
       '3/11/20': {
-        'Italy': 827,
-        'Iran': 354,
-        'Spain': 54,
-        'France': 48,
-        'South Korea': 60,
-        'United Kingdom': 8,
-        'Germany': 3,
-        'Switzerland': 4,
-        'Netherlands': 5,
-        'Belgium': 3,
-        'Lebanon': 2,
-        'Indonesia': 1,
-        'Albania': 1,
-        'Panama': 1,
-        'USA > South Dakota': 1,
-        'Japan': 15,
-        'Sweden': 1,
-        'USA > Washington': 24,
+        // 'Italy': 827,
+        // 'Iran': 354,
+        // 'Spain': 54,
+        // 'France': 48,
+        // 'South Korea': 60,
+        // 'United Kingdom': 8,
+        // 'Germany': 3,
+        // 'Switzerland': 4,
+        // 'Netherlands': 5,
+        // 'Belgium': 3,
+        // 'Lebanon': 2,
+        // 'Indonesia': 1,
+        // 'Albania': 1,
+        // 'Panama': 1,
+        // 'USA > South Dakota': 1,
+        // 'Japan': 15,
+        // 'Sweden': 1,
+        // 'USA > Washington': 24,
       }
     }
   },
   daily: {
     deaths:  {
       '3/11/20': {
-        'China > Hubei (Wuhan)': 22,
+        // 'China > Hubei (Wuhan)': 22,
       }
     }
   },

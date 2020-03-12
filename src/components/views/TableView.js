@@ -97,7 +97,7 @@ const TableView = ({
                 <div className='name'>
                   {entry.emoji}
                   &nbsp;&nbsp;
-                  <b>{entry.name}</b>
+                  <b>{entry.displayName || entry.name}</b>
                 </div>
 
                 <div className='totals'>

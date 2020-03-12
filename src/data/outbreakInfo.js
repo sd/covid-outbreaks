@@ -8,6 +8,7 @@ export const OUTBREAK_DATA_AGGREGATES = {
 
   'Taiwan > Taiwan': 'Taiwan',
   'Taipei and environs > Taiwan': 'Taiwan',
+  'Taiwan*': 'Taiwan',
 
   'occupied Palestinian territory': 'Palestine',
 
@@ -19,17 +20,29 @@ export const OUTBREAK_DATA_AGGREGATES = {
   'Holy See': 'Vatican City',
   'Viet Nam': 'Vietnam',
 
-  'Others > Diamond Princess cruise ship': 'Diamond Princess (out of Japan)',
-  'US > Diamond Princess': 'Diamond Princess (out of Japan)',
-  'US > Grand Princess': 'Grand Princess (out of US)',
+  'Others > Diamond Princess cruise ship': 'Diamond Princess',
+  'US > Diamond Princess': 'Diamond Princess',
+  'US > Grand Princess': 'Grand Princess',
 
-  'US > Washington, D.C.': 'USA > D.C.',
+  'US > Washington, D.C.': 'USA > District of Columbia',
+
+  'Iran': 'Iran (Islamic Republic of)',
+
+  'Republic of Korea': 'South Korea',
+  'Korea, South': 'South Korea',
+
+  'France > France': 'France',
+
+  'Czechia': 'Czech Republic',
+
+  'Congo (Kinshasa)': 'Congo',
+
+
+  'Cruise Ship > Diamond Princess': 'Diamond Princess'
 }
 
 /* Rows that started under one name and now continue under another */
 export const OUTBREAK_DATA_OVERLAYS = {
-  'Iran (Islamic Republic of)': 'Iran',
-  'Republic of Korea': 'South Korea',
 }
 
 export const OUTBREAK_ATTRIBUTES = {
@@ -105,8 +118,9 @@ export const OUTBREAK_ATTRIBUTES = {
   'Martinique': { emoji: '🇲🇶', region: 'americas' },
   'Saint Martin': { emoji: '🇸🇽', region: 'americas' },
   'Saint Barthelemy': { emoji: '🇫🇷', region: 'americas' },
+  'Jamaica': { emoji: '🇯🇲', region: 'americas' },
 
-  'Iran': { emoji: '🇮🇷', region: 'middle east',
+  'Iran (Islamic Republic of)': { displayName: 'Iran', emoji: '🇮🇷', region: 'middle east',
     links: { 'Islamic Republic News Agency': 'https://en.irna.ir/service/news',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iran' }},
   'Israel': { emoji: '🇮🇱', region: 'middle east' },
@@ -137,6 +151,9 @@ export const OUTBREAK_ATTRIBUTES = {
   'Tunisia': { emoji: '🇹🇳', region: 'africa' },
   'Togo': { emoji: '🇹🇬', region: 'africa' },
   'Nigeria': { emoji: '🇳🇬', region: 'africa' },
+  'Congo': { emoji: '🇨🇩', region: 'africa' },
+  'Cote d\'Ivoire': { emoji: '🇨🇮', region: 'africa' },
+  'Reunion': { emoji: '🇫🇷', region: 'africa' },
 
   'Australia': { emoji: '🇦🇺', region: 'oceania',
     links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Australia' }},
@@ -207,9 +224,9 @@ export const OUTBREAK_ATTRIBUTES = {
   'Ukraine': { emoji: '🇺🇦', region: 'europe' },
 
 
-  'Diamond Princess (out of Japan)': { emoji: '🛳', region: 'other', type: 'other',
+  'Diamond Princess': { displayName: 'Diamond Princess (out of Japan)', emoji: '🛳', region: 'other', type: 'other',
     links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_on_cruise_ships#Diamond_Princess' }},
-  'Grand Princess (out of US)': { emoji: '🛳', region: 'other', type: 'other' }
+  'Grand Princess': { displayName: 'Grand Princess (out of US)', emoji: '🛳', region: 'other', type: 'other' }
 }
 
 export function findAggregateMapping (name) {
@@ -224,6 +241,12 @@ export function findAggregateMapping (name) {
     }
 
     parts = name.match(/Mainland China > (.*)/)
+    if (parts) {
+      if (parts[1].indexOf('Hubei') >= 0) return 'China > Hubei (Wuhan)'
+      else return 'China > Other'
+    }
+
+    parts = name.match(/^China > (.*)/)
     if (parts) {
       if (parts[1].indexOf('Hubei') >= 0) return 'China > Hubei (Wuhan)'
       else return 'China > Other'

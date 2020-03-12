@@ -131,7 +131,7 @@ function prepareEntries (data, fieldName, entries) {
 function processOneFile (fieldName, rawData, entries ) {
   let data
   data = parseRawData(rawData, DATA_OVERRIDES[fieldName])
-  data = combineRows(data, (a, b) => (a || 0) + (b || 0), findAggregateMapping)
+  data = combineRows(data, (a, b) => (a === undefined || b === undefined ? (a || b) : (a || 0) + (b || 0)), findAggregateMapping)
   data = combineRows(data, (a, b) => (a || b), findOverlayMapping)
 
   entries = prepareEntries(data, fieldName, entries)
@@ -150,10 +150,12 @@ function processOneFile (fieldName, rawData, entries ) {
     entry = entries[name]
 
     dates.forEach(d => {
-      entry.totals[fieldName][d] = row[d]
-      entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
-      entry.latestTotal[fieldName] = entry.totals[fieldName][d]
-      entry.latestDaily[fieldName] = entry.daily[fieldName][d]
+      if (row[d] || row[d] === 0) {
+        entry.totals[fieldName][d] = row[d]
+        entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
+        entry.latestTotal[fieldName] = entry.totals[fieldName][d]
+        entry.latestDaily[fieldName] = entry.daily[fieldName][d]
+      }
     })
 
     entry.latestPreliminaryTotal[fieldName] = entry.latestTotal[fieldName]
