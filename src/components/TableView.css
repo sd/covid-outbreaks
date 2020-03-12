@@ -116,3 +116,13 @@
   color: #e96;
 }
 
+.TableView .name .flag {
+  line-height: 100%;
+}
+
+.TableView .name .flag {
+  font-size: 160%;
+  position: relative;
+  top: 0.15em;
+}
+

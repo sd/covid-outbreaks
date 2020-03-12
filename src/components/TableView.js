@@ -12,7 +12,8 @@ const TableView = ({
   loaded, data, allDates,
   sort, filter,
   pinPositions, pinEntry, unpinEntry,
-  isExpanded, expandEntry, collapseEntry
+  isExpanded, expandEntry, collapseEntry,
+  isMobile, isTablet
 }) => {
   if (loaded) {
     let viewOptions = { pinPositions }
@@ -22,7 +23,16 @@ const TableView = ({
     data = data.sort((a, b) => viewOptions.sorter(a, b, viewOptions ))
     data = data.filter((a) => viewOptions.filterer(a, viewOptions ))
 
-    const sharedProps = { allDates, pinEntry, unpinEntry, expandEntry, collapseEntry }
+    let dates
+    if (isMobile) {
+      dates = allDates.slice(Math.max(allDates.length - 28, 0))
+    } else if (isTablet) {
+      dates = allDates.slice(Math.max(allDates.length - 42, 0))
+    } else {
+      dates = allDates.slice(Math.max(allDates.length - 56, 0))
+    }
+
+    const sharedProps = { dates, pinEntry, unpinEntry, expandEntry, collapseEntry }
 
     return (
       <div className='TableView'>

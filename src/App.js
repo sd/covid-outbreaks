@@ -34,7 +34,7 @@ function App({ isMobile, isTablet, isDesktop }) {
 
         <DataLoader />
 
-        <TableView />
+        <TableView isMobile={isMobile} isTablet={isTablet} isDesktop={isDesktop} />
       </div>
 
       <footer className="App-footer">
@@ -52,9 +52,9 @@ function App({ isMobile, isTablet, isDesktop }) {
 }
 
 const mapSizesToProps = ({ width }) => ({
-  isMobile: width < 480,
-  isTablet: width >= 480 && width < 1024,
-  isDesktop: width >= 1024
+  isMobile: width <= 480,
+  isTablet: width > 480 && width <= 1024,
+  isDesktop: width > 1024
 })
 
 export default withSizes(mapSizesToProps)(App);

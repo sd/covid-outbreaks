@@ -150,12 +150,17 @@ function processOneFile (fieldName, rawData, entries ) {
     entry = entries[name]
 
     dates.forEach(d => {
-      if (row[d] || row[d] === 0) {
-        entry.totals[fieldName][d] = row[d]
-        entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
-        entry.latestTotal[fieldName] = entry.totals[fieldName][d]
-        entry.latestDaily[fieldName] = entry.daily[fieldName][d]
+      let value = row[d]
+
+      /* Prevent errors when data is missing */
+      if (value === undefined || value === null || value < entry.latestTotal[fieldName]) {
+        value = entry.latestTotal[fieldName] || 0
       }
+
+      entry.totals[fieldName][d] = value
+      entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
+      entry.latestTotal[fieldName] = entry.totals[fieldName][d]
+      entry.latestDaily[fieldName] = entry.daily[fieldName][d]
     })
 
     entry.latestPreliminaryTotal[fieldName] = entry.latestTotal[fieldName]
@@ -212,23 +217,111 @@ export function fetchDataDispatcher (dispatch) {
 
 const DATA_OVERRIDES = {
   deaths: {
-    'Mainland China > Hubei': {
-      // '1/29/20': 125 + (37 / 2) - 0.5,
-      // '1/30/20': 162 + (37 / 2) + 0.5,
-      // '2/12/20': 1068 + (242 / 2),
-      // '2/13/20': 1310 + (242 / 2),
-      // '2/21/20': 2144 + (202 / 2),
-      // '2/22/20': 2346 + (202 / 2),
-      // '2/23/20': 2346 + (149 / 2) + 0.5,
-      // '2/24/20': 2495 + (149 / 2) - 0.5
-    }
+    'US > Washington': {
+      '2/29/20': 1,
+      '3/1/20': 1,
+      '3/2/20': 6,
+      '3/3/20': 7,
+      '3/4/20': 10,
+      '3/5/20': 11,
+      '3/6/20': 13,
+      '3/7/20': 16,
+      '3/8/20': 18,
+      '3/9/20': 19,
+      '3/10/20': 23
+    },
+    'US > California': {
+      '3/4/20': 1,
+      '3/5/20': 1,
+      '3/6/20': 1,
+      '3/7/20': 1,
+      '3/8/20': 1,
+      '3/9/20': 1,
+      '3/10/20': 2
+    },
+    'US > Florida': {
+      '3/8/20': 2,
+      '3/9/20': 2,
+      '3/10/20': 2
+    },
+    'US > New Jersey': {
+      '3/10/20': 1
+    },
+  },
+  cases: {
+    'US > Washington': {
+      '1/22/20': 1,
+      '2/28/20': 1,
+      '2/29/20': 7,
+      '3/1/20': 11,
+      '3/2/20': 18,
+      '3/3/20': 27,
+      '3/4/20': 39,
+      '3/5/20': 70,
+      '3/6/20': 78,
+      '3/7/20': 102,
+      '3/8/20': 122,
+      '3/9/20': 122,
+      '3/10/20': 162
+    },
+    'US > California': {
+      '1/26/20': 2,
+      '1/31/20': 3,
+      '2/3/20': 6,
+      '2/11/20': 7,
+      '2/13/20': 8,
+      '2/21/20': 10,
+      '2/27/20': 11,
+      '2/29/20': 12,
+      '3/2/20': 21,
+      '3/3/20': 25,
+      '3/4/20': 35,
+      '3/5/20': 52,
+      '3/6/20': 59,
+      '3/7/20': 81,
+      '3/8/20': 95,
+      '3/9/20': 101,
+      '3/10/20': 145
+    },
+    'US > New York': {
+      '3/2/20': 1,
+      '3/3/20': 2,
+      '3/4/20': 11,
+      '3/5/20': 23,
+      '3/6/20': 36,
+      '3/7/20': 76,
+      '3/8/20': 106,
+      '3/9/20': 142,
+      '3/10/20': 150
+    },
+    'US > Florida': {
+      '3/2/20': 1,
+      '3/3/20': 2,
+      '3/4/20': 2,
+      '3/5/20': 3,
+      '3/6/20': 3,
+      '3/7/20': 7,
+      '3/8/20': 10,
+      '3/9/20': 13,
+      '3/10/20': 16
+    },
+    'US > Texas': {
+      '3/5/20': 3,
+      '3/6/20': 4,
+      '3/7/20': 8,
+      '3/8/20': 11,
+      '3/9/20': 13,
+      '3/10/20': 16
+    },
+    'US > New Jersey': {
+      '3/5/20': 2,
+      '3/6/20': 2,
+      '3/7/20': 4,
+      '3/8/20': 5,
+      '3/9/20': 5,
+      '3/10/20': 15
+    },
   }
-  // 'Iran': {
-  //   '3/10/20': { deathsRaw: 291, casesRaw: 8042 },
-  // },
-  // 'South Korea': {
-  //   '3/10/20': { deathsRaw: 54, casesRaw: 7513 },
-  // }
 }
 export default reducer
 

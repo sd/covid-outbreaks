@@ -27,8 +27,10 @@
 .App-header .logo {
   height: 1.5em;
   width: 1.5em;
-  margin-right: 0.2em;
+  margin-right: 0.3em;
   vertical-align: middle;
+  position: relative;
+  top: -0.1em;
 }
 
 .App-content {

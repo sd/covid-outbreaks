@@ -34,59 +34,66 @@ const SVG_STYLES = {
   }
 }
 
-const OutbreakSparklineSVG = ({entry, allDates}) => {
-  let width = allDates.length * SVG_STYLES.emptyMarker.markerWidth
+const OutbreakSparklineSVG = ({entry, dates, sideToSide}) => {
+  let canvasWidth = dates.length * SVG_STYLES.emptyMarker.markerWidth
 
   let maxDataPoint = Math.max(
-    ...allDates.map(d => entry.daily.deaths[d] || 0),
-    ...allDates.map(d => entry.preliminaryDaily.deaths[d] || 0),
-    ...allDates.map(d => (entry.daily.cases[d] || 0) / SVG_STYLES.caseMarker.multiplier)
-    , 0
+    ...dates.map(d => entry.daily.deaths[d] || 0),
+    ...dates.map(d => entry.preliminaryDaily.deaths[d] || 0),
+    ...dates.map(d => (entry.daily.cases[d] || 0) / SVG_STYLES.caseMarker.multiplier),
+    0
   )
-  let height = (maxDataPoint + 1) * SVG_STYLES.emptyMarker.markerHeight + 10
+
+  let columns = 1
+
+  if (sideToSide && maxDataPoint > 50) {
+    columns = 2
+  }
+
+  let canvasHeight = (maxDataPoint + 1) * SVG_STYLES.emptyMarker.markerHeight + 10
 
   if (entry.daily.deaths) {
     return (
       <div className='OutbreakSparkline'>
-        <svg width={'100%'} viewBox={`0 0 ${width} ${height}`}>
-          {allDates.map((date, index) => (
+        <svg width={'100%'} viewBox={`0 0 ${canvasWidth} ${canvasHeight}`}>
+          {dates.map((date, index) => (
             ((index + 2) % 7 === 0) && /* + 2 moves the lines to a monday */
               <line
                 key={`line_${index}`}
                 x1={index * SVG_STYLES.emptyMarker.markerWidth}
                 y1={0}
                 x2={index * SVG_STYLES.emptyMarker.markerWidth}
-                y2={height}
+                y2={canvasHeight}
                 strokeWidth={SVG_STYLES.weekLines.strokeWidth}
                 stroke={SVG_STYLES.weekLines.stroke}
               />
           ))}
-          {allDates.map((date, index) => (
+          {dates.map((date, index) => (
             <OutbreakSparklineOneDaySVG
               key={`empty_${date}`}
               dayIndex={index}
               count={1}
-              height={height}
+              height={canvasHeight}
               markerStyle={SVG_STYLES.emptyMarker}
             />
           ))}
-          {allDates.map((date, index) => (
+          {dates.map((date, index) => (
             entry.daily.cases[date] &&
               <OutbreakSparklineOneDaySVG
                 key={`cases_${date}`}
                 dayIndex={index}
                 count={entry.daily.cases[date] / SVG_STYLES.caseMarker.multiplier}
-                height={height}
+                height={canvasHeight}
                 markerStyle={SVG_STYLES.caseMarker}
               />
           ))}
-          {allDates.map((date, index)=> (
+          {dates.map((date, index)=> (
             (entry.daily.deaths[date] || entry.preliminaryDaily.deaths[date]) &&
               <OutbreakSparklineOneDaySVG
                 key={`deaths_${date}`}
                 dayIndex={index}
                 count={entry.daily.deaths[date] || entry.preliminaryDaily.deaths[date]}
-                height={height}
+                height={canvasHeight}
                 markerStyle={entry.daily.deaths[date] !== undefined ? SVG_STYLES.deathMarker : SVG_STYLES.preliminaryDeathMarker}
               />
           ))}
@@ -139,7 +146,7 @@ const OutbreakSparklineOneDaySVG = ({dayIndex, count, xOffset = 0, yOffset = 0, 
   )
 }
 
-export const OutbreakSparklineSampleMarker = ({type}) => {
+export const OutbreakSparklineSampleMarker = ({ type }) => {
   let style = SVG_STYLES[type]
 
   if (style) {

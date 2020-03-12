@@ -6,11 +6,11 @@ import OutbreakSparklineSVG from './OutbreakSparklineSVG'
 import OutbreakTable from './OutbreakTable'
 
 
-const OneTableEntry = ({entry, allDates, pinned, expanded, pinEntry, unpinEntry, expandEntry, collapseEntry}) => {
+const OneTableEntry = ({entry, dates, pinned, expanded, pinEntry, unpinEntry, expandEntry, collapseEntry}) => {
   return (
     <div key={entry.name} className={classNames('TableView-row', { pinned, expanded })}>
 
-      <OutbreakSparklineSVG entry={entry} allDates={allDates} />
+      <OutbreakSparklineSVG entry={entry} dates={dates} />
 
       <div className='TableView-title'>
         <div className='tools'>
@@ -27,7 +27,7 @@ const OneTableEntry = ({entry, allDates, pinned, expanded, pinEntry, unpinEntry,
         </div>
 
         <div className='name'>
-          {entry.emoji}
+          <span className='flag'>{entry.emoji}</span>
           &nbsp;&nbsp;
           <b>{entry.displayName || entry.name}</b>
         </div>
@@ -58,7 +58,7 @@ const OneTableEntry = ({entry, allDates, pinned, expanded, pinEntry, unpinEntry,
           )}
 
           <section>
-            <OutbreakTable entry={entry} allDates={allDates} />
+            <OutbreakTable entry={entry} dates={dates} />
           </section>
 
           {entry.sources.deaths && (

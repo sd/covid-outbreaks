@@ -5,8 +5,8 @@ import { formatDateMonDD } from '../../utils/dateFormats'
 
 import './OutbreakTable.css'
 
-const OutbreakTable = ({entry, allDates}) => {
-  let reversedDates = [...allDates]
+const OutbreakTable = ({entry, dates}) => {
+  let reversedDates = [...dates]
   reversedDates.reverse()
 
   if (entry.daily.deaths) {
