@@ -3,7 +3,7 @@ export const PRELIMINARY_DATA = {
     deaths:  {
       '3/12/20': {
         'Italy': 1016,
-        'Iran': 429,
+        'Iran (Islamic Republic of)': 429,
         // 'France': 48,
         'South Korea': 66,
         'Spain': 86,
