@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 
 const SVG_STYLES = {
   weekLines: {
@@ -7,13 +7,13 @@ const SVG_STYLES = {
   },
   emptyMarker: {
     fill: '#444',
-    markerWidth: 12,
+    markerWidth: 10,
     markerHeight: 2,
     radius: 0.5
   },
   deathMarker: {
     fill: '#F00',
-    markerWidth: 12,
+    markerWidth: 10,
     markerHeight: 2,
     radius: 1.2
   },
@@ -21,20 +21,20 @@ const SVG_STYLES = {
     fill: 'none',
     stroke: '#e96',
     strokeWidth: 0.6,
-    markerWidth: 12,
+    markerWidth: 10,
     markerHeight: 2,
     radius: 1.2
   },
   caseMarker: {
     fill: '#6a6a6a',
-    markerWidth: 12,
+    markerWidth: 10,
     markerHeight: 2,
     radius: 3.0,
     multiplier: 100
   }
 }
 
-const OutbreakSparklineSVG = ({entry, dates, sideToSide}) => {
+const OutbreakSparklineSVG = ({entry, dates, sideBySide}) => {
   let canvasWidth = dates.length * SVG_STYLES.emptyMarker.markerWidth
 
   let maxDataPoint = Math.max(
@@ -46,8 +46,9 @@ const OutbreakSparklineSVG = ({entry, dates, sideToSide}) => {
 
   let columns = 1
 
-  if (sideToSide && maxDataPoint > 50) {
+  if (sideBySide && maxDataPoint > 50) {
     columns = 2
+    maxDataPoint = maxDataPoint / 2
   }
 
   let canvasHeight = (maxDataPoint + 1) * SVG_STYLES.emptyMarker.markerHeight + 10
@@ -73,6 +74,7 @@ const OutbreakSparklineSVG = ({entry, dates, sideToSide}) => {
               key={`empty_${date}`}
               dayIndex={index}
               count={1}
+              columns={columns}
               height={canvasHeight}
               markerStyle={SVG_STYLES.emptyMarker}
             />
@@ -83,6 +85,8 @@ const OutbreakSparklineSVG = ({entry, dates, sideToSide}) => {
                 key={`cases_${date}`}
                 dayIndex={index}
                 count={entry.daily.cases[date] / SVG_STYLES.caseMarker.multiplier}
+                columns={columns}
+                round={false}
                 height={canvasHeight}
                 markerStyle={SVG_STYLES.caseMarker}
               />
@@ -93,6 +97,8 @@ const OutbreakSparklineSVG = ({entry, dates, sideToSide}) => {
                 key={`deaths_${date}`}
                 dayIndex={index}
                 count={entry.daily.deaths[date] || entry.preliminaryDaily.deaths[date]}
+                columns={columns}
+                round={true}
                 height={canvasHeight}
                 markerStyle={entry.daily.deaths[date] !== undefined ? SVG_STYLES.deathMarker : SVG_STYLES.preliminaryDeathMarker}
               />
@@ -105,9 +111,37 @@ const OutbreakSparklineSVG = ({entry, dates, sideToSide}) => {
   }
 }
 
-const OutbreakSparklineOneDaySVG = ({dayIndex, count, xOffset = 0, yOffset = 0, height, markerStyle}) => {
+const OutbreakSparklineOneDaySVG = ({dayIndex, count, columns, round, height, markerStyle}) => {
+  let markerColumns = []
+  let perColumn = count / columns
+  if (round) {
+    perColumn = Math.round(perColumn)
+  }
+  let column = 1
+
+  let offsetPerColumn = markerStyle.markerWidth / (columns + 1)
+
+  while (count > 0) {
+    markerColumns.push(
+      <OutbreakSparklineOneColumnSVG
+        key={`column_${column}`}
+        dayIndex={dayIndex}
+        count={count > perColumn ? (perColumn * column) : count}
+        xOffset={column * offsetPerColumn}
+        yOffset={markerStyle.markerHeight / 2}
+        height={height}
+        style={markerStyle}
+      />
+    )
+    count = count - perColumn
+    column = column + 1
+  }
+
+  return <>{markerColumns}</>
+}
+
+const OutbreakSparklineOneColumnSVG = ({dayIndex, count, xOffset, yOffset, height, style}) => {
   let markers = []
-  let style = markerStyle
 
   let rounded = Math.round(count)
 
@@ -130,8 +164,8 @@ const OutbreakSparklineOneDaySVG = ({dayIndex, count, xOffset = 0, yOffset = 0, 
       markers.push(
         <circle
           key={i}
-          cx={xOffset + (dayIndex * style.markerWidth) + (style.markerWidth / 2)}
-          cy={yOffset + height - ((i + 1) * style.markerHeight) - (style.markerHeight / 2)}
+          cx={(dayIndex * style.markerWidth) + xOffset}
+          cy={height - ((i + 1) * style.markerHeight) - yOffset}
           r={radius}
           stroke={style.stroke}
           fill={style.fill}
@@ -142,7 +176,7 @@ const OutbreakSparklineOneDaySVG = ({dayIndex, count, xOffset = 0, yOffset = 0, 
   }
 
   return (
-    <Fragment>{markers}</Fragment>
+    <>{markers}</>
   )
 }
 

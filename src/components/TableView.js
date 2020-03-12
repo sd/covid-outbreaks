@@ -40,6 +40,7 @@ const TableView = ({
         {data.map((entry, index) => (
           <OneTableEntry key={entry.name} {...sharedProps}
             entry={entry} index={index} pinned={pinPositions[entry.name]} expanded={isExpanded[entry.name]}
+            sideBySide={true}
           />
         ))}
 

@@ -36,7 +36,8 @@
 .App-content {
   flex: 1;
   text-align: center;
-  margin-top: 8em;
+  margin: 7em 1em 0em 1em;
+
 }
 
 .App-footer {

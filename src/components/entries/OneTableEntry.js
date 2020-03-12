@@ -6,11 +6,15 @@ import OutbreakSparklineSVG from './OutbreakSparklineSVG'
 import OutbreakTable from './OutbreakTable'
 
 
-const OneTableEntry = ({entry, dates, pinned, expanded, pinEntry, unpinEntry, expandEntry, collapseEntry}) => {
+const OneTableEntry = ({
+  entry, dates,
+  pinned, expanded, sideBySide,
+  pinEntry, unpinEntry, expandEntry, collapseEntry
+}) => {
   return (
     <div key={entry.name} className={classNames('TableView-row', { pinned, expanded })}>
 
-      <OutbreakSparklineSVG entry={entry} dates={dates} />
+      <OutbreakSparklineSVG entry={entry} dates={dates} sideBySide={sideBySide} />
 
       <div className='TableView-title'>
         <div className='tools'>

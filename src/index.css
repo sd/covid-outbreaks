@@ -29,6 +29,16 @@ body {
   background: #777;
 }
 
+@media only screen and (max-width: 600px) {
+  body {
+    scrollbar-width: 0.3em;
+  }
+
+  ::-webkit-scrollbar {
+    width: 0.3em;
+    height: 0.3em;
+  }
+}
 
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
@@ -47,29 +57,4 @@ a:hover, a:active {
   white-space: nowrap;
 }
 
-@media only screen and (max-width: 600px) {
-  .blockUnder600px {
-    display: block;
-  }
-  .hideUnder600px {
-    display: none;
-  }
 
-  body {
-    scrollbar-width: 0.3em;
-  }
-
-  ::-webkit-scrollbar {
-    width: 0.3em;
-    height: 0.3em;
-  }
-}
-
-@media only screen and (max-width: 900px) {
-  .blockUnder900px {
-    display: block;
-  }
-  .hideUnder900px {
-    display: none;
-  }
-}
