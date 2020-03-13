@@ -1,13 +1,26 @@
 export const PRELIMINARY_DATA = {
   total: {
     deaths:  {
-      '3/12/20': {
+      '3/13/20': {
+        // 'Italy': 1016,
+        'Iran (Islamic Republic of)': 514,
+        // 'France': 61,
+        'South Korea': 71,
+        'Spain': 120,
+        // 'Japan': 19,
+        'Germany': 7,
+        // 'Switzerland': 7,
+        'United Kingdom': 10,
+        // 'USA > California': 4,
+        'Indonesia': 1,
+        'Hong Kong': 4,
       }
     }
   },
   daily: {
     deaths:  {
-      '3/12/20': {
+      '3/13/20': {
+        'China > Hubei (Wuhan)': 8,
       }
     }
   },
