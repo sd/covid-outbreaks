@@ -8,7 +8,7 @@ export const DATA_PRELIMINARY = {
       '3/13/20': {
         'Italy': 1266,
         'Iran (Islamic Republic of)': 514,
-        // 'France': 61,
+        'France': 79,
         'South Korea': 71,
         'Spain': 122,
         'Japan': 19,
