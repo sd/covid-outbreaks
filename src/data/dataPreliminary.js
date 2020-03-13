@@ -16,7 +16,7 @@ export const DATA_PRELIMINARY = {
         'Netherlands': 10,
         'United Kingdom': 10,
         'Switzerland': 9,
-        // 'USA > California': 4,
+        'USA > Kansas': 1,
         'Indonesia': 1,
         'Hong Kong': 4,
         'Ukraine': 1,
