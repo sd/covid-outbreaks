@@ -2,7 +2,7 @@ export const PRELIMINARY_DATA = {
   total: {
     deaths:  {
       '3/13/20': {
-        // 'Italy': 1016,
+        'Italy': 1266,
         'Iran (Islamic Republic of)': 514,
         // 'France': 61,
         'South Korea': 71,
