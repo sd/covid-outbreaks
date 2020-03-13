@@ -1,7 +1,8 @@
 import { csv as d3CSV } from 'd3-fetch'
 
 import { OUTBREAK_ATTRIBUTES, findAggregateMapping, findOverlayMapping } from '../../data/outbreakInfo'
-import { PRELIMINARY_DATA } from '../../data/preliminaryData'
+import { DATA_PRELIMINARY } from '../../data/dataPreliminary'
+import { DATA_OVERRIDES } from '../../data/dataOverrides'
 
 const CASES_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
 const DEATHS_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'
@@ -139,8 +140,8 @@ function processOneFile (fieldName, rawData, entries ) {
   let dates = data.dates
   let preliminaryDates = []
 
-  if (PRELIMINARY_DATA.total && PRELIMINARY_DATA.total[fieldName]) {
-    preliminaryDates = Object.keys(PRELIMINARY_DATA.total[fieldName]).filter(d => dates.indexOf(d) < 0)
+  if (DATA_PRELIMINARY.total && DATA_PRELIMINARY.total[fieldName]) {
+    preliminaryDates = Object.keys(DATA_PRELIMINARY.total[fieldName]).filter(d => dates.indexOf(d) < 0)
   }
 
   let row, entry
@@ -166,15 +167,15 @@ function processOneFile (fieldName, rawData, entries ) {
     entry.latestPreliminaryTotal[fieldName] = entry.latestTotal[fieldName]
 
     preliminaryDates.forEach(d => {
-      if (PRELIMINARY_DATA.total[fieldName][d] && PRELIMINARY_DATA.total[fieldName][d][entry.name]) {
-        let total = PRELIMINARY_DATA.total[fieldName][d][entry.name]
+      if (DATA_PRELIMINARY.total[fieldName][d] && DATA_PRELIMINARY.total[fieldName][d][entry.name]) {
+        let total = DATA_PRELIMINARY.total[fieldName][d][entry.name]
         let daily = total - entry.latestTotal[fieldName]
 
         entry.preliminaryDaily[fieldName][d] = daily
         entry.latestPreliminaryTotal[fieldName] = entry.latestPreliminaryTotal[fieldName] + daily
         entry.latestPreliminaryDaily[fieldName] = (entry.latestPreliminaryDaily[fieldName] || 0) + daily
-      } else if (PRELIMINARY_DATA.daily[fieldName][d] && PRELIMINARY_DATA.daily[fieldName][d][entry.name]) {
-        let daily = PRELIMINARY_DATA.daily[fieldName][d][entry.name]
+      } else if (DATA_PRELIMINARY.daily[fieldName][d] && DATA_PRELIMINARY.daily[fieldName][d][entry.name]) {
+        let daily = DATA_PRELIMINARY.daily[fieldName][d][entry.name]
 
         entry.preliminaryDaily[fieldName][d] = daily
         entry.latestPreliminaryTotal[fieldName] = entry.latestPreliminaryTotal[fieldName] + daily
@@ -215,151 +216,5 @@ export function fetchDataDispatcher (dispatch) {
     // })
 }
 
-const DATA_OVERRIDES = {
-  deaths: {
-    'Italy': {
-      '3/12/20': 1016,
-    },
-    'France': {
-      '3/12/20': 61,
-    },
-    'United Kingdom': {
-      '3/12/20': 10,
-    },
-    'Switzerland': {
-      '3/12/20': 4,
-    },
-    'Germany': {
-      '3/12/20': 5,
-    },
-    'Spain': {
-      '3/12/20': 84,
-    },
-    'Japan': {
-      '3/12/20': 19,
-    },
-    'US > Washington': {
-      '2/29/20': 1,
-      '3/1/20': 1,
-      '3/2/20': 6,
-      '3/3/20': 7,
-      '3/4/20': 10,
-      '3/5/20': 11,
-      '3/6/20': 13,
-      '3/7/20': 16,
-      '3/8/20': 18,
-      '3/9/20': 19,
-      '3/10/20': 23
-    },
-    'US > California': {
-      '3/4/20': 1,
-      '3/5/20': 1,
-      '3/6/20': 1,
-      '3/7/20': 1,
-      '3/8/20': 1,
-      '3/9/20': 1,
-      '3/10/20': 2
-    },
-    'US > Florida': {
-      '3/8/20': 2,
-      '3/9/20': 2,
-      '3/10/20': 2
-    },
-    'US > New Jersey': {
-      '3/10/20': 1
-    },
-  },
-  cases: {
-    'Italy': {
-      '3/12/20': 15113,
-    },
-    'France': {
-      '3/12/20': 2876,
-    },
-    'United Kingdom': {
-      '3/12/20': 10,
-    },
-    'Switzerland': {
-      '3/12/20': 815,
-    },
-    'Germany': {
-      '3/12/20': 2369,
-    },
-    'Spain': {
-      '3/12/20': 2950,
-    },
-    'US > Washington': {
-      '1/22/20': 1,
-      '2/29/20': 7,
-      '3/1/20': 11,
-      '3/2/20': 18,
-      '3/3/20': 27,
-      '3/4/20': 39,
-      '3/5/20': 70,
-      '3/6/20': 78,
-      '3/7/20': 102,
-      '3/8/20': 122,
-      '3/9/20': 122,
-      '3/10/20': 162
-    },
-    'US > California': {
-      '1/26/20': 2,
-      '1/31/20': 3,
-      '2/3/20': 6,
-      '2/11/20': 7,
-      '2/13/20': 8,
-      '2/21/20': 10,
-      '2/27/20': 11,
-      '2/29/20': 12,
-      '3/2/20': 21,
-      '3/3/20': 25,
-      '3/4/20': 35,
-      '3/5/20': 52,
-      '3/6/20': 59,
-      '3/7/20': 81,
-      '3/8/20': 95,
-      '3/9/20': 101,
-      '3/10/20': 145
-    },
-    'US > New York': {
-      '3/2/20': 1,
-      '3/3/20': 2,
-      '3/4/20': 11,
-      '3/5/20': 23,
-      '3/6/20': 36,
-      '3/7/20': 76,
-      '3/8/20': 106,
-      '3/9/20': 142,
-      '3/10/20': 150
-    },
-    'US > Florida': {
-      '3/2/20': 1,
-      '3/3/20': 2,
-      '3/4/20': 2,
-      '3/5/20': 3,
-      '3/6/20': 3,
-      '3/7/20': 7,
-      '3/8/20': 10,
-      '3/9/20': 13,
-      '3/10/20': 16
-    },
-    'US > Texas': {
-      '3/5/20': 3,
-      '3/6/20': 4,
-      '3/7/20': 8,
-      '3/8/20': 11,
-      '3/9/20': 13,
-      '3/10/20': 16
-    },
-    'US > New Jersey': {
-      '3/5/20': 2,
-      '3/6/20': 2,
-      '3/7/20': 4,
-      '3/8/20': 5,
-      '3/9/20': 5,
-      '3/10/20': 15
-    },
-  }
-}
 export default reducer
 
