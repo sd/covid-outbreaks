@@ -139,7 +139,7 @@ function processOneFile (fieldName, rawData, entries ) {
   let dates = data.dates
   let preliminaryDates = []
 
-  if (PRELIMINARY_DATA.total[fieldName]) {
+  if (PRELIMINARY_DATA.total && PRELIMINARY_DATA.total[fieldName]) {
     preliminaryDates = Object.keys(PRELIMINARY_DATA.total[fieldName]).filter(d => dates.indexOf(d) < 0)
   }
 
@@ -166,14 +166,14 @@ function processOneFile (fieldName, rawData, entries ) {
     entry.latestPreliminaryTotal[fieldName] = entry.latestTotal[fieldName]
 
     preliminaryDates.forEach(d => {
-      if (PRELIMINARY_DATA.total[fieldName][d][entry.name]) {
+      if (PRELIMINARY_DATA.total[fieldName][d] && PRELIMINARY_DATA.total[fieldName][d][entry.name]) {
         let total = PRELIMINARY_DATA.total[fieldName][d][entry.name]
         let daily = total - entry.latestTotal[fieldName]
 
         entry.preliminaryDaily[fieldName][d] = daily
         entry.latestPreliminaryTotal[fieldName] = entry.latestPreliminaryTotal[fieldName] + daily
         entry.latestPreliminaryDaily[fieldName] = (entry.latestPreliminaryDaily[fieldName] || 0) + daily
-      } else if (PRELIMINARY_DATA.daily[fieldName][d][entry.name]) {
+      } else if (PRELIMINARY_DATA.daily[fieldName][d] && PRELIMINARY_DATA.daily[fieldName][d][entry.name]) {
         let daily = PRELIMINARY_DATA.daily[fieldName][d][entry.name]
 
         entry.preliminaryDaily[fieldName][d] = daily

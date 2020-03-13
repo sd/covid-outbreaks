@@ -165,6 +165,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'Congo': { emoji: '🇨🇩', region: 'africa' },
   'Cote d\'Ivoire': { emoji: '🇨🇮', region: 'africa' },
   'Reunion': { emoji: '🇫🇷', region: 'africa' },
+  'Sudan': { emoji: '🇸🇩', region: 'africa' },
 
   'Australia': { emoji: '🇦🇺', region: 'oceania',
     links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Australia' }},

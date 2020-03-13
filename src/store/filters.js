@@ -1,5 +1,5 @@
 function filterAll (a, options) {
-  return true
+  return a.latestPreliminaryTotal.cases > 0
 }
 
 function filterRelevant (a, options) {
@@ -12,7 +12,7 @@ function filterRelevant (a, options) {
   } else if (options.sort === 'deathsTotal') {
     return a.latestPreliminaryTotal.cases > 100
   } else {
-    return true
+    return a.latestPreliminaryTotal.cases > 0
   }
 }
 

@@ -6,25 +6,33 @@ export const PRELIMINARY_DATA = {
         'Iran (Islamic Republic of)': 514,
         // 'France': 61,
         'South Korea': 71,
-        'Spain': 120,
-        // 'Japan': 19,
+        'Spain': 122,
+        'Japan': 19,
         'Germany': 7,
-        // 'Switzerland': 7,
+        'Netherlands': 10,
         'United Kingdom': 10,
         // 'USA > California': 4,
         'Indonesia': 1,
         'Hong Kong': 4,
+        'Ukraine': 1,
+        'Sudan': 1,
+      }
+    },
+    cases: {
+      '3/13/20': {
+        'Venezuela': 2,
       }
     }
   },
   daily: {
     deaths:  {
       '3/13/20': {
-        'China > Hubei (Wuhan)': 8,
+        'China > Hubei (Wuhan)': 6,
       }
+    },
+    cases: {
     }
-  },
-
+  }
 }
 
 
