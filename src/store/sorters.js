@@ -7,6 +7,8 @@ function sortEntriesByDeathsLatest(a, b, { pinPositions }) {
     return 1
   } else if (b.latestPreliminaryDaily.deaths !== a.latestPreliminaryDaily.deaths) {
     return b.latestPreliminaryDaily.deaths - a.latestPreliminaryDaily.deaths
+  } else if (b.latestPreliminaryDaily.cases !== a.latestPreliminaryDaily.cases) {
+    return b.latestPreliminaryDaily.cases - a.latestPreliminaryDaily.cases
   } else if (b.latestPreliminaryTotal.deaths !== a.latestPreliminaryTotal.deaths) {
     return b.latestPreliminaryTotal.deaths - a.latestPreliminaryTotal.deaths
   } else if (b.latestPreliminaryTotal.cases !== a.latestPreliminaryTotal.cases) {
