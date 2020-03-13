@@ -217,6 +217,27 @@ export function fetchDataDispatcher (dispatch) {
 
 const DATA_OVERRIDES = {
   deaths: {
+    'Italy': {
+      '3/12/20': 1016,
+    },
+    'France': {
+      '3/12/20': 61,
+    },
+    'United Kingdom': {
+      '3/12/20': 10,
+    },
+    'Switzerland': {
+      '3/12/20': 7,
+    },
+    'Germany': {
+      '3/12/20': 6,
+    },
+    'Spain': {
+      '3/12/20': 86,
+    },
+    'Japan': {
+      '3/12/20': 19,
+    },
     'US > Washington': {
       '2/29/20': 1,
       '3/1/20': 1,

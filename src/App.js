@@ -11,7 +11,8 @@ import TableView from './components/TableView'
 function App({ isMobile, isTablet, isDesktop }) {
   const dataSources = (
     <div className='dataSources'>
-      Data from <a target='_blank' rel="noopener noreferrer" href='https://github.com/CSSEGISandData/COVID-19'>John Hopkins Univeristy</a>,
+      Data from <a target='_blank' rel="noopener noreferrer" href='https://github.com/CSSEGISandData/COVID-19'>John Hopkins Univeristy</a>
+      {', '}
       { isMobile && <br /> }
       <a target='_blank' rel="noopener noreferrer" href='https://www.worldometers.info/coronavirus/#countries'>Worldometers</a> and other sources.
     </div>
