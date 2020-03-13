@@ -53,12 +53,15 @@ const OutbreakSparklineSVG = ({entry, dates, sideBySide}) => {
 
   let canvasHeight = (maxDataPoint + 1) * SVG_STYLES.emptyMarker.markerHeight + 10
 
+  const firstDateObj = new Date(dates[0])
+  const mondayOffset = firstDateObj.getDay() - 1
+
   if (entry.daily.deaths) {
     return (
       <div className='OutbreakSparkline'>
         <svg width={'100%'} viewBox={`0 0 ${canvasWidth} ${canvasHeight}`}>
           {dates.map((date, index) => (
-            ((index + 2) % 7 === 0) && /* + 2 moves the lines to a monday */
+            ((index + mondayOffset) % 7 === 0) && /* + 2 moves the lines to a monday */
               <line
                 key={`line_${index}`}
                 x1={index * SVG_STYLES.emptyMarker.markerWidth}
