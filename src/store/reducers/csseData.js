@@ -4,8 +4,11 @@ import { OUTBREAK_ATTRIBUTES, findAggregateMapping, findOverlayMapping } from '.
 import { DATA_PRELIMINARY } from '../../data/dataPreliminary'
 import { DATA_OVERRIDES } from '../../data/dataOverrides'
 
-const CASES_URL = './rawdata/cases.csv' // https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
-const DEATHS_URL = './rawdata/deaths.csv' // 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'
+import rawcases from '../../data/rawcases.csv'
+import rawdeaths from '../../data/rawdeaths.csv'
+
+// const CASES_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
+// const DEATHS_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'
 
 const initialState = {
   loaded: false,
@@ -193,7 +196,7 @@ function processOneFile (fieldName, rawData, entries ) {
 
 export function fetchDataDispatcher (dispatch) {
   dispatch({type: 'CSSE_DATA.LOAD.BEGIN'})
-  return Promise.all([d3CSV(CASES_URL), d3CSV(DEATHS_URL)])
+  return Promise.all([d3CSV(rawcases), d3CSV(rawdeaths)])
     .then(results => {
       let caseData = results[0]
       let deathData = results[1]
