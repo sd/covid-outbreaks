@@ -10,12 +10,13 @@ import { viewOptionsForSorting, SORTER_TYPES, SORTER_DESCRIPTIONS } from '../sto
 import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../store/filters'
 
 const ViewControls = ({
-  lastDate, lastPreliminaryDate,
+  lastDate,
   reset,
   sort, setSort,
   filter, setFilter,
   noScaling, setNoScaling,
   weeks, setWeeks,
+  totals, setTotals,
   isMobile
 }) => {
   let viewOptions = {}
@@ -86,6 +87,18 @@ const ViewControls = ({
           <div className='form-row'>
             <div className='form-label'>
               <input
+                type='checkbox' id='totals' name='noScaling' checked={!!totals}
+                onChange={(event) => setTotals(event.target.checked)}
+              />
+            </div>
+            <div className='form-field'>
+              <label htmlFor='totals'>Show Totals</label>
+            </div>
+          </div>
+
+          <div className='form-row'>
+            <div className='form-label'>
+              <input
                 type='checkbox' id='noScaling' name='noScaling' checked={!!noScaling}
                 onChange={(event) => setNoScaling(event.target.checked)}
               />
@@ -114,10 +127,10 @@ const ViewControls = ({
 export default connect(
   (state, ownProps) => ({
     lastDate: state.csseData.lastDate,
-    lastPreliminaryDate: state.csseData.lastPreliminaryDate,
     sort: state.ui.sort,
     filter: state.ui.filter,
     weeks: state.ui.weeks,
+    totals: state.ui.totals,
     noScaling: state.ui.noScaling
   }),
   (dispatch) => ({
@@ -125,6 +138,7 @@ export default connect(
     setFilter: (value) => dispatch({ type: 'UI.SET_FILTER', value }),
     setNoScaling: (value) => dispatch({ type: 'UI.SET_NO_SCALING', value }),
     setWeeks: (value) => dispatch({ type: 'UI.SET_WEEKS', value }),
+    setTotals: (value) => dispatch({ type: 'UI.SET_TOTALS', value }),
     reset: () => dispatch({ type: 'UI.RESET' }),
   })
 )(ViewControls)

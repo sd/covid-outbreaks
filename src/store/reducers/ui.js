@@ -7,6 +7,7 @@ const initialState = {
   expanded: undefined,
   noScaling: undefined,
   weeks: undefined,
+  totals: undefined,
   isExpanded: {}
 }
 
@@ -51,6 +52,9 @@ function reducer (state = initialState, action) {
 
     case 'UI.SET_WEEKS':
       return { ...state, weeks: action.value || undefined}
+
+    case 'UI.SET_TOTALS':
+      return { ...state, totals: action.value || undefined}
 
     case 'UI.SET_PINNED_ENTRIES':
       newValues = processPinned(action.value)

@@ -17,14 +17,6 @@ const SVG_STYLES = {
     markerHeight: 2.2,
     radius: 1.2
   },
-  preliminaryDeathMarker: {
-    fill: 'none',
-    stroke: '#e96',
-    strokeWidth: 0.6,
-    markerWidth: 9,
-    markerHeight: 2.2,
-    radius: 1.2
-  },
   caseMarker: {
     fill: '#6a6a6a',
     markerWidth: 9,
@@ -39,17 +31,16 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
 
   let maxDataPoint = Math.max(
     ...dates.map(d => entry.daily.deaths[d] || 0),
-    ...dates.map(d => entry.preliminaryDaily.deaths[d] || 0),
     ...dates.map(d => (entry.daily.cases[d] || 0) / SVG_STYLES.caseMarker.multiplier),
     0
   )
 
   let columns = 1
 
-  if (sideBySide && maxDataPoint > 200) {
-    columns = 3
-  } else if (sideBySide && maxDataPoint > 50) {
-    columns = 2
+  if (sideBySide) {
+    if (maxDataPoint > 300) columns = 4
+    else if (maxDataPoint > 200) columns = 3
+    else if (maxDataPoint > 50) columns = 2
   }
 
   maxDataPoint = maxDataPoint / columns
@@ -98,16 +89,17 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
               />
           ))}
           {dates.map((date, index)=> (
-            (entry.daily.deaths[date] || entry.preliminaryDaily.deaths[date]) &&
+            (entry.daily.deaths[date] &&
               <OutbreakSparklineOneDaySVG
                 key={`deaths_${date}`}
                 dayIndex={index}
-                count={entry.daily.deaths[date] || entry.preliminaryDaily.deaths[date]}
+                count={entry.daily.deaths[date]}
                 columns={columns}
                 round={true}
                 height={canvasHeight}
-                markerStyle={entry.daily.deaths[date] !== undefined ? SVG_STYLES.deathMarker : SVG_STYLES.preliminaryDeathMarker}
+                markerStyle={SVG_STYLES.deathMarker}
               />
+            )
           ))}
         </svg>
       </div>

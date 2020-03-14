@@ -7,10 +7,11 @@ import OneTableEntry from './entries/OneTableEntry'
 
 import { viewOptionsForSorting } from '../store/sorters'
 import { viewOptionsForFiltering } from '../store/filters'
+import { totalizeEntries } from '../store/totalize'
 
 const TableView = ({
   loaded, data, allDates, last4weeks, last6weeks, last8weeks,
-  sort, filter, noScaling, weeks,
+  sort, filter, noScaling, weeks, totals,
   pinPositions, pinEntry, unpinEntry,
   isExpanded, expandEntry, collapseEntry,
   isMobile, isTablet
@@ -22,6 +23,13 @@ const TableView = ({
 
     data = data.sort((a, b) => viewOptions.sorter(a, b, viewOptions ))
     data = data.filter((a) => viewOptions.filterer(a, viewOptions ))
+
+    let totalsEntry
+    if (totals) {
+      totalsEntry = totalizeEntries(data, allDates)
+      totalsEntry.name = `${viewOptions.filterDescription} • TOTALS`
+      totalsEntry.emoji = '🌎'
+    }
 
     let dates
     if (weeks === 'four') {
@@ -44,6 +52,12 @@ const TableView = ({
 
     return (
       <div className='TableView'>
+        {totalsEntry &&
+          <OneTableEntry {...sharedProps}
+            entry={totalsEntry} index={0} pinned={false} expanded={isExpanded['totals']}
+            sideBySide={!noScaling}
+          />
+        }
 
         {data.map((entry, index) => (
           <OneTableEntry key={entry.name} {...sharedProps}
@@ -76,6 +90,7 @@ const mapStateToProps = (state, ownProps) => ({
   filter: state.ui.filter,
   noScaling: state.ui.noScaling,
   weeks: state.ui.weeks,
+  totals: state.ui.totals,
   pinPositions: state.ui.pinPositions,
   isExpanded: state.ui.isExpanded
 })

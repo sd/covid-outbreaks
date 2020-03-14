@@ -35,8 +35,7 @@ const mapStateToProps = (state, ownProps) => ({
   loading: state.csseData.loading,
   loaded: state.csseData.loaded,
   errorMessage: state.csseData.errorMessage,
-  lastDate: state.csseData.lastDate,
-  lastPreliminaryDate: state.csseData.lastPreliminaryDate
+  lastDate: state.csseData.lastDate
 })
 
 const mapDispatchToProps = (dispatch) => ({

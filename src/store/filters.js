@@ -1,23 +1,27 @@
 function filterAll (a, options) {
-  return a.latestPreliminaryTotal.cases > 0
+  return a.latestTotal.cases > 0
 }
 
 function filterRelevant (a, options) {
   if (options.sort === 'casesLatest') {
-    return a.latestPreliminaryTotal.cases > 0
+    return a.latestTotal.cases > 0
   } else if (options.sort === 'casesTotal') {
-    return a.latestPreliminaryTotal.cases > 0
+    return a.latestTotal.cases > 0
   } else if (options.sort === 'deathsLatest') {
-    return a.latestPreliminaryTotal.cases > 100
+    return a.latestTotal.cases > 100
   } else if (options.sort === 'deathsTotal') {
-    return a.latestPreliminaryTotal.cases > 100
+    return a.latestTotal.cases > 100
   } else {
-    return a.latestPreliminaryTotal.cases > 0
+    return a.latestTotal.cases > 0
   }
 }
 
 function filterAmericas (a, options) {
   return (a.region === 'americas')
+}
+
+function filterUSA (a, options) {
+  return (a.name.startsWith('USA >'))
 }
 
 function filterEurope (a, options) {
@@ -44,6 +48,7 @@ const FILTERERS = {
   all: filterAll,
   relevant: filterRelevant,
   americas: filterAmericas,
+  usa: filterUSA,
   europe: filterEurope,
   middleEast: filterMiddleEast,
   africa: filterAfrica,
@@ -57,6 +62,7 @@ export const FILTER_ALIASES = {
   relevant: 'relevant',
   default: 'all',
   americas: 'americas',
+  usa: 'usa',
   europe: 'europe',
   middleEast: 'middleEast',
   africa: 'africa',
@@ -75,6 +81,7 @@ export const FILTER_ALIASES = {
 export const FILTER_DESCRIPTIONS = {
   relevant: 'Important outbreaks',
   americas: 'Outbreaks in The Americas',
+  usa: 'Outbreaks in USA',
   europe: 'Outbreaks in Europe',
   africa: 'Outbreaks in Africa',
   asiaOceania: 'Outbreaks in Asia & Oceania',
@@ -82,7 +89,7 @@ export const FILTER_DESCRIPTIONS = {
   all: 'All outbreaks'
 }
 
-export const FILTER_TYPES = ['all', 'relevant', 'asiaOceania', 'europe', 'americas', 'africa', 'otherRegions']
+export const FILTER_TYPES = ['all', 'relevant', 'asiaOceania', 'europe', 'americas', 'usa', 'africa', 'otherRegions']
 
 export function viewOptionsForFiltering(filter, moreOptions) {
   filter = FILTER_ALIASES[filter] || FILTER_ALIASES.default

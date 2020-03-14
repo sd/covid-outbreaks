@@ -1,7 +1,6 @@
 import { csv as d3CSV } from 'd3-fetch'
 
 import { OUTBREAK_ATTRIBUTES, findAggregateMapping, findOverlayMapping } from '../../data/outbreakInfo'
-import { DATA_PRELIMINARY } from '../../data/dataPreliminary'
 import { DATA_OVERRIDES } from '../../data/dataOverrides'
 
 import rawcases from '../../data/rawcases.csv'
@@ -20,7 +19,7 @@ const initialState = {
 export function reducer (state = initialState, action) {
   switch(action.type) {
     case 'CSSE_DATA.LOAD.BEGIN':
-      return { ...state, loading: true, error: undefined, errorMessage: '', lastDate: undefined, lastPreliminaryDate: undefined }
+      return { ...state, loading: true, error: undefined, errorMessage: '', lastDate: undefined }
 
     case 'CSSE_DATA.LOAD.SUCCESS':
       return { ...state, loading: false, loaded: true, ...action.payload }
@@ -114,20 +113,11 @@ function prepareEntries (data, fieldName, entries) {
     entry.percent = entry.percent || {}
     entry.percent[fieldName] = {}
 
-    entry.preliminaryDaily = entry.preliminaryDaily || {}
-    entry.preliminaryDaily[fieldName] = {}
-
     entry.latestTotal = entry.latestTotal || {}
     entry.latestTotal[fieldName] = 0
 
-    entry.latestPreliminaryTotal = entry.latestPreliminaryTotal || {}
-    entry.latestPreliminaryTotal[fieldName] = 0
-
     entry.latestDaily = entry.latestDaily || {}
     entry.latestDaily[fieldName] = 0
-
-    entry.latestPreliminaryDaily = entry.latestPreliminaryDaily || {}
-    entry.latestPreliminaryDaily[fieldName] = 0
 
     entries[entry.name] = entry
   })
@@ -145,11 +135,6 @@ function processOneFile (fieldName, rawData, entries ) {
 
   let dates = data.dates
   let lastDate = dates.slice(-1)
-  let preliminaryDates = []
-
-  if (DATA_PRELIMINARY.total && DATA_PRELIMINARY.total[fieldName]) {
-    preliminaryDates = Object.keys(DATA_PRELIMINARY.total[fieldName]).filter(d => dates.indexOf(d) < 0)
-  }
 
   let row, entry
 
@@ -176,31 +161,10 @@ function processOneFile (fieldName, rawData, entries ) {
       }
     })
 
-    entry.latestPreliminaryTotal[fieldName] = entry.latestTotal[fieldName]
-
-    // preliminaryDates.forEach(d => {
-    //   if (DATA_PRELIMINARY.total[fieldName][d] && DATA_PRELIMINARY.total[fieldName][d][entry.name]) {
-    //     let total = DATA_PRELIMINARY.total[fieldName][d][entry.name]
-    //     let daily = total - entry.latestTotal[fieldName]
-
-    //     entry.preliminaryDaily[fieldName][d] = daily
-    //     entry.latestPreliminaryTotal[fieldName] = entry.latestPreliminaryTotal[fieldName] + daily
-    //     entry.latestPreliminaryDaily[fieldName] = (entry.latestPreliminaryDaily[fieldName] || 0) + daily
-    //   } else if (DATA_PRELIMINARY.daily[fieldName][d] && DATA_PRELIMINARY.daily[fieldName][d][entry.name]) {
-    //     let daily = DATA_PRELIMINARY.daily[fieldName][d][entry.name]
-
-    //     entry.preliminaryDaily[fieldName][d] = daily
-    //     entry.latestPreliminaryTotal[fieldName] = entry.latestPreliminaryTotal[fieldName] + daily
-    //     entry.latestPreliminaryDaily[fieldName] = (entry.latestPreliminaryDaily[fieldName || 0]) + daily
-    //   }
-    // })
-
-    entry.latestPreliminaryDaily[fieldName] = entry.latestPreliminaryDaily[fieldName] || entry.latestDaily[fieldName]
-
     entries[entry.name] = entry
   })
 
-  return { entries, names: data.names, dates: data.dates, preliminaryDates }
+  return { entries, names: data.names, dates: data.dates }
 }
 
 export function fetchDataDispatcher (dispatch) {
@@ -215,9 +179,8 @@ export function fetchDataDispatcher (dispatch) {
 
       let data = Object.keys(deathsResults.entries).filter(k => k !== 'ignore').map(k => deathsResults.entries[k])
 
-      let allDates = [...deathsResults.dates, ...deathsResults.preliminaryDates]
+      let allDates = deathsResults.dates
       let lastDate = deathsResults.dates[deathsResults.dates.length - 1]
-      let lastPreliminaryDate = deathsResults.preliminaryDates[deathsResults.preliminaryDates.length - 1]
 
       let last4weeks = allDates.slice(-28)
       let last6weeks = allDates.slice(-42)
@@ -225,7 +188,7 @@ export function fetchDataDispatcher (dispatch) {
 
       dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', payload: {
         data, allDates, last4weeks, last6weeks, last8weeks,
-        lastDate, lastPreliminaryDate
+        lastDate
       }})
       return data
     })
