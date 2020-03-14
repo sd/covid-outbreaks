@@ -25,6 +25,7 @@
   border-top: 1px solid #999;
   display: grid;
   margin-top: 0.2em;
+  padding-top: 0.2em;
 }
 
 .TableView-title .tools {
@@ -54,7 +55,7 @@
 }
 
 .TableView-title {
-  grid-template-columns: 9em auto 9em;
+  grid-template-columns: 10em auto 10em;
   grid-template-rows: auto;
   grid-template-areas:
     "tools name totals";
@@ -67,7 +68,7 @@
 
 @media only screen and (max-width: 600px) {
   .TableView-title {
-    grid-template-columns: auto 9em;
+    grid-template-columns: auto 10em;
     grid-template-rows: auto;
     grid-template-areas:
       "name   totals"
@@ -115,14 +116,37 @@
   color: #e96;
 }
 
-.TableView .name {
+.TableView .title {
   line-height: 150%;
+  margin-left: auto;
+  margin-right: auto;
 }
 
-.TableView .name .flag {
+@media only screen and (max-width: 600px) {
+  .TableView .title {
+    margin-left: 0;
+    margin-right: 0;
+  }
+}
+
+.TableView .title .name {
+  display: inline-block;
+}
+
+.TableView .title .flag {
+  float: left;
+
+  margin-right: 0.2em;
+
   font-size: 160%;
-  position: relative;
-  top: 0.15em;
   text-shadow: 0 0 0.2em #999;
 }
 
+.TableView .totals .cases {
+  white-space: nowrap;
+}
+
+.TableView .totals .cases {
+  font-size: 80%;
+  opacity: 0.4;
+}

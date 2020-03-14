@@ -32,7 +32,7 @@
 }
 
 .OutbreakTable .cases {
-  color: #777;
+  opacity: 0.4;
   margin-top: 0.4em;
 }
 

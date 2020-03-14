@@ -144,6 +144,7 @@ function processOneFile (fieldName, rawData, entries ) {
   entries = prepareEntries(data, fieldName, entries)
 
   let dates = data.dates
+  let lastDate = dates.slice(-1)
   let preliminaryDates = []
 
   if (DATA_PRELIMINARY.total && DATA_PRELIMINARY.total[fieldName]) {
@@ -161,36 +162,38 @@ function processOneFile (fieldName, rawData, entries ) {
 
       /* Prevent errors when data is missing */
       if (value === undefined || value === null || value < entry.latestTotal[fieldName]) {
-        value = entry.latestTotal[fieldName] || 0
+        value = (d === lastDate) ? (entry.latestTotal[fieldName] || 0) : undefined
       }
 
-      entry.totals[fieldName][d] = value
-      entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
-      if (entry.latestDaily[fieldName] > 0) {
-        entry.percent[fieldName][d] = Math.round(((entry.daily[fieldName][d] / entry.latestDaily[fieldName]) - 1) * 100)
+      if (value !== undefined) {
+        entry.totals[fieldName][d] = value
+        entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
+        if (entry.latestDaily[fieldName] > 0) {
+          entry.percent[fieldName][d] = Math.round(((entry.daily[fieldName][d] / entry.latestDaily[fieldName]) - 1) * 100)
+        }
+        entry.latestTotal[fieldName] = entry.totals[fieldName][d]
+        entry.latestDaily[fieldName] = entry.daily[fieldName][d]
       }
-      entry.latestTotal[fieldName] = entry.totals[fieldName][d]
-      entry.latestDaily[fieldName] = entry.daily[fieldName][d]
     })
 
     entry.latestPreliminaryTotal[fieldName] = entry.latestTotal[fieldName]
 
-    preliminaryDates.forEach(d => {
-      if (DATA_PRELIMINARY.total[fieldName][d] && DATA_PRELIMINARY.total[fieldName][d][entry.name]) {
-        let total = DATA_PRELIMINARY.total[fieldName][d][entry.name]
-        let daily = total - entry.latestTotal[fieldName]
+    // preliminaryDates.forEach(d => {
+    //   if (DATA_PRELIMINARY.total[fieldName][d] && DATA_PRELIMINARY.total[fieldName][d][entry.name]) {
+    //     let total = DATA_PRELIMINARY.total[fieldName][d][entry.name]
+    //     let daily = total - entry.latestTotal[fieldName]
 
-        entry.preliminaryDaily[fieldName][d] = daily
-        entry.latestPreliminaryTotal[fieldName] = entry.latestPreliminaryTotal[fieldName] + daily
-        entry.latestPreliminaryDaily[fieldName] = (entry.latestPreliminaryDaily[fieldName] || 0) + daily
-      } else if (DATA_PRELIMINARY.daily[fieldName][d] && DATA_PRELIMINARY.daily[fieldName][d][entry.name]) {
-        let daily = DATA_PRELIMINARY.daily[fieldName][d][entry.name]
+    //     entry.preliminaryDaily[fieldName][d] = daily
+    //     entry.latestPreliminaryTotal[fieldName] = entry.latestPreliminaryTotal[fieldName] + daily
+    //     entry.latestPreliminaryDaily[fieldName] = (entry.latestPreliminaryDaily[fieldName] || 0) + daily
+    //   } else if (DATA_PRELIMINARY.daily[fieldName][d] && DATA_PRELIMINARY.daily[fieldName][d][entry.name]) {
+    //     let daily = DATA_PRELIMINARY.daily[fieldName][d][entry.name]
 
-        entry.preliminaryDaily[fieldName][d] = daily
-        entry.latestPreliminaryTotal[fieldName] = entry.latestPreliminaryTotal[fieldName] + daily
-        entry.latestPreliminaryDaily[fieldName] = (entry.latestPreliminaryDaily[fieldName || 0]) + daily
-      }
-    })
+    //     entry.preliminaryDaily[fieldName][d] = daily
+    //     entry.latestPreliminaryTotal[fieldName] = entry.latestPreliminaryTotal[fieldName] + daily
+    //     entry.latestPreliminaryDaily[fieldName] = (entry.latestPreliminaryDaily[fieldName || 0]) + daily
+    //   }
+    // })
 
     entry.latestPreliminaryDaily[fieldName] = entry.latestPreliminaryDaily[fieldName] || entry.latestDaily[fieldName]
 

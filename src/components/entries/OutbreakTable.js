@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import formatNumber from '../../utils/formatNumber'
-import { formatDateMonDD } from '../../utils/dateFormats'
+import { formatDateMonDD, ABBREVIATED_MONTHS, ABBREVIATED_WEEKDAYS } from '../../utils/dateFormats'
 
 import './OutbreakTable.css'
 
@@ -16,20 +16,7 @@ const OutbreakTable = ({entry, dates}) => {
         <div className='OutbreakTable-values' >
           {reversedDates.map((date, index)=> (
             <div key={date} className='row'>
-              <div className='date'>{formatDateMonDD(date)}</div>
-              <div className='cases'>{formatNumber(entry.daily.cases[date])}</div>
-              <div className={classNames('percent', {
-                  positive: entry.percent.cases[date] > 0,
-                  negative: entry.percent.cases[date] < 0,
-                  large: Math.abs(entry.percent.cases[date]) > 25,
-                  huge: Math.abs(entry.percent.cases[date]) > 50
-                })}
-              >
-                {
-                  formatNumber(entry.percent.cases[date])
-                }
-                {entry.percent.cases[date] !== undefined ? '%' : <span>&nbsp;</span>}
-              </div>
+              <div className='date'><DateHeader d={date} /></div>
 
               <div className='deaths'>{formatNumber(entry.daily.deaths[date])}</div>
               <div className={classNames('percent', {
@@ -44,15 +31,30 @@ const OutbreakTable = ({entry, dates}) => {
                 }
                 {entry.percent.deaths[date] !== undefined ? '%': <span>&nbsp;</span>}
               </div>
+
+              <div className='cases'>{formatNumber(entry.daily.cases[date])}</div>
+              <div className={classNames('percent cases', {
+                  positive: entry.percent.cases[date] > 0,
+                  negative: entry.percent.cases[date] < 0,
+                  large: Math.abs(entry.percent.cases[date]) > 25,
+                  huge: Math.abs(entry.percent.cases[date]) > 50
+                })}
+              >
+                {
+                  formatNumber(entry.percent.cases[date])
+                }
+                {entry.percent.cases[date] !== undefined ? '%' : <span>&nbsp;</span>}
+              </div>
+
             </div>
           ))}
         </div>
         <div className='OutbreakTable-headers'>
           <div className='row'>
             <div className='date'>Date</div>
-            <div className='cases'>Cases</div>
-            <div className='percent'>&nbsp;</div>
             <div className='deaths'>Deaths</div>
+            <div className='percent'>&nbsp;</div>
+            <div className='cases'>Cases</div>
             <div className='percent'>&nbsp;</div>
           </div>
         </div>
@@ -60,6 +62,20 @@ const OutbreakTable = ({entry, dates}) => {
     )
   } else {
     return null
+  }
+}
+
+ /* Sat 29   MAR 1   Mon 2   Tue 3 ... */
+const DateHeader = ({d}) => {
+  if (d) {
+    const date = new Date(d)
+    if (date.getDate() === 1) {
+      return <b>{`${ABBREVIATED_MONTHS[date.getMonth() + 1].toUpperCase()} ${date.getDate()}`}</b>
+    } else {
+      return `${ABBREVIATED_WEEKDAYS[date.getDay()]} ${date.getDate()}`
+    }
+  } else {
+    return ''
   }
 }
 

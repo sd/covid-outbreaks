@@ -30,24 +30,24 @@ const OneTableEntry = ({
           }
         </div>
 
-        <div className='name'>
+        <div className='title'>
           <span className='flag'>{entry.emoji}</span>
-          &nbsp;&nbsp;
-          <b>{entry.displayName || entry.name}</b>
+          <span className='name'>{entry.displayName || entry.name}</span>
         </div>
 
         <div className='totals'>
-          {
-            entry.latestTotal.deaths > 0
-            ? <div className='segment'>{formatNumber(entry.latestDaily.deaths)} new deaths</div>
-            : <div className='segment'>{formatNumber(entry.latestTotal.cases)} total cases</div>
-          }
-          <div className='segment'><b>
-            {formatNumber(entry.latestTotal.deaths)} total
-            {entry.latestPreliminaryTotal.deaths !== entry.latestTotal.deaths && (
-              <span className='preliminary'>{' +'}{formatNumber(entry.latestPreliminaryDaily.deaths)}</span>
-            )}
-          </b></div>
+          <div className='deaths'>
+            {formatNumber(entry.latestTotal.deaths)} deaths
+            {entry.latestDaily.deaths > 0 &&
+              ` (+${formatNumber(entry.latestDaily.deaths)})`
+            }
+          </div>
+          <div className='cases'>
+            {formatNumber(entry.latestTotal.cases)} cases
+            {entry.latestDaily.cases > 0 &&
+              ` (+${formatNumber(entry.latestDaily.cases)})`
+            }
+          </div>
         </div>
       </div>
       {expanded && (

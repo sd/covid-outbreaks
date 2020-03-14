@@ -38,7 +38,7 @@ export function formatDateISO (d) {
   }
 }
 
-const MONTHS = {
+export const MONTHS = {
   '1': 'January',
   '2': 'February',
   '3': 'March',
@@ -53,7 +53,7 @@ const MONTHS = {
   '12': 'December'
 }
 
-const ABBREVIATED_MONTHS = {
+export const ABBREVIATED_MONTHS = {
   '1': 'Jan',
   '2': 'Feb',
   '3': 'Mar',
@@ -68,3 +68,12 @@ const ABBREVIATED_MONTHS = {
   '12': 'Dec'
 }
 
+export const ABBREVIATED_WEEKDAYS = {
+  '0': 'Sun',
+  '1': 'Mon',
+  '2': 'Tue',
+  '3': 'Wed',
+  '4': 'Thu',
+  '5': 'Fri',
+  '6': 'Sat',
+}
