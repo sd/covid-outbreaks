@@ -36,7 +36,7 @@ const OutbreakTable = ({entry, dates}) => {
                   positive: entry.percent.deaths[date] > 0,
                   negative: entry.percent.deaths[date] < 0,
                   large: Math.abs(entry.percent.deaths[date]) > 15,
-                  huge: Math.abs(entry.percent.deaths[date]) > 60
+                  huge: Math.abs(entry.percent.deaths[date]) > 50
                 })}
               >
                 {
