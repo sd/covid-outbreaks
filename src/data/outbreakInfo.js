@@ -176,6 +176,7 @@ export const OUTBREAK_ATTRIBUTES = {
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy' }},
   'Spain': { emoji: '🇪🇸', region: 'europe',
     links: { 'Ministerio de Sanidad': 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm',
+             'RTVE': 'https://www.rtve.es/noticias/20200314/mapa-del-coronavirus-espana/2004681.shtml',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain' }},
   'Portugal': { emoji: '🇵🇹', region: 'europe' },
   'France': { emoji: '🇫🇷', region: 'europe',
