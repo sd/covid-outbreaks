@@ -219,7 +219,14 @@ export function fetchDataDispatcher (dispatch) {
       let lastDate = deathsResults.dates[deathsResults.dates.length - 1]
       let lastPreliminaryDate = deathsResults.preliminaryDates[deathsResults.preliminaryDates.length - 1]
 
-      dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', payload: { data, allDates, lastDate, lastPreliminaryDate }})
+      let last4weeks = allDates.slice(-28)
+      let last6weeks = allDates.slice(-42)
+      let last8weeks = allDates.slice(-56)
+
+      dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', payload: {
+        data, allDates, last4weeks, last6weeks, last8weeks,
+        lastDate, lastPreliminaryDate
+      }})
       return data
     })
     // .catch(error => {

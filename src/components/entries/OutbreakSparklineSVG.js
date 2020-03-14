@@ -34,7 +34,7 @@ const SVG_STYLES = {
   }
 }
 
-const OutbreakSparklineSVG = ({entry, dates, sideBySide}) => {
+const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
   let canvasWidth = dates.length * SVG_STYLES.emptyMarker.markerWidth
 
   let maxDataPoint = Math.max(
@@ -207,4 +207,4 @@ export const OutbreakSparklineSampleMarker = ({ type }) => {
   }
 
 }
-export default OutbreakSparklineSVG
+export default  React.memo(OutbreakSparklineSVG)

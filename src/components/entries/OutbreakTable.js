@@ -79,4 +79,4 @@ const DateHeader = ({d}) => {
   }
 }
 
-export default OutbreakTable
+export default  React.memo(OutbreakTable)

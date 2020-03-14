@@ -9,7 +9,7 @@ import { viewOptionsForSorting } from '../store/sorters'
 import { viewOptionsForFiltering } from '../store/filters'
 
 const TableView = ({
-  loaded, data, allDates,
+  loaded, data, allDates, last4weeks, last6weeks, last8weeks,
   sort, filter,
   pinPositions, pinEntry, unpinEntry,
   isExpanded, expandEntry, collapseEntry,
@@ -25,14 +25,14 @@ const TableView = ({
 
     let dates
     if (isMobile) {
-      dates = allDates.slice(Math.max(allDates.length - 28, 0))
+      dates = last4weeks
     } else if (isTablet) {
-      dates = allDates.slice(Math.max(allDates.length - 42, 0))
+      dates = last6weeks
     } else {
-      dates = allDates.slice(Math.max(allDates.length - 56, 0))
+      dates = last8weeks
     }
 
-    const sharedProps = { dates, pinEntry, unpinEntry, expandEntry, collapseEntry }
+    const sharedProps = { dates, allDates, pinEntry, unpinEntry, expandEntry, collapseEntry }
 
     return (
       <div className='TableView'>
@@ -49,8 +49,8 @@ const TableView = ({
   } else {
     return (
       <div className='TableView'>
-        <div className='Views-paddedContent'>
-          <h2>Table View (Loading...)</h2>
+        <div className='TableView-loading'>
+          <h2>Loading...</h2>
         </div>
       </div>
     )
@@ -61,6 +61,9 @@ const mapStateToProps = (state, ownProps) => ({
   loaded: state.csseData.loaded,
   data: state.csseData.data,
   allDates: state.csseData.allDates,
+  last4weeks: state.csseData.last4weeks,
+  last6weeks: state.csseData.last6weeks,
+  last8weeks: state.csseData.last8weeks,
   sort: state.ui.sort,
   filter: state.ui.filter,
   pinPositions: state.ui.pinPositions,

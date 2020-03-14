@@ -1,3 +1,8 @@
+.TableView {
+  flex: 1;
+  position: relative;
+}
+
 .TableView-row {
   width: 100%;
   min-width: 200px;
@@ -6,6 +11,17 @@
   margin-right: auto;
   margin-bottom: 2em;
   clear: both;
+}
+
+.TableView-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
 }
 
 .desktop .TableView-row {

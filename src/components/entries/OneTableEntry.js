@@ -79,4 +79,4 @@ const OneTableEntry = ({
   )
 }
 
-export default OneTableEntry
+export default  React.memo(OneTableEntry)
