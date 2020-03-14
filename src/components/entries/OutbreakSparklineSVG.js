@@ -46,10 +46,13 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
 
   let columns = 1
 
-  if (sideBySide && maxDataPoint > 50) {
+  if (sideBySide && maxDataPoint > 200) {
+    columns = 3
+  } else if (sideBySide && maxDataPoint > 50) {
     columns = 2
-    maxDataPoint = maxDataPoint / 2
   }
+
+  maxDataPoint = maxDataPoint / columns
 
   let canvasHeight = (maxDataPoint + 1) * SVG_STYLES.emptyMarker.markerHeight + 10
 
@@ -115,32 +118,43 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
 }
 
 const OutbreakSparklineOneDaySVG = ({dayIndex, count, columns, round, height, markerStyle}) => {
-  let markerColumns = []
-  let perColumn = count / columns
+  let columnCounts = []
+
   if (round) {
-    perColumn = Math.round(perColumn)
+    if (columns > 2 && count > 3 && round) debugger
+
+    let perColumn = Math.round(count / columns)
+
+    for (let i = 0; i < columns; i++) {
+      columnCounts.push(perColumn)
+    }
+
+    let remainder = count % columns
+    for (let i = 0; i < remainder; i++) {
+      columnCounts[i] = columnCounts[i] + 1
+    }
+  } else {
+    let perColumn = count / columns
+    for (let i = 0; i < columns; i++) {
+      columnCounts.push(perColumn)
+    }
   }
-  let column = 1
 
   let offsetPerColumn = markerStyle.markerWidth / (columns + 1)
 
-  while (count > 0) {
-    markerColumns.push(
+  return columnCounts.map(
+    (count, index) => (
       <OutbreakSparklineOneColumnSVG
-        key={`column_${column}`}
-        dayIndex={dayIndex}
-        count={count > perColumn ? (perColumn * column) : count}
-        xOffset={column * offsetPerColumn}
-        yOffset={markerStyle.markerHeight / 2}
-        height={height}
-        style={markerStyle}
-      />
+          key={`column_${index + 1}`}
+          dayIndex={dayIndex}
+          count={count}
+          xOffset={(index + 1) * offsetPerColumn}
+          yOffset={markerStyle.markerHeight / 2}
+          height={height}
+          style={markerStyle}
+        />
     )
-    count = count - perColumn
-    column = column + 1
-  }
-
-  return <>{markerColumns}</>
+  )
 }
 
 const OutbreakSparklineOneColumnSVG = ({dayIndex, count, xOffset, yOffset, height, style}) => {

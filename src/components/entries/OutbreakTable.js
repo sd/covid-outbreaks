@@ -2,7 +2,7 @@ import React from 'react'
 import classNames from 'classnames'
 
 import formatNumber from '../../utils/formatNumber'
-import { formatDateMonDD, ABBREVIATED_MONTHS, ABBREVIATED_WEEKDAYS } from '../../utils/dateFormats'
+import { ABBREVIATED_MONTHS, ABBREVIATED_WEEKDAYS } from '../../utils/dateFormats'
 
 import './OutbreakTable.css'
 
