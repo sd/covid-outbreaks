@@ -3,7 +3,6 @@ import './App.css';
 import withSizes from 'react-sizes'
 import classNames from 'classnames'
 
-import DataLoader from './components/DataLoader'
 import ViewControls from './components/ViewControls'
 import MarkerLegend from './components/MarkerLegend'
 import TableView from './components/TableView'
@@ -32,8 +31,6 @@ function App({ isMobile, isTablet, isDesktop }) {
         {isMobile && dataSources}
 
         <ViewControls isMobile={isMobile} />
-
-        <DataLoader />
 
         <TableView isMobile={isMobile} isTablet={isTablet} isDesktop={isDesktop} />
       </div>

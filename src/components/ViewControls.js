@@ -4,13 +4,14 @@ import Popup from 'reactjs-popup'
 
 import './ViewControls.css'
 
-import { formatDateMonthDD } from '../utils/dateFormats'
+import DataLoader from './DataLoader'
 
 import { viewOptionsForSorting, SORTER_TYPES, SORTER_DESCRIPTIONS } from '../store/sorters'
 import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../store/filters'
 
 const ViewControls = ({
   lastDate, lastPreliminaryDate,
+  reset,
   sort, setSort,
   filter, setFilter,
   noScaling, setNoScaling,
@@ -19,8 +20,6 @@ const ViewControls = ({
   let viewOptions = {}
   viewOptions = viewOptionsForSorting(sort, viewOptions)
   viewOptions = viewOptionsForFiltering(filter, viewOptions)
-
-  if (!lastDate) return null
 
   return (
     <div className='ViewControls'>
@@ -53,7 +52,7 @@ const ViewControls = ({
             <div className='form-field'>
               <select value={viewOptions.filter} onChange={(event) => setFilter(event.target.value)}>
                 {FILTER_TYPES.map(option => (
-                  <option value={option}>{FILTER_DESCRIPTIONS[option]}</option>
+                  <option key={option} value={option}>{FILTER_DESCRIPTIONS[option]}</option>
                 ))}
               </select>
             </div>
@@ -64,7 +63,7 @@ const ViewControls = ({
             <div className='form-field'>
               <select value={viewOptions.sort} onChange={(event) => setSort(event.target.value)}>
                 {SORTER_TYPES.map(option => (
-                  <option value={option}>{SORTER_DESCRIPTIONS[option]}</option>
+                  <option key={option} value={option}>{SORTER_DESCRIPTIONS[option]}</option>
                 ))}
               </select>
             </div>
@@ -83,47 +82,17 @@ const ViewControls = ({
           </div>
 
           <div className='form-row form-single'>
+            <button onClick={() => { reset(); close() }}>Reset to defaults</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button onClick={() => close()}>Done</button>
           </div>
 
         </div>
       )}
-    </Popup>
+      </Popup>
 
-    <span className='segment'>
-      <span className='date'>
-        {' as of '}
-        {formatDateMonthDD(lastDate)}
-      </span>
-      {lastPreliminaryDate && (
-        <span className='preliminary preliminaryDate'>
-          { isMobile ? ' (+ prelim. ' : ' (preliminary for ' }
-          {formatDateMonthDD(lastPreliminaryDate)}
-          { ')' }
-        </span>
-      )}
-    </span>
+      <DataLoader />
 
-
-      {/* <span className='segment filtering'>
-        <SelectionPopup
-          selected={viewOptions.filter}
-          options={FILTER_TYPES}
-          descriptions={FILTER_DESCRIPTIONS}
-          title='Filtering options'
-          onSelect={(option) => setFilter(option)}
-        />
-      </span>
-      <span className='segment sorting'>
-        {' sorted by '}
-        <SelectionPopup
-          selected={viewOptions.sort}
-          options={SORTER_TYPES}
-          descriptions={SORTER_DESCRIPTIONS}
-          title='Sorting options'
-          onSelect={(option) => setSort(option)}
-        />
-      </span> */}
     </div>
   )
 }
@@ -140,5 +109,6 @@ export default connect(
     setSort: (value) => dispatch({ type: 'UI.SET_SORT', value }),
     setFilter: (value) => dispatch({ type: 'UI.SET_FILTER', value }),
     setNoScaling: (value) => dispatch({ type: 'UI.SET_NO_SCALING', value }),
+    reset: () => dispatch({ type: 'UI.RESET' }),
   })
 )(ViewControls)

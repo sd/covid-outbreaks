@@ -33,6 +33,9 @@ function reducer (state = initialState, action) {
   let newValues
 
   switch(action.type) {
+    case 'UI.RESET':
+      return initialState
+
     case 'UI.SET_VIEW':
       return { ...state, view: action.value || undefined }
 
