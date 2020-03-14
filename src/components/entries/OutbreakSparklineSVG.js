@@ -7,28 +7,28 @@ const SVG_STYLES = {
   },
   emptyMarker: {
     fill: '#444',
-    markerWidth: 10,
-    markerHeight: 2,
+    markerWidth: 9,
+    markerHeight: 2.2,
     radius: 0.5
   },
   deathMarker: {
     fill: '#F00',
-    markerWidth: 10,
-    markerHeight: 2,
+    markerWidth: 9,
+    markerHeight: 2.2,
     radius: 1.2
   },
   preliminaryDeathMarker: {
     fill: 'none',
     stroke: '#e96',
     strokeWidth: 0.6,
-    markerWidth: 10,
-    markerHeight: 2,
+    markerWidth: 9,
+    markerHeight: 2.2,
     radius: 1.2
   },
   caseMarker: {
     fill: '#6a6a6a',
-    markerWidth: 10,
-    markerHeight: 2,
+    markerWidth: 9,
+    markerHeight: 2.2,
     radius: 3.0,
     multiplier: 100
   }
@@ -79,7 +79,7 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
             <OutbreakSparklineOneDaySVG
               key={`empty_${date}`}
               dayIndex={index}
-              count={1}
+              count={columns}
               columns={columns}
               height={canvasHeight}
               markerStyle={SVG_STYLES.emptyMarker}
@@ -120,22 +120,16 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
 const OutbreakSparklineOneDaySVG = ({dayIndex, count, columns, round, height, markerStyle}) => {
   let columnCounts = []
 
-  if (round) {
-    let perColumn = Math.round(count / columns)
+  let perColumn = count / columns
+  if (round) perColumn = Math.round(perColumn)
 
-    for (let i = 0; i < columns; i++) {
-      columnCounts.push(perColumn)
-    }
+  for (let i = 0; i < columns; i++) {
+    columnCounts.push(perColumn)
+  }
 
-    let remainder = count % columns
-    for (let i = 0; i < remainder; i++) {
-      columnCounts[i] = columnCounts[i] + 1
-    }
-  } else {
-    let perColumn = count / columns
-    for (let i = 0; i < columns; i++) {
-      columnCounts.push(perColumn)
-    }
+  let remainder = count % columns
+  for (let i = 0; i < remainder; i++) {
+    columnCounts[i] = columnCounts[i] + 1
   }
 
   let offsetPerColumn = markerStyle.markerWidth / (columns + 1)

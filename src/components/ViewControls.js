@@ -73,7 +73,7 @@ const ViewControls = ({
           <div className='form-row'>
             <div className='form-label'>Limit to </div>
             <div className='form-field'>
-              <select value={viewOptions.weeks} onChange={(event) => setWeeks(event.target.value)}>
+              <select value={weeks} onChange={(event) => setWeeks(event.target.value)}>
                 <option value={''}>What fits on screen</option>
                 <option value={'four'}>Last 4 weeks</option>
                 <option value={'six'}>Last 6 weeks</option>
