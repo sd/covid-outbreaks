@@ -4,8 +4,8 @@ import { OUTBREAK_ATTRIBUTES, findAggregateMapping, findOverlayMapping } from '.
 import { DATA_PRELIMINARY } from '../../data/dataPreliminary'
 import { DATA_OVERRIDES } from '../../data/dataOverrides'
 
-const CASES_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
-const DEATHS_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'
+const CASES_URL = './rawdata/cases.csv' // https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
+const DEATHS_URL = './rawdata/deaths.csv' // 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'
 
 const initialState = {
   loaded: false,
