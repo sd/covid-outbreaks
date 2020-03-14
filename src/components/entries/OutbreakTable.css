@@ -33,8 +33,32 @@
 
 .OutbreakTable .cases {
   color: #777;
+  margin-top: 0.4em;
 }
 
 .OutbreakTable .deaths {
   color: #f99;
+  margin-top: 0.4em;
+}
+
+.OutbreakTable .percent {
+  font-size: 75%;
+}
+
+.OutbreakTable .percent.positive.large {
+  color: #c66;
+}
+
+.OutbreakTable .percent.positive.huge {
+  color: #f00;
+  font-weight: bold;
+}
+
+.OutbreakTable .percent.negative.large {
+  color: #3a3;
+}
+
+.OutbreakTable .percent.negative.huge {
+  color: #0f0;
+  font-weight: bold;
 }

@@ -111,6 +111,9 @@ function prepareEntries (data, fieldName, entries) {
     entry.daily = entry.daily || {}
     entry.daily[fieldName] = {}
 
+    entry.percent = entry.percent || {}
+    entry.percent[fieldName] = {}
+
     entry.preliminaryDaily = entry.preliminaryDaily || {}
     entry.preliminaryDaily[fieldName] = {}
 
@@ -163,6 +166,9 @@ function processOneFile (fieldName, rawData, entries ) {
 
       entry.totals[fieldName][d] = value
       entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
+      if (entry.latestDaily[fieldName] > 0) {
+        entry.percent[fieldName][d] = Math.round(((entry.daily[fieldName][d] / entry.latestDaily[fieldName]) - 1) * 100)
+      }
       entry.latestTotal[fieldName] = entry.totals[fieldName][d]
       entry.latestDaily[fieldName] = entry.daily[fieldName][d]
     })
