@@ -15,6 +15,7 @@ const ViewControls = ({
   sort, setSort,
   filter, setFilter,
   noScaling, setNoScaling,
+  weeks, setWeeks,
   isMobile
 }) => {
   let viewOptions = {}
@@ -70,6 +71,19 @@ const ViewControls = ({
           </div>
 
           <div className='form-row'>
+            <div className='form-label'>Limit to </div>
+            <div className='form-field'>
+              <select value={viewOptions.weeks} onChange={(event) => setWeeks(event.target.value)}>
+                <option value={''}>What fits on screen</option>
+                <option value={'four'}>Last 4 weeks</option>
+                <option value={'six'}>Last 6 weeks</option>
+                <option value={'eight'}>Last 8 weeks</option>
+                <option value={'all'}>All available dates</option>
+              </select>
+            </div>
+          </div>
+
+          <div className='form-row'>
             <div className='form-label'>
               <input
                 type='checkbox' id='noScaling' name='noScaling' checked={!!noScaling}
@@ -103,12 +117,14 @@ export default connect(
     lastPreliminaryDate: state.csseData.lastPreliminaryDate,
     sort: state.ui.sort,
     filter: state.ui.filter,
+    weeks: state.ui.weeks,
     noScaling: state.ui.noScaling
   }),
   (dispatch) => ({
     setSort: (value) => dispatch({ type: 'UI.SET_SORT', value }),
     setFilter: (value) => dispatch({ type: 'UI.SET_FILTER', value }),
     setNoScaling: (value) => dispatch({ type: 'UI.SET_NO_SCALING', value }),
+    setWeeks: (value) => dispatch({ type: 'UI.SET_WEEKS', value }),
     reset: () => dispatch({ type: 'UI.RESET' }),
   })
 )(ViewControls)

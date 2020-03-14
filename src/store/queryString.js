@@ -43,8 +43,12 @@ function setupQueryStringSync (store) {
         noscale: {
           selector: state => state.ui.noScaling,
           action: value => ({ type: 'UI.SET_NO_SCALING', value })
+        },
+        weeks: {
+          selector: state => state.ui.weeks,
+          action: value => ({ type: 'UI.SET_WEEKS', value })
         }
-    },
+      },
     replaceState: true,
     initialTruth: 'location'
   })

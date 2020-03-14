@@ -6,6 +6,7 @@ const initialState = {
   pinPositions: {},
   expanded: undefined,
   noScaling: undefined,
+  weeks: undefined,
   isExpanded: {}
 }
 
@@ -47,6 +48,9 @@ function reducer (state = initialState, action) {
 
     case 'UI.SET_NO_SCALING':
       return { ...state, noScaling: action.value || undefined}
+
+    case 'UI.SET_WEEKS':
+      return { ...state, weeks: action.value || undefined}
 
     case 'UI.SET_PINNED_ENTRIES':
       newValues = processPinned(action.value)

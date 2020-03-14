@@ -10,7 +10,7 @@ import { viewOptionsForFiltering } from '../store/filters'
 
 const TableView = ({
   loaded, data, allDates, last4weeks, last6weeks, last8weeks,
-  sort, filter, noScaling,
+  sort, filter, noScaling, weeks,
   pinPositions, pinEntry, unpinEntry,
   isExpanded, expandEntry, collapseEntry,
   isMobile, isTablet
@@ -24,7 +24,15 @@ const TableView = ({
     data = data.filter((a) => viewOptions.filterer(a, viewOptions ))
 
     let dates
-    if (isMobile) {
+    if (weeks === 'four') {
+      dates = last4weeks
+    } else if (weeks === 'six') {
+      dates = last6weeks
+    } else if (weeks === 'eight') {
+      dates = last8weeks
+    } else if (weeks === 'all') {
+      dates = allDates
+    } else if (isMobile) {
       dates = last4weeks
     } else if (isTablet) {
       dates = last6weeks
@@ -67,6 +75,7 @@ const mapStateToProps = (state, ownProps) => ({
   sort: state.ui.sort,
   filter: state.ui.filter,
   noScaling: state.ui.noScaling,
+  weeks: state.ui.weeks,
   pinPositions: state.ui.pinPositions,
   isExpanded: state.ui.isExpanded
 })

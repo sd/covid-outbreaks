@@ -24,7 +24,8 @@ export function configureStore (state) {
           filter: urlUi.filter || storedUi.filter,
           noScaling: urlUi.noScaling || storedUi.noScaling,
           pinned: urlUi.pinned || storedUi.pinned,
-          expanded: urlUi.expanded || storedUi.expanded
+          expanded: urlUi.expanded || storedUi.expanded,
+          weeks: urlUi.weeks || storedUi.weeks
         }
       }
     }
