@@ -39,6 +39,10 @@ function setupQueryStringSync (store) {
         filter: {
           selector: state => state.ui.filter,
           action: value => ({ type: 'UI.SET_FILTER', value })
+        },
+        noscale: {
+          selector: state => state.ui.noScaling,
+          action: value => ({ type: 'UI.SET_NO_SCALING', value })
         }
     },
     replaceState: true,

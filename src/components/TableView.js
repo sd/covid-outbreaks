@@ -10,7 +10,7 @@ import { viewOptionsForFiltering } from '../store/filters'
 
 const TableView = ({
   loaded, data, allDates, last4weeks, last6weeks, last8weeks,
-  sort, filter,
+  sort, filter, noScaling,
   pinPositions, pinEntry, unpinEntry,
   isExpanded, expandEntry, collapseEntry,
   isMobile, isTablet
@@ -40,7 +40,7 @@ const TableView = ({
         {data.map((entry, index) => (
           <OneTableEntry key={entry.name} {...sharedProps}
             entry={entry} index={index} pinned={pinPositions[entry.name]} expanded={isExpanded[entry.name]}
-            sideBySide={true}
+            sideBySide={!noScaling}
           />
         ))}
 
@@ -66,6 +66,7 @@ const mapStateToProps = (state, ownProps) => ({
   last8weeks: state.csseData.last8weeks,
   sort: state.ui.sort,
   filter: state.ui.filter,
+  noScaling: state.ui.noScaling,
   pinPositions: state.ui.pinPositions,
   isExpanded: state.ui.isExpanded
 })

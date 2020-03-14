@@ -9,7 +9,7 @@
   padding: 1em 1em;
   background: rgb(33, 33, 33);
   background: linear-gradient(180deg, rgba(33, 33, 33, 1) 0%, rgba(33, 33, 33, 1) 50%, rgba(33, 33, 33, 0) 100%);
-  z-index: 100;
+  z-index: 1;
   text-align: center;
   position: fixed;
   top: 0;
@@ -53,7 +53,7 @@
   right: 0;
   background: rgb(33, 33, 33);
   background: linear-gradient(0deg, rgba(33, 33, 33, 1) 0%, rgba(33, 33, 33, 1) 50%, rgba(33, 33, 33, 0) 100%);
-  z-index: 100;
+  z-index: 1;
 
   padding: 1em 2em;
   text-align: center;

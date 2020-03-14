@@ -1,0 +1,62 @@
+.ViewControls-trigger {
+  color: #cc2;
+  border-bottom: 1px dotted #cc2;
+  cursor: pointer;
+}
+
+.ViewControls-trigger:hover {
+  color: #ff0;
+  border-bottom: 1px solid #ff0;
+  cursor: pointer;
+}
+
+.ViewControls-content h4 {
+  margin: 0;
+  margin-bottom: 0.5em;
+}
+
+.ViewControls-popup {
+  border: 1px solid black;
+  background-color: #999;
+  color: #000;
+  text-align: left;
+  padding: 0.7em 1em;
+  font-size: 1rem;
+}
+
+.ViewControls-popup .form-row {
+  text-align: left;
+}
+
+.ViewControls-popup .form-label {
+  display: inline-block;
+  width: 4em;
+  font-weight: bold;
+  text-align: right;
+  padding-right: 0.5em;
+}
+
+.ViewControls-popup label {
+  font-weight: bold;
+}
+
+.ViewControls-popup .form-field {
+  text-align: left;
+  display: inline-block;
+}
+
+.ViewControls-popup .form-single {
+  text-align: center;
+  font-size: 1rem;
+}
+
+
+.ViewControls-popup  button {
+  color: #24c;
+  font-size: 1rem;
+}
+
+.ViewControls-popup select {
+  background-color: #f0f0f0;
+  font-size: 1rem;
+}

@@ -5,6 +5,7 @@ const initialState = {
   pinned: undefined,
   pinPositions: {},
   expanded: undefined,
+  noScaling: undefined,
   isExpanded: {}
 }
 
@@ -33,13 +34,16 @@ function reducer (state = initialState, action) {
 
   switch(action.type) {
     case 'UI.SET_VIEW':
-      return { ...state, view: action.value }
+      return { ...state, view: action.value || undefined }
 
     case 'UI.SET_SORT':
-      return { ...state, sort: action.value }
+      return { ...state, sort: action.value || undefined }
 
     case 'UI.SET_FILTER':
-      return { ...state, filter: action.value }
+      return { ...state, filter: action.value || undefined }
+
+    case 'UI.SET_NO_SCALING':
+      return { ...state, noScaling: action.value || undefined}
 
     case 'UI.SET_PINNED_ENTRIES':
       newValues = processPinned(action.value)

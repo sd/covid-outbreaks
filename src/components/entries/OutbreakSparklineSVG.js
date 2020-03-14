@@ -121,8 +121,6 @@ const OutbreakSparklineOneDaySVG = ({dayIndex, count, columns, round, height, ma
   let columnCounts = []
 
   if (round) {
-    if (columns > 2 && count > 3 && round) debugger
-
     let perColumn = Math.round(count / columns)
 
     for (let i = 0; i < columns; i++) {
