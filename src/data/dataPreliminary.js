@@ -6,7 +6,6 @@ export const DATA_PRELIMINARY = {
   total: {
     deaths:  {
       '3/13/20': {
-        'Sudan': 1,
       }
     },
     cases: {
