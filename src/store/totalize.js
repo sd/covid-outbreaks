@@ -31,16 +31,21 @@ export function totalizeEntries (data, dates) {
           totalsEntry.latestTotal[fieldName] = (totalsEntry.latestTotal[fieldName] || 0) + entry.daily[fieldName][d]
         }
 
-        if (totalsEntry.latestDaily && totalsEntry.latestDaily[fieldName] > 0) {
-          totalsEntry.percent[fieldName][d] = Math.round(
-            ((totalsEntry.daily[fieldName][d] / totalsEntry.latestDaily[fieldName]) - 1) * 100
-          )
-        }
-
         if (totalsEntry.daily && totalsEntry.daily[fieldName][d]) {
           totalsEntry.latestDaily[fieldName] = totalsEntry.daily[fieldName][d]
         }
       })
+    })
+  })
+
+  fieldNames.forEach(fieldName => {
+    let latestDaily = undefined
+    dates.forEach(d => {
+
+      if (latestDaily > 0) {
+        totalsEntry.percent[fieldName][d] = Math.round(((totalsEntry.daily[fieldName][d] / latestDaily) - 1) * 100)
+      }
+      latestDaily = totalsEntry.daily[fieldName][d]
     })
   })
 
