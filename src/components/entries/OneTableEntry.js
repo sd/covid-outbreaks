@@ -52,7 +52,7 @@ const OneTableEntry = ({
       </div>
       {expanded && (
         <div className='TableView-more'>
-          {entry.links  && (
+          {entry && entry.links  && (
             <section>
               <b>Links:&nbsp;&nbsp;</b>
               {Object.keys(entry.links).map(key =>
@@ -65,7 +65,7 @@ const OneTableEntry = ({
             <OutbreakTable entry={entry} dates={dates} />
           </section>
 
-          {entry.sources.deaths && (
+          {entry && entry.sources && entry.sources.deaths && (
             <section>
               <b>Includes data labeled as&nbsp;&nbsp;</b>
               {entry.sources.deaths.map(name =>

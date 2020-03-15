@@ -10,7 +10,7 @@ const OutbreakTable = ({entry, dates}) => {
   let reversedDates = [...dates]
   reversedDates.reverse()
 
-  if (entry.daily.deaths) {
+  if (entry && entry.daily && entry.daily.deaths) {
     return (
       <div className='OutbreakTable'>
         <div className='OutbreakTable-values' >

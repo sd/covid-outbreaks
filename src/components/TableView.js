@@ -27,7 +27,7 @@ const TableView = ({
     let totalsEntry
     if (totals) {
       totalsEntry = totalizeEntries(data, allDates)
-      totalsEntry.name = `${viewOptions.filterDescription} • TOTALS`
+      totalsEntry.displayName = `${viewOptions.filterDescription} • TOTALS`
       totalsEntry.emoji = '🌎'
     }
 
@@ -53,7 +53,7 @@ const TableView = ({
     return (
       <div className='TableView'>
         {totalsEntry &&
-          <OneTableEntry {...sharedProps}
+          <OneTableEntry {...sharedProps} pinEntry={() => (false)}
             entry={totalsEntry} index={0} pinned={false} expanded={isExpanded['totals']}
             sideBySide={!noScaling}
           />
