@@ -26,6 +26,7 @@ export const OUTBREAK_DATA_AGGREGATES = {
   'US > Grand Princess': 'Grand Princess',
 
   'US > Washington, D.C.': 'USA > District of Columbia',
+  'US > Virgin Islands, U.S.': 'USA > Virgin Islands',
 
   'Iran': 'Iran (Islamic Republic of)',
 
@@ -99,6 +100,7 @@ export const OUTBREAK_ATTRIBUTES = {
           'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
           'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }},
 
+  'USA > Puerto Rico': { emoji: '🇵🇷', region: 'americas' },
 
   'Mexico': { emoji: '🇲🇽', region: 'americas' },
   'Panama': { emoji: '🇵🇦', region: 'americas' },
@@ -116,8 +118,11 @@ export const OUTBREAK_ATTRIBUTES = {
   'Cuba': { emoji: '🇨🇺', region: 'americas' },
   'Haiti': { emoji: '🇭🇹', region: 'americas' },
   'Puerto Rico': { emoji: '🇵🇷', region: 'americas' },
-  'Trinidad & Tobago': { emoji: '🇹🇹', region: 'americas' },
+  'Trinidad and Tobago': { emoji: '🇹🇹', region: 'americas' },
   'Aruba': { emoji: '🇦🇼', region: 'americas' },
+  'Curacao': { emoji: '🇨🇼', region: 'americas' },
+  'Saint Lucia': { emoji: '🇱🇨', region: 'americas' },
+  'Saint Vincent and the Grenadines': { emoji: '🇻🇨', region: 'americas' },
   'Antigua and Barbuda': { emoji: '🇦🇬', region: 'americas' },
   'Cayman Islands': { emoji: '🇰🇾', region: 'americas' },
   'Guadeloupe': { emoji: '🇬🇵', region: 'americas' },
@@ -174,6 +179,13 @@ export const OUTBREAK_ATTRIBUTES = {
   'Ethiopia': { emoji: '🇪🇹', region: 'africa' },
   'Guinea': { emoji: '🇬🇳', region: 'africa' },
   'Kenya': { emoji: '🇰🇪', region: 'africa' },
+  'Ghana': { emoji: '🇬🇭', region: 'africa' },
+  'Namibia': { emoji: '🇳🇦', region: 'africa' },
+  'Seychelles': { emoji: '🇸🇨', region: 'africa' },
+  'Eswatini': { emoji: '🇸🇿', region: 'africa' },
+  'Gabon': { emoji: '🇬🇦', region: 'africa' },
+  'Mauritania': { emoji: '🇲🇷', region: 'africa' },
+  'Rwanda': { emoji: '🇷🇼', region: 'africa' },
 
   'Australia': { emoji: '🇦🇺', region: 'oceania',
     links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Australia' }},
@@ -225,6 +237,8 @@ export const OUTBREAK_ATTRIBUTES = {
   'Austria': { emoji: '🇦🇹', region: 'europe' },
   'Greece': { emoji: '🇬🇷', region: 'europe' },
   'Norway': { emoji: '🇳🇴', region: 'europe' },
+  'Jersey': { emoji: '🇯🇪', region: 'europe' },
+  'Guernsey': { emoji: '🇬🇬', region: 'europe' },
   'Iceland': { emoji: '🇮🇸', region: 'europe' },
   'Moldova': { emoji: '🇲🇩', region: 'europe' },
   'Denmark': { emoji: '🇩🇰', region: 'europe' },
