@@ -13,7 +13,7 @@ function App({ isMobile, isTablet, isDesktop }) {
       Data from <a target='_blank' rel="noopener noreferrer" href='https://github.com/CSSEGISandData/COVID-19'>John Hopkins University</a>
       {', '}
       { isMobile && <br /> }
-      <a target='_blank' rel="noopener noreferrer" href='https://www.worldometers.info/coronavirus/#countries'>Worldometers</a> and other sources.
+      <a target='_blank' rel="noopener noreferrer" href='https://bnonews.com/index.php/2020/02/the-latest-coronavirus-cases/'>BNO News</a> and other sources.
     </div>
   )
 
