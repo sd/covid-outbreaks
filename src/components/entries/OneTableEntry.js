@@ -18,16 +18,16 @@ const OneTableEntry = ({
 
       <div className='TableView-title'>
         <div className='tools'>
-          {
+          {pinEntry && (
             pinned
             ? <button className='segment activated' onClick={ () => unpinEntry(entry) }>pinned to top</button>
             : <button className='segment' onClick={ () => pinEntry(entry) }>pin</button>
-          }
-          {
+          )}
+          { expandEntry && (
             expanded
             ? <button className='segment activated' onClick={ () => collapseEntry(entry) }>hide data</button>
             : <button className='segment' onClick={ () => expandEntry(entry) }>show more</button>
-          }
+          )}
         </div>
 
         <div className='title'>

@@ -53,8 +53,8 @@ const TableView = ({
     return (
       <div className='TableView'>
         {totalsEntry &&
-          <OneTableEntry {...sharedProps} pinEntry={() => (false)}
-            entry={totalsEntry} index={0} pinned={false} expanded={isExpanded['totals']}
+          <OneTableEntry {...sharedProps} pinEntry={undefined}
+            entry={totalsEntry} index={0} pinned={true} expanded={isExpanded['totals']}
             sideBySide={!noScaling}
           />
         }

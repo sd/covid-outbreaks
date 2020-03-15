@@ -24,6 +24,7 @@ export const OUTBREAK_DATA_AGGREGATES = {
   'Others > Diamond Princess cruise ship': 'Diamond Princess',
   'US > Diamond Princess': 'Diamond Princess',
   'US > Grand Princess': 'Grand Princess',
+  'Cruise Ship > Diamond Princess': 'Diamond Princess',
 
   'US > Washington, D.C.': 'USA > District of Columbia',
   'US > Virgin Islands, U.S.': 'USA > Virgin Islands',
@@ -38,9 +39,6 @@ export const OUTBREAK_DATA_AGGREGATES = {
   'Czechia': 'Czech Republic',
 
   'Congo (Kinshasa)': 'Congo',
-
-
-  'Cruise Ship > Diamond Princess': 'Diamond Princess'
 }
 
 /* Rows that started under one name and now continue under another */
