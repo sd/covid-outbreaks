@@ -29,6 +29,8 @@ const SVG_STYLES = {
 const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
   let canvasWidth = dates.length * SVG_STYLES.emptyMarker.markerWidth
 
+  if (!entry || !entry.daily || !entry.daily.deaths || !entry.daily.cases) return null
+
   let maxDataPoint = Math.max(
     ...dates.map(d => entry.daily.deaths[d] || 0),
     ...dates.map(d => (entry.daily.cases[d] || 0) / SVG_STYLES.caseMarker.multiplier),

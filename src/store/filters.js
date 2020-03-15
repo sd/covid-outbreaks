@@ -1,5 +1,5 @@
 function filterAll (a, options) {
-  return a.latestTotal.cases > 0
+  return a.daily.deaths && a.daily.cases && a.latestTotal.cases > 0
 }
 
 function filterRelevant (a, options) {
