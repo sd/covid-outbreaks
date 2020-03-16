@@ -7,19 +7,19 @@ const SVG_STYLES = {
   },
   emptyMarker: {
     fill: '#444',
-    markerWidth: 9,
+    markerWidth: 12,
     markerHeight: 2.2,
     radius: 0.5
   },
   deathMarker: {
     fill: '#F00',
-    markerWidth: 9,
+    markerWidth: 12,
     markerHeight: 2.2,
-    radius: 1.2
+    radius: 1
   },
   caseMarker: {
     fill: '#6a6a6a',
-    markerWidth: 9,
+    markerWidth: 12,
     markerHeight: 2.2,
     radius: 3.0,
     multiplier: 100
@@ -40,8 +40,9 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
   let columns = 1
 
   if (sideBySide) {
-    if (maxDataPoint > 300) columns = 4
-    else if (maxDataPoint > 200) columns = 3
+    if (maxDataPoint > 300) columns = 6
+    else if (maxDataPoint > 200) columns = 4
+    else if (maxDataPoint > 100) columns = 3
     else if (maxDataPoint > 50) columns = 2
   }
 
@@ -114,17 +115,30 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
 const OutbreakSparklineOneDaySVG = ({dayIndex, count, columns, round, height, markerStyle}) => {
   let columnCounts = []
 
-  let perColumn = count / columns
-  if (round) perColumn = Math.floor(perColumn)
+  if (count < 1) {
+    columnCounts[0] = count
+    for (let i = 1; i < columns; i++) {
+      columnCounts[i] = 0
+    }
+  } else if (count < columns) {
+    columnCounts[0] = count
+    for (let i = 0; count > 0; i++) {
+      columnCounts[i] = 1
+      count = count - 1
+    }
+  } else {
+    let perColumn = count / columns
+    if (round) perColumn = Math.floor(perColumn)
 
-  for (let i = 0; i < columns; i++) {
-    columnCounts.push(perColumn)
-    count = count - perColumn
-  }
+    for (let i = 0; i < columns; i++) {
+      columnCounts.push(perColumn)
+      count = count - perColumn
+    }
 
-  let remainder = count % columns
-  for (let i = 0; i < remainder; i++) {
-    columnCounts[i] = columnCounts[i] + 1
+    let remainder = count % columns
+    for (let i = 0; i < remainder; i++) {
+      columnCounts[i] = columnCounts[i] + 1
+    }
   }
 
   let offsetPerColumn = markerStyle.markerWidth / (columns + 1)
