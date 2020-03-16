@@ -25,7 +25,7 @@
     "done_button": "Done"
   },
   "entry": {
-    "totals_title": "{{filter}} TOTALS",
+    "totals_title": "TOTALS FOR {{filter}}",
     "pin_button": "pin",
     "unpin_button": "pinned to top",
     "expand_button": "more info",
