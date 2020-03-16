@@ -75,7 +75,7 @@ class App extends React.Component {
 
             <div className="error-info">
               <pre>
-                <b>{error.message}</b><br />
+                {/* <b>{error.message}</b><br /> */}
                 {errorInfo.componentStack}
               </pre>
             </div>
