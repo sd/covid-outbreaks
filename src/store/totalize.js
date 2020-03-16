@@ -5,6 +5,7 @@ export function totalizeEntries (data, dates) {
     daily: { deaths: {}, cases: {} },
     totals: { deaths: {}, cases: {} },
     percent: { deaths: {}, cases: {} },
+    outbreakDay: { deaths: {}, cases: {} },
 
     latestTotal: {},
     latestDaily: {}
@@ -26,6 +27,11 @@ export function totalizeEntries (data, dates) {
         if (totalsEntry.daily[fieldName][d]) {
           totalsEntry.latestDaily[fieldName] = totalsEntry.daily[fieldName][d]
         }
+
+        totalsEntry.outbreakDay[fieldName][d] = Math.max(
+          totalsEntry.outbreakDay[fieldName][d] || 0,
+          entry.outbreakDay[fieldName][d] || 0
+        ) || undefined
       })
     })
   })

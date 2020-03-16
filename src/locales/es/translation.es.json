@@ -26,7 +26,7 @@
     "done_button": "Listo"
   },
   "entry": {
-    "totals_title": "TOTALES de {{filter}}",
+    "totals_title": "TOTALES para {{filter}}",
     "pin_button": "fijar",
     "unpin_button": "fijado al tope",
     "expand_button": "mostrar más",
@@ -48,6 +48,7 @@
       "relevant": "Brotes importantes",
       "americas": "Brotes en las Americas",
       "usa": "Brotes en los EEUU",
+      "latam": "Brotes en Latinoamérica",
       "europe": "Brotes en Europa",
       "africa": "Brotes en Africa",
       "asiaOceania": "Brotes en Asia y Oceanía",

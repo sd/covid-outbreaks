@@ -104,7 +104,7 @@ export const OUTBREAK_ATTRIBUTES = {
           'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
           'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }},
 
-  'USA > Puerto Rico': { emoji: '🇵🇷', region: 'americas' },
+  'USA > Puerto Rico': { displayName: 'Puerto Rico', emoji: '🇵🇷', region: 'americas' },
 
   'Mexico': { emoji: '🇲🇽', region: 'americas', esDisplayName: 'México' },
   'Panama': { emoji: '🇵🇦', region: 'americas', esDisplayName: 'Panamá' },
@@ -121,7 +121,6 @@ export const OUTBREAK_ATTRIBUTES = {
   'Jamaica': { emoji: '🇯🇲', region: 'americas' },
   'Cuba': { emoji: '🇨🇺', region: 'americas' },
   'Haiti': { emoji: '🇭🇹', region: 'americas', esDisplayName: 'Haití' },
-  'Puerto Rico': { emoji: '🇵🇷', region: 'americas' },
   'Trinidad and Tobago': { emoji: '🇹🇹', region: 'americas', esDisplayName: 'Trinidad y Tobago' },
   'Aruba': { emoji: '🇦🇼', region: 'americas' },
   'Curacao': { emoji: '🇨🇼', region: 'americas' },

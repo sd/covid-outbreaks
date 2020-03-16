@@ -24,6 +24,16 @@ function filterUSA (a, options) {
   return (a.name.startsWith('USA >'))
 }
 
+const LATAM_COUNTRIES = [
+  'Mexico', 'Panama', 'Costa Rica', 'El Salvador', 'Honduras', 'Guatemala',
+  'Nicaragua', 'Dominican Republic', 'Cuba', 'Haiti', 'USA > Puerto Rico',
+  'Colombia', 'Venezuela', 'Brazil', 'Ecuador', 'Bolivia', 'Peru', 'Uruguay',
+  'Argentina', 'Paraguay', 'Chile'
+]
+function filterLatam (a, options) {
+  return (LATAM_COUNTRIES.indexOf(a.name) >= 0)
+}
+
 function filterEurope (a, options) {
   return (a.region === 'europe')
 }
@@ -49,6 +59,7 @@ const FILTERERS = {
   relevant: filterRelevant,
   americas: filterAmericas,
   usa: filterUSA,
+  latam: filterLatam,
   europe: filterEurope,
   middleEast: filterMiddleEast,
   africa: filterAfrica,
@@ -63,6 +74,7 @@ export const FILTER_ALIASES = {
   default: 'all',
   americas: 'americas',
   usa: 'usa',
+  latam: 'latam',
   europe: 'europe',
   middleEast: 'middleEast',
   africa: 'africa',
@@ -82,6 +94,7 @@ export const FILTER_DESCRIPTIONS = {
   relevant: 'Important outbreaks',
   americas: 'Outbreaks in The Americas',
   usa: 'Outbreaks in USA',
+  latam: 'Outbreaks in Latin America',
   europe: 'Outbreaks in Europe',
   africa: 'Outbreaks in Africa',
   asiaOceania: 'Outbreaks in Asia & Oceania',
@@ -89,7 +102,7 @@ export const FILTER_DESCRIPTIONS = {
   all: 'All outbreaks'
 }
 
-export const FILTER_TYPES = ['all', 'relevant', 'asiaOceania', 'europe', 'americas', 'usa', 'africa', 'otherRegions']
+export const FILTER_TYPES = ['all', 'relevant', 'asiaOceania', 'europe', 'americas', 'usa', 'latam', 'africa', 'otherRegions']
 
 export function viewOptionsForFiltering(filter, moreOptions) {
   filter = FILTER_ALIASES[filter] || FILTER_ALIASES.default
