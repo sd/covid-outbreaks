@@ -30,6 +30,7 @@
     "unpin_button": "pinned to top",
     "expand_button": "more info",
     "collapse_button": "hide",
+    "outbreak_day": "day {{day}}",
     "deaths_total_with_latest": "{{total}} deaths (+{{latest}})",
     "deaths_total_with_no_change": "{{total}} deaths",
     "deaths_total_no_deaths": "no deaths",

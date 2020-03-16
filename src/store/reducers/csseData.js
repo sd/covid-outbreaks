@@ -113,6 +113,9 @@ function prepareEntries (data, fieldName, entries) {
     entry.percent = entry.percent || {}
     entry.percent[fieldName] = {}
 
+    entry.outbreakDay = entry.outbreakDay || {}
+    entry.outbreakDay[fieldName] = {}
+
     entry.latestTotal = entry.latestTotal || {}
     entry.latestTotal[fieldName] = 0
 
@@ -142,6 +145,8 @@ function processOneFile (fieldName, rawData, entries ) {
     row = data.rows[name]
     entry = entries[name]
 
+    let outbreakCounter = undefined
+
     dates.forEach(d => {
       let value = row[d]
 
@@ -153,9 +158,21 @@ function processOneFile (fieldName, rawData, entries ) {
       if (value !== undefined) {
         entry.totals[fieldName][d] = value
         entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
+        // `percent` and `outbreakCounter` rely on `latestDaily` holding the previous day value
+        // which is why we process them here, before setting the new `latestDaily`
         if (entry.latestDaily[fieldName] > 0) {
           entry.percent[fieldName][d] = Math.round(((entry.daily[fieldName][d] / entry.latestDaily[fieldName]) - 1) * 100)
         }
+
+        // if (name === 'France' && d === '2/16/20') debugger
+        if (entry.daily[fieldName][d] === 0 && !entry.latestDaily[fieldName]) {
+          outbreakCounter = undefined
+        } else {
+          outbreakCounter = (outbreakCounter || 0) + 1
+        }
+        entry.outbreakDay[fieldName][d] = outbreakCounter
+
+        // Having calculated `percent` and `outbreakCounter`, we can now set `latestDaily`
         entry.latestTotal[fieldName] = entry.totals[fieldName][d]
         entry.latestDaily[fieldName] = entry.daily[fieldName][d]
       }

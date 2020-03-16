@@ -20,7 +20,12 @@ const OutbreakTable = ({entry, dates}) => {
           {reversedDates.map((date, index)=> (
             <div key={date} className='row'>
               <div className='date'><DateHeader d={date} i18n={i18n} /></div>
-
+              <div className='outbreakDay'>
+                {entry.outbreakDay.deaths[date]
+                  ? <Trans i18nKey='entry.outbreak_day'>day {{day: entry.outbreakDay.deaths[date]}}</Trans>
+                  : <span>&nbsp;</span>
+                }
+              </div>
               <div className='deaths'>{formatNumber(entry.daily.deaths[date], i18n)}</div>
               <div className={classNames('percent', {
                   positive: entry.percent.deaths[date] > 0,
@@ -55,6 +60,7 @@ const OutbreakTable = ({entry, dates}) => {
         <div className='OutbreakTable-headers'>
           <div className='row'>
             <div className='date'><Trans i18nKey='entry.table_date_label'>Date</Trans></div>
+            <div className='outbreakDay'>&nbsp;</div>
             <div className='deaths'><Trans i18nKey='entry.table_deaths_label'>Deaths</Trans></div>
             <div className='percent'>&nbsp;</div>
             <div className='cases'><Trans i18nKey='entry.table_cases_label'>Cases</Trans></div>
@@ -73,7 +79,7 @@ const DateHeader = ({d, i18n}) => {
   if (d) {
     const date = new Date(d)
     if (date.getDate() === 1) {
-      return <b>{formatDateMonthAbbrDD(d, i18n)}</b>
+      return <b>{formatDateMonthAbbrDD(d, i18n).toUpperCase()}</b>
     } else {
       return formatDateWeekdayAbbrDD(d, i18n)
     }

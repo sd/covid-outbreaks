@@ -33,15 +33,17 @@ export function formatDateMonthAbbrDD (d, i18n) {
 
 export function formatDateWeekdayAbbrDD (d, i18n) {
   let parts = d.match(/(\d+)\/(\d+)\/(\d+)/)
+  const date = new Date(d)
+  const weekday = date.getDay()
 
   if (parts) {
     if (i18n) {
       return i18n.t('date.formats.weekday_abbr_dd', '{{weekday}} {{day}}', {
-        weekday: i18n.t(`date.weekdays_abbr.${parts[1]}`, ABBREVIATED_WEEKDAYS[parts[1]]),
+        weekday: i18n.t(`date.weekdays_abbr.${weekday}`, ABBREVIATED_WEEKDAYS[weekday]),
         day: parts[2]
       })
     } else {
-      return `${ABBREVIATED_WEEKDAYS[parts[1]]} ${parts[2]}`
+      return `${ABBREVIATED_WEEKDAYS[weekday]} ${parts[2]}`
     }
   } else {
     return d

@@ -31,6 +31,12 @@
   white-space: nowrap;
 }
 
+.OutbreakTable .outbreakDay {
+  white-space: nowrap;
+  font-size: 80%;
+  color: #77b;
+}
+
 .OutbreakTable .cases {
   opacity: 0.4;
   margin-top: 0.4em;
