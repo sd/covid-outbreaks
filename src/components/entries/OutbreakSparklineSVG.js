@@ -73,7 +73,7 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
             <OutbreakSparklineOneDaySVG
               key={`empty_${date}`}
               dayIndex={index}
-              count={columns}
+              count={1}
               columns={columns}
               height={canvasHeight}
               markerStyle={SVG_STYLES.emptyMarker}
