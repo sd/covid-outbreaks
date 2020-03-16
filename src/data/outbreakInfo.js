@@ -39,6 +39,7 @@ export const OUTBREAK_DATA_AGGREGATES = {
   'Czechia': 'Czech Republic',
 
   'Congo (Kinshasa)': 'Congo',
+  'Congo (Brazzaville)': 'Congo',
 }
 
 /* Rows that started under one name and now continue under another */
@@ -72,7 +73,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'Indonesia': { emoji: '🇮🇩', region: 'asia' },
   'Macau': { emoji: '🇲🇴', region: 'asia', esDisplayName: 'Macao' },
   'Cambodia': { emoji: '🇰🇭', region: 'asia', esDisplayName: 'Camboya' },
-  'Kazakhstan': { emoji: '🇰🇿', region: 'asia' },
+  'Kazakhstan': { emoji: '🇰🇿', region: 'asia', esDisplayName: 'Kazakstán' },
   'Laos': { emoji: '🇱🇦', region: 'asia' },
   'Bhutan': { emoji: '🇧🇹', region: 'asia' },
   'Brunei': { emoji: '🇧🇳', region: 'asia' },
@@ -83,6 +84,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'Maldives': { emoji: '🇲🇻', region: 'asia', esDisplayName: 'Maldivas' },
   'Bangladesh': { emoji: '🇧🇩', region: 'asia' },
   'Mongolia': { emoji: '🇲🇳', region: 'asia' },
+  'Uzbekistan': { emoji: '🇺🇿', region: 'asia', esDisplayName: 'Uzbequistán' },
 
   'Canada': { emoji: '🇨🇦', region: 'americas',
     links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Canada' }},
@@ -165,7 +167,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'Oman': { emoji: '🇴🇲', region: 'middle east' },
   'Saudi Arabia': { emoji: '🇸🇦', region: 'middle east', esDisplayName: 'Arabia Saudita' },
   'Pakistan': { emoji: '🇵🇰', region: 'middle east', esDisplayName: 'Paquistán' },
-  'Afghanistan': { emoji: '🇦🇫', region: 'middle east' },
+  'Afghanistan': { emoji: '🇦🇫', region: 'middle east', esDisplayName: 'Afganistán' },
   'Turkey': { emoji: '🇹🇷', region: 'middle east', esDisplayName: 'Turquía' },
   'Jordan': { emoji: '🇯🇴', region: 'middle east', esDisplayName: 'Jordania' },
 
@@ -192,6 +194,8 @@ export const OUTBREAK_ATTRIBUTES = {
   'Gabon': { emoji: '🇬🇦', region: 'africa', esDisplayName: 'Gabón' },
   'Mauritania': { emoji: '🇲🇷', region: 'africa' },
   'Rwanda': { emoji: '🇷🇼', region: 'africa' },
+  'Central African Republic': { emoji: '🇨🇫', region: 'africa', esDisplayName: 'República Central Africana' },
+  'Equatorial Guinea': { emoji: '🇬🇶', region: 'africa', esDisplayName: 'Guinea Ecuatorial' },
 
   'Australia': { emoji: '🇦🇺', region: 'oceania',
     links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Australia' }},
@@ -256,6 +260,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'Guernsey': { emoji: '🇬🇬', region: 'europe' },
   'Iceland': { emoji: '🇮🇸', region: 'europe', esDisplayName: 'Islandia' },
   'Moldova': { emoji: '🇲🇩', region: 'europe' },
+  'Kosovo': { emoji: '🇽🇰', region: 'europe' },
   'Denmark': { emoji: '🇩🇰', region: 'europe', esDisplayName: 'Dinamarca' },
   'Faroe Islands': { emoji: '🇫🇴', region: 'europe', esDisplayName: 'Islas Faroe' },
   'Czech Republic': { emoji: '🇨🇿', region: 'europe', esDisplayName: 'República Checa' },

@@ -40,7 +40,7 @@
 .App-content {
   flex: 1;
   text-align: center;
-  margin: 7em 1em 8em 1em;
+  margin: 7em 0.3em 8em 0.3em;
   display: flex;
   flex-direction: column;
   align-items: stretch;
