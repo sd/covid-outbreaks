@@ -1,12 +1,15 @@
 import React from 'react'
 import classNames from 'classnames'
+import { Trans, useTranslation } from 'react-i18next';
 
 import formatNumber from '../../utils/formatNumber'
-import { ABBREVIATED_MONTHS, ABBREVIATED_WEEKDAYS } from '../../utils/dateFormats'
+import { formatDateMonthAbbrDD, formatDateWeekdayAbbrDD } from '../../utils/dateFormats'
 
 import './OutbreakTable.css'
 
 const OutbreakTable = ({entry, dates}) => {
+  const { i18n } = useTranslation();
+
   let reversedDates = [...dates]
   reversedDates.reverse()
 
@@ -16,9 +19,9 @@ const OutbreakTable = ({entry, dates}) => {
         <div className='OutbreakTable-values' >
           {reversedDates.map((date, index)=> (
             <div key={date} className='row'>
-              <div className='date'><DateHeader d={date} /></div>
+              <div className='date'><DateHeader d={date} i18n={i18n} /></div>
 
-              <div className='deaths'>{formatNumber(entry.daily.deaths[date])}</div>
+              <div className='deaths'>{formatNumber(entry.daily.deaths[date], i18n)}</div>
               <div className={classNames('percent', {
                   positive: entry.percent.deaths[date] > 0,
                   negative: entry.percent.deaths[date] < 0,
@@ -27,12 +30,12 @@ const OutbreakTable = ({entry, dates}) => {
                 })}
               >
                 {
-                  formatNumber(entry.percent.deaths[date])
+                  formatNumber(entry.percent.deaths[date], i18n)
                 }
                 {entry.percent.deaths[date] !== undefined ? '%': <span>&nbsp;</span>}
               </div>
 
-              <div className='cases'>{formatNumber(entry.daily.cases[date])}</div>
+              <div className='cases'>{formatNumber(entry.daily.cases[date], i18n)}</div>
               <div className={classNames('percent cases', {
                   positive: entry.percent.cases[date] > 0,
                   negative: entry.percent.cases[date] < 0,
@@ -41,7 +44,7 @@ const OutbreakTable = ({entry, dates}) => {
                 })}
               >
                 {
-                  formatNumber(entry.percent.cases[date])
+                  formatNumber(entry.percent.cases[date], i18n)
                 }
                 {entry.percent.cases[date] !== undefined ? '%' : <span>&nbsp;</span>}
               </div>
@@ -51,10 +54,10 @@ const OutbreakTable = ({entry, dates}) => {
         </div>
         <div className='OutbreakTable-headers'>
           <div className='row'>
-            <div className='date'>Date</div>
-            <div className='deaths'>Deaths</div>
+            <div className='date'><Trans i18nKey='entry.table_date_label'>Date</Trans></div>
+            <div className='deaths'><Trans i18nKey='entry.table_deaths_label'>Deaths</Trans></div>
             <div className='percent'>&nbsp;</div>
-            <div className='cases'>Cases</div>
+            <div className='cases'><Trans i18nKey='entry.table_cases_label'>Cases</Trans></div>
             <div className='percent'>&nbsp;</div>
           </div>
         </div>
@@ -66,13 +69,13 @@ const OutbreakTable = ({entry, dates}) => {
 }
 
  /* Sat 29   MAR 1   Mon 2   Tue 3 ... */
-const DateHeader = ({d}) => {
+const DateHeader = ({d, i18n}) => {
   if (d) {
     const date = new Date(d)
     if (date.getDate() === 1) {
-      return <b>{`${ABBREVIATED_MONTHS[date.getMonth() + 1].toUpperCase()} ${date.getDate()}`}</b>
+      return <b>{formatDateMonthAbbrDD(d, i18n)}</b>
     } else {
-      return `${ABBREVIATED_WEEKDAYS[date.getDay()]} ${date.getDate()}`
+      return formatDateWeekdayAbbrDD(d, i18n)
     }
   } else {
     return ''

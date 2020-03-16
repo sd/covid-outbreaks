@@ -11,8 +11,6 @@ export function totalizeEntries (data, dates) {
 
   }
 
-  let lastDate = dates.slice(-1)
-
   const fieldNames =  ['deaths', 'cases']
 
   data.forEach(entry => {

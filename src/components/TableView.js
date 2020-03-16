@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { Trans, useTranslation } from 'react-i18next';
 
 import './TableView.css'
 
@@ -16,6 +17,8 @@ const TableView = ({
   isExpanded, expandEntry, collapseEntry,
   isMobile, isTablet
 }) => {
+  const { t } = useTranslation();
+
   if (loaded) {
     let viewOptions = { pinPositions }
     viewOptions = viewOptionsForSorting(sort, viewOptions)
@@ -27,8 +30,15 @@ const TableView = ({
     let totalsEntry
     if (totals) {
       totalsEntry = totalizeEntries(data, allDates)
-      totalsEntry.displayName = `${viewOptions.filterDescription} • TOTALS`
+      totalsEntry.displayName = t(
+        'entry.totals_title', "{{filter}} • TOTALS",
+        {
+          filter: t(`filter.description.${viewOptions.filter}`, viewOptions.filterDescription)
+        }
+      )
+
       totalsEntry.emoji = '🌎'
+      console.log(viewOptions.filter)
     }
 
     let dates
@@ -72,7 +82,7 @@ const TableView = ({
     return (
       <div className='TableView'>
         <div className='TableView-loading'>
-          <h2>Loading...</h2>
+          <h2><Trans i18nKey={'general.loading'}>Loading...</Trans></h2>
         </div>
       </div>
     )

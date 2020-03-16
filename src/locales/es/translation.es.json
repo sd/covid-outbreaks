@@ -1,0 +1,123 @@
+{
+  "general.title": "Brotes de COVID-19!",
+  "general": {
+    "title": "Brotes de COVID-19",
+    "loading": "Cargando…",
+    "credits": "Visualización por Sebastián Delmont • <1>@sd</1> • <3>github</3>",
+    "data_credits": "Datos de <1>John Hopkins University</1>, <3>BNO News</3> y otras fuentes."
+  },
+  "legend": {
+    "deaths_label": "1 muerte",
+    "cases_label": "100 casos"
+  },
+  "view_description": {
+    "view_description": "<0>{{filter}}</0>, ordenados por <2>{{sort}}</2>",
+    "view_and_date_description": "<0 /> <1 />",
+    "as_of_date": "Hasta {{date}}",
+    "loading": "(actualizando datos…)"
+  },
+  "view_controls": {
+    "show_label": "Incluir",
+    "sort_label": "Ordenados por",
+    "weeks_label": "Limitados a",
+    "totals_label": "Mostrar Totales",
+    "no_scaling_label": "Mantener Escala Vertical",
+    "reset_button": "Reiniciar",
+    "done_button": "Listo"
+  },
+  "entry": {
+    "totals_title": "TOTALES de {{filter}}",
+    "pin_button": "fijar",
+    "unpin_button": "fijado al tope",
+    "expand_button": "mostrar más",
+    "collapse_button": "esconder",
+    "deaths_total_with_latest": "{{total}} muertes (+{{latest}})",
+    "deaths_total_with_no_change": "{{total}} muertes",
+    "deaths_total_no_deaths": "sin muertes",
+    "cases_total_with_latest": "{{total}} casos (+{{latest}})",
+    "cases_total_with_no_change": "{{total}} casos",
+    "cases_total_no_cases": "sin casos",
+    "links_label": "Enlaces:",
+    "table_date_label": "Fecha",
+    "table_deaths_label": "Muertes",
+    "table_cases_label": "Casos"
+  },
+  "filter": {
+    "description": {
+      "relevant": "Brotes importantes",
+      "americas": "Brotes en las Americas",
+      "usa": "Brotes en los EEUU",
+      "europe": "Brotes en Europa",
+      "africa": "Brotes en Africa",
+      "asiaOceania": "Brotes en Asia y Oceanía",
+      "otherRegions": "Brotes en otras areas",
+      "all": "Todos los brotes"
+    }
+  },
+  "sort": {
+    "description": {
+      "name": "Nombre",
+      "casesTotal": "Casos Totales",
+      "casesLatest": "Nuevos Casos",
+      "deathsTotal": "Muertes Totales",
+      "deathsLatest": "Nuevas Muertes"
+    }
+  },
+  "weeks": {
+    "description": {
+      "fit": "Lo que quepa",
+      "four": "Últimas 4 semanas",
+      "six": "Últimas 6 semanas",
+      "eight": "Últimas 8 semanas",
+      "all": "Todas las fechas"
+    }
+  },
+  "number": {
+    "decimals_separator": ",",
+    "thousands_separator": "."
+  },
+  "date": {
+    "formats": {
+      "month_dd": "{{month}} {{day}}",
+      "abbr_month_dd": "{{month}} {{day}}",
+      "abbr_weekday_dd": "{{weekday}} {{day}}"
+    },
+    "months": {
+      "1": "Enero",
+      "2": "Febrero",
+      "3": "Marzo",
+      "4": "Abril",
+      "5": "Mayo",
+      "6": "Junio",
+      "7": "Julio",
+      "8": "Agosto",
+      "9": "Septiembre",
+      "10": "Octubre",
+      "11": "Noviembre",
+      "12": "Diciembre"
+    },
+    "months_abbr": {
+      "1": "Ene",
+      "2": "Feb",
+      "3": "Mar",
+      "4": "Abr",
+      "5": "May",
+      "6": "Jun",
+      "7": "Jul",
+      "8": "Ago",
+      "9": "Sep",
+      "10": "Oct",
+      "11": "Nov",
+      "12": "Dic"
+    },
+    "weekdays_abbr": {
+      "0": "Dom",
+      "1": "Lun",
+      "2": "Mar",
+      "3": "Mie",
+      "4": "Jue",
+      "5": "Vie",
+      "6": "Sab"
+    }
+  }
+}

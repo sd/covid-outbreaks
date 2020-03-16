@@ -1,16 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import Popup from 'reactjs-popup'
+import { Trans, useTranslation } from 'react-i18next';
 
 import './ViewControls.css'
-
-import DataLoader from './DataLoader'
 
 import { viewOptionsForSorting, SORTER_TYPES, SORTER_DESCRIPTIONS } from '../store/sorters'
 import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../store/filters'
 
 const ViewControls = ({
-  lastDate,
   reset,
   sort, setSort,
   filter, setFilter,
@@ -19,9 +17,14 @@ const ViewControls = ({
   totals, setTotals,
   isMobile
 }) => {
+  const { t } = useTranslation();
+
   let viewOptions = {}
   viewOptions = viewOptionsForSorting(sort, viewOptions)
   viewOptions = viewOptionsForFiltering(filter, viewOptions)
+
+  const filterDescription = t(`filter.description.${viewOptions.filter}`, viewOptions.filterDescription)
+  const sortDescription = t(`sort.description.${viewOptions.sort}`, viewOptions.sortDescription)
 
   return (
     <div className='ViewControls'>
@@ -39,47 +42,49 @@ const ViewControls = ({
           backgroundColor: 'inherit',
           color: 'inherit',
           border: 'none',
-          minWidth: '20em'
+          minWidth: '25em'
         }}
         trigger={
           <span className='ViewControls-trigger'>
-            <b>{FILTER_DESCRIPTIONS[viewOptions.filter]}</b> sorted by <b>{SORTER_DESCRIPTIONS[viewOptions.sort]}</b>
+            <Trans i18nKey='view_description.view_description'>
+              <b>{{filter: filterDescription}}</b> sorted by <b>{{sort: sortDescription}}</b>
+            </Trans>
           </span>
         }
       >
       {close => (
         <div className='ViewControls-popup form'>
           <div className='form-row'>
-            <div className='form-label'>Show</div>
+            <div className='form-label'><Trans i18nKey='view_controls.show_label'>Show</Trans></div>
             <div className='form-field'>
               <select value={viewOptions.filter} onChange={(event) => setFilter(event.target.value)}>
                 {FILTER_TYPES.map(option => (
-                  <option key={option} value={option}>{FILTER_DESCRIPTIONS[option]}</option>
+                  <option key={option} value={option}>{t(`filter.description.${option}`, FILTER_DESCRIPTIONS[option])}</option>
                 ))}
               </select>
             </div>
           </div>
 
           <div className='form-row'>
-            <div className='form-label'>Sort by </div>
+            <div className='form-label'><Trans i18nKey='view_controls.sort_label'>Show</Trans></div>
             <div className='form-field'>
               <select value={viewOptions.sort} onChange={(event) => setSort(event.target.value)}>
                 {SORTER_TYPES.map(option => (
-                  <option key={option} value={option}>{SORTER_DESCRIPTIONS[option]}</option>
+                  <option key={option} value={option}>{t(`sort.description.${option}`, SORTER_DESCRIPTIONS[option])}</option>
                 ))}
               </select>
             </div>
           </div>
 
           <div className='form-row'>
-            <div className='form-label'>Limit to </div>
+            <div className='form-label'><Trans i18nKey='view_controls.weeks_label'>Limit To</Trans></div>
             <div className='form-field'>
               <select value={weeks} onChange={(event) => setWeeks(event.target.value)}>
-                <option value={''}>What fits on screen</option>
-                <option value={'four'}>Last 4 weeks</option>
-                <option value={'six'}>Last 6 weeks</option>
-                <option value={'eight'}>Last 8 weeks</option>
-                <option value={'all'}>All available dates</option>
+                <option value={''}>{t(`weeks.description.fit`, 'What fits on screen')}</option>
+                <option value={'four'}>{t(`weeks.description.four`, 'Last 4 weeks')}</option>
+                <option value={'six'}>{t(`weeks.description.six`, 'Last 6 weeks')}</option>
+                <option value={'eight'}>{t(`weeks.description.eight`, 'Last 8 weeks')}</option>
+                <option value={'all'}>{t(`weeks.description.all`, 'All available dates')}</option>
               </select>
             </div>
           </div>
@@ -92,7 +97,7 @@ const ViewControls = ({
               />
             </div>
             <div className='form-field'>
-              <label htmlFor='totals'>Show Totals</label>
+              <label htmlFor='totals'><Trans i18nKey='view_controls.totals_label'>Show Totals</Trans></label>
             </div>
           </div>
 
@@ -104,21 +109,19 @@ const ViewControls = ({
               />
             </div>
             <div className='form-field'>
-              <label htmlFor='noScaling'>Preserve vertical scale</label>
+              <label htmlFor='noScaling'><Trans i18nKey='view_controls.no_scaling_label'>Preserve vertical scale</Trans></label>
             </div>
           </div>
 
-          <div className='form-row form-single'>
-            <button onClick={() => { reset(); close() }}>Reset to defaults</button>
+          <div className='form-row form-single buttons'>
+            <button onClick={() => { reset(); close() }}><Trans i18nKey='view_controls.reset_button'>Reset to defaults</Trans></button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <button onClick={() => close()}>Done</button>
+            <button onClick={() => close()}><Trans i18nKey='view_controls.done_button'>Done</Trans></button>
           </div>
 
         </div>
       )}
       </Popup>
-
-      <DataLoader />
 
     </div>
   )
@@ -126,7 +129,6 @@ const ViewControls = ({
 
 export default connect(
   (state, ownProps) => ({
-    lastDate: state.csseData.lastDate,
     sort: state.ui.sort,
     filter: state.ui.filter,
     weeks: state.ui.weeks,

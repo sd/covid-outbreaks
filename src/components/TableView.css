@@ -72,7 +72,7 @@
 }
 
 .TableView-title {
-  grid-template-columns: 10em auto 10em;
+  grid-template-columns: 11em auto 11em;
   grid-template-rows: auto;
   grid-template-areas:
     "tools name totals";
@@ -85,7 +85,7 @@
 
 @media only screen and (max-width: 600px) {
   .TableView-title {
-    grid-template-columns: auto 10em;
+    grid-template-columns: auto 11em;
     grid-template-rows: auto;
     grid-template-areas:
       "name   totals"

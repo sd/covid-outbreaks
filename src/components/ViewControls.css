@@ -1,3 +1,9 @@
+.ViewControls {
+  font-size: 1rem;
+  margin-bottom: 0.5em;
+  line-height: 2em;
+}
+
 .ViewControls-trigger {
   color: #cc2;
   border-bottom: 1px dotted #cc2;
@@ -12,12 +18,12 @@
 
 .ViewControls-content h4 {
   margin: 0;
-  margin-bottom: 0.5em;
+  margin-bottom: 0;
 }
 
 .ViewControls-popup {
   border: 1px solid black;
-  background-color: #999;
+  background-color: #bbb;
   color: #000;
   text-align: left;
   padding: 0.7em 1em;
@@ -30,7 +36,7 @@
 
 .ViewControls-popup .form-label {
   display: inline-block;
-  width: 4em;
+  width: 8em;
   font-weight: bold;
   text-align: right;
   padding-right: 0.5em;
@@ -47,16 +53,19 @@
 
 .ViewControls-popup .form-single {
   text-align: center;
-  font-size: 1rem;
+  font-size: 1em;
 }
 
+.ViewControls-popup .form-row.buttons {
+  margin-top: 1em;
+}
 
 .ViewControls-popup  button {
   color: #24c;
-  font-size: 1rem;
+  font-size: 1em;
 }
 
 .ViewControls-popup select {
   background-color: #f0f0f0;
-  font-size: 1rem;
+  font-size: 1em;
 }

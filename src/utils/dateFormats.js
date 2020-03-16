@@ -1,18 +1,58 @@
-export function formatDateMonDD (d) {
+export function formatDateMonthDD (d, i18n) {
   let parts = d.match(/(\d+)\/(\d+)\/(\d+)/)
 
   if (parts) {
-    return `${ABBREVIATED_MONTHS[parts[1]]} ${parts[2]}`
+    if (i18n) {
+      return i18n.t('date.format.month_dd', '{{month}} {{day}}', {
+        month: i18n.t(`date.months.${parts[1]}`, MONTHS[parts[1]]),
+        day: parts[2]
+      })
+    } else {
+      return `${MONTHS[parts[1]]} ${parts[2]}`
+    }
+  } else {
+    return d
+  }
+}
+export function formatDateMonthAbbrDD (d, i18n) {
+  let parts = d.match(/(\d+)\/(\d+)\/(\d+)/)
+
+  if (parts) {
+    if (i18n) {
+      return i18n.t('date.format.month_abbr_dd', '{{month}} {{day}}', {
+        month: i18n.t(`date.months_abbr.${parts[1]}`, ABBREVIATED_MONTHS[parts[1]]),
+        day: parts[2]
+      })
+    } else {
+      return `${ABBREVIATED_MONTHS[parts[1]]} ${parts[2]}`
+    }
   } else {
     return d
   }
 }
 
-export function formatDateMonthDD (d) {
+export function formatDateWeekdayAbbrDD (d, i18n) {
   let parts = d.match(/(\d+)\/(\d+)\/(\d+)/)
 
   if (parts) {
-    return `${MONTHS[parts[1]]} ${parts[2]}`
+    if (i18n) {
+      return i18n.t('date.format.abbr_weekday_dd', '{{weekday}} {{day}}', {
+        weekday: i18n.t(`date.weekdays_abbr.${parts[1]}`, ABBREVIATED_WEEKDAYS[parts[1]]),
+        day: parts[2]
+      })
+    } else {
+      return `${ABBREVIATED_WEEKDAYS[parts[1]]} ${parts[2]}`
+    }
+  } else {
+    return d
+  }
+}
+
+export function formatDateMonDD (d) {
+  let parts = d.match(/(\d+)\/(\d+)\/(\d+)/)
+
+  if (parts) {
+    return `${ABBREVIATED_MONTHS[parts[1]]} ${parts[2]}`
   } else {
     return d
   }
