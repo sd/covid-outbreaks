@@ -115,10 +115,11 @@ const OutbreakSparklineOneDaySVG = ({dayIndex, count, columns, round, height, ma
   let columnCounts = []
 
   let perColumn = count / columns
-  if (round) perColumn = Math.round(perColumn)
+  if (round) perColumn = Math.floor(perColumn)
 
   for (let i = 0; i < columns; i++) {
     columnCounts.push(perColumn)
+    count = count - perColumn
   }
 
   let remainder = count % columns
@@ -153,8 +154,9 @@ const OutbreakSparklineOneColumnSVG = ({dayIndex, count, xOffset, yOffset, heigh
     radiusScale = (count - rounded)
 
     if (radiusScale < 0.1) radiusScale = 0.3
-    else if (radiusScale < 0.5) radiusScale = 0.5
-    else if (radiusScale < 0.7) radiusScale = 0.7
+    else if (radiusScale < 0.6) radiusScale = 0.6
+    else if (radiusScale < 0.75) radiusScale = 0.75
+    // else if (radiusScale < 0.8) radiusScale = 0.8
   } else {
     radiusScale = 1
   }
