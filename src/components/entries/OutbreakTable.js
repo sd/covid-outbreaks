@@ -34,6 +34,7 @@ const OutbreakTable = ({entry, dates}) => {
                   huge: Math.abs(entry.percent.deaths[date]) > 50
                 })}
               >
+                { entry.percent.deaths[date] > 0 && '+' }
                 {
                   formatNumber(entry.percent.deaths[date], i18n)
                 }
@@ -48,6 +49,7 @@ const OutbreakTable = ({entry, dates}) => {
                   huge: Math.abs(entry.percent.cases[date]) > 50
                 })}
               >
+                { entry.percent.cases[date] > 0 && '+' }
                 {
                   formatNumber(entry.percent.cases[date], i18n)
                 }
