@@ -3,7 +3,7 @@ export function formatDateMonthDD (d, i18n) {
 
   if (parts) {
     if (i18n) {
-      return i18n.t('date.format.month_dd', '{{month}} {{day}}', {
+      return i18n.t('date.formats.month_dd', '{{month}} {{day}}', {
         month: i18n.t(`date.months.${parts[1]}`, MONTHS[parts[1]]),
         day: parts[2]
       })
@@ -19,7 +19,7 @@ export function formatDateMonthAbbrDD (d, i18n) {
 
   if (parts) {
     if (i18n) {
-      return i18n.t('date.format.month_abbr_dd', '{{month}} {{day}}', {
+      return i18n.t('date.formats.month_abbr_dd', '{{month}} {{day}}', {
         month: i18n.t(`date.months_abbr.${parts[1]}`, ABBREVIATED_MONTHS[parts[1]]),
         day: parts[2]
       })
@@ -36,7 +36,7 @@ export function formatDateWeekdayAbbrDD (d, i18n) {
 
   if (parts) {
     if (i18n) {
-      return i18n.t('date.format.abbr_weekday_dd', '{{weekday}} {{day}}', {
+      return i18n.t('date.formats.weekday_abbr_dd', '{{weekday}} {{day}}', {
         weekday: i18n.t(`date.weekdays_abbr.${parts[1]}`, ABBREVIATED_WEEKDAYS[parts[1]]),
         day: parts[2]
       })

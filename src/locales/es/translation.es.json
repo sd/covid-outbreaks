@@ -79,8 +79,8 @@
   "date": {
     "formats": {
       "month_dd": "{{month}} {{day}}",
-      "abbr_month_dd": "{{month}} {{day}}",
-      "abbr_weekday_dd": "{{weekday}} {{day}}"
+      "month_abbr_dd": "{{month}} {{day}}",
+      "weekday_abbr_dd": "{{weekday}} {{day}}"
     },
     "months": {
       "1": "Enero",
