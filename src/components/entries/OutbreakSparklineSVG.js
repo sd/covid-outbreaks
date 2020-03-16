@@ -156,7 +156,6 @@ const OutbreakSparklineOneColumnSVG = ({dayIndex, count, xOffset, yOffset, heigh
     if (radiusScale < 0.1) radiusScale = 0.3
     else if (radiusScale < 0.6) radiusScale = 0.6
     else if (radiusScale < 0.75) radiusScale = 0.75
-    // else if (radiusScale < 0.8) radiusScale = 0.8
   } else {
     radiusScale = 1
   }

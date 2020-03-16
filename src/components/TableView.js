@@ -38,7 +38,6 @@ const TableView = ({
       )
 
       totalsEntry.emoji = '🌎'
-      console.log(viewOptions.filter)
     }
 
     let dates

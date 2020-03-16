@@ -9,26 +9,84 @@ import MarkerLegend from './components/MarkerLegend'
 import TableView from './components/TableView'
 import DataLoader from './components/DataLoader'
 
-const App = ({ isMobile, isTablet, isDesktop }) => {
-  return (
-    <div className={ classNames('App', { mobile: isMobile, tablet: isTablet, desktop: isDesktop }) }>
+class App extends React.Component {
+  constructor(props) {
+    super(props);
+    this.state = { error: null, errorInfo: null };
+  }
 
-      <PageHeader />
+  componentDidCatch(error, errorInfo) {
+    this.setState({
+      error: error,
+      errorInfo: errorInfo
+    })
 
-      <div className="App-content">
-        { isMobile && <DataSources isMobile={isMobile} /> }
+    console.error('Error Caught by App')
+    console.error(error)
+    console.error(errorInfo)
+  }
 
-        <ViewControls isMobile={isMobile} />
+  resetAndReload = () => {
+    window.localStorage.clear()
+    window.sessionStorage.clear()
+    window.location.reload()
+  }
 
-        <DataLoader />
+  render() {
+    const { isMobile, isTablet, isDesktop } = this.props
+    const { error, errorInfo } = this.state
 
-        <TableView isMobile={isMobile} isTablet={isTablet} isDesktop={isDesktop} />
+    return (
+      <div className={ classNames('App', { mobile: isMobile, tablet: isTablet, desktop: isDesktop }) }>
+
+        <PageHeader />
+
+        {!error &&
+          <div className="App-content">
+            { isMobile && <DataSources isMobile={isMobile} /> }
+
+            <ViewControls isMobile={isMobile} />
+
+            <DataLoader />
+
+            <TableView isMobile={isMobile} isTablet={isTablet} isDesktop={isDesktop} />
+          </div>
+        }
+
+        {error &&
+          <div className="App-error">
+            <div>
+              <h2><Trans i18nKey={'general.error_title'}>ERROR</Trans></h2>
+
+              <Trans i18nKey={'general.error_text'}>
+                <p>
+                  Something unexpected happened. We suggest clicking the
+                  button below to reset cached data and try loading the page again.
+                </p>
+                <p>
+                  If an error is still happening, reach out to <a href='https://twitter.com/'>@sd on twitter</a>.
+                </p>
+              </Trans>
+
+              <button onClick={() => this.resetAndReload()}>
+                <Trans i18nKey={'general.reload_button'}>Try Again!</Trans>
+              </button>
+            </div>
+
+            <div className="error-info">
+              <pre>
+                <b>{error.message}</b><br />
+                {errorInfo.componentStack}
+              </pre>
+            </div>
+          </div>
+        }
+
+        <PageFooter extraFooterInfo={ !isMobile && <DataSources isMobile={isMobile} /> } />
+
       </div>
-
-      <PageFooter extraFooterInfo={ !isMobile && <DataSources isMobile={isMobile} /> } />
-
-    </div>
-  )
+    )
+  }
 }
 
 const DataSources = ({isMobile}) => {
