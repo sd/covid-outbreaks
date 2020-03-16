@@ -15,11 +15,11 @@ const storeInfo = configureStore()
 const renderApp = () => (
   ReactDOM.render(
     <Provider store={storeInfo.store}>
-      <PersistGate loading={null} persistor={storeInfo.persistor}>
+      {/* <PersistGate loading={null} persistor={storeInfo.persistor}> */}
         <Suspense fallback="loading">
           <App />
         </Suspense>
-      </PersistGate>
+      {/* </PersistGate> */}
     </Provider>,
     document.getElementById('root')
   )

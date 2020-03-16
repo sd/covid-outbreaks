@@ -9,30 +9,30 @@ import defaultStorage from 'redux-persist/lib/storage'
 export function configureStore (state) {
   let reducer = rootReducer
 
-  const persistConfig = {
-    key: "root",
-    storage: defaultStorage,
-    stateReconciler: (stateFromStorage, stateFromQueryString) => {
-      const storedUi = stateFromStorage.ui || {}
-      const urlUi = stateFromQueryString.ui || {}
+  // const persistConfig = {
+  //   key: "root",
+  //   storage: defaultStorage,
+  //   stateReconciler: (stateFromStorage, stateFromQueryString) => {
+  //     const storedUi = stateFromStorage.ui || {}
+  //     const urlUi = stateFromQueryString.ui || {}
 
-      return {
-        ...stateFromStorage,
-        ui: {
-          ...storedUi,
-          sort: urlUi.sort || storedUi.sort,
-          filter: urlUi.filter || storedUi.filter,
-          noScaling: urlUi.noScaling || storedUi.noScaling,
-          pinned: urlUi.pinned || storedUi.pinned,
-          expanded: urlUi.expanded || storedUi.expanded,
-          weeks: urlUi.weeks || storedUi.weeks,
-          totals: urlUi.totals || storedUi.totals
-        }
-      }
-    }
-  }
+  //     return {
+  //       ...stateFromStorage,
+  //       ui: {
+  //         ...storedUi,
+  //         sort: urlUi.sort || storedUi.sort,
+  //         filter: urlUi.filter || storedUi.filter,
+  //         noScaling: urlUi.noScaling || storedUi.noScaling,
+  //         pinned: urlUi.pinned || storedUi.pinned,
+  //         expanded: urlUi.expanded || storedUi.expanded,
+  //         weeks: urlUi.weeks || storedUi.weeks,
+  //         totals: urlUi.totals || storedUi.totals
+  //       }
+  //     }
+  //   }
+  // }
 
-  reducer = persistReducer(persistConfig, reducer)
+  // // reducer = persistReducer(persistConfig, reducer)
 
 
   const middlewares = [thunkMiddleware]
@@ -63,7 +63,7 @@ export function configureStore (state) {
 
   setupQueryStringSync(store)
 
-  const persistor = persistStore(store, state)
+  const persistor = null //persistStore(store, state)
 
   return { store, persistor }
 }
