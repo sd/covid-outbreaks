@@ -37,13 +37,11 @@ export const OUTBREAK_DATA_AGGREGATES = {
   'France > France': 'France',
 
   'Czechia': 'Czech Republic',
-
-  'Congo (Kinshasa)': 'Congo',
-  'Congo (Brazzaville)': 'Congo',
 }
 
 /* Rows that started under one name and now continue under another */
 export const OUTBREAK_DATA_OVERLAYS = {
+  'Congo (Brazzaville)': 'Republic of the Congo'
 }
 
 export const OUTBREAK_ATTRIBUTES = {
@@ -72,6 +70,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'Kazakhstan': { emoji: '🇰🇿', region: 'asia', esDisplayName: 'Kazakstán' },
   'Laos': { emoji: '🇱🇦', region: 'asia' },
   'Brunei': { emoji: '🇧🇳', region: 'asia' },
+  'Thailand': { emoji: '🇹🇭', region: 'asia', esDisplayName: 'Tailandia' },
   'Mongolia': { emoji: '🇲🇳', region: 'asia' },
   'Uzbekistan': { emoji: '🇺🇿', region: 'asia', esDisplayName: 'Uzbequistán' },
   'North Korea': { emoji: '🇰🇵', region: 'asia' },
@@ -105,7 +104,7 @@ export const OUTBREAK_ATTRIBUTES = {
           'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
           'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }},
 
-  'USA > Puerto Rico': { displayName: 'Puerto Rico', emoji: '🇵🇷', region: 'americas' },
+  'Puerto Rico': { displayName: 'Puerto Rico', emoji: '🇵🇷', region: 'americas' },
 
   'Mexico': { emoji: '🇲🇽', region: 'americas', esDisplayName: 'México' },
   'Panama': { emoji: '🇵🇦', region: 'americas', esDisplayName: 'Panamá' },
@@ -120,6 +119,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'Saint Martin': { emoji: '🇸🇽', region: 'americas' },
   'Saint Barthelemy': { emoji: '🇫🇷', region: 'americas' },
   'Jamaica': { emoji: '🇯🇲', region: 'americas' },
+  'The Bahamas': { emoji: '🇧🇸', region: 'americas', esDisplayName: 'Las Bahamas' },
   'Cuba': { emoji: '🇨🇺', region: 'americas' },
   'Haiti': { emoji: '🇭🇹', region: 'americas', esDisplayName: 'Haití' },
   'Trinidad and Tobago': { emoji: '🇹🇹', region: 'americas', esDisplayName: 'Trinidad y Tobago' },
@@ -180,9 +180,14 @@ export const OUTBREAK_ATTRIBUTES = {
   'Tunisia': { emoji: '🇹🇳', region: 'africa', esDisplayName: 'Tunez' },
   'Togo': { emoji: '🇹🇬', region: 'africa' },
   'Nigeria': { emoji: '🇳🇬', region: 'africa' },
-  'Congo': { emoji: '🇨🇩', region: 'africa' },
+  'Congo (Kinshasa)': { emoji: '🇨🇩', region: 'africa' },
+  'Republic of the Congo': { emoji: '🇨🇬', region: 'africa', esDisplayName: 'República del Congo' },
   'Cote d\'Ivoire': { emoji: '🇨🇮', region: 'africa', esDisplayName: 'Costa de Marfil' },
   'Reunion': { emoji: '🇫🇷', region: 'africa', esDisplayName: 'Reunión' },
+  'Somalia': { emoji: '🇸🇴', region: 'africa' },
+  'Tanzania': { emoji: '🇹🇿', region: 'africa', esDisplayName: 'Tanzanía' },
+  'Benin': { emoji: '🇧🇯', region: 'africa', esDisplayName: 'Benín' },
+  'Liberia': { emoji: '🇱🇷', region: 'africa' },
   'Sudan': { emoji: '🇸🇩', region: 'africa', esDisplayName: 'Sudán' },
   'Ethiopia': { emoji: '🇪🇹', region: 'africa', esDisplayName: 'Etiopía' },
   'Guinea': { emoji: '🇬🇳', region: 'africa' },
@@ -276,6 +281,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'Lithuania': { emoji: '🇱🇹', region: 'europe', esDisplayName: 'Lituania' },
   'Monaco': { emoji: '🇲🇨', region: 'europe' },
   'Serbia': { emoji: '🇷🇸', region: 'europe' },
+  'Greenland': { emoji: '🇬🇱', region: 'europe' },
   'Vatican City': { emoji: '🇻🇦', region: 'europe', esDisplayName: 'Ciudad del Vatiano' },
   'Ukraine': { emoji: '🇺🇦', region: 'europe', esDisplayName: 'Ucrania' },
 
