@@ -4,12 +4,15 @@ export function totalizeEntries (data, dates) {
     name: 'totals',
     daily: { deaths: {}, cases: {} },
     totals: { deaths: {}, cases: {} },
-    percent: { deaths: {}, cases: {} },
+    velocity: { deaths: {}, cases: {} },
+    acceleration: { deaths: {}, cases: {} },
     outbreakDay: { deaths: {}, cases: {} },
 
     latestTotal: {},
-    latestDaily: {}
-
+    latestDaily: {},
+    latestVelocity: {},
+    latestAcceleration: {},
+    latestOutbreakDay: {}
   }
 
   const fieldNames =  ['deaths', 'cases']
@@ -36,16 +39,16 @@ export function totalizeEntries (data, dates) {
     })
   })
 
-  fieldNames.forEach(fieldName => {
-    let latestDaily = undefined
-    dates.forEach(d => {
+  // fieldNames.forEach(fieldName => {
+  //   let latestDaily = undefined
+  //   dates.forEach(d => {
 
-      if (latestDaily > 0) {
-        totalsEntry.percent[fieldName][d] = Math.round(((totalsEntry.daily[fieldName][d] / latestDaily) - 1) * 100)
-      }
-      latestDaily = totalsEntry.daily[fieldName][d]
-    })
-  })
+  //     if (latestDaily > 0) {
+  //       totalsEntry.percent[fieldName][d] = Math.round(((totalsEntry.daily[fieldName][d] / latestDaily) - 1) * 100)
+  //     }
+  //     latestDaily = totalsEntry.daily[fieldName][d]
+  //   })
+  // })
 
   return totalsEntry
 }

@@ -55,8 +55,8 @@
   text-align: right;
 }
 
-.TableView-title .name {
-  grid-area: name;
+.TableView-title .title {
+  grid-area: title;
   float: left;
   text-align: center;
 }
@@ -75,7 +75,8 @@
   grid-template-columns: 11em auto 11em;
   grid-template-rows: auto;
   grid-template-areas:
-    "tools name totals";
+    "tools title totals"
+    "tools title summary";
 }
 .TableView-title .name { text-align: center }
 .TableView-title .tools { text-align: left }
@@ -88,8 +89,8 @@
     grid-template-columns: auto 11em;
     grid-template-rows: auto;
     grid-template-areas:
-      "name   totals"
-      "tools  totals";
+      "title   totals"
+      "tools  summary";
   }
   .TableView-title .name { text-align: left }
   .TableView-title .tools { text-align: left }
@@ -133,12 +134,14 @@
   line-height: 150%;
   margin-left: auto;
   margin-right: auto;
+  text-align: center;
 }
 
 @media only screen and (max-width: 600px) {
   .TableView .title {
     margin-left: 0;
     margin-right: 0;
+    text-align: left;
   }
 }
 
@@ -148,7 +151,6 @@
 
 .TableView .title .flag {
   float: left;
-
   margin-right: 0.2em;
 
   font-size: 160%;
@@ -162,4 +164,56 @@
 .TableView .totals .cases {
   font-size: 80%;
   opacity: 0.4;
+}
+
+.TableView .totals .velocitySummary {
+  white-space: nowrap;
+  font-size: 80%;
+}
+
+.TableView .velocity {
+  color: #bb6;
+}
+
+.TableView .acceleration {
+  color: #fa6;
+}
+
+.TableView .acceleration.decreasing {
+  color: #5d5;
+}
+.TableView .acceleration.increasing {
+  color: #d55;
+}
+
+.TableView .acceleration .arrow {
+  font-size: 60%;
+  position: relative;
+  top: -0.1rem;
+  left: -0.1rem;
+}
+
+.TableView .velocity.good {
+  color: #7b7;
+}
+
+.TableView .velocity.medium {
+  color: #aa3;
+}
+
+.TableView .velocity.bad {
+  color: #c96;
+}
+
+.TableView .velocity.verybad {
+  color: #c66;
+}
+
+.TableView .velocity.terrible {
+  color: #d33;
+  font-weight: bold;
+}
+
+.TableView .outbreakDay {
+  color: #7ae;
 }

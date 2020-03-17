@@ -13,6 +13,7 @@ export function configureStore (state) {
     key: "root",
     storage: defaultStorage,
     stateReconciler: (stateFromStorage, stateFromQueryString) => {
+      return stateFromQueryString
       if (!stateFromStorage.version || stateFromStorage.version !== stateFromQueryString.version) {
         return stateFromQueryString
       }

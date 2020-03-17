@@ -6,12 +6,10 @@ import OutbreakSparklineSVG from './OutbreakSparklineSVG'
 import OutbreakTable from './OutbreakTable'
 import { Trans, useTranslation } from 'react-i18next';
 
-function formatNumber(n) { return numeral(n).format('0,000') }
-
 const OneTableEntry = ({
   entry, dates,
   pinned, expanded, sideBySide,
-  pinEntry, unpinEntry, expandEntry, collapseEntry
+  pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile
 }) => {
   const { t, i18n } = useTranslation();
 
@@ -36,19 +34,29 @@ const OneTableEntry = ({
 
         <div className='title'>
           <span className='flag'>{entry.emoji}</span>
-          <span className='name'>{entry[`${i18n.language}DisplayName`] || entry.displayName || entry.name}</span>
+          <span className='name'>
+            {entry[`${i18n.language}DisplayName`] || entry.displayName || entry.name}
+            {entry.latestOutbreakDay.deaths &&
+              <span className='outbreakDay'>
+                { ' • ' }
+                <Trans i18nKey='entry.outbreak_day'>
+                day {{ day: entry.latestOutbreakDay.deaths }}
+                </Trans>
+              </span>
+            }
+          </span>
         </div>
 
         <div className='totals'>
           <div className='deaths'>
             {entry.latestTotal.deaths > 0 && entry.latestDaily.deaths > 0 &&
               <Trans i18nKey='entry.deaths_total_with_latest'>
-                {{total: formatNumber(entry.latestTotal.deaths, i18n)}} deaths (+{{latest: formatNumber(entry.latestDaily.deaths, i18n)}})
+                {{total: numeral(entry.latestTotal.deaths).format('0,000')}} deaths (+{{latest: numeral(entry.latestDaily.deaths).format('0,000')}})
               </Trans>
             }
             {entry.latestTotal.deaths > 0 && !entry.latestDaily.deaths &&
               <Trans i18nKey='entry.deaths_total_with_no_change'>
-                {{total: formatNumber(entry.latestTotal.deaths, i18n)}} deaths
+                {{total: numeral(entry.latestTotal.deaths).format('0,000')}} deaths
               </Trans>
             }
             {!entry.latestTotal.deaths &&
@@ -57,15 +65,27 @@ const OneTableEntry = ({
               </Trans>
             }
           </div>
+
+          {entry.latestVelocity.deaths && entry.latestVelocity.deaths !== 1 &&
+            <div className='velocitySummary velocity'>
+              <Trans i18nKey='entry.velocity_description'>
+                Growing <VelocityWithStyles value={entry.latestVelocity.deaths} />/week
+              </Trans>
+              {entry.latestAcceleration.deaths &&
+                <span>&nbsp;&nbsp;<AccelerationWithStyles value={entry.latestAcceleration.deaths} /></span>
+              }
+            </div>
+          }
+
           <div className='cases'>
-          {entry.latestTotal.cases > 0 && entry.latestDaily.cases > 0 &&
+            {entry.latestTotal.cases > 0 && entry.latestDaily.cases > 0 &&
               <Trans i18nKey='entry.cases_total_with_latest'>
-                {{total: formatNumber(entry.latestTotal.cases, i18n)}} cases (+{{latest: formatNumber(entry.latestDaily.cases, i18n)}})
+                {{total: numeral(entry.latestTotal.cases).format('0,000')}} cases (+{{latest: numeral(entry.latestDaily.cases).format('0,000')}})
               </Trans>
             }
             {entry.latestTotal.cases > 0 && !entry.latestDaily.cases &&
               <Trans i18nKey='entry.cases_total_with_no_change'>
-                {{total: formatNumber(entry.latestTotal.cases, i18n)}} cases
+                {{total: numeral(entry.latestTotal.cases).format('0,000')}} cases
               </Trans>
             }
             {!entry.latestTotal.cases &&
@@ -74,8 +94,10 @@ const OneTableEntry = ({
               </Trans>
             }
           </div>
+
         </div>
       </div>
+
       {expanded && (
         <div className='TableView-more'>
           {entry && entry.links  && (
@@ -93,7 +115,8 @@ const OneTableEntry = ({
 
           {entry && entry.sources && entry.sources.deaths && (
             <section>
-              <b>Includes data labeled as&nbsp;&nbsp;</b>
+              <b><Trans i18nKey='entry.includes_data_for'>Includes data labeled as</Trans></b>
+              &nbsp;&nbsp;
               {entry.sources.deaths.map(name =>
                 <span key={name}>{name}&nbsp;&nbsp;&nbsp;&nbsp;</span>
               )}
@@ -105,4 +128,36 @@ const OneTableEntry = ({
   )
 }
 
-export default  React.memo(OneTableEntry)
+export const VelocityWithStyles = ({value}) => {
+  return (
+    <span className={classNames('velocity', {
+      // good: value < 1.5,
+      // medium: value > 2,
+      // bad: value > 4,
+      // terrible: value > 10
+    })}
+    >
+    {value
+      ? `${numeral(value).format('0,000.0')}x`
+      : <span>&nbsp;</span>
+    }
+    </span>
+  )
+}
+
+export const AccelerationWithStyles = ({value}) => {
+  return (
+    <span className={classNames('acceleration', {
+      increasing: value > 1,
+      decreasing: value < 1
+    })}
+    >
+      {value > 1 && <span><span className='arrow'>▲</span>{numeral((value - 1) * 100).format('0,000')}%</span>}
+      {value === 1 && '0%'}
+      {value < 1 && <span><span className='arrow'>▼</span>{numeral((1 - value) * 100).format('0,000')}%</span>}
+      {!value && <span>&nbsp;</span>}
+    </span>
+  )
+}
+
+export default React.memo(OneTableEntry)

@@ -34,37 +34,34 @@
 .OutbreakTable .outbreakDay {
   white-space: nowrap;
   font-size: 80%;
-  color: #77b;
 }
 
 .OutbreakTable .cases {
   opacity: 0.4;
+}
+
+.OutbreakTable .cases.totals {
+  font-weight: bold;
   margin-top: 0.4em;
+}
+.OutbreakTable .cases.daily {
+  font-weight: normal;
+  font-size: 80%;
 }
 
 .OutbreakTable .deaths {
   color: #f99;
+}
+.OutbreakTable .deaths.totals {
+  font-weight: bold;
   margin-top: 0.4em;
 }
-
-.OutbreakTable .percent {
-  font-size: 75%;
+.OutbreakTable .deaths.daily {
+  font-weight: normal;
+  font-size: 80%;
 }
 
-.OutbreakTable .percent.positive.large {
-  color: #c66;
-}
-
-.OutbreakTable .percent.positive.huge {
-  color: #f00;
-  font-weight: bold;
-}
-
-.OutbreakTable .percent.negative.large {
-  color: #3a3;
-}
-
-.OutbreakTable .percent.negative.huge {
-  color: #0f0;
-  font-weight: bold;
+.OutbreakTable .velocity {
+  margin-top: 0.4em;
+  font-size: 100%;
 }

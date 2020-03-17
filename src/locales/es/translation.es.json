@@ -32,6 +32,7 @@
     "expand_button": "mostrar más",
     "collapse_button": "esconder",
     "outbreak_day": "día {{day}}",
+    "velocity_description": "Creciendo <1 />/semana",
     "deaths_total_with_latest": "{{total}} muertes (+{{latest}})",
     "deaths_total_with_no_change": "{{total}} muertes",
     "deaths_total_no_deaths": "sin muertes",
@@ -40,8 +41,11 @@
     "cases_total_no_cases": "sin casos",
     "links_label": "Enlaces:",
     "table_date_label": "Fecha",
+    "table_velocity_label": "Crecimiento/sem.",
+    "table_acceleration_label": "Aceleración",
     "table_deaths_label": "Muertes",
-    "table_cases_label": "Casos"
+    "table_cases_label": "Casos",
+    "includes_data_for": "Incluye datos agrupados bajo"
   },
   "filter": {
     "description": {
@@ -62,7 +66,8 @@
       "casesTotal": "Casos Totales",
       "casesLatest": "Nuevos Casos",
       "deathsTotal": "Muertes Totales",
-      "deathsLatest": "Nuevas Muertes"
+      "deathsLatest": "Nuevas Muertes",
+      "outbreakDay": "Días en el brote"
     }
   },
   "weeks": {
@@ -73,10 +78,6 @@
       "eight": "Últimas 8 semanas",
       "all": "Todas las fechas"
     }
-  },
-  "number": {
-    "decimals_separator": ",",
-    "thousands_separator": "."
   },
   "date": {
     "formats": {

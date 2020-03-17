@@ -113,6 +113,12 @@ function prepareEntries (data, fieldName, entries) {
     entry.percent = entry.percent || {}
     entry.percent[fieldName] = {}
 
+    entry.velocity = entry.velocity || {}
+    entry.velocity[fieldName] = {}
+
+    entry.acceleration = entry.acceleration || {}
+    entry.acceleration[fieldName] = {}
+
     entry.outbreakDay = entry.outbreakDay || {}
     entry.outbreakDay[fieldName] = {}
 
@@ -121,6 +127,14 @@ function prepareEntries (data, fieldName, entries) {
 
     entry.latestDaily = entry.latestDaily || {}
     entry.latestDaily[fieldName] = 0
+
+    entry.latestVelocity = entry.latestVelocity || {}
+    entry.latestVelocity[fieldName] = 0
+
+    entry.latestAcceleration = entry.latestAcceleration || {}
+    entry.latestAcceleration[fieldName] = 0
+
+    entry.latestOutbreakDay = entry.latestOutbreakDay || {}
 
     entries[entry.name] = entry
   })
@@ -147,7 +161,7 @@ function processOneFile (fieldName, rawData, entries ) {
 
     let outbreakCounter = undefined
 
-    dates.forEach(d => {
+    dates.forEach((d, index) => {
       let value = row[d]
 
       /* Prevent errors when data is missing */
@@ -158,23 +172,41 @@ function processOneFile (fieldName, rawData, entries ) {
       if (value !== undefined) {
         entry.totals[fieldName][d] = value
         entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
-        // `percent` and `outbreakCounter` rely on `latestDaily` holding the previous day value
-        // which is why we process them here, before setting the new `latestDaily`
-        if (entry.latestDaily[fieldName] > 0) {
-          entry.percent[fieldName][d] = Math.round(((entry.daily[fieldName][d] / entry.latestDaily[fieldName]) - 1) * 100)
+
+        // if (name === 'Spain' && d === '3/10/20') debugger
+
+        // if (index >= 9 && entry.totals[fieldName][d] && entry.totals[fieldName][dates[index - 9]]) {
+        //   const growth0 = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 7]]
+        //   const growth1 = entry.totals[fieldName][dates[index - 1]] / entry.totals[fieldName][dates[index - 8]]
+        //   const growth2 = entry.totals[fieldName][dates[index - 2]] / entry.totals[fieldName][dates[index - 9]]
+
+        //   entry.velocity[fieldName][d] = (growth0 + growth1 + growth2) / 3
+        // }
+
+        if (index >= 7 && entry.totals[fieldName][d] && entry.totals[fieldName][dates[index - 7]]) {
+          entry.velocity[fieldName][d] = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 7]]
         }
 
-        // if (name === 'France' && d === '2/16/20') debugger
-        if (entry.daily[fieldName][d] === 0 && !entry.latestDaily[fieldName]) {
+        if (entry.velocity[fieldName][d] && entry.velocity[fieldName][dates[index - 1]] > 0) {
+          entry.acceleration[fieldName][d] = entry.velocity[fieldName][d] / entry.velocity[fieldName][dates[index - 1]]
+        }
+
+        if (
+          !entry.daily[fieldName][d]
+          && !entry.daily[fieldName][dates[index - 1]]
+          && !entry.daily[fieldName][dates[index - 2]]
+        ) {
           outbreakCounter = undefined
         } else {
           outbreakCounter = (outbreakCounter || 0) + 1
         }
         entry.outbreakDay[fieldName][d] = outbreakCounter
 
-        // Having calculated `percent` and `outbreakCounter`, we can now set `latestDaily`
         entry.latestTotal[fieldName] = entry.totals[fieldName][d]
         entry.latestDaily[fieldName] = entry.daily[fieldName][d]
+        entry.latestVelocity[fieldName] = entry.velocity[fieldName][d]
+        entry.latestAcceleration[fieldName] = entry.acceleration[fieldName][d]
+        entry.latestOutbreakDay[fieldName] = entry.outbreakDay[fieldName][d]
       }
     })
 
