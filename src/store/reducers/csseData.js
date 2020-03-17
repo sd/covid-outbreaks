@@ -173,8 +173,6 @@ function processOneFile (fieldName, rawData, entries ) {
         entry.totals[fieldName][d] = value
         entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
 
-        // if (name === 'Spain' && d === '3/10/20') debugger
-
         // if (index >= 9 && entry.totals[fieldName][d] && entry.totals[fieldName][dates[index - 9]]) {
         //   const growth0 = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 7]]
         //   const growth1 = entry.totals[fieldName][dates[index - 1]] / entry.totals[fieldName][dates[index - 8]]
