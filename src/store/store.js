@@ -13,7 +13,7 @@ export function configureStore (state) {
     key: "root",
     storage: defaultStorage,
     stateReconciler: (stateFromStorage, stateFromQueryString) => {
-      if (!stateFromStorage.version || stateFromStorage.version < '20200316') {
+      if (!stateFromStorage.version || stateFromStorage.version !== stateFromQueryString.version) {
         return stateFromQueryString
       }
 

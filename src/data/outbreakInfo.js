@@ -14,6 +14,7 @@ export const OUTBREAK_DATA_AGGREGATES = {
 
   'UK': 'United Kingdom',
   'United Kingdom > UK': 'United Kingdom',
+  'United Kingdom > United Kingdom': 'United Kingdom',
   'Channel Islands': 'United Kingdom',
 
   'Russian Federation': 'Russia',

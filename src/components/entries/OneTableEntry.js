@@ -1,11 +1,12 @@
 import React from 'react'
 import classNames from 'classnames'
-import formatNumber from '../../utils/formatNumber'
+import numeral from 'numeral'
 
 import OutbreakSparklineSVG from './OutbreakSparklineSVG'
 import OutbreakTable from './OutbreakTable'
 import { Trans, useTranslation } from 'react-i18next';
 
+function formatNumber(n) { return numeral(n).format('0,000') }
 
 const OneTableEntry = ({
   entry, dates,

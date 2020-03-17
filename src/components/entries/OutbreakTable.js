@@ -1,11 +1,14 @@
 import React from 'react'
 import classNames from 'classnames'
 import { Trans, useTranslation } from 'react-i18next';
+import numeral from 'numeral'
 
-import formatNumber from '../../utils/formatNumber'
+
 import { formatDateMonthAbbrDD, formatDateWeekdayAbbrDD } from '../../utils/dateFormats'
 
 import './OutbreakTable.css'
+
+function formatNumber(n) { return numeral(n).format('0,000') }
 
 const OutbreakTable = ({entry, dates}) => {
   const { i18n } = useTranslation();
