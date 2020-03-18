@@ -5,6 +5,7 @@ import numeral from 'numeral'
 import OutbreakSparklineSVG from './OutbreakSparklineSVG'
 import OutbreakTable from './OutbreakTable'
 import { Trans, useTranslation } from 'react-i18next';
+import Information from '../ui/Information'
 
 const OneTableEntry = ({
   entry, dates,
@@ -42,6 +43,7 @@ const OneTableEntry = ({
                 <Trans i18nKey='entry.outbreak_day'>
                 day {{ day: entry.latestOutbreakDay.deaths }}
                 </Trans>
+                <Information about='outbreakDay' />
               </span>
             }
           </span>

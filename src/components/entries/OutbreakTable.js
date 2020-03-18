@@ -2,6 +2,7 @@ import React from 'react'
 import { Trans, useTranslation } from 'react-i18next';
 import numeral from 'numeral'
 
+import Information from '../ui/Information'
 
 import { formatDateMonthAbbrDD, formatDateWeekdayAbbrDD } from '../../utils/dateFormats'
 
@@ -80,10 +81,17 @@ const OutbreakTable = ({entry, dates}) => {
             <div className='deaths daily'>&nbsp;</div>
 
             {entry.latestVelocity.deaths &&
-              <div className='velocity'><Trans i18nKey='entry.table_velocity_label'>Velocity/week</Trans></div>
+              <div className='velocity'>
+                <Trans i18nKey='entry.table_velocity_label'>Velocity/week</Trans>
+                <Information about={'velocity'} />
+
+              </div>
             }
             {entry.latestAcceleration.deaths &&
-              <div className='acceleration'><Trans i18nKey='entry.table_acceleration_label'>Acceleration</Trans></div>
+              <div className='acceleration'>
+                <Trans i18nKey='entry.table_acceleration_label'>Acceleration</Trans>
+                <Information about={'acceleration'} />
+              </div>
             }
 
             <div className='cases totals'><Trans i18nKey='entry.table_cases_label'>Cases</Trans></div>

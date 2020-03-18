@@ -1,0 +1,33 @@
+.Information-icon {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  display: inline-block;
+  position: relative;
+  top: 0.2em;
+  width: 1em;
+  height: 1em;
+  border: 0.1em solid;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+.Information-icon-i {
+  font-size: 1em;
+  position: relative;
+  top: -0.35em;
+}
+.Information-trigger {
+  margin-left: 0.3em;
+  font-size: 90%;
+  position: relative;
+  top: -0.1em;
+  opacity: 0.6;
+  cursor: pointer;
+}
+.Information-content {
+  background-color: #ffb;
+  color: #333;
+  padding: 0.5em 1em;
+  text-align: left;
+  font-weight: normal;
+}

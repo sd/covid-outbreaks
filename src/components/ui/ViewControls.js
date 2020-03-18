@@ -5,8 +5,8 @@ import { Trans, useTranslation } from 'react-i18next';
 
 import './ViewControls.css'
 
-import { viewOptionsForSorting, SORTER_TYPES, SORTER_DESCRIPTIONS } from '../store/sorters'
-import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../store/filters'
+import { viewOptionsForSorting, SORTER_TYPES, SORTER_DESCRIPTIONS } from '../../store/sorters'
+import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../../store/filters'
 
 const ViewControls = ({
   reset,

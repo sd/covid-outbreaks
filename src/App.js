@@ -4,9 +4,9 @@ import withSizes from 'react-sizes'
 import classNames from 'classnames'
 import { Trans } from 'react-i18next'
 
-import ViewControls from './components/ViewControls'
-import MarkerLegend from './components/MarkerLegend'
 import TableView from './components/TableView'
+import ViewControls from './components/ui/ViewControls'
+import MarkerLegend from './components/ui/MarkerLegend'
 import DataLoader from './components/DataLoader'
 
 class App extends React.Component {

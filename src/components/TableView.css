@@ -175,8 +175,16 @@
   color: #bb6;
 }
 
+.TableView .velocity .coloredBorder {
+  border-color: #bb6;
+}
+
 .TableView .acceleration {
   color: #fa6;
+}
+
+.TableView .acceleration .coloredBorder {
+  border-color: #fa6;
 }
 
 .TableView .acceleration.decreasing {
@@ -216,4 +224,8 @@
 
 .TableView .outbreakDay {
   color: #7ae;
+}
+
+.TableView .outbreakDay .coloredBorder {
+  border-color: #7ae;
 }

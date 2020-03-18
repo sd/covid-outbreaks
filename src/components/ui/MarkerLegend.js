@@ -1,7 +1,7 @@
 import React from 'react'
 import { Trans } from 'react-i18next';
 
-import { OutbreakSparklineSampleMarker } from './entries/OutbreakSparklineSVG'
+import { OutbreakSparklineSampleMarker } from '../entries/OutbreakSparklineSVG'
 
 const MarkerLegend = () => {
   return (
