@@ -116,8 +116,14 @@ function prepareEntries (data, fieldName, entries) {
     entry.velocity = entry.velocity || {}
     entry.velocity[fieldName] = {}
 
+    entry.velocityRolling = entry.velocityRolling || {}
+    entry.velocityRolling[fieldName] = {}
+
     entry.acceleration = entry.acceleration || {}
     entry.acceleration[fieldName] = {}
+
+    entry.accelerationRolling = entry.accelerationRolling || {}
+    entry.accelerationRolling[fieldName] = {}
 
     entry.outbreakDay = entry.outbreakDay || {}
     entry.outbreakDay[fieldName] = {}
@@ -130,6 +136,12 @@ function prepareEntries (data, fieldName, entries) {
 
     entry.latestVelocity = entry.latestVelocity || {}
     entry.latestVelocity[fieldName] = 0
+
+    entry.latestVelocityRolling = entry.latestVelocityRolling || {}
+    entry.latestVelocityRolling[fieldName] = 0
+
+    entry.latestAccelerationRolling = entry.latestAccelerationRolling || {}
+    entry.latestAccelerationRolling[fieldName] = 0
 
     entry.latestAcceleration = entry.latestAcceleration || {}
     entry.latestAcceleration[fieldName] = 0
@@ -173,16 +185,20 @@ function processOneFile (fieldName, rawData, entries ) {
         entry.totals[fieldName][d] = value
         entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
 
-        // if (index >= 9 && entry.totals[fieldName][d] && entry.totals[fieldName][dates[index - 9]]) {
-        //   const growth0 = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 7]]
-        //   const growth1 = entry.totals[fieldName][dates[index - 1]] / entry.totals[fieldName][dates[index - 8]]
-        //   const growth2 = entry.totals[fieldName][dates[index - 2]] / entry.totals[fieldName][dates[index - 9]]
+        if (index >= 9 && entry.totals[fieldName][d] && entry.totals[fieldName][dates[index - 9]]) {
+          const growth0 = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 7]]
+          const growth1 = entry.totals[fieldName][dates[index - 1]] / entry.totals[fieldName][dates[index - 8]]
+          const growth2 = entry.totals[fieldName][dates[index - 2]] / entry.totals[fieldName][dates[index - 9]]
 
-        //   entry.velocity[fieldName][d] = (growth0 + growth1 + growth2) / 3
-        // }
+          entry.velocityRolling[fieldName][d] = (growth0 + growth1 + growth2) / 3
+        }
 
         if (index >= 7 && entry.totals[fieldName][d] && entry.totals[fieldName][dates[index - 7]]) {
           entry.velocity[fieldName][d] = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 7]]
+        }
+
+        if (entry.velocityRolling[fieldName][d] && entry.velocityRolling[fieldName][dates[index - 1]] > 0) {
+          entry.accelerationRolling[fieldName][d] = entry.velocityRolling[fieldName][d] / entry.velocityRolling[fieldName][dates[index - 1]]
         }
 
         if (entry.velocity[fieldName][d] && entry.velocity[fieldName][dates[index - 1]] > 0) {
@@ -204,6 +220,8 @@ function processOneFile (fieldName, rawData, entries ) {
         entry.latestDaily[fieldName] = entry.daily[fieldName][d]
         entry.latestVelocity[fieldName] = entry.velocity[fieldName][d]
         entry.latestAcceleration[fieldName] = entry.acceleration[fieldName][d]
+        entry.latestVelocityRolling[fieldName] = entry.velocityRolling[fieldName][d]
+        entry.latestAccelerationRolling[fieldName] = entry.accelerationRolling[fieldName][d]
         entry.latestOutbreakDay[fieldName] = entry.outbreakDay[fieldName][d]
       }
     })
