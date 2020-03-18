@@ -119,7 +119,7 @@ const PageFooter = ({extraFooterInfo}) => {
 
       <div className='credits'>
         <Trans i18nKey='general.credits'>
-          Visualization by Sebastián Delmont • <a href='https://twitter.com/sd'>@sd</a> • <a href='https://twitter.com/sd'>github</a>
+          Visualization by Sebastián Delmont • <a href='https://twitter.com/sd'>@sd</a> • <a href='https://github.com/sd/covid-outbreaks'>github</a>
         </Trans>
       </div>
     </footer>
