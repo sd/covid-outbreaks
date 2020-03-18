@@ -43,7 +43,7 @@ const OneTableEntry = ({
                 <Trans i18nKey='entry.outbreak_day'>
                 day {{ day: entry.latestOutbreakDay.deaths }}
                 </Trans>
-                <Information about='outbreakDay' />
+                <Information about='outbreakDay' position={isMobile ? 'top right' : 'bottom center'} />
               </span>
             }
           </span>

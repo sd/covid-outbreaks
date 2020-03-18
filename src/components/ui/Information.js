@@ -5,7 +5,7 @@ import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
 import './Information.css'
 
-const Information = ({about}) => {
+const Information = ({about, position}) => {
   let ContentClass = null
   const contentComponents = {
     outbreakDay: InfoForOutbreakDay,
@@ -18,24 +18,23 @@ const Information = ({about}) => {
   if (ContentClass) {
     return (
       <Popup
-          tooltip
-          position={'bottom'}
-          arrow={true}
-          closeOnDocumentClick
-          className='ViewControls-popup'
-          overlayStyle={{
-            zIndex: 1000
-          }}
-          contentStyle={{
-            zIndex: 1001,
-            backgroundColor: '#ffb',
-            color: '#333',
-            minWidth: '25em'
-          }}
-          trigger={
-              <span className='Information-trigger'><FontAwesomeIcon icon={faQuestionCircle} /></span>
-          }
-        >
+        tooltip
+        position={position || 'bottom center'}
+        arrow={true}
+        closeOnDocumentClick
+        className='ViewControls-popup'
+        overlayStyle={{
+          zIndex: 1000
+        }}
+        contentStyle={{
+          zIndex: 1001,
+          backgroundColor: '#ffb',
+          color: '#333',
+        }}
+        trigger={
+            <span className='Information-trigger'><FontAwesomeIcon icon={faQuestionCircle} /></span>
+        }
+      >
         {close => (
           <div className='Information-content'>
             {ContentClass && <ContentClass />}
