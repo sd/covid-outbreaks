@@ -38,6 +38,8 @@ export const OUTBREAK_DATA_AGGREGATES = {
   'France > France': 'France',
 
   'Czechia': 'Czech Republic',
+
+  'Gambia, The': 'The Gambia',
 }
 
 /* Rows that started under one name and now continue under another */
@@ -75,6 +77,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'Mongolia': { emoji: '🇲🇳', region: 'asia' },
   'Uzbekistan': { emoji: '🇺🇿', region: 'asia', esDisplayName: 'Uzbequistán' },
   'North Korea': { emoji: '🇰🇵', region: 'asia' },
+  'Kyrgyzstan': { emoji: '🇰🇬', region: 'asia' },
 
   /* South East Asia */
   'India': { emoji: '🇮🇳', region: 'asia',
@@ -202,6 +205,9 @@ export const OUTBREAK_ATTRIBUTES = {
   'Gabon': { emoji: '🇬🇦', region: 'africa', esDisplayName: 'Gabón' },
   'Mauritania': { emoji: '🇲🇷', region: 'africa' },
   'Rwanda': { emoji: '🇷🇼', region: 'africa' },
+  'Djibouti': { emoji: '🇩🇯', region: 'africa' },
+  'Mauritius': { emoji: '🇲🇺', region: 'africa' },
+  'Zambia': { emoji: '🇿🇲', region: 'africa' },
   'Central African Republic': { emoji: '🇨🇫', region: 'africa', esDisplayName: 'República Central Africana' },
   'Equatorial Guinea': { emoji: '🇬🇶', region: 'africa', esDisplayName: 'Guinea Ecuatorial' },
 
