@@ -246,7 +246,9 @@ export const OUTBREAK_ATTRIBUTES = {
     links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_San_Marino' }},
   'Germany': { emoji: '🇩🇪', region: 'europe',
     esDisplayName: 'Alemania',
-    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Germany' }},
+    links: {
+      'Robert Koch Institut': 'https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Gesamt.html',
+      'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Germany' }},
   'Sweden': { emoji: '🇸🇪', region: 'europe',
     esDisplayName: 'Suecia',
     links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Sweden' }},
