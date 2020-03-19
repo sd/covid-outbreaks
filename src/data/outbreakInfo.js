@@ -238,16 +238,22 @@ export const OUTBREAK_ATTRIBUTES = {
     links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_Philippines' }},
   'Switzerland': { emoji: '🇨🇭', region: 'europe',
     esDisplayName: 'Suiza',
-    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Switzerland' }},
+    links: {
+      'Tribune de Geneva': 'https://interactif.tdg.ch/2020/covid-19-carte-suisse/',
+      'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Switzerland'
+    }},
   'Netherlands': { emoji: '🇳🇱', region: 'europe',
     esDisplayName: 'Holanda',
-    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_Netherlands' }},
+    links: {
+      'Ministry of Health': 'https://www.rivm.nl/en/news/current-information-about-novel-coronavirus-covid-19',
+      'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_Netherlands' }},
   'San Marino': { emoji: '🇸🇲', region: 'europe',
     links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_San_Marino' }},
   'Germany': { emoji: '🇩🇪', region: 'europe',
     esDisplayName: 'Alemania',
     links: {
       'Robert Koch Institut': 'https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Gesamt.html',
+      'Berliner Morgenpost': 'https://interaktiv.morgenpost.de/corona-virus-karte-infektionen-deutschland-weltweit/?fbclid=IwAR04HlqzakGaNssQzbz4d8o8R3gz0C910U8tvfYlBT6P0lVJJvHfk9uS2rc',
       'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Germany' }},
   'Sweden': { emoji: '🇸🇪', region: 'europe',
     esDisplayName: 'Suecia',
