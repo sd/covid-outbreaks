@@ -33,7 +33,10 @@ const OutbreakTable = ({entry, dates}) => {
               </div>
 
               <div className='deaths totals'>
-                {numeral(entry.totals.deaths[date]).format('0,000')}
+                {entry.totals.deaths[date]
+                  ? numeral(entry.totals.deaths[date]).format('0,000')
+                  : <span>&nbsp;</span>
+                }
               </div>
 
               <div className='deaths daily'>
@@ -56,7 +59,10 @@ const OutbreakTable = ({entry, dates}) => {
               }
 
               <div className='cases totals'>
-                {numeral(entry.totals.cases[date]).format('0,000')}
+                {entry.totals.cases[date] > 0
+                  ? numeral(entry.totals.cases[date]).format('0,000')
+                  : <span>&nbsp;</span>
+                }
               </div>
 
               <div className='cases daily'>
