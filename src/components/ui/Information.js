@@ -56,8 +56,8 @@ const InfoSources = () => {
       <h1>Data Sources</h1>
 
       <p>
-        Our data comes mainly from the <a target='_blank' href='https://github.com/CSSEGISandData/COVID-19'>Johns Hopkins University Center for Systems Science and Engineering</a> github
-        repository, and it's the same data used in their popular <a target='_blank' href='https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6'>dashboard and map</a>.
+        Our data comes mainly from the <a target='_blank' rel='noreferer noopener' href='https://github.com/CSSEGISandData/COVID-19'>Johns Hopkins University Center for Systems Science and Engineering</a> github
+        repository, and it's the same data used in their popular <a target='_blank' rel='noreferer noopener' href='https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6'>dashboard and map</a>.
       </p>
 
       <p>
@@ -68,9 +68,9 @@ const InfoSources = () => {
       <p>
         We also try to update some numbers during the day from reliable data sources, and mostly for countries with large numbers of deaths.
         For this we look at official pages, but also at
-        {' '}<a target='_blank' href='https://www.worldometers.info/coronavirus/#countries'>Worldometers</a>,
-        {' '}<a target='_blank' href='https://bnonews.com/index.php/2020/02/the-latest-coronavirus-cases/'>BNO News</a> and
-        {' '}<a target='_blank' href='https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html'>NY Times</a>.
+        {' '}<a target='_blank' rel='noreferer noopener' href='https://www.worldometers.info/coronavirus/#countries'>Worldometers</a>,
+        {' '}<a target='_blank' rel='noreferer noopener' href='https://bnonews.com/index.php/2020/02/the-latest-coronavirus-cases/'>BNO News</a> and
+        {' '}<a target='_blank' rel='noreferer noopener' href='https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html'>NY Times</a>.
       </p>
 
     </>
