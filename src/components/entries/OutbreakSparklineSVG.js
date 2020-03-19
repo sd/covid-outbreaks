@@ -1,4 +1,6 @@
 import React from 'react'
+import { useTranslation } from 'react-i18next';
+import { formatDateMonthAbbrDD } from '../../utils/dateFormats'
 
 const SVG_STYLES = {
   weekLines: {
@@ -27,6 +29,8 @@ const SVG_STYLES = {
 }
 
 const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
+  const { i18n } = useTranslation();
+
   let canvasWidth = dates.length * SVG_STYLES.emptyMarker.markerWidth
 
   if (!entry || !entry.daily || !entry.daily.deaths || !entry.daily.cases) return null
@@ -68,7 +72,20 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
                 strokeWidth={SVG_STYLES.weekLines.strokeWidth}
                 stroke={SVG_STYLES.weekLines.stroke}
               />
-          ))}
+            )
+          )}
+          {dates.map((date, index) => (
+            ((index + mondayOffset) % 7 === 0) && /* + 2 moves the lines to a monday */
+              <text
+                key={`text_${index}`}
+                x={index * SVG_STYLES.emptyMarker.markerWidth + 2}
+                y={8}
+                style={{fontSize: '9px', fill: `${SVG_STYLES.weekLines.stroke}`}}
+              >
+                {formatDateMonthAbbrDD(date, i18n)}
+              </text>
+            )
+          )}
           {dates.map((date, index) => (
             <OutbreakSparklineOneDaySVG
               key={`empty_${date}`}

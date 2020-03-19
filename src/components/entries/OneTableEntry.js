@@ -154,9 +154,9 @@ export const AccelerationWithStyles = ({value}) => {
       decreasing: value < 0
     })}
     >
-      {value > 0 && <span><span className='arrow'>▲</span>{numeral(value).format('0,000.0')}</span>}
+      {value > 0 && <span><span className='arrow'>▲</span>{numeral(value).format('0,000.00')}</span>}
       {value === 0 && <span>&nbsp;</span>}
-      {value < 0 && <span><span className='arrow'>▼</span>{numeral(value).format('0,000.0')}</span>}
+      {value < 0 && <span><span className='arrow'>▼</span>{numeral(value).format('0,000.00')}</span>}
       {!value && <span>&nbsp;</span>}
     </span>
   )

@@ -56,8 +56,8 @@ const InfoSources = () => {
       <h1>Data Sources</h1>
 
       <p>
-        Our data comes mainly from the <a href='https://github.com/CSSEGISandData/COVID-19'>Johns Hopkins University Center for Systems Science and Engineering</a>
-        github repository, and it's the same data used in their popular <a href='https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6'>dashboard and map</a>.
+        Our data comes mainly from the <a href='https://github.com/CSSEGISandData/COVID-19'>Johns Hopkins University Center for Systems Science and Engineering</a> github
+        repository, and it's the same data used in their popular <a href='https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6'>dashboard and map</a>.
       </p>
 
       <p>
