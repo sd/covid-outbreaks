@@ -43,7 +43,7 @@ const OneTableEntry = ({
                 <Trans i18nKey='entry.outbreak_day'>
                 day {{ day: entry.latestOutbreakDay.deaths }}
                 </Trans>
-                <Information about='outbreakDay' position={isMobile ? 'top right' : 'bottom center'} />
+                <Information content='numbers' />
               </span>
             }
           </span>
@@ -150,13 +150,13 @@ export const VelocityWithStyles = ({value}) => {
 export const AccelerationWithStyles = ({value}) => {
   return (
     <span className={classNames('acceleration', {
-      increasing: value > 1,
-      decreasing: value < 1
+      increasing: value > 0,
+      decreasing: value < 0
     })}
     >
-      {value > 1 && <span><span className='arrow'>▲</span>{numeral((value - 1) * 100).format('0,000')}%</span>}
-      {value === 1 && '0%'}
-      {value < 1 && <span><span className='arrow'>▼</span>{numeral((1 - value) * 100).format('0,000')}%</span>}
+      {value > 0 && <span><span className='arrow'>▲</span>{numeral(value).format('0,000.0')}</span>}
+      {value === 0 && <span>&nbsp;</span>}
+      {value < 0 && <span><span className='arrow'>▼</span>{numeral(value).format('0,000.0')}</span>}
       {!value && <span>&nbsp;</span>}
     </span>
   )

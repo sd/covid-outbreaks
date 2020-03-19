@@ -46,16 +46,40 @@ code {
     monospace;
 }
 
-a:link, a:visited {
+a:link, a:visited, .link {
   color: #cc2;
+  cursor: pointer;
+  text-decoration: underline;
 }
 
-a:hover, a:active {
+a:hover, a:active, .link:hover {
   color: #ff6;
+  cursor: pointer;
 }
 
 .segment {
   white-space: nowrap;
 }
+
+
+.content.lightTheme a:link, .content.lightTheme a:visited {
+  color: #990;
+}
+
+.content.lightTheme a:hover, .content.lightTheme a:active {
+  color: #dd3;
+}
+
+.content.yellowTheme a:link, .content.yellowTheme a:visited {
+  color: #009;
+}
+
+.content.yellowTheme a:hover, .content.yellowTheme a:active {
+  color: #00d;
+}
+
+
+
+
 
 

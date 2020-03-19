@@ -8,6 +8,7 @@ import TableView from './components/TableView'
 import ViewControls from './components/ui/ViewControls'
 import MarkerLegend from './components/ui/MarkerLegend'
 import DataLoader from './components/DataLoader'
+import Information from './components/ui/Information'
 
 class App extends React.Component {
   constructor(props) {
@@ -43,8 +44,6 @@ class App extends React.Component {
 
         {!error &&
           <div className="App-content">
-            { isMobile && <DataSources isMobile={isMobile} /> }
-
             <ViewControls isMobile={isMobile} />
 
             <DataLoader />
@@ -82,21 +81,11 @@ class App extends React.Component {
           </div>
         }
 
-        <PageFooter extraFooterInfo={ !isMobile && <DataSources isMobile={isMobile} /> } />
+        <PageFooter />
 
       </div>
     )
   }
-}
-
-const DataSources = ({isMobile}) => {
-  return (
-    <div className='dataSources'>
-      <Trans i18nKey='general.data_credits'>
-        Data from <a target='_blank' rel='noopener noreferrer' href='https://github.com/CSSEGISandData/COVID-19'>John Hopkins University</a>, <a target='_blank' rel="noopener noreferrer" href='https://bnonews.com/index.php/2020/02/the-latest-coronavirus-cases/'>BNO News</a> and other sources.
-      </Trans>
-    </div>
-  )
 }
 
 const PageHeader = () => {
@@ -112,15 +101,16 @@ const PageHeader = () => {
   )
 }
 
-const PageFooter = ({extraFooterInfo}) => {
+const PageFooter = () => {
   return (
     <footer className="App-footer">
-      {extraFooterInfo}
-
       <div className='credits'>
         <Trans i18nKey='general.credits'>
-          Visualization by Sebastián Delmont • <a href='https://twitter.com/sd'>@sd</a> • <a href='https://github.com/sd/covid-outbreaks'>github</a>
+          Visualization by Sebastián Delmont
         </Trans>
+        {' • '}<a href='https://twitter.com/sd'>@sd</a>
+        {' • '}<a href='https://github.com/sd/covid-outbreaks'>github</a>
+        {' • '}<Information content='sources' trigger={<span className='link'>Data Sources</span>}></Information>
       </div>
     </footer>
   )

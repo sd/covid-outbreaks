@@ -90,6 +90,7 @@ function prepareEntries (data, fieldName, entries) {
 
   Object.keys(data.rows).forEach(name => {
     sources = data.sources[name]
+    if (sources && sources.length < 2) sources = undefined
 
     nameParts = name.split(' > ')
 
@@ -185,7 +186,7 @@ function processOneFile (fieldName, rawData, entries ) {
         entry.totals[fieldName][d] = value
         entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
 
-        if (index >= 9 && entry.totals[fieldName][d] && entry.totals[fieldName][dates[index - 9]]) {
+        if (entry.totals[fieldName][dates[index - 9]]) {
           const growth0 = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 7]]
           const growth1 = entry.totals[fieldName][dates[index - 1]] / entry.totals[fieldName][dates[index - 8]]
           const growth2 = entry.totals[fieldName][dates[index - 2]] / entry.totals[fieldName][dates[index - 9]]
@@ -193,16 +194,29 @@ function processOneFile (fieldName, rawData, entries ) {
           entry.velocityRolling[fieldName][d] = (growth0 + growth1 + growth2) / 3
         }
 
-        if (index >= 7 && entry.totals[fieldName][d] && entry.totals[fieldName][dates[index - 7]]) {
+        if (entry.totals[fieldName][dates[index - 7]]) {
           entry.velocity[fieldName][d] = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 7]]
         }
+        //  else if (entry.totals[fieldName][dates[index - 6]]) {
+        //   let diff = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 6]]
+        //   entry.velocity[fieldName][d] = Math.pow(Math.pow(diff, 1/5), 6)
+        // } else if (entry.totals[fieldName][dates[index - 5]]) {
+        //   let diff = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 5]]
+        //   entry.velocity[fieldName][d] = Math.pow(Math.pow(diff, 1/4), 6)
+        // } else if (entry.totals[fieldName][dates[index - 4]]) {
+        //   let diff = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 4]]
+        //   entry.velocity[fieldName][d] = Math.pow(Math.pow(diff, 1/3), 6)
+        // } else if (entry.totals[fieldName][dates[index - 3]]) {
+        //   let diff = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 3]]
+        //   entry.velocity[fieldName][d] = Math.pow(Math.pow(diff, 1/2), 6)
+        // }
 
         if (entry.velocityRolling[fieldName][d] && entry.velocityRolling[fieldName][dates[index - 1]] > 0) {
-          entry.accelerationRolling[fieldName][d] = entry.velocityRolling[fieldName][d] / entry.velocityRolling[fieldName][dates[index - 1]]
+          entry.accelerationRolling[fieldName][d] = entry.velocityRolling[fieldName][d] - entry.velocityRolling[fieldName][dates[index - 1]]
         }
 
         if (entry.velocity[fieldName][d] && entry.velocity[fieldName][dates[index - 1]] > 0) {
-          entry.acceleration[fieldName][d] = entry.velocity[fieldName][d] / entry.velocity[fieldName][dates[index - 1]]
+          entry.acceleration[fieldName][d] = entry.velocity[fieldName][d] - entry.velocity[fieldName][dates[index - 1]]
         }
 
         if (

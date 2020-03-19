@@ -172,20 +172,24 @@
   font-size: 80%;
 }
 
+
+.TableView .outbreakDay {
+  color: #7ae;
+}
+.TableView .lightTheme .outbreakDay {
+  color: #59d;
+}
+
 .TableView .velocity {
   color: #bb6;
 }
 
-.TableView .velocity .coloredBorder {
-  border-color: #bb6;
+.TableView .lightTheme .velocity {
+  color: #993;
 }
 
 .TableView .acceleration {
   color: #fa6;
-}
-
-.TableView .acceleration .coloredBorder {
-  border-color: #fa6;
 }
 
 .TableView .acceleration.decreasing {
@@ -193,6 +197,13 @@
 }
 .TableView .acceleration.increasing {
   color: #d55;
+}
+
+.TableView .lightTheme .acceleration.decreasing {
+  color: #4c4;
+}
+.TableView .lightTheme .acceleration.increasing {
+  color: #c44;
 }
 
 .TableView .acceleration .arrow {
@@ -221,12 +232,4 @@
 .TableView .velocity.terrible {
   color: #d33;
   font-weight: bold;
-}
-
-.TableView .outbreakDay {
-  color: #7ae;
-}
-
-.TableView .outbreakDay .coloredBorder {
-  border-color: #7ae;
 }
