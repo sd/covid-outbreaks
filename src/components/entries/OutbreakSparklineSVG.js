@@ -44,9 +44,9 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
   let columns = 1
 
   if (sideBySide) {
-    if (maxDataPoint > 400) columns = 5
-    else if (maxDataPoint > 200) columns = 5
-    else if (maxDataPoint > 100) columns = 2
+    if (maxDataPoint > 400) columns = 6
+    else if (maxDataPoint > 200) columns = 4
+    else if (maxDataPoint > 100) columns = 3
     else if (maxDataPoint > 50) columns = 2
   }
 
