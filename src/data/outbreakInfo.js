@@ -78,6 +78,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'Uzbekistan': { emoji: '🇺🇿', region: 'asia', esDisplayName: 'Uzbequistán' },
   'North Korea': { emoji: '🇰🇵', region: 'asia' },
   'Kyrgyzstan': { emoji: '🇰🇬', region: 'asia' },
+  'Fiji': { emoji: '🇫🇯', region: 'asia' },
 
   /* South East Asia */
   'India': { emoji: '🇮🇳', region: 'asia',
@@ -204,6 +205,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'Eswatini': { emoji: '🇸🇿', region: 'africa' },
   'Gabon': { emoji: '🇬🇦', region: 'africa', esDisplayName: 'Gabón' },
   'Mauritania': { emoji: '🇲🇷', region: 'africa' },
+  'Chad': { emoji: '🇹🇩', region: 'africa' },
   'Rwanda': { emoji: '🇷🇼', region: 'africa' },
   'Djibouti': { emoji: '🇩🇯', region: 'africa' },
   'Mauritius': { emoji: '🇲🇺', region: 'africa' },
