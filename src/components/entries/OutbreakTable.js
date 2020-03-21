@@ -54,7 +54,7 @@ const OutbreakTable = ({entry, dates}) => {
 
               {entry.latestAcceleration.deaths &&
                 <div className='acceleration'>
-                  <AccelerationWithStyles value={entry.acceleration.deaths[date]} />
+                  <AccelerationWithStyles value={entry.rollingAcceleration.deaths[date]} />
                 </div>
               }
 
@@ -88,7 +88,7 @@ const OutbreakTable = ({entry, dates}) => {
 
             {entry.latestVelocity.deaths &&
               <div className='velocity'>
-                <Trans i18nKey='entry.table_velocity_label'>Velocity/week</Trans>
+                <Trans i18nKey='entry.table_velocity_label'>Velocity</Trans>
                 <Information content='numbers' />
 
               </div>

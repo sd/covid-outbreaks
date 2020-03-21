@@ -140,26 +140,63 @@ export const VelocityWithStyles = ({value}) => {
     })}
     >
     {value
-      ? `${numeral(value).format('0,000.0')}x`
+      ? `${numeral(value).format('0,000.00')}`
       : <span>&nbsp;</span>
     }
     </span>
   )
 }
 
-export const AccelerationWithStyles = ({value}) => {
-  return (
-    <span className={classNames('acceleration', {
-      increasing: value > 0,
-      decreasing: value < 0
-    })}
-    >
-      {value > 0 && <span><span className='arrow'>▲</span>{numeral(value).format('0,000.00')}</span>}
-      {value === 0 && <span>&nbsp;</span>}
-      {value < 0 && <span><span className='arrow'>▼</span>{numeral(value).format('0,000.00')}</span>}
-      {!value && <span>&nbsp;</span>}
-    </span>
-  )
+export const AccelerationWithStyles = ({value, isPercent = false}) => {
+  return <NumberWithStyles value={value} className='acceleration' arrows={true} percent={false} />
 }
 
+export const NumberWithStyles = ({value, className, arrows = false, percent = false}) => {
+  if (percent) {
+    return (
+      <span className={classNames(className, {
+        increasing: value > 1,
+        decreasing: value < 1
+      })}
+      >
+        {value > 1 &&
+          <span>
+            {arrows && <span className='arrow'>▲</span>}
+            {numeral((value - 1) * 100).format('0,000.0')}%
+          </span>
+        }
+        {value < 1 &&
+          <span>
+            {arrows && <span className='arrow'>▼</span>}
+            {numeral((1 - value) * 100).format('0,000.0')}%
+          </span>
+        }
+        {!value && <span>&nbsp;</span>}
+      </span>
+    )
+  } else {
+    return (
+      <span className={classNames(className, {
+        increasing: value > 0,
+        decreasing: value < 0
+      })}
+      >
+        {value > 0 &&
+          <span>
+            {arrows && <span className='arrow'>▲</span>}
+            {numeral(value).format('0,000.00')}
+          </span>
+        }
+        {value === 0 && <span>&nbsp;</span>}
+        {value < 0 &&
+          <span>
+            {arrows && <span className='arrow'>▼</span>}
+            {numeral(value).format('0,000.00')}
+          </span>
+        }
+        {!value && <span>&nbsp;</span>}
+      </span>
+    )
+  }
+}
 export default React.memo(OneTableEntry)

@@ -56,8 +56,8 @@ const InfoSources = () => {
       <h1>Data Sources</h1>
 
       <p>
-        Our data comes mainly from the <a target='_blank' rel='noreferer noopener' href='https://github.com/CSSEGISandData/COVID-19'>Johns Hopkins University Center for Systems Science and Engineering</a> github
-        repository, and it's the same data used in their popular <a target='_blank' rel='noreferer noopener' href='https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6'>dashboard and map</a>.
+        Our data comes mainly from the <a target='_blank' rel='noreferrer noopener' href='https://github.com/CSSEGISandData/COVID-19'>Johns Hopkins University Center for Systems Science and Engineering</a> github
+        repository, and it's the same data used in their popular <a target='_blank' rel='noreferrer noopener' href='https://www.arcgis.com/apps/opsdashboard/index.html#/bda7594740fd40299423467b48e9ecf6'>dashboard and map</a>.
       </p>
 
       <p>
@@ -68,9 +68,9 @@ const InfoSources = () => {
       <p>
         We also try to update some numbers during the day from reliable data sources, and mostly for countries with large numbers of deaths.
         For this we look at official pages, but also at
-        {' '}<a target='_blank' rel='noreferer noopener' href='https://www.worldometers.info/coronavirus/#countries'>Worldometers</a>,
-        {' '}<a target='_blank' rel='noreferer noopener' href='https://bnonews.com/index.php/2020/02/the-latest-coronavirus-cases/'>BNO News</a> and
-        {' '}<a target='_blank' rel='noreferer noopener' href='https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html'>NY Times</a>.
+        {' '}<a target='_blank' rel='noreferrer noopener' href='https://www.worldometers.info/coronavirus/#countries'>Worldometers</a>,
+        {' '}<a target='_blank' rel='noreferrer noopener' href='https://bnonews.com/index.php/2020/02/the-latest-coronavirus-cases/'>BNO News</a> and
+        {' '}<a target='_blank' rel='noreferrer noopener' href='https://www.nytimes.com/interactive/2020/us/coronavirus-us-cases.html'>NY Times</a>.
       </p>
 
     </>
@@ -88,6 +88,8 @@ const InfoNumbers = () => {
         over time or accross outbreaks.
       </p>
 
+
+
       <h3>Outbreak Day • <span className='outbreakDay'>day 15</span></h3>
 
       <p>
@@ -99,31 +101,30 @@ const InfoNumbers = () => {
         but reset it back to zero after two consecutive days with no new deaths.
       </p>
 
-      <h3>Velocity, or growth per week • <VelocityWithStyles value={3.2} /></h3>
+
+
+      <h3>Velocity • <VelocityWithStyles value={3.2} /></h3>
 
       <p>
-        How much larger is the total number of deaths, compared to 7 days before.
+        How much larger is the total number of deaths, compared to 3 days before, but using a logarithmic (base 10) scale.
       </p>
 
       <p>
-        A velocity of 5x corresponds to about 30% day-over-day increases over 7 days.
+        If you plot the number of deaths in a logarithmic scale, this is the slope of the curve. If you want to
+        compare different outbreaks, this is the best number to use but only if you compare similar stages based
+        on days into the outbreak or total number of deaths.
+      </p>
+
+
+
+      <h3>Acceleration • <span style={{opacity: 0.3}}><VelocityWithStyles value={3.2} /></span>&nbsp;<AccelerationWithStyles value={-0.3} /></h3>
+
+      <p>
+        How much has <i>velocity</i> changed, compared to the previous day. We use a rolling average of the last 3 days.
       </p>
 
       <p>
-        2x → 12%, 3x → 20%, 4x → 26%, 5x → 31%<br />
-        8x → 41%, 10x → 47%, 15x → 57%, 20x → 65%.
-      </p>
-
-      <h3>Acceleration • <span style={{opacity: 0.3}}><VelocityWithStyles value={3.2} /></span>&nbsp;<AccelerationWithStyles value={-1.3} /></h3>
-
-      <p>
-        How much has <i>velocity</i> changed, compared to the previous day. It's the best indicator that
-        progress of the outbreak is speeding up or slowing down.
-      </p>
-
-      <p>
-        <i>Velocity</i> is calculated by comparing <i>death totals</i> 7 days appart,
-        while <i>Acceleration</i> compares <i>velocity</i> day to day.
+        This is the best indicator that progress of the outbreak is speeding up or slowing down.
       </p>
 
       <p>
@@ -136,7 +137,7 @@ const InfoNumbers = () => {
         I'm not an Epidemiologist or a Statisticial, nor do I play one on TV.
         I believe these metrics are sound mathematically and give good insights into the progression of each outbreak,
         but it's possible that I'm wrong about their interpretation or calculation. If that's the case,
-        and you're a real expert in this subject, please reach out on twitter <a href='https://twitter.com/sd'>@sd</a> to discuss.
+        and you're a real expert in this subject, please reach out on twitter <a target='_blank' rel='noreferrer noopener' href='https://twitter.com/sd'>@sd</a> to discuss.
       </p>
     </>
   )

@@ -117,14 +117,11 @@ function prepareEntries (data, fieldName, entries) {
     entry.velocity = entry.velocity || {}
     entry.velocity[fieldName] = {}
 
-    entry.velocityRolling = entry.velocityRolling || {}
-    entry.velocityRolling[fieldName] = {}
-
     entry.acceleration = entry.acceleration || {}
     entry.acceleration[fieldName] = {}
 
-    entry.accelerationRolling = entry.accelerationRolling || {}
-    entry.accelerationRolling[fieldName] = {}
+    entry.rollingAcceleration = entry.rollingAcceleration || {}
+    entry.rollingAcceleration[fieldName] = {}
 
     entry.outbreakDay = entry.outbreakDay || {}
     entry.outbreakDay[fieldName] = {}
@@ -137,12 +134,6 @@ function prepareEntries (data, fieldName, entries) {
 
     entry.latestVelocity = entry.latestVelocity || {}
     entry.latestVelocity[fieldName] = 0
-
-    entry.latestVelocityRolling = entry.latestVelocityRolling || {}
-    entry.latestVelocityRolling[fieldName] = 0
-
-    entry.latestAccelerationRolling = entry.latestAccelerationRolling || {}
-    entry.latestAccelerationRolling[fieldName] = 0
 
     entry.latestAcceleration = entry.latestAcceleration || {}
     entry.latestAcceleration[fieldName] = 0
@@ -166,7 +157,11 @@ function processOneFile (fieldName, rawData, entries ) {
   let dates = data.dates
   let lastDate = dates.slice(-1)
 
-  let row, entry
+  let row, entry, sum, i
+
+  const logForVelocity = Math.log10
+  const velocityOffset = 3
+  const rollingCount = 3
 
   data.names.forEach(name => {
     row = data.rows[name]
@@ -186,37 +181,20 @@ function processOneFile (fieldName, rawData, entries ) {
         entry.totals[fieldName][d] = value
         entry.daily[fieldName][d] = entry.totals[fieldName][d] - entry.latestTotal[fieldName]
 
-        if (entry.totals[fieldName][dates[index - 9]]) {
-          const growth0 = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 7]]
-          const growth1 = entry.totals[fieldName][dates[index - 1]] / entry.totals[fieldName][dates[index - 8]]
-          const growth2 = entry.totals[fieldName][dates[index - 2]] / entry.totals[fieldName][dates[index - 9]]
-
-          entry.velocityRolling[fieldName][d] = (growth0 + growth1 + growth2) / 3
-        }
-
-        if (entry.totals[fieldName][dates[index - 7]]) {
-          entry.velocity[fieldName][d] = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 7]]
-        }
-        //  else if (entry.totals[fieldName][dates[index - 6]]) {
-        //   let diff = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 6]]
-        //   entry.velocity[fieldName][d] = Math.pow(Math.pow(diff, 1/5), 6)
-        // } else if (entry.totals[fieldName][dates[index - 5]]) {
-        //   let diff = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 5]]
-        //   entry.velocity[fieldName][d] = Math.pow(Math.pow(diff, 1/4), 6)
-        // } else if (entry.totals[fieldName][dates[index - 4]]) {
-        //   let diff = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 4]]
-        //   entry.velocity[fieldName][d] = Math.pow(Math.pow(diff, 1/3), 6)
-        // } else if (entry.totals[fieldName][dates[index - 3]]) {
-        //   let diff = entry.totals[fieldName][d] / entry.totals[fieldName][dates[index - 3]]
-        //   entry.velocity[fieldName][d] = Math.pow(Math.pow(diff, 1/2), 6)
-        // }
-
-        if (entry.velocityRolling[fieldName][d] && entry.velocityRolling[fieldName][dates[index - 1]] > 0) {
-          entry.accelerationRolling[fieldName][d] = entry.velocityRolling[fieldName][d] - entry.velocityRolling[fieldName][dates[index - 1]]
+        if (entry.totals[fieldName][d] > 1 && entry.totals[fieldName][dates[index - velocityOffset]] > 1) {
+          entry.velocity[fieldName][d] = logForVelocity(entry.totals[fieldName][d] - entry.totals[fieldName][dates[index - velocityOffset]])
         }
 
         if (entry.velocity[fieldName][d] && entry.velocity[fieldName][dates[index - 1]] > 0) {
           entry.acceleration[fieldName][d] = entry.velocity[fieldName][d] - entry.velocity[fieldName][dates[index - 1]]
+        }
+
+        sum = undefined
+        for (i = 0; i < rollingCount; i++) {
+          sum = (sum || 0) + entry.acceleration[fieldName][dates[index - i]]
+        }
+        if (sum !== undefined) {
+          entry.rollingAcceleration[fieldName][d] = sum / rollingCount
         }
 
         if (
@@ -233,9 +211,7 @@ function processOneFile (fieldName, rawData, entries ) {
         entry.latestTotal[fieldName] = entry.totals[fieldName][d]
         entry.latestDaily[fieldName] = entry.daily[fieldName][d]
         entry.latestVelocity[fieldName] = entry.velocity[fieldName][d]
-        entry.latestAcceleration[fieldName] = entry.acceleration[fieldName][d]
-        entry.latestVelocityRolling[fieldName] = entry.velocityRolling[fieldName][d]
-        entry.latestAccelerationRolling[fieldName] = entry.accelerationRolling[fieldName][d]
+        entry.latestAcceleration[fieldName] = entry.rollingAcceleration[fieldName][d]
         entry.latestOutbreakDay[fieldName] = entry.outbreakDay[fieldName][d]
       }
     })
