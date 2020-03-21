@@ -321,26 +321,35 @@ export const OUTBREAK_ATTRIBUTES = {
 
 export function findAggregateMapping (name) {
   if (OUTBREAK_DATA_AGGREGATES[name]) {
-    return OUTBREAK_DATA_AGGREGATES[name]
+    return [OUTBREAK_DATA_AGGREGATES[name]]
   } else {
     let parts
 
     parts = name.match(/US > (.*), (\w\w)/)
     if (parts && US_STATES[parts[2]]) {
-      return 'ignore'
+      return ['ignore']
       // return `USA > ${US_STATES[parts[2]]}`
+    }
+
+    parts = name.match(/US > ([^,]+)$/)
+    if (parts) {
+      // if (parts[1] === 'New York' || parts[1] === 'New Jersey' || parts[1] === 'Connecticut') {
+      //   return [`USA > ${parts[1]}`, 'USA > NY/NJ/CT TriState Area']
+      // } else {
+        return [`USA > ${parts[1]}`]
+      // }
     }
 
     parts = name.match(/Mainland China > (.*)/)
     if (parts) {
       if (parts[1].indexOf('Hubei') >= 0) return 'China > Hubei (Wuhan)'
-      else return 'China > Other'
+      else return ['China > Other']
     }
 
     parts = name.match(/^China > (.*)/)
     if (parts) {
       if (parts[1].indexOf('Hubei') >= 0) return 'China > Hubei (Wuhan)'
-      else return 'China > Other'
+      else return ['China > Other']
     }
   }
 
@@ -349,14 +358,7 @@ export function findAggregateMapping (name) {
 
 export function findOverlayMapping (name) {
   if (OUTBREAK_DATA_OVERLAYS[name]) {
-    return OUTBREAK_DATA_OVERLAYS[name]
-  } else {
-    let parts
-
-    parts = name.match(/US > ([^,]+)$/)
-    if (parts) {
-      return `USA > ${parts[1]}`
-    }
+    return [OUTBREAK_DATA_OVERLAYS[name]]
   }
 
   return false

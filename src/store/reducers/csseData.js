@@ -59,22 +59,28 @@ function parseRawData (rawData, overrides) {
 }
 
 function combineRows (data, combinationMethod, combinationRules) {
-  let targetName
+  let targetNames
   let row
   let rows = {}
   let sources = data.sources
 
   data.names.forEach(name => {
-    targetName = combinationRules(name)
-    if (targetName) {
-      row = rows[targetName] || {}
-      data.dates.forEach(d => {
-        if (data.rows[name][d] || data.rows[name][d] === 0) {
-          row[d] = combinationMethod(row[d],data.rows[name][d])
-        }
+    targetNames = combinationRules(name)
+    if (targetNames) {
+      if (!targetNames.forEach) {
+        targetNames = [targetNames]
+      }
+
+      targetNames.forEach(targetName => {
+        row = rows[targetName] || {}
+        data.dates.forEach(d => {
+          if (data.rows[name][d] || data.rows[name][d] === 0) {
+            row[d] = combinationMethod(row[d],data.rows[name][d])
+          }
+        })
+        data.sources[targetName] = (data.sources[targetName] || []).concat(name)
+        rows[targetName] = row
       })
-      data.sources[targetName] = (data.sources[targetName] || []).concat(name)
-      rows[targetName] = row
     } else {
       rows[name] = data.rows[name]
     }
@@ -150,7 +156,7 @@ function processOneFile (fieldName, rawData, entries ) {
   let data
   data = parseRawData(rawData, DATA_OVERRIDES[fieldName])
   data = combineRows(data, (a, b) => (a === undefined || b === undefined ? (a || b) : (a || 0) + (b || 0)), findAggregateMapping)
-  data = combineRows(data, (a, b) => (a || b), findOverlayMapping)
+  data = combineRows(data, (a, b) => Math.max(a || 0, b || 0), findOverlayMapping)
 
   entries = prepareEntries(data, fieldName, entries)
 
