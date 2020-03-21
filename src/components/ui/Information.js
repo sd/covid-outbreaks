@@ -120,7 +120,7 @@ const InfoNumbers = () => {
       <h3>Acceleration • <span style={{opacity: 0.3}}><VelocityWithStyles value={3.2} /></span>&nbsp;<AccelerationWithStyles value={-0.3} /></h3>
 
       <p>
-        How much has <i>velocity</i> changed, compared to the previous day. We use a rolling average of the last 3 days.
+        How much has <i>velocity</i> changed, compared to the previous day.
       </p>
 
       <p>

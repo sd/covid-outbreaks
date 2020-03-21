@@ -161,7 +161,7 @@ function processOneFile (fieldName, rawData, entries ) {
 
   const logForVelocity = Math.log10
   const velocityOffset = 7
-  const rollingCount = 3
+  const rollingCount = 1
 
   data.names.forEach(name => {
     row = data.rows[name]
@@ -211,7 +211,7 @@ function processOneFile (fieldName, rawData, entries ) {
         entry.latestTotal[fieldName] = entry.totals[fieldName][d]
         entry.latestDaily[fieldName] = entry.daily[fieldName][d]
         entry.latestVelocity[fieldName] = entry.velocity[fieldName][d]
-        entry.latestAcceleration[fieldName] = entry.rollingAcceleration[fieldName][d]
+        entry.latestAcceleration[fieldName] = entry.acceleration[fieldName][d]
         entry.latestOutbreakDay[fieldName] = entry.outbreakDay[fieldName][d]
       }
     })
