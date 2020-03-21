@@ -97,7 +97,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'USA': { emoji: '🇺🇸', region: 'americas',
     links: { 'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }},
-  'USA > Washington': { emoji: '🇺🇸', region: 'americas',
+  'USA > Washington': { emoji: '🇺🇸', region: 'americas', displayName: 'USA > Washington (Seattle)',
     links: { 'WA State Dept. of Health': 'https://www.doh.wa.gov/Emergencies/Coronavirus',
              'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }},

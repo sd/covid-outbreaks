@@ -37,15 +37,17 @@ const OneTableEntry = ({
           <span className='flag'>{entry.emoji}</span>
           <span className='name'>
             {entry[`${i18n.language}DisplayName`] || entry.displayName || entry.name}
+          </span>
+          <span className='info'>
             {entry.latestOutbreakDay.deaths &&
-              <span className='outbreakDay'>
-                { ' • ' }
-                <Trans i18nKey='entry.outbreak_day'>
-                day {{ day: entry.latestOutbreakDay.deaths }}
-                </Trans>
-                <Information content='numbers' />
-              </span>
-            }
+                <span className='outbreakDay'>
+                  { ' • ' }
+                  <Trans i18nKey='entry.outbreak_day'>
+                  day {{ day: entry.latestOutbreakDay.deaths }}
+                  </Trans>
+                  <Information content='numbers' />
+                </span>
+              }
           </span>
         </div>
 

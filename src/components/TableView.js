@@ -54,7 +54,7 @@ const TableView = ({
     } else if (isTablet) {
       dates = last6weeks
     } else {
-      dates = last8weeks
+      dates = last6weeks
     }
 
     const sharedProps = { dates, allDates, pinEntry, unpinEntry, expandEntry, collapseEntry }

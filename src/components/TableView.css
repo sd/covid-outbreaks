@@ -158,6 +158,10 @@
   text-shadow: 0 0 0.2em #999;
 }
 
+.TableView .title .info {
+  display: inline-block;
+}
+
 .TableView .totals .cases {
   white-space: nowrap;
 }

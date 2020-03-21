@@ -2,6 +2,11 @@ import React from 'react'
 import { useTranslation } from 'react-i18next';
 import { formatDateMonthAbbrDD } from '../../utils/dateFormats'
 
+const markerWidth = 12
+const markerHeight = 4
+
+export const groupedMarkerSize = 10
+
 const SVG_STYLES = {
   weekLines: {
     stroke: '#555',
@@ -9,21 +14,31 @@ const SVG_STYLES = {
   },
   emptyMarker: {
     fill: '#444',
-    markerWidth: 12,
-    markerHeight: 2.2,
+    markerWidth,
+    markerHeight,
     radius: 0.5
   },
   deathMarker: {
-    fill: '#F00',
-    markerWidth: 12,
-    markerHeight: 2.2,
-    radius: 1
+    fill: '#f00',
+    stroke: '#900',
+    strokeWidth: 0.5,
+    markerWidth,
+    markerHeight,
+    radius: 1.3
+  },
+  groupedDeathMarker: {
+    fill: '#f33',
+    stroke: '#700',
+    strokeWidth: 0.5,
+    markerWidth,
+    markerHeight,
+    radius: 2.5
   },
   caseMarker: {
-    fill: '#6a6a6a',
-    markerWidth: 12,
-    markerHeight: 2.2,
-    radius: 3.0,
+    fill: '#535353',
+    markerWidth,
+    markerHeight,
+    radius: 4.0,
     multiplier: 100
   }
 }
@@ -35,20 +50,26 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
 
   if (!entry || !entry.daily || !entry.daily.deaths || !entry.daily.cases) return null
 
-  let maxDataPoint = Math.max(
-    ...dates.map(d => entry.daily.deaths[d] || 0),
-    ...dates.map(d => (entry.daily.cases[d] || 0) / SVG_STYLES.caseMarker.multiplier),
-    0
-  )
+  let scalingFactor = 1
+  let maxDeaths = Math.max(...dates.map(d => entry.daily.deaths[d] || 0), 0)
+  let maxCases = Math.max(...dates.map(d => entry.daily.cases[d] || 0), 0) / SVG_STYLES.caseMarker.multiplier
+
+  if (maxDeaths >= 100 && sideBySide) {
+    scalingFactor = groupedMarkerSize
+    maxDeaths = maxDeaths / scalingFactor
+    maxCases = maxCases / scalingFactor
+  }
+
+  let maxDataPoint = Math.max(maxDeaths, maxCases)
 
   let columns = 1
 
   if (sideBySide) {
-    if (maxDataPoint > 600) columns = 7
-    else if (maxDataPoint > 400) columns = 6
-    else if (maxDataPoint > 200) columns = 4
-    else if (maxDataPoint > 100) columns = 3
-    else if (maxDataPoint > 50) columns = 2
+    if (maxDataPoint > 600) columns = 6
+    else if (maxDataPoint >= 200) columns = 4
+    else if (maxDataPoint >= 150) columns = 3
+    else if (maxDataPoint >= 100) columns = 3
+    else if (maxDataPoint >= 50) columns = 2
   }
 
   maxDataPoint = maxDataPoint / columns
@@ -102,7 +123,7 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
               <OutbreakSparklineOneDaySVG
                 key={`cases_${date}`}
                 dayIndex={index}
-                count={entry.daily.cases[date] / SVG_STYLES.caseMarker.multiplier}
+                count={entry.daily.cases[date] / SVG_STYLES.caseMarker.multiplier / scalingFactor }
                 columns={columns}
                 round={false}
                 height={canvasHeight}
@@ -114,11 +135,11 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
               <OutbreakSparklineOneDaySVG
                 key={`deaths_${date}`}
                 dayIndex={index}
-                count={entry.daily.deaths[date]}
+                count={entry.daily.deaths[date] / scalingFactor}
                 columns={columns}
                 round={true}
                 height={canvasHeight}
-                markerStyle={SVG_STYLES.deathMarker}
+                markerStyle={scalingFactor === 1 ? SVG_STYLES.deathMarker : SVG_STYLES.groupedDeathMarker}
               />
             )
           ))}

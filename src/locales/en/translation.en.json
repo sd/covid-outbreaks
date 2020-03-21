@@ -6,6 +6,7 @@
   },
   "legend": {
     "deaths_label": "1 death",
+    "grouped_deaths_label": "{{groupSize}} deaths",
     "cases_label": "100 cases"
   },
   "view_description": {
