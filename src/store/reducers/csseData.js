@@ -160,7 +160,7 @@ function processOneFile (fieldName, rawData, entries ) {
   let row, entry, sum, i
 
   const logForVelocity = Math.log10
-  const velocityOffset = 3
+  const velocityOffset = 7
   const rollingCount = 3
 
   data.names.forEach(name => {

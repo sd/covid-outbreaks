@@ -106,7 +106,7 @@ const InfoNumbers = () => {
       <h3>Velocity • <VelocityWithStyles value={3.2} /></h3>
 
       <p>
-        How much larger is the total number of deaths, compared to 3 days before, but using a logarithmic (base 10) scale.
+        How much larger is the total number of deaths, compared to 7 days before, but using a logarithmic (base 10) scale.
       </p>
 
       <p>
