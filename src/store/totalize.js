@@ -20,7 +20,7 @@ export function totalizeEntries (data, dates) {
   data.forEach(entry => {
     dates.forEach(d => {
       fieldNames.forEach(fieldName => {
-        if (entry.daily[fieldName][d] || entry.daily[fieldName][d] === 0) {
+        if (entry.daily[fieldName] && (entry.daily[fieldName][d] || entry.daily[fieldName][d] === 0)) {
           totalsEntry.daily[fieldName][d] = (totalsEntry.daily[fieldName][d] || 0) + entry.daily[fieldName][d]
           totalsEntry.totals[fieldName][d] = (totalsEntry.totals[fieldName][d] || 0) + entry.daily[fieldName][d]
 
@@ -31,9 +31,12 @@ export function totalizeEntries (data, dates) {
           totalsEntry.latestDaily[fieldName] = totalsEntry.daily[fieldName][d]
         }
 
+        totalsEntry.outbreakDay = totalsEntry.outbreakDay || {}
+        totalsEntry.outbreakDay[fieldName] = totalsEntry.outbreakDay[fieldName] || {}
+
         totalsEntry.outbreakDay[fieldName][d] = Math.max(
           totalsEntry.outbreakDay[fieldName][d] || 0,
-          entry.outbreakDay[fieldName][d] || 0
+          (entry.outbreakDay[fieldName] && entry.outbreakDay[fieldName][d]) || 0
         ) || undefined
       })
     })
