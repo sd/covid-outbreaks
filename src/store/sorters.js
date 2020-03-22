@@ -61,16 +61,16 @@ function sortEntriesByOutbreakDay(a, b) {
 }
 
 function sortEntriesByVelocity(a, b) {
-  if (b.velocity.deaths !== a.velocity.deaths) {
-    return (b.velocity.deaths || 0) - (a.velocity.deaths || 0)
+  if (b.latestVelocity.deaths !== a.latestVelocity.deaths) {
+    return (b.latestVelocity.deaths || 0) - (a.latestVelocity.deaths || 0)
   } else {
     defaultSorting(a, b)
   }
 }
 
 function sortEntriesByAcceleration(a, b) {
-  if (b.acceleration.deaths !== a.acceleration.deaths) {
-    return Math.abs(b.acceleration.deaths || 0) - Math.abs(a.acceleration.deaths || 0)
+  if (b.latestAcceleration.deaths !== a.latestAcceleration.deaths) {
+    return Math.abs(b.latestAcceleration.deaths || 0) - Math.abs(a.latestAcceleration.deaths || 0)
   } else {
     defaultSorting(a, b)
   }
@@ -147,8 +147,7 @@ export const SORTER_DESCRIPTIONS = {
   acceleration: 'Acceleration'
 }
 
-export const SORTER_TYPES = ['deathsLatest', 'deathsTotal', 'outbreakDay', 'name']
-// export const SORTER_TYPES = ['deathsLatest', 'deathsTotal', 'velocity', 'acceleration', 'outbreakDay', 'name']
+export const SORTER_TYPES = ['deathsLatest', 'deathsTotal', 'velocity', 'acceleration', 'outbreakDay', 'name']
 
 export function viewOptionsForSorting(sort, moreOptions) {
   sort = SORTER_ALIASES[sort] || SORTER_ALIASES.default
