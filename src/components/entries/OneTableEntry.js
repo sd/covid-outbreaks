@@ -1,6 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
 import numeral from 'numeral'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faThumbtack, faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons'
 
 import OutbreakSparklineSVG from './OutbreakSparklineSVG'
 import OutbreakTable from './OutbreakTable'
@@ -15,7 +17,7 @@ const OneTableEntry = ({
   const { t, i18n } = useTranslation();
 
   return (
-    <div key={entry.name} className={classNames('TableView-row', { pinned, expanded })}>
+    <div key={entry.code} className={classNames('TableView-row', { pinned, expanded })}>
 
       <OutbreakSparklineSVG entry={entry} dates={dates} sideBySide={sideBySide} />
 
@@ -23,20 +25,32 @@ const OneTableEntry = ({
         <div className='tools'>
           {pinEntry && (
             pinned
-            ? <button className='segment activated' onClick={ () => unpinEntry(entry) }>{t('entry.unpin_button', 'pinned to top')}</button>
-            : <button className='segment' onClick={ () => pinEntry(entry) }>{t('entry.pin_button', 'pinned')}</button>
+            ? <button className='segment activated' onClick={ () => unpinEntry(entry) }>
+                <FontAwesomeIcon icon={faThumbtack} style={{verticalAlign: 'text-bottom'}} />&nbsp;
+                {t('entry.unpin_button', 'pinned to top')}
+              </button>
+            : <button className='segment' onClick={ () => pinEntry(entry) }>
+                <FontAwesomeIcon icon={faThumbtack} style={{verticalAlign: 'text-bottom'}} />&nbsp;
+                {t('entry.pin_button', 'pinned')}
+              </button>
           )}
           { expandEntry && (
             expanded
-            ? <button className='segment activated' onClick={ () => collapseEntry(entry) }>{t('entry.collapse_button', 'hide data')}</button>
-            : <button className='segment' onClick={ () => expandEntry(entry) }>{t('entry.expand_button', 'show more')}</button>
+            ? <button className='segment activated' onClick={ () => collapseEntry(entry) }>
+                <FontAwesomeIcon icon={faMinusSquare} style={{verticalAlign: 'text-bottom'}} />&nbsp;
+                {t('entry.collapse_button', 'hide data')}
+              </button>
+            : <button className='segment' onClick={ () => expandEntry(entry) }>
+                <FontAwesomeIcon icon={faPlusSquare} style={{verticalAlign: 'text-bottom'}} />&nbsp;
+                {t('entry.expand_button', 'show more')}
+              </button>
           )}
         </div>
 
         <div className='title'>
           <span className='flag'>{entry.emoji}</span>
           <span className='name'>
-            {entry[`${i18n.language}DisplayName`] || entry.displayName || entry.name}
+            {entry[`${i18n.language}DisplayName`] || entry.displayName || entry.name || entry.code}
           </span>
           <span className='info'>
             {entry.latestOutbreakDay.deaths &&
@@ -104,14 +118,27 @@ const OneTableEntry = ({
 
       {expanded && (
         <div className='TableView-more'>
-          {entry && entry.links  && (
+          {entry && (entry.links || entry.population) &&
             <section>
-              <b><Trans i18nKey='entry.links_label'>Links:</Trans>&nbsp;&nbsp;</b>
-              {Object.keys(entry.links).map(key =>
-                <span key={key}><a href={entry.links[key]} target='_blank' rel="noopener noreferrer">{key}</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+              {entry.links && (
+                <>
+                  <b><Trans i18nKey='entry.links_label'>Links:</Trans>&nbsp;&nbsp;</b>
+                  {Object.keys(entry.links).map(key =>
+                    <span key={key}><a href={entry.links[key]} target='_blank' rel="noopener noreferrer">{key}</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  )}
+                </>
+              )}
+              {entry.links && entry.population && <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>}
+              {entry.population && (
+                <>
+                  <b>
+                    <Trans i18nKey='entry.population_label'>Population:</Trans>&nbsp;
+                  </b>
+                  {numeral(entry.population).format('0,000')}M
+                </>
               )}
             </section>
-          )}
+          }
 
           <section>
             <OutbreakTable entry={entry} dates={dates} />

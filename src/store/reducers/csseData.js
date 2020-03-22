@@ -1,7 +1,6 @@
 import { csv as d3CSV } from 'd3-fetch'
 
-import { findAggregateMapping, findOverlayMapping } from '../helpers/countryInfo'
-import { OUTBREAK_ATTRIBUTES } from '../../data/outbreakInfo'
+import { findAggregateMapping, findOverlayMapping, countryForCSSName, attributesForCountry } from '../helpers/countryInfo'
 import { DATA_OVERRIDES } from '../../data/dataOverrides'
 
 import rawcases from '../../data/rawcases.csv'
@@ -44,69 +43,67 @@ function parseRawData (rawData, overrides) {
   let name
 
   rawData.forEach(rawRow => {
-    name = [rawRow['Country/Region'], rawRow['Province/State']].filter(x => x).join(' > ')
-    rows[name] = {}
+    name = countryForCSSName([rawRow['Country/Region'], rawRow['Province/State']].filter(x => x).join(' > '))
 
-    dates.forEach(d => {
-      if (overrides[name] && (overrides[name][d] || overrides[name][d] === 0)) {
-        rows[name][d] = overrides[name][d]
-      } else if (rawRow[d] || rawRow[d] === '0') {
-        rows[name][d] = parseInt(rawRow[d], 10)
-      }
-    })
+    if (name) {
+      rows[name] = {}
+
+      dates.forEach(d => {
+        if (overrides[name] && (overrides[name][d] || overrides[name][d] === 0)) {
+          rows[name][d] = overrides[name][d]
+        } else if (rawRow[d] || rawRow[d] === '0') {
+          rows[name][d] = parseInt(rawRow[d], 10)
+        }
+      })
+    }
   })
 
-  return { dates, rows, names: Object.keys(rows), sources }
+  return { dates, rows, codes: Object.keys(rows), sources }
 }
 
 function combineRows (data, combinationMethod, combinationRules) {
-  let targetNames
+  let targetCodes
   let row
   let rows = {}
   let sources = data.sources
 
-  data.names.forEach(name => {
-    targetNames = combinationRules(name)
-    if (targetNames) {
-      if (!targetNames.forEach) {
-        targetNames = [targetNames]
+  data.codes.forEach(code => {
+    targetCodes = combinationRules(code)
+    if (targetCodes) {
+      if (!targetCodes.forEach) {
+        targetCodes = [targetCodes]
       }
 
-      targetNames.forEach(targetName => {
-        row = rows[targetName] || {}
+      targetCodes.forEach(targetCode => {
+        row = rows[targetCode] || {}
         data.dates.forEach(d => {
-          if (data.rows[name][d] || data.rows[name][d] === 0) {
-            row[d] = combinationMethod(row[d],data.rows[name][d])
+          if (data.rows[code][d] || data.rows[code][d] === 0) {
+            row[d] = combinationMethod(row[d],data.rows[code][d])
           }
         })
-        data.sources[targetName] = (data.sources[targetName] || []).concat(name)
-        rows[targetName] = row
+        data.sources[targetCode] = (data.sources[targetCode] || []).concat(code)
+        rows[targetCode] = row
       })
     } else {
-      rows[name] = data.rows[name]
+      rows[code] = data.rows[code]
     }
   })
 
-  return {dates: data.dates, sources, rows, names: Object.keys(rows)}
+  return {dates: data.dates, sources, rows, codes: Object.keys(rows)}
 }
 
 function prepareEntries (data, fieldName, entries) {
   entries = entries || {}
 
-  let sources, nameParts, entry
+  let sources, entry
 
-  Object.keys(data.rows).forEach(name => {
-    sources = data.sources[name]
+  Object.keys(data.rows).forEach(code => {
+    sources = data.sources[code]
     if (sources && sources.length < 2) sources = undefined
 
-    nameParts = name.split(' > ')
-
-    entry = entries[name] || {
-      name,
-      country: nameParts[0],
-      type: nameParts[1] ? 'province' : 'country',
-      ...OUTBREAK_ATTRIBUTES[nameParts[0]],
-      ...OUTBREAK_ATTRIBUTES[name]
+    entry = entries[code] || {
+      code,
+      ...attributesForCountry(code)
     }
 
     entry.sources = entry.sources || {}
@@ -147,7 +144,7 @@ function prepareEntries (data, fieldName, entries) {
 
     entry.latestOutbreakDay = entry.latestOutbreakDay || {}
 
-    entries[entry.name] = entry
+    entries[entry.code] = entry
   })
 
   return entries
@@ -170,9 +167,9 @@ function processOneFile (fieldName, rawData, entries ) {
   const velocityOffset = 7
   const rollingCount = 3
 
-  data.names.forEach(name => {
-    row = data.rows[name]
-    entry = entries[name]
+  data.codes.forEach(code => {
+    row = data.rows[code]
+    entry = entries[code]
 
     let outbreakCounter = undefined
 
@@ -224,10 +221,10 @@ function processOneFile (fieldName, rawData, entries ) {
       }
     })
 
-    entries[entry.name] = entry
+    entries[entry.code] = entry
   })
 
-  return { entries, names: data.names, dates: data.dates }
+  return { entries, codes: data.codes, dates: data.dates }
 }
 
 export function fetchDataDispatcher (dispatch) {

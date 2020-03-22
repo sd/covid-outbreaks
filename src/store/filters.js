@@ -21,7 +21,7 @@ function filterAmericas (a, options) {
 }
 
 function filterUSA (a, options) {
-  return (a.name.startsWith('USA >'))
+  return (a.code.startsWith('us.'))
 }
 
 const LATAM_COUNTRIES = [

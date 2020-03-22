@@ -1,4 +1,136 @@
 export const OUTBREAK_ATTRIBUTES = {
+  'cn': { // China
+    links: { 'Official Reports': 'http://en.nhc.gov.cn/news.html',
+            'Wikipedia': 'https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_outbreak_in_mainland_China' }
+  },
+  'tw': { // Taiwan
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Taiwan' }
+  },
+  'jp': { // Japan
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Japan' }
+  },
+  'kr': { // South Korea
+    links: { 'Official Reports': 'https://www.cdc.go.kr/board/board.es?mid=a30402000000&bid=0030',
+            'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_South_Korea' }
+  },
+  'sg': { // Singapore
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Singapore' }
+  },
+  'my': { // Malasya
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Malaysia'}
+  },
+
+  'in': { // India
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_India' }
+  },
+
+  'ca': { // Canada
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Canada' }
+  },
+
+  'us': {
+    links: { 'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }
+  },
+  'us.wa': {
+    links: { 'WA State Dept. of Health': 'https://www.doh.wa.gov/Emergencies/Coronavirus',
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }
+  },
+  'us.ca': {
+    links: { 'CA Dept. Public of Health': 'https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/nCoV2019.aspx',
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }
+  },
+  'us.ny': {
+    links: { 'NY Dept. of Health': 'https://www.health.ny.gov/diseases/communicable/coronavirus/',
+             'Wikipedia NY': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_New_York_(state)',
+             'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }
+  },
+
+  'ir': { // Iran
+    links: { 'Islamic Republic News Agency': 'https://en.irna.ir/service/news',
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iran' }
+  },
+  'iq': { // Iraq
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iraq' }
+  },
+  'ae': { // United Arab Emirates
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Arab_Emirates' }
+  },
+  'eg': { // Egypt
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Egypt' }
+  },
+
+  'au': { // Australia
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Australia' }
+  },
+
+  'it': { // Italy
+    links: { 'Protezione Civile': 'http://www.protezionecivile.gov.it/media-communication/press-release',
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy' }
+  },
+
+  'es': { // Spain
+    links: { 'Ministerio de Sanidad': 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm',
+             'RTVE': 'https://www.rtve.es/noticias/20200314/mapa-del-coronavirus-espana/2004681.shtml',
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain' }
+  },
+
+  'fr': { // France
+    links: { 'Santé publique France': 'https://www.santepubliquefrance.fr/maladies-et-traumatismes/maladies-et-infections-respiratoires/infection-a-coronavirus/articles/infection-au-nouveau-coronavirus-sars-cov-2-covid-19-france-et-monde',
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_France' }
+  },
+
+  'uk': { // United Kingdom
+    links: { 'Gov.uk': 'https://www.gov.uk/guidance/coronavirus-covid-19-information-for-the-public',
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Kingdom' }
+  },
+
+  'ph': { // Philippines
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_Philippines' }
+  },
+
+  'ch': { // Switzerland
+    links: { 'Tribune de Geneva': 'https://interactif.tdg.ch/2020/covid-19-carte-suisse/',
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Switzerland' }
+  },
+
+  'nl': { // Netherlands
+    links: { 'Ministry of Health': 'https://www.rivm.nl/en/news/current-information-about-novel-coronavirus-covid-19',
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_Netherlands' }
+  },
+  'sm': { // San Marino
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_San_Marino' }
+  },
+
+  'de': { // Germany
+    links: { 'Robert Koch Institut': 'https://www.rki.de/DE/Content/InfAZ/N/Neuartiges_Coronavirus/Situationsberichte/Gesamt.html',
+             'Berliner Morgenpost': 'https://interaktiv.morgenpost.de/corona-virus-karte-infektionen-deutschland-weltweit/?fbclid=IwAR04HlqzakGaNssQzbz4d8o8R3gz0C910U8tvfYlBT6P0lVJJvHfk9uS2rc',
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Germany' }
+  },
+
+  'se': { // Sweden
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Sweden' }
+  },
+
+  'be': { // Belgium
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_Belgium' }
+  },
+  'at': { // Austria
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_Austria' }
+  },
+
+  'other.diamond_princess': {
+    displayName: 'Diamond Princess (out of Japan)',
+    emoji: '🛳',
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_on_cruise_ships#Diamond_Princess' }
+  },
+  'other.grand_princess': {
+    displayName: 'Grand Princess (out of US)',
+    emoji: '🛳'
+  }
+}
+
+export const OLD_OUTBREAK_ATTRIBUTES = {
   'China': { emoji: '🇨🇳', region: 'asia',
     links: { 'Official Reports': 'http://en.nhc.gov.cn/news.html',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_outbreak_in_mainland_China' }},

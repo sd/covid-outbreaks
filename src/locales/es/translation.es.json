@@ -40,9 +40,11 @@
     "cases_total_with_no_change": "{{total}} casos",
     "cases_total_no_cases": "sin casos",
     "links_label": "Enlaces:",
+    "population_label": "Población:",
     "table_date_label": "Fecha",
     "table_velocity_label": "Velocidad(log)",
     "table_acceleration_label": "Aceleración",
+    "table_average_acceleration_label": "Promedio 3 días",
     "table_deaths_label": "Muertes",
     "table_cases_label": "Casos",
     "includes_data_for": "Incluye datos agrupados bajo"
