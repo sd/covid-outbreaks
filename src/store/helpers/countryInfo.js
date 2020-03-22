@@ -1,6 +1,8 @@
 import countryByAbbreviation from 'country-json/src/country-by-abbreviation' // https://github.com/samayo/country-json/blob/master/src/country-by-abbreviation.json
 import countryByPopulation from 'country-json/src/country-by-population' // https://github.com/samayo/country-json/blob/master/src/country-by-abbreviation.json
 
+import countryNamesES from '../../locales/es/countries.es.json'
+
 import { US_STATES_BY_CODE } from '../../data/geoData'
 import { OUTBREAK_ATTRIBUTES } from '../../data/outbreakInfo'
 
@@ -175,6 +177,7 @@ export function attributesForCountry(code) {
   }
 
   attrs.name = codeToNameIndex[code]
+  attrs.esName = countryNamesES[code]
 
   if (parts[0] !== 'other') {
     attrs.name = attrs.name || (`${codeToNameIndex[parts[0]]}: ${parts[1]}`)
