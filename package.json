@@ -10,6 +10,7 @@
     "@testing-library/react": "^9.3.2",
     "@testing-library/user-event": "^7.1.2",
     "classnames": "^2.2.6",
+    "country-json": "^1.1.0",
     "d3-fetch": "^1.1.2",
     "i18next": "^19.3.2",
     "i18next-browser-languagedetector": "^4.0.2",

@@ -1,6 +1,7 @@
 import { csv as d3CSV } from 'd3-fetch'
 
-import { OUTBREAK_ATTRIBUTES, findAggregateMapping, findOverlayMapping } from '../../data/outbreakInfo'
+import { findAggregateMapping, findOverlayMapping } from '../helpers/countryInfo'
+import { OUTBREAK_ATTRIBUTES } from '../../data/outbreakInfo'
 import { DATA_OVERRIDES } from '../../data/dataOverrides'
 
 import rawcases from '../../data/rawcases.csv'
