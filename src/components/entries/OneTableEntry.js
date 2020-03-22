@@ -41,7 +41,7 @@ const OneTableEntry = ({
           <span className='info'>
             {entry.latestOutbreakDay.deaths &&
                 <span className='outbreakDay'>
-                  { ' • ' }
+                  &nbsp;•&nbsp;
                   <Trans i18nKey='entry.outbreak_day'>
                   day {{ day: entry.latestOutbreakDay.deaths }}
                   </Trans>

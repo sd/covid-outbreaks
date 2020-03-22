@@ -207,6 +207,7 @@ function processOneFile (fieldName, rawData, entries ) {
           !entry.daily[fieldName][d]
           && !entry.daily[fieldName][dates[index - 1]]
           && !entry.daily[fieldName][dates[index - 2]]
+          && !entry.daily[fieldName][dates[index - 3]]
         ) {
           outbreakCounter = undefined
         } else {

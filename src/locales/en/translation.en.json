@@ -67,6 +67,8 @@
       "casesLatest": "Latest Cases",
       "deathsTotal": "Total Deaths",
       "deathsLatest": "Latest Deaths",
+      "velocity": "Velocity",
+      "acceleration": "Acceleration",
       "outbreakDay": "Days into outbreak"
     }
   },

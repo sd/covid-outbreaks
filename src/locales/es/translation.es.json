@@ -67,6 +67,8 @@
       "casesLatest": "Nuevos Casos",
       "deathsTotal": "Muertes Totales",
       "deathsLatest": "Nuevas Muertes",
+      "velocity": "Velocidad",
+      "acceleration": "Aceleración",
       "outbreakDay": "Días en el brote"
     }
   },

@@ -98,7 +98,7 @@ const InfoNumbers = () => {
 
       <p>
         We start counting on the first day with new deaths,
-        but reset it back to zero after two consecutive days with no new deaths.
+        but reset it back to zero after three consecutive days with no new deaths.
       </p>
 
 
