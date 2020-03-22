@@ -168,7 +168,7 @@ function processOneFile (fieldName, rawData, entries ) {
 
   const logForVelocity = Math.log10
   const velocityOffset = 7
-  const rollingCount = 1
+  const rollingCount = 3
 
   data.names.forEach(name => {
     row = data.rows[name]

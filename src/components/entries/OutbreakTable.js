@@ -16,6 +16,11 @@ const OutbreakTable = ({entry, dates}) => {
   let reversedDates = [...dates]
   reversedDates.reverse()
 
+  // Remove dates without data at the end of the series
+  while (!entry.totals.deaths[reversedDates[0]] && !entry.totals.cases[reversedDates[0]]) {
+    reversedDates = reversedDates.slice(1)
+  }
+
   if (entry && entry.daily && entry.daily.deaths) {
     return (
       <div className='OutbreakTable'>
@@ -53,9 +58,14 @@ const OutbreakTable = ({entry, dates}) => {
               }
 
               {entry.latestAcceleration.deaths &&
-                <div className='acceleration'>
-                  <AccelerationWithStyles value={entry.acceleration.deaths[date]} />
-                </div>
+                <>
+                  <div className='acceleration'>
+                    <AccelerationWithStyles value={entry.acceleration.deaths[date]} />
+                  </div>
+                  <div className='acceleration'>
+                    <AccelerationWithStyles value={entry.rollingAcceleration.deaths[date]} />
+                  </div>
+                </>
               }
 
               <div className='cases totals'>
@@ -71,10 +81,7 @@ const OutbreakTable = ({entry, dates}) => {
                   : <span>&nbsp;</span>
                 }
               </div>
-{/*
-              <div className='velocity'>
-                <VelocityWithStyles value={entry.velocity.cases[date]} />
-              </div> */}
+
             </div>
           ))}
         </div>
@@ -94,10 +101,14 @@ const OutbreakTable = ({entry, dates}) => {
               </div>
             }
             {entry.latestAcceleration.deaths &&
-              <div className='acceleration'>
-                <Trans i18nKey='entry.table_acceleration_label'>Acceleration</Trans>
-                <Information content='numbers' />
-              </div>
+              <>
+                <div className='acceleration'>
+                  <Trans i18nKey='entry.table_acceleration_label'>Acceleration</Trans>
+                </div>
+                <div className='acceleration'>
+                  <Trans i18nKey='entry.table_average_acceleration_label'>3-day Average</Trans>
+                </div>
+              </>
             }
 
             <div className='cases totals'><Trans i18nKey='entry.table_cases_label'>Cases</Trans></div>
