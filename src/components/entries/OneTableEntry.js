@@ -50,7 +50,7 @@ const OneTableEntry = ({
         <div className='title'>
           <span className='flag'>{entry.emoji}</span>
           <span className='name'>
-            {entry[`${i18n.language}DisplayName`] || entry.displayName || entry.name || entry.code}
+            {t(`countries.${entry.code}`, entry.name || entry.code)}
           </span>
           <span className='info'>
             {entry.latestOutbreakDay.deaths &&

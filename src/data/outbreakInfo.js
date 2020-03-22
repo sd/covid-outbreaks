@@ -34,11 +34,13 @@ export const OUTBREAK_ATTRIBUTES = {
   },
   'us.wa': {
     links: { 'WA State Dept. of Health': 'https://www.doh.wa.gov/Emergencies/Coronavirus',
-             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }
+             'Wikipedia WA': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_Washington_(state)',
+             'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }
   },
   'us.ca': {
     links: { 'CA Dept. Public of Health': 'https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/nCoV2019.aspx',
-             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }
+             'Wikipedia CA': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_California',
+             'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }
   },
   'us.ny': {
     links: { 'NY Dept. of Health': 'https://www.health.ny.gov/diseases/communicable/coronavirus/',
