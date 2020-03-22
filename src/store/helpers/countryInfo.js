@@ -21,6 +21,8 @@ let nameToCodeIndex = {
   'Kosovo': 'xk',
   'Fiji': 'fj',
   'Eswatini': 'sz',
+  'United Kingdom': 'gb',
+  'Northern Ireland': 'gb.Northern Ireland',
 
   'Cruise Ship > Diamond Princess': 'other.diamond_princess',
   'Grand Princess': 'other.grand_princess',
@@ -52,12 +54,12 @@ let codeToNameIndex = {
   'cn.other': 'China: Other',
   'tw': 'Taiwan',
   'ru': 'Russia',
-  'gb': 'Great Britain',
   'ci': 'Cote d\'Ivoire',
   'cv': 'Cabo Verde',
   'tl': 'East Timor',
   'xk': 'Kosovo',
   'sz': 'Eswatini',
+  'gb': 'United Kingdom',
 
   'ca.ab': 'Canada: Alberta',
   'ca.bc': 'Canada: British Columbia',
@@ -91,15 +93,14 @@ Object.keys(US_STATES_BY_CODE).forEach(key => {
   nameToCodeIndex[`US > ${US_STATES_BY_CODE[key]}`] = code
   codeToNameIndex[code] = `USA: ${US_STATES_BY_CODE[key]}`
 })
-nameToCodeIndex = {...nameToCodeIndex, ...{
+nameToCodeIndex = {...nameToCodeIndex, ...{ // Overrides post-data loding
   'US > Puerto Rico': 'pr',
   'US > Guam': 'gu',
   'US > Washington, D.C.': 'us.dc',
   'US > District of Columbia': 'us.dc',
   'US > Virgin Islands, U.S.': 'us.vi',
-
 }}
-codeToNameIndex = {...codeToNameIndex, ...{
+codeToNameIndex = {...codeToNameIndex, ...{ // Overrides post-data loding
   'us.wa': 'USA: Washington State',
   'us.ny': 'USA: New York State',
   'us.dc': 'USA: District of Columbia',

@@ -82,7 +82,7 @@ export const OUTBREAK_ATTRIBUTES = {
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_France' }
   },
 
-  'uk': { // United Kingdom
+  'gb': { // United Kingdom
     links: { 'Gov.uk': 'https://www.gov.uk/guidance/coronavirus-covid-19-information-for-the-public',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Kingdom' }
   },
