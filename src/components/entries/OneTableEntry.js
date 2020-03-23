@@ -111,7 +111,14 @@ const OneTableEntry = ({
             }
           </div>
 
-          {entry.latestVelocity.deaths && entry.latestVelocity.deaths !== 1 &&
+          {entry.latestAcceleration.deaths &&
+            <div className='velocitySummary acceleration'>
+              <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={false} format={'0,000.0'} /> days to 10x
+              <Information content='numbers' />
+            </div>
+          }
+
+          {/* {entry.latestVelocity.deaths && entry.latestVelocity.deaths !== 1 &&
             <div className='velocitySummary velocity'>
               <Trans i18nKey='entry.velocity_description'>
                 Growing <VelocityWithStyles value={entry.latestVelocity.deaths} />/week
@@ -120,7 +127,7 @@ const OneTableEntry = ({
                 <span>&nbsp;&nbsp;<AccelerationWithStyles value={entry.latestAcceleration.deaths} /></span>
               }
             </div>
-          }
+          } */}
 
           <div className='cases'>
             {entry.latestTotal.cases > 0 && entry.latestDaily.cases > 0 &&

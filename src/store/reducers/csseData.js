@@ -163,7 +163,7 @@ function processOneFile (fieldName, rawData, entries ) {
   let dates = data.dates
   let lastDate = dates.slice(-1)
 
-  let row, entry, sum, i
+  let row, entry, sum, cnt, i
 
   const logForVelocity = Math.log10
   const velocityOffset = 7
@@ -196,11 +196,15 @@ function processOneFile (fieldName, rawData, entries ) {
         }
 
         sum = undefined
+        cnt = 0
         for (i = 0; i < rollingCount; i++) {
-          sum = (sum || 0) + entry.acceleration[fieldName][dates[index - i]]
+          if (entry.acceleration[fieldName][dates[index - i]] !== undefined) {
+            sum = (sum || 0) + (entry.acceleration[fieldName][dates[index - i]])
+            cnt = cnt + 1
+          }
         }
         if (sum !== undefined) {
-          entry.rollingAcceleration[fieldName][d] = sum / rollingCount
+          entry.rollingAcceleration[fieldName][d] = sum / cnt
         }
 
         if (

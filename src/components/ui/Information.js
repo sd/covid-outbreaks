@@ -23,8 +23,6 @@ const Information = ({content, position, trigger}) => {
         closeOnDocumentClick
         className='ViewControls-popup'
         overlayStyle={{
-          position: 'fixed',
-          top: 0, right: 0, bottom: 0, left: 0,
           zIndex: 1000
         }}
         contentStyle={{
@@ -34,10 +32,7 @@ const Information = ({content, position, trigger}) => {
           minWidth: '50vh',
           maxWidth: '70vh',
           maxHeight: '60vh',
-          overflow: 'auto',
-          position: 'fixed',
-          top: '20vh', right: '20vh', bottom: '20vh', left: '20vh',
-
+          overflow: 'auto'
         }}
         trigger={
           trigger || <span className='Information-trigger'><FontAwesomeIcon icon={faQuestionCircle} /></span>

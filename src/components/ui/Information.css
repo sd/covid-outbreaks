@@ -32,6 +32,7 @@
   padding: 0.5em 1em;
   text-align: left;
   font-weight: normal;
+  white-space: normal;
 }
 .Information-content p {
   margin-top: 0em;

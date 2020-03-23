@@ -1,5 +1,6 @@
 .TableView > div {
   padding: 7em 0.3em 8em 0.3em;
+  position: relative;
 }
 
 .TableView-row {
