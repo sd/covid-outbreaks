@@ -34,23 +34,23 @@ function setupQueryStringSync (store) {
         },
         sort: {
           selector: state => state.ui.sort,
-          action: value => ({ type: 'UI.SET_SORT', value })
+          action: value => ({ type: 'UI.SET', values: {sort: value} })
         },
         filter: {
           selector: state => state.ui.filter,
-          action: value => ({ type: 'UI.SET_FILTER', value })
+          action: value => ({ type: 'UI.SET', values: {filter: value} })
         },
         noscale: {
           selector: state => state.ui.noScaling,
-          action: value => ({ type: 'UI.SET_NO_SCALING', value })
+          action: value => ({ type: 'UI.SET', values: {noScaling: value} })
         },
         weeks: {
           selector: state => state.ui.weeks,
-          action: value => ({ type: 'UI.SET_WEEKS', value })
+          action: value => ({ type: 'UI.SET', values: {weeks: value} })
         },
         totals: {
           selector: state => state.ui.totals,
-          action: value => ({ type: 'UI.SET_TOTALS', value })
+          action: value => ({ type: 'UI.SET', values: {totals: value} })
         }
       },
     replaceState: true,

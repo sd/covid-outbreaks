@@ -69,6 +69,19 @@ export const OUTBREAK_ATTRIBUTES = {
       fullLockdown: '3/22/20', // Only essential services
     }
   },
+  'us.fl': {
+    keyDates: {
+      death1: '',
+      death10: '',
+      death50: '',
+      death250: '',
+      localSchoolClosings: '',
+      wideSchoolClosings: '',
+      localLockdown: '3/9/20', // Widespread work from home
+      wideLockdown: '3/18/20', // Restaurants closed
+      fullLockdown: '', // Shelter-in-place order
+    }
+  },
 
   'ir': { // Iran
     links: { 'Islamic Republic News Agency': 'https://en.irna.ir/service/news',
@@ -109,10 +122,10 @@ export const OUTBREAK_ATTRIBUTES = {
              'RTVE': 'https://www.rtve.es/noticias/20200314/mapa-del-coronavirus-espana/2004681.shtml',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain' },
     keyDates: {
-      death1: '3/14/20',
-      death10: '3/16/20',
-      death50: '3/21/20',
-      death250: '',
+      death1: '3/3/20',
+      death10: '3/7/20',
+      death50: '3/9/20',
+      death250: '3/15/20',
       localSchoolClosings: '03/09/20',
       wideSchoolClosings: '03/12/20',
       localLockdown: '03/08/20', // Limited movement in some areas

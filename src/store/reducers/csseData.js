@@ -22,7 +22,7 @@ export function reducer (state = initialState, action) {
       return { ...state, loading: true, error: undefined, errorMessage: '', lastDate: undefined }
 
     case 'CSSE_DATA.LOAD.SUCCESS':
-      return { ...state, loading: false, loaded: true, ...action.payload }
+      return { ...state, loading: false, loaded: true, ...action.values }
 
     case 'CSSE_DATA.LOAD.FAILURE':
       return { ...state, loading: false, loaded: false, error: action.error, errorMessage: action.errorMessage }
@@ -108,6 +108,8 @@ function prepareEntries (data, fieldName, entries) {
 
     entry.sources = entry.sources || {}
     entry.sources[fieldName] = sources
+
+    entry.keyDates = entry.keyDates || {}
 
     entry.totals = entry.totals || {}
     entry.totals[fieldName] = {}
@@ -218,6 +220,14 @@ function processOneFile (fieldName, rawData, entries ) {
         entry.latestVelocity[fieldName] = entry.velocity[fieldName][d]
         entry.latestAcceleration[fieldName] = entry.acceleration[fieldName][d]
         entry.latestOutbreakDay[fieldName] = entry.outbreakDay[fieldName][d]
+
+        if (fieldName === 'deaths') {
+          [1, 5, 25, 125, 625].forEach(n => {
+            if (!entry.keyDates[`death${n}`] && entry.totals.deaths[d] >= n) {
+              entry.keyDates[`death${n}`] = d
+            }
+          })
+        }
       }
     })
 
@@ -246,7 +256,7 @@ export function fetchDataDispatcher (dispatch) {
       let last6weeks = allDates.slice(-42)
       let last8weeks = allDates.slice(-56)
 
-      dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', payload: {
+      dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', values: {
         data, allDates, last4weeks, last6weeks, last8weeks,
         lastDate
       }})

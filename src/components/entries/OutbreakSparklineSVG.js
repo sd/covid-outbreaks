@@ -5,8 +5,6 @@ import { formatDateMonthAbbrDD } from '../../utils/dateFormats'
 const markerWidth = 12
 const markerHeight = 4
 
-export const groupedMarkerSize = 10
-
 const SVG_STYLES = {
   weekLines: {
     stroke: '#555',
@@ -34,47 +32,43 @@ const SVG_STYLES = {
     markerHeight,
     radius: 2.5
   },
+  compDeathMarker: {
+    fill: '#ff0',
+    stroke: '#990',
+    strokeWidth: 0.5,
+    markerWidth,
+    markerHeight,
+    radius: 1.5
+  },
+  compGroupedDeathMarker: {
+    fill: '#ff3',
+    stroke: '#770',
+    strokeWidth: 0.5,
+    markerWidth,
+    markerHeight,
+    radius: 2.8
+  },
   caseMarker: {
     fill: '#535353',
     markerWidth,
     markerHeight,
-    radius: 4.0,
-    multiplier: 100
+    radius: 4.0
   }
 }
 
-const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
+const OutbreakSparklineSVG =  ({
+  entry, dates,
+  comparisonEntry, comparisonOffset,
+  sideBySide,
+  scale, maxScaledValue, columns, casesScale
+}) => {
   const { i18n } = useTranslation();
-
-  let canvasWidth = dates.length * SVG_STYLES.emptyMarker.markerWidth
 
   if (!entry || !entry.daily || !entry.daily.deaths || !entry.daily.cases) return null
 
-  let scalingFactor = 1
-  let maxDeaths = Math.max(...dates.map(d => entry.daily.deaths[d] || 0), 0)
-  let maxCases = Math.max(...dates.map(d => entry.daily.cases[d] || 0), 0) / SVG_STYLES.caseMarker.multiplier
+  let canvasWidth = dates.length * SVG_STYLES.emptyMarker.markerWidth
 
-  if (maxDeaths >= 100 && sideBySide) {
-    scalingFactor = groupedMarkerSize
-    maxDeaths = maxDeaths / scalingFactor
-    maxCases = maxCases / scalingFactor
-  }
-
-  let maxDataPoint = Math.max(maxDeaths, maxCases)
-
-  let columns = 1
-
-  if (sideBySide) {
-    if (maxDataPoint > 600) columns = 6
-    else if (maxDataPoint >= 200) columns = 4
-    else if (maxDataPoint >= 150) columns = 3
-    else if (maxDataPoint >= 100) columns = 3
-    else if (maxDataPoint >= 50) columns = 2
-  }
-
-  maxDataPoint = maxDataPoint / columns
-
-  let canvasHeight = (maxDataPoint + 1) * SVG_STYLES.emptyMarker.markerHeight + 10
+  let canvasHeight = ((maxScaledValue / columns) + 1) * SVG_STYLES.emptyMarker.markerHeight + 10
 
   const firstDateObj = new Date(dates[0])
   const mondayOffset = firstDateObj.getDay() - 1
@@ -123,23 +117,45 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
               <OutbreakSparklineOneDaySVG
                 key={`cases_${date}`}
                 dayIndex={index}
-                count={entry.daily.cases[date] / SVG_STYLES.caseMarker.multiplier / scalingFactor }
+                count={entry.daily.cases[date] / casesScale / scale }
                 columns={columns}
                 round={false}
                 height={canvasHeight}
                 markerStyle={SVG_STYLES.caseMarker}
               />
           ))}
-          {dates.map((date, index)=> (
+          {false && comparisonEntry && comparisonEntry.daily && comparisonEntry.daily.deaths &&
+            dates.map((date, index) => {
+              const compDate = dates[index - comparisonOffset]
+              if (comparisonEntry.daily.deaths[compDate]) {
+                return (
+                  <OutbreakSparklineOneDaySVG
+                    key={`comp_deaths_${date}`}
+                    dayIndex={index}
+                    count={comparisonEntry.daily.deaths[compDate]}
+                    columns={columns}
+                    round={true}
+                    height={canvasHeight}
+                    markerStyle={scale === 1 ? SVG_STYLES.compDeathMarker : SVG_STYLES.compGroupedDeathMarker}
+                    xOffset={-2}
+                    yOffset={-1}
+                  />
+                )
+              } else {
+                return null
+              }
+            })
+          }
+          {dates.map((date, index) => (
             (entry.daily.deaths[date] &&
               <OutbreakSparklineOneDaySVG
                 key={`deaths_${date}`}
                 dayIndex={index}
-                count={entry.daily.deaths[date] / scalingFactor}
+                count={entry.daily.deaths[date] / scale}
                 columns={columns}
                 round={true}
                 height={canvasHeight}
-                markerStyle={scalingFactor === 1 ? SVG_STYLES.deathMarker : SVG_STYLES.groupedDeathMarker}
+                markerStyle={scale === 1 ? SVG_STYLES.deathMarker : SVG_STYLES.groupedDeathMarker}
               />
             )
           ))}
@@ -151,7 +167,10 @@ const OutbreakSparklineSVG =  ({entry, dates, sideBySide}) => {
   }
 }
 
-const OutbreakSparklineOneDaySVG = ({dayIndex, count, columns, round, height, markerStyle}) => {
+const OutbreakSparklineOneDaySVG = ({
+  dayIndex, count, columns, round, height, markerStyle,
+  xOffset = 0, yOffset = 0
+}) => {
   let columnCounts = []
 
   if (count < 1) {
@@ -188,8 +207,8 @@ const OutbreakSparklineOneDaySVG = ({dayIndex, count, columns, round, height, ma
           key={`column_${index + 1}`}
           dayIndex={dayIndex}
           count={count}
-          xOffset={(index + 1) * offsetPerColumn}
-          yOffset={markerStyle.markerHeight / 2}
+          xOffset={xOffset + ((index + 1) * offsetPerColumn)}
+          yOffset={yOffset + (markerStyle.markerHeight / 2)}
           height={height}
           style={markerStyle}
         />

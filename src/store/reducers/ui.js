@@ -8,6 +8,7 @@ const initialState = {
   noScaling: undefined,
   weeks: undefined,
   totals: undefined,
+  keyDate: undefined,
   isExpanded: {}
 }
 
@@ -38,23 +39,8 @@ function reducer (state = initialState, action) {
     case 'UI.RESET':
       return initialState
 
-    case 'UI.SET_VIEW':
-      return { ...state, view: action.value || undefined }
-
-    case 'UI.SET_SORT':
-      return { ...state, sort: action.value || undefined }
-
-    case 'UI.SET_FILTER':
-      return { ...state, filter: action.value || undefined }
-
-    case 'UI.SET_NO_SCALING':
-      return { ...state, noScaling: action.value || undefined}
-
-    case 'UI.SET_WEEKS':
-      return { ...state, weeks: action.value || undefined}
-
-    case 'UI.SET_TOTALS':
-      return { ...state, totals: action.value || undefined}
+    case 'UI.SET':
+      return { ...state, ...action.values }
 
     case 'UI.SET_PINNED_ENTRIES':
       newValues = processPinned(action.value)

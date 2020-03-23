@@ -90,11 +90,11 @@ function sortPinFirst(secondarySort) {
   return (a, b, options) => {
     const { pinPositions } = options
 
-    if (pinPositions[b.name] &&  pinPositions[a.name]) {
-      return (pinPositions[b.name] - pinPositions[a.name])
-    } else if (pinPositions[a.name]) {
+    if (pinPositions[b.code] &&  pinPositions[a.code]) {
+      return (pinPositions[b.code] - pinPositions[a.code])
+    } else if (pinPositions[a.code]) {
       return -1
-    } else if (pinPositions[b.name]) {
+    } else if (pinPositions[b.code]) {
       return 1
     } else {
       return secondarySort(a, b, options)

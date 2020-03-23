@@ -1,6 +1,5 @@
-.TableView {
-  flex: 1;
-  position: relative;
+.TableView > div {
+  padding: 7em 0.3em 8em 0.3em;
 }
 
 .TableView-row {
@@ -9,7 +8,7 @@
   max-width: 600px;
   margin-left: auto;
   margin-right: auto;
-  margin-top: 2em;
+  padding-top: 2em;
   clear: both;
 }
 

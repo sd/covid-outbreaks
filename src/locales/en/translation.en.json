@@ -7,7 +7,7 @@
   "legend": {
     "deaths_label": "1 death",
     "grouped_deaths_label": "{{groupSize}} deaths",
-    "cases_label": "100 cases"
+    "cases_label": "{{groupSize}} cases"
   },
   "view_description": {
     "view_description": "<0>{{filter}}</0> sorted by <2>{{sort}}</2>",

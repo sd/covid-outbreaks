@@ -1,21 +1,26 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { VariableSizeList } from 'react-window';
 import { Trans, useTranslation } from 'react-i18next';
 
 import './TableView.css'
 
+import ViewControls from '../components/ui/ViewControls'
 import OneTableEntry from './entries/OneTableEntry'
 
 import { viewOptionsForSorting } from '../store/sorters'
 import { viewOptionsForFiltering } from '../store/filters'
 import { totalizeEntries } from '../store/totalize'
 
+export const TableViewContext = React.createContext({})
+
 const TableView = ({
   loaded, data, allDates, last4weeks, last6weeks, last8weeks,
   sort, filter, noScaling, weeks, totals,
   pinPositions, pinEntry, unpinEntry,
   isExpanded, expandEntry, collapseEntry,
-  isMobile, isTablet
+  isMobile, isTablet,
+  listRef, tableViewRef, listHeight
 }) => {
   const { t } = useTranslation();
 
@@ -23,7 +28,6 @@ const TableView = ({
     let viewOptions = { pinPositions }
     viewOptions = viewOptionsForSorting(sort, viewOptions)
     viewOptions = viewOptionsForFiltering(filter, viewOptions)
-
 
     data = data.sort((a, b) => viewOptions.sorter(a, b, viewOptions ))
     data = data.filter((a) => viewOptions.filterer(a, viewOptions ))
@@ -58,25 +62,18 @@ const TableView = ({
       dates = last6weeks
     }
 
-    const sharedProps = { dates, allDates, pinEntry, unpinEntry, expandEntry, collapseEntry }
+    const comparisonEntry = data.find(entry => entry.code === 'it')
+    const comparisonOffset = 0
 
+    const actualProps = {
+      data, dates, allDates,
+      viewOptions, pinPositions, isExpanded, pinEntry, unpinEntry, expandEntry, collapseEntry,
+      totalsEntry, comparisonEntry, comparisonOffset,
+      listRef, tableViewRef, listHeight,
+      isMobile
+    }
     return (
-      <div className='TableView'>
-        {totalsEntry &&
-          <OneTableEntry {...sharedProps} pinEntry={undefined}
-            entry={totalsEntry} index={0} pinned={true} expanded={isExpanded['totals']}
-            sideBySide={!noScaling}
-          />
-        }
-
-        {data.map((entry, index) => (
-          <OneTableEntry key={entry.name} {...sharedProps}
-            entry={entry} index={index} pinned={pinPositions[entry.name]} expanded={isExpanded[entry.name]}
-            sideBySide={!noScaling}
-          />
-        ))}
-
-      </div>
+      <ActualTableView {...actualProps} />
     )
   } else {
     return (
@@ -87,6 +84,76 @@ const TableView = ({
       </div>
     )
   }
+}
+
+const ActualTableView = ({
+  data, dates, allDates,
+  noScaling,
+  pinPositions, pinEntry, unpinEntry,
+  isExpanded, expandEntry, collapseEntry,
+  totalsEntry, comparisonEntry, comparisonOffset,
+  listRef, tableViewRef, listHeight,
+  isMobile
+}) => {
+  const entryHeights = React.useRef({});
+
+  const setEntryHeight = React.useCallback((code, index, size) => {
+    const prev = entryHeights.current[code]
+    entryHeights.current = { ...entryHeights.current, [code]: size }
+    if (prev !== size) {
+      listRef.current.resetAfterIndex(index)
+    }
+  }, [listRef])
+
+  const getEntryHeight = React.useCallback((index) => {
+    if (index === 0) {
+      return 140 // first row with ViewControls
+    }
+    else {
+      return entryHeights.current[data[index - 1].code] || 200
+    }
+  }, [data])
+
+  const sharedProps = { dates, allDates, pinEntry, unpinEntry, expandEntry, collapseEntry }
+
+  return (
+    <TableViewContext.Provider value={{ setEntryHeight }}>
+      <div className='TableView' ref={tableViewRef}>
+        {totalsEntry &&
+          <OneTableEntry {...sharedProps} pinEntry={undefined}
+            entry={totalsEntry} index={0} pinned={true} expanded={isExpanded['totals']}
+            sideBySide={!noScaling}
+          />
+        }
+
+        <VariableSizeList
+          height={listHeight}
+          itemCount={data.length}
+          itemSize={getEntryHeight}
+          ref={listRef}
+        >
+          {({ index, style }) => {
+            if (index === 0) {
+              return <ViewControls isMobile={isMobile} />
+            } else {
+              const code = data[index] && data[index].code
+
+              return (
+                <div style={{...style}}>
+                  <OneTableEntry {...sharedProps}
+                    entry={data[index - 1]} index={index - 1} pinned={pinPositions[code]} expanded={isExpanded[code]}
+                    sideBySide={!noScaling}
+                    comparisonEntry={comparisonEntry} comparisonOffset={comparisonOffset}
+                  />
+                </div>
+              )
+            }
+          }}
+        </VariableSizeList>
+
+      </div>
+    </TableViewContext.Provider>
+  )
 }
 
 const mapStateToProps = (state, ownProps) => ({
@@ -105,11 +172,18 @@ const mapStateToProps = (state, ownProps) => ({
   isExpanded: state.ui.isExpanded
 })
 
-const mapDispatchToProps = (dispatch) => ({
-  pinEntry: (entry) => dispatch({ type: 'UI.PIN_ENTRY', value: entry.name }),
-  unpinEntry: (entry) => dispatch({ type: 'UI.UNPIN_ENTRY', value: entry.name }),
-  expandEntry: (entry) => dispatch({ type: 'UI.EXPAND_ENTRY', value: entry.name }),
-  collapseEntry: (entry) => dispatch({ type: 'UI.COLLAPSE_ENTRY', value: entry.name })
+const mapDispatchToProps = (dispatch, props) => ({
+  pinEntry: (entry) => {
+    console.log('pin', props)
+    props.listRef.current.resetAfterIndex(0)
+    dispatch({ type: 'UI.PIN_ENTRY', value: entry.code })
+  },
+  unpinEntry: (entry) => {
+    props.listRef.current.resetAfterIndex(0)
+    dispatch({ type: 'UI.UNPIN_ENTRY', value: entry.code })
+  },
+  expandEntry: (entry) => dispatch({ type: 'UI.EXPAND_ENTRY', value: entry.code }),
+  collapseEntry: (entry) => dispatch({ type: 'UI.COLLAPSE_ENTRY', value: entry.code })
 })
 
 const ConnectedTableView = connect(

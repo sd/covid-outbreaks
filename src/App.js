@@ -12,8 +12,10 @@ import Information from './components/ui/Information'
 
 class App extends React.Component {
   constructor(props) {
-    super(props);
-    this.state = { error: null, errorInfo: null };
+    super(props)
+    this.state = { error: null, errorInfo: null }
+    this.listRef = React.createRef()
+    this.tableViewRef = React.createRef()
   }
 
   componentDidCatch(error, errorInfo) {
@@ -34,7 +36,7 @@ class App extends React.Component {
   }
 
   render() {
-    const { isMobile, isTablet, isDesktop } = this.props
+    const { isMobile, isTablet, isDesktop, windowHeight } = this.props
     const { error, errorInfo } = this.state
 
     return (
@@ -44,11 +46,13 @@ class App extends React.Component {
 
         {!error &&
           <div className="App-content">
-            <ViewControls isMobile={isMobile} />
-
             <DataLoader />
 
-            <TableView isMobile={isMobile} isTablet={isTablet} isDesktop={isDesktop} />
+            <TableView
+              listHeight={windowHeight}
+              tableViewRef={this.tableViewRef} listRef={this.listRef}
+              isMobile={isMobile} isTablet={isTablet} isDesktop={isDesktop}
+            />
           </div>
         }
 
@@ -116,10 +120,11 @@ const PageFooter = () => {
   )
 }
 
-const mapSizesToProps = ({ width }) => ({
+const mapSizesToProps = ({ width, height }) => ({
   isMobile: width <= 480,
   isTablet: width > 480 && width <= 1024,
-  isDesktop: width > 1024
+  isDesktop: width > 1024,
+  windowHeight: height
 })
 
 export default withSizes(mapSizesToProps)(App)

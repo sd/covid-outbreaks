@@ -9,12 +9,8 @@ import { viewOptionsForSorting, SORTER_TYPES, SORTER_DESCRIPTIONS } from '../../
 import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../../store/filters'
 
 const ViewControls = ({
-  reset,
-  sort, setSort,
-  filter, setFilter,
-  noScaling, setNoScaling,
-  weeks, setWeeks,
-  totals, setTotals,
+  setUI, resetUI,
+  sort, filter, noScaling, weeks, totals,
   isMobile
 }) => {
   const { t } = useTranslation();
@@ -57,7 +53,7 @@ const ViewControls = ({
           <div className='form-row'>
             <div className='form-label'><Trans i18nKey='view_controls.show_label'>Show</Trans></div>
             <div className='form-field'>
-              <select value={viewOptions.filter} onChange={(event) => setFilter(event.target.value)}>
+              <select value={viewOptions.filter} onChange={(event) => setUI({filter: event.target.value})}>
                 {FILTER_TYPES.map(option => (
                   <option key={option} value={option}>{t(`filter.description.${option}`, FILTER_DESCRIPTIONS[option])}</option>
                 ))}
@@ -68,7 +64,7 @@ const ViewControls = ({
           <div className='form-row'>
             <div className='form-label'><Trans i18nKey='view_controls.sort_label'>Show</Trans></div>
             <div className='form-field'>
-              <select value={viewOptions.sort} onChange={(event) => setSort(event.target.value)}>
+              <select value={viewOptions.sort} onChange={(event) => setUI({sort: event.target.value})}>
                 {SORTER_TYPES.map(option => (
                   <option key={option} value={option}>{t(`sort.description.${option}`, SORTER_DESCRIPTIONS[option])}</option>
                 ))}
@@ -79,7 +75,7 @@ const ViewControls = ({
           <div className='form-row'>
             <div className='form-label'><Trans i18nKey='view_controls.weeks_label'>Limit To</Trans></div>
             <div className='form-field'>
-              <select value={weeks} onChange={(event) => setWeeks(event.target.value)}>
+              <select value={weeks} onChange={(event) => setUI({weeks: event.target.value})}>
                 <option value={''}>{t(`weeks.description.fit`, 'What fits on screen')}</option>
                 <option value={'four'}>{t(`weeks.description.four`, 'Last 4 weeks')}</option>
                 <option value={'six'}>{t(`weeks.description.six`, 'Last 6 weeks')}</option>
@@ -93,7 +89,7 @@ const ViewControls = ({
             <div className='form-label'>
               <input
                 type='checkbox' id='totals' name='noScaling' checked={!!totals}
-                onChange={(event) => setTotals(event.target.checked)}
+                onChange={(event) => setUI({totals: event.target.checked})}
               />
             </div>
             <div className='form-field'>
@@ -105,7 +101,7 @@ const ViewControls = ({
             <div className='form-label'>
               <input
                 type='checkbox' id='noScaling' name='noScaling' checked={!!noScaling}
-                onChange={(event) => setNoScaling(event.target.checked)}
+                onChange={(event) => setUI({noScaling: event.target.checked})}
               />
             </div>
             <div className='form-field'>
@@ -114,7 +110,7 @@ const ViewControls = ({
           </div>
 
           <div className='form-row form-single buttons'>
-            <button onClick={() => { reset(); close() }}><Trans i18nKey='view_controls.reset_button'>Reset to defaults</Trans></button>
+            <button onClick={() => { resetUI(); close() }}><Trans i18nKey='view_controls.reset_button'>Reset to defaults</Trans></button>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <button onClick={() => close()}><Trans i18nKey='view_controls.done_button'>Done</Trans></button>
           </div>
@@ -136,11 +132,7 @@ export default connect(
     noScaling: state.ui.noScaling
   }),
   (dispatch) => ({
-    setSort: (value) => dispatch({ type: 'UI.SET_SORT', value }),
-    setFilter: (value) => dispatch({ type: 'UI.SET_FILTER', value }),
-    setNoScaling: (value) => dispatch({ type: 'UI.SET_NO_SCALING', value }),
-    setWeeks: (value) => dispatch({ type: 'UI.SET_WEEKS', value }),
-    setTotals: (value) => dispatch({ type: 'UI.SET_TOTALS', value }),
-    reset: () => dispatch({ type: 'UI.RESET' }),
+    setUI: (values) => dispatch({ type: 'UI.SET', values }),
+    resetUI: () => dispatch({ type: 'UI.RESET' }),
   })
 )(ViewControls)

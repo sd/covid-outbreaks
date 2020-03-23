@@ -8,18 +8,40 @@ import OutbreakSparklineSVG from './OutbreakSparklineSVG'
 import OutbreakTable from './OutbreakTable'
 import { Trans, useTranslation } from 'react-i18next';
 import Information from '../ui/Information'
+import { TableViewContext } from '../TableView'
+
+export const DEATHS_SCALE = 10
+export const CASES_SCALE = 100
 
 const OneTableEntry = ({
-  entry, dates,
+  entry, index, dates,
+  comparisonEntry, comparisonOffset,
   pinned, expanded, sideBySide,
   pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile
 }) => {
+  const { setEntryHeight } = React.useContext(TableViewContext)
+  const entryRef = React.useRef()
+  React.useEffect(() => {
+    setEntryHeight(entry.code, index, entryRef.current.getBoundingClientRect().height)
+  })
+
   const { t, i18n } = useTranslation();
 
-  return (
-    <div key={entry.code} className={classNames('TableView-row', { pinned, expanded })}>
+  const { scale, maxScaledValue, columns } = calculateScale (entry, dates, { sideBySide, deathsScale: DEATHS_SCALE, casesScale: CASES_SCALE })
 
-      <OutbreakSparklineSVG entry={entry} dates={dates} sideBySide={sideBySide} />
+  if (comparisonEntry && comparisonEntry.code === entry.code) {
+    comparisonEntry = undefined
+    comparisonOffset = undefined
+  }
+
+  return (
+    <div key={entry.code} ref={entryRef} className={classNames('TableView-row', { pinned, expanded })}>
+      <OutbreakSparklineSVG
+        entry={entry} dates={dates}
+        comparisonEntry={comparisonEntry} comparisonOffset={comparisonOffset}
+        sideBySide={sideBySide}
+        scale={scale} maxScaledValue={maxScaledValue} columns={columns}
+      />
 
       <div className='TableView-title'>
         <div className='tools'>
@@ -228,4 +250,31 @@ export const NumberWithStyles = ({value, className, arrows = false, percent = fa
     )
   }
 }
-export default React.memo(OneTableEntry)
+
+function calculateScale (entry, dates, { sideBySide, deathsScale = DEATHS_SCALE, casesScale = CASES_SCALE }) {
+  let scale = 1
+  let maxDeaths = Math.max(...dates.map(d => entry.daily.deaths[d] || 0), 0)
+  let maxCases = Math.max(...dates.map(d => entry.daily.cases[d] || 0), 0) / casesScale
+
+  if (maxDeaths >= 100 && sideBySide) {
+    scale = deathsScale
+    maxDeaths = maxDeaths / scale
+    maxCases = maxCases / scale
+  }
+
+  let maxScaledValue = Math.max(maxDeaths, maxCases)
+
+  let columns = 1
+
+  if (sideBySide) {
+    if (maxScaledValue > 600) columns = 6
+    else if (maxScaledValue >= 200) columns = 4
+    else if (maxScaledValue >= 150) columns = 3
+    else if (maxScaledValue >= 100) columns = 3
+    else if (maxScaledValue >= 50) columns = 2
+  }
+
+  return { scale, maxScaledValue, columns }
+}
+
+export default OneTableEntry
