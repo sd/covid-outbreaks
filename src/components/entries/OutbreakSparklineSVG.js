@@ -33,18 +33,18 @@ const SVG_STYLES = {
     radius: 2.5
   },
   compDeathMarker: {
-    fill: '#b00',
+    fill: '#bb0',
     opacity: 0.2,
     markerWidth,
     markerHeight,
-    radius: 1.2
+    radius: 1.3
   },
   compGroupedDeathMarker: {
-    fill: '#b11',
-    opacity: 0.2,
+    fill: '#bb1',
+    fillOpacity: "0.1",
     markerWidth,
     markerHeight,
-    radius: 2.3
+    radius: 2.5
   },
   caseMarker: {
     fill: '#636363',
@@ -130,12 +130,12 @@ const OutbreakSparklineSVG =  ({
                   <OutbreakSparklineOneDaySVG
                     key={`comp_deaths_${date}`}
                     dayIndex={index}
-                    count={comparisonEntry.daily.deaths[compDate]}
+                    count={comparisonEntry.daily.deaths[compDate] / scale}
                     columns={columns}
                     round={true}
                     height={canvasHeight}
                     markerStyle={scale === 1 ? SVG_STYLES.compDeathMarker : SVG_STYLES.compGroupedDeathMarker}
-                    xOffset={-2}
+                    xOffset={-1}
                     yOffset={1}
                   />
                 )

@@ -34,8 +34,8 @@ const OneTableEntry = ({
   if (comparisonEntry) {
     if (comparisonEntry.code === entry.code) {
       comparisonEntry = undefined
-    } else {
-      comparisonOffset = Math.round((entry.keyDates.death5 - comparisonEntry.keyDates.death5) / (1000*60*60*24))
+    } else if (entry.keyDates.death5 && comparisonEntry.keyDates.death5) {
+      comparisonOffset = Math.ceil((entry.keyDates.death5.getTime() - comparisonEntry.keyDates.death5.getTime()) / (1000*60*60*24))
     }
   }
 

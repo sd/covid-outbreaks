@@ -62,7 +62,7 @@ const TableView = ({
       dates = last6weeks
     }
 
-    const comparisonEntry = undefined//data.find(entry => entry.code === 'it')
+    const comparisonEntry = undefined //data.find(entry => entry.code === 'it')
 
     const actualProps = {
       data, dates, allDates,
