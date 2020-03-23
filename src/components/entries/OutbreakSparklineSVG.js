@@ -33,23 +33,22 @@ const SVG_STYLES = {
     radius: 2.5
   },
   compDeathMarker: {
-    fill: '#ff0',
-    stroke: '#990',
-    strokeWidth: 0.5,
+    fill: '#d00',
+    opacity: 0.2,
     markerWidth,
     markerHeight,
-    radius: 1.5
+    radius: 1.3
   },
   compGroupedDeathMarker: {
-    fill: '#ff3',
-    stroke: '#770',
-    strokeWidth: 0.5,
+    fill: '#d22',
+    opacity: 0.2,
     markerWidth,
     markerHeight,
-    radius: 2.8
+    radius: 2.5
   },
   caseMarker: {
-    fill: '#535353',
+    fill: '#636363',
+    opacity: 1,
     markerWidth,
     markerHeight,
     radius: 4.0
@@ -63,7 +62,6 @@ const OutbreakSparklineSVG =  ({
   scale, maxScaledValue, columns, casesScale
 }) => {
   const { i18n } = useTranslation();
-
   if (!entry || !entry.daily || !entry.daily.deaths || !entry.daily.cases) return null
 
   let canvasWidth = dates.length * SVG_STYLES.emptyMarker.markerWidth
@@ -138,7 +136,7 @@ const OutbreakSparklineSVG =  ({
                     height={canvasHeight}
                     markerStyle={scale === 1 ? SVG_STYLES.compDeathMarker : SVG_STYLES.compGroupedDeathMarker}
                     xOffset={-2}
-                    yOffset={-1}
+                    yOffset={1}
                   />
                 )
               } else {

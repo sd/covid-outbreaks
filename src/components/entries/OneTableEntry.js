@@ -40,7 +40,7 @@ const OneTableEntry = ({
         entry={entry} dates={dates}
         comparisonEntry={comparisonEntry} comparisonOffset={comparisonOffset}
         sideBySide={sideBySide}
-        scale={scale} maxScaledValue={maxScaledValue} columns={columns}
+        scale={scale} casesScale={CASES_SCALE} maxScaledValue={maxScaledValue} columns={columns}
       />
 
       <div className='TableView-title'>
