@@ -62,13 +62,12 @@ const TableView = ({
       dates = last6weeks
     }
 
-    const comparisonEntry = data.find(entry => entry.code === 'it')
-    const comparisonOffset = 0
+    const comparisonEntry = undefined//data.find(entry => entry.code === 'it')
 
     const actualProps = {
       data, dates, allDates,
       viewOptions, pinPositions, isExpanded, pinEntry, unpinEntry, expandEntry, collapseEntry,
-      totalsEntry, comparisonEntry, comparisonOffset,
+      totalsEntry, comparisonEntry,
       listRef, tableViewRef, listHeight,
       isMobile
     }
@@ -91,7 +90,7 @@ const ActualTableView = ({
   noScaling,
   pinPositions, pinEntry, unpinEntry,
   isExpanded, expandEntry, collapseEntry,
-  totalsEntry, comparisonEntry, comparisonOffset,
+  totalsEntry, comparisonEntry,
   listRef, tableViewRef, listHeight,
   isMobile
 }) => {
@@ -136,14 +135,14 @@ const ActualTableView = ({
             if (index === 0) {
               return <ViewControls isMobile={isMobile} />
             } else {
-              const code = data[index] && data[index].code
+              const code = data[index - 1] && data[index - 1].code
 
               return (
                 <div style={{...style}}>
                   <OneTableEntry {...sharedProps}
                     entry={data[index - 1]} index={index - 1} pinned={pinPositions[code]} expanded={isExpanded[code]}
                     sideBySide={!noScaling}
-                    comparisonEntry={comparisonEntry} comparisonOffset={comparisonOffset}
+                    comparisonEntry={comparisonEntry}
                   />
                 </div>
               )

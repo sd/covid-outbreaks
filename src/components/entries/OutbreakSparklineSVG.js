@@ -33,18 +33,18 @@ const SVG_STYLES = {
     radius: 2.5
   },
   compDeathMarker: {
-    fill: '#d00',
+    fill: '#b00',
     opacity: 0.2,
     markerWidth,
     markerHeight,
-    radius: 1.3
+    radius: 1.2
   },
   compGroupedDeathMarker: {
-    fill: '#d22',
+    fill: '#b11',
     opacity: 0.2,
     markerWidth,
     markerHeight,
-    radius: 2.5
+    radius: 2.3
   },
   caseMarker: {
     fill: '#636363',
@@ -122,7 +122,7 @@ const OutbreakSparklineSVG =  ({
                 markerStyle={SVG_STYLES.caseMarker}
               />
           ))}
-          {false && comparisonEntry && comparisonEntry.daily && comparisonEntry.daily.deaths &&
+          {comparisonEntry && comparisonEntry.daily && comparisonEntry.daily.deaths &&
             dates.map((date, index) => {
               const compDate = dates[index - comparisonOffset]
               if (comparisonEntry.daily.deaths[compDate]) {

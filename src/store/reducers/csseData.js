@@ -222,9 +222,10 @@ function processOneFile (fieldName, rawData, entries ) {
         entry.latestOutbreakDay[fieldName] = entry.outbreakDay[fieldName][d]
 
         if (fieldName === 'deaths') {
-          [1, 5, 25, 125, 625].forEach(n => {
+          let parsedDate = new Date(d)
+          ;[1, 5, 25, 125, 625].forEach(n => {
             if (!entry.keyDates[`death${n}`] && entry.totals.deaths[d] >= n) {
-              entry.keyDates[`death${n}`] = d
+              entry.keyDates[`death${n}`] = parsedDate
             }
           })
         }

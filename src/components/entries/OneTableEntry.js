@@ -15,7 +15,7 @@ export const CASES_SCALE = 100
 
 const OneTableEntry = ({
   entry, index, dates,
-  comparisonEntry, comparisonOffset,
+  comparisonEntry,
   pinned, expanded, sideBySide,
   pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile
 }) => {
@@ -29,9 +29,14 @@ const OneTableEntry = ({
 
   const { scale, maxScaledValue, columns } = calculateScale (entry, dates, { sideBySide, deathsScale: DEATHS_SCALE, casesScale: CASES_SCALE })
 
-  if (comparisonEntry && comparisonEntry.code === entry.code) {
-    comparisonEntry = undefined
-    comparisonOffset = undefined
+  let comparisonOffset = 0
+
+  if (comparisonEntry) {
+    if (comparisonEntry.code === entry.code) {
+      comparisonEntry = undefined
+    } else {
+      comparisonOffset = Math.round((entry.keyDates.death5 - comparisonEntry.keyDates.death5) / (1000*60*60*24))
+    }
   }
 
   return (
