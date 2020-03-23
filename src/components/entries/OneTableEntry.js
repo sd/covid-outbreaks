@@ -203,28 +203,28 @@ export const VelocityWithStyles = ({value}) => {
   )
 }
 
-export const AccelerationWithStyles = ({value, isPercent = false}) => {
-  return <NumberWithStyles value={value} className='acceleration' arrows={true} percent={false} />
+export const AccelerationWithStyles = ({value, arrows = true, colors = true, isPercent = false, format}) => {
+  return <NumberWithStyles value={value} className='acceleration' arrows={arrows} percent={isPercent} colors={colors} format={format} />
 }
 
-export const NumberWithStyles = ({value, className, arrows = false, percent = false}) => {
+export const NumberWithStyles = ({value, className, arrows = false, percent = false, colors = false, format}) => {
   if (percent) {
     return (
       <span className={classNames(className, {
-        increasing: value > 1,
-        decreasing: value < 1
+        increasing: colors && value > 1,
+        decreasing: colors && value < 1
       })}
       >
         {value > 1 &&
           <span>
             {arrows && <span className='arrow'>▲</span>}
-            {numeral((value - 1) * 100).format('0,000.0')}%
+            {numeral((value - 1) * 100).format(format || '0,000.0')}%
           </span>
         }
         {value < 1 &&
           <span>
             {arrows && <span className='arrow'>▼</span>}
-            {numeral((1 - value) * 100).format('0,000.0')}%
+            {numeral((1 - value) * 100).format(format || '0,000.0')}%
           </span>
         }
         {!value && <span>&nbsp;</span>}
@@ -233,21 +233,21 @@ export const NumberWithStyles = ({value, className, arrows = false, percent = fa
   } else {
     return (
       <span className={classNames(className, {
-        increasing: value > 0,
-        decreasing: value < 0
+        increasing: colors && value > 0,
+        decreasing: colors && value < 0
       })}
       >
         {value > 0 &&
           <span>
             {arrows && <span className='arrow'>▲</span>}
-            {numeral(value).format('0,000.00')}
+            {numeral(value).format(format || '0,000.00')}
           </span>
         }
         {value === 0 && <span>&nbsp;</span>}
         {value < 0 &&
           <span>
             {arrows && <span className='arrow'>▼</span>}
-            {numeral(value).format('0,000.00')}
+            {numeral(value).format(format || '0,000.00')}
           </span>
         }
         {!value && <span>&nbsp;</span>}

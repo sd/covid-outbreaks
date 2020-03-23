@@ -23,6 +23,8 @@ const Information = ({content, position, trigger}) => {
         closeOnDocumentClick
         className='ViewControls-popup'
         overlayStyle={{
+          position: 'fixed',
+          top: 0, right: 0, bottom: 0, left: 0,
           zIndex: 1000
         }}
         contentStyle={{
@@ -32,7 +34,10 @@ const Information = ({content, position, trigger}) => {
           minWidth: '50vh',
           maxWidth: '70vh',
           maxHeight: '60vh',
-          overflow: 'auto'
+          overflow: 'auto',
+          position: 'fixed',
+          top: '20vh', right: '20vh', bottom: '20vh', left: '20vh',
+
         }}
         trigger={
           trigger || <span className='Information-trigger'><FontAwesomeIcon icon={faQuestionCircle} /></span>
@@ -103,7 +108,7 @@ const InfoNumbers = () => {
 
 
 
-      <h3>Velocity • <VelocityWithStyles value={3.2} /></h3>
+      <h3>Velocity • <VelocityWithStyles value={2.2} /></h3>
 
       <p>
         How much larger is the total number of deaths, compared to 7 days before, but using a logarithmic (base 10) scale.
@@ -117,7 +122,7 @@ const InfoNumbers = () => {
 
 
 
-      <h3>Acceleration • <span style={{opacity: 0.3}}><VelocityWithStyles value={3.2} /></span>&nbsp;<AccelerationWithStyles value={-0.3} /></h3>
+      <h3>Acceleration • <span style={{opacity: 0.3}}><VelocityWithStyles value={2.2} /></span>&nbsp;<AccelerationWithStyles value={0.14} /></h3>
 
       <p>
         How much has <i>velocity</i> changed, compared to the previous day.
@@ -129,6 +134,21 @@ const InfoNumbers = () => {
 
       <p>
         Negative numbers are good news, and that's why we show them in green.
+      </p>
+
+
+      <h3>Days to 10x • <span style={{opacity: 1}}><AccelerationWithStyles value={7.1} colors={false} arrows={false} /></span></h3>
+
+      <p>
+         If an outbreak is accelerating at <AccelerationWithStyles value={0.14} /> per day, it means that if nothing else
+         changes, it would take <tt>1/0.14</tt> days
+         for Velocity to increase from <VelocityWithStyles value={2.2} /> to <VelocityWithStyles value={3.2} />,
+         which is the same as saying that the total number of new deaths in the last 7 days increased 10x.
+      </p>
+
+      <p>
+        This is just another way to understand acceleration data, using units that might make it easier to see the impact
+        it has on real world numbers.
       </p>
 
       <h3>DISCLAIMER</h3>

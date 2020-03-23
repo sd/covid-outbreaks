@@ -6,7 +6,7 @@ import Information from '../ui/Information'
 
 import { formatDateMonthAbbrDD, formatDateWeekdayAbbrDD } from '../../utils/dateFormats'
 
-import { VelocityWithStyles, AccelerationWithStyles } from './OneTableEntry'
+import { VelocityWithStyles, AccelerationWithStyles, NumberWithStyles } from './OneTableEntry'
 
 import './OutbreakTable.css'
 
@@ -65,6 +65,9 @@ const OutbreakTable = ({entry, dates}) => {
                   <div className='acceleration'>
                     <AccelerationWithStyles value={entry.rollingAcceleration.deaths[date]} />
                   </div>
+                  <div className='acceleration'>
+                    <AccelerationWithStyles value={1 / entry.rollingAcceleration.deaths[date]} arrows={false} colors={false} format={'0,000.0'} />
+                  </div>
                 </>
               }
 
@@ -107,6 +110,9 @@ const OutbreakTable = ({entry, dates}) => {
                 </div>
                 <div className='acceleration'>
                   <Trans i18nKey='entry.table_average_acceleration_label'>3-day Average</Trans>
+                </div>
+                <div className='acceleration'>
+                  <Trans i18nKey='entry.table_days_to_tenx_label'>Days to 10x</Trans>
                 </div>
               </>
             }
