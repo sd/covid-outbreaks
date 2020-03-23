@@ -111,7 +111,7 @@ const OneTableEntry = ({
             }
           </div>
 
-          {entry.latestAcceleration.deaths &&
+          {false && entry.latestAcceleration.deaths &&
             <div className='velocitySummary acceleration'>
               <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={false} format={'0,000.0'} /> days to 10x
               <Information content='numbers' />
