@@ -57,6 +57,8 @@
       "latam": "Brotes en Latinoamérica",
       "europe": "Brotes en Europa",
       "africa": "Brotes en Africa",
+      "middleEast": "Brotes en el Medio Oriente",
+      "seAsia": "Brotes en el Sudeste Asiatico",
       "asiaOceania": "Brotes en Asia y Oceanía",
       "otherRegions": "Brotes en otras areas",
       "all": "Todos los brotes"

@@ -42,7 +42,7 @@ const ViewControls = ({
           backgroundColor: 'inherit',
           color: 'inherit',
           border: 'none',
-          minWidth: '25em'
+          minWidth: '27em'
         }}
         trigger={
           <span className='ViewControls-trigger'>

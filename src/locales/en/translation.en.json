@@ -57,6 +57,8 @@
       "latam": "Outbreaks in Latin America",
       "europe": "Outbreaks in Europe",
       "africa": "Outbreaks in Africa",
+      "middleEast": "Outbreaks in the Middle East",
+      "seAsia": "Outbreaks in Southeast Asia",
       "asiaOceania": "Outbreaks in Asia & Oceania",
       "otherRegions": "Outbreaks in other regions",
       "all": "All outbreaks"

@@ -40,12 +40,34 @@ export const OUTBREAK_ATTRIBUTES = {
   'us.ca': {
     links: { 'CA Dept. Public of Health': 'https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/nCoV2019.aspx',
              'Wikipedia CA': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_California',
-             'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }
+             'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' },
+    keyDates: {
+      death1: '',
+      death10: '',
+      death50: '',
+      death250: '',
+      localSchoolClosings: '',
+      wideSchoolClosings: '3/16/20',
+      localLockdown: '3/9/20', // Widespread work from home
+      wideLockdown: '3/15/20', // Restaurants closed
+      fullLockdown: '3/17/20', // Shelter-in-place order
+    }
   },
   'us.ny': {
     links: { 'NY Dept. of Health': 'https://www.health.ny.gov/diseases/communicable/coronavirus/',
              'Wikipedia NY': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_New_York_(state)',
-             'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }
+             'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' },
+    keyDates: {
+      death1: '3/14/20',
+      death10: '3/16/20',
+      death50: '3/21/20',
+      death250: '',
+      localSchoolClosings: '3/07/20',
+      wideSchoolClosings: '3/14/20',
+      localLockdown: '3/10/20', // Limited movement in New Rochelle, calls to social distance
+      wideLockdown: '3/17/20', // Limited movement in most areas, restaurants closed
+      fullLockdown: '3/22/20', // Only essential services
+    }
   },
 
   'ir': { // Iran
@@ -68,23 +90,67 @@ export const OUTBREAK_ATTRIBUTES = {
 
   'it': { // Italy
     links: { 'Protezione Civile': 'http://www.protezionecivile.gov.it/media-communication/press-release',
-             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy' }
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy' },
+    keyDates: {
+      death1: '2/21/20',
+      death10: '2/25/20',
+      death50: '3/2/20',
+      death250: '3/8/20',
+      localSchoolClosings: '02/22/20',
+      wideSchoolClosings: '03/04/20',
+      localLockdown: '03/08/20', // Limited movement in some areas
+      wideLockdown: '03/09/20', // Limited movement in most areas
+      fullLockdown: '03/11/20', // Only essential services
+    }
   },
 
   'es': { // Spain
     links: { 'Ministerio de Sanidad': 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm',
              'RTVE': 'https://www.rtve.es/noticias/20200314/mapa-del-coronavirus-espana/2004681.shtml',
-             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain' }
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain' },
+    keyDates: {
+      death1: '3/14/20',
+      death10: '3/16/20',
+      death50: '3/21/20',
+      death250: '',
+      localSchoolClosings: '03/09/20',
+      wideSchoolClosings: '03/12/20',
+      localLockdown: '03/08/20', // Limited movement in some areas
+      wideLockdown: '03/14/20', // Limited movement in most areas
+      fullLockdown: '03/15/20', // Only essential services
+    }
   },
 
   'fr': { // France
     links: { 'Santé publique France': 'https://www.santepubliquefrance.fr/maladies-et-traumatismes/maladies-et-infections-respiratoires/infection-a-coronavirus/articles/infection-au-nouveau-coronavirus-sars-cov-2-covid-19-france-et-monde',
-             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_France' }
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_France' },
+    keyDates: {
+      death1: '2/26/20',
+      death10: '3/7/20',
+      death50: '3/12/20',
+      death250: '3/18/20',
+      localSchoolClosings: '',
+      wideSchoolClosings: '03/16/20',
+      localLockdown: '', // Limited movement in some areas
+      wideLockdown: '03/17/20', // Limited movement in most areas
+      fullLockdown: '', // Only essential services
+    }
   },
 
   'gb': { // United Kingdom
     links: { 'Gov.uk': 'https://www.gov.uk/guidance/coronavirus-covid-19-information-for-the-public',
-             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Kingdom' }
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Kingdom' },
+    keyDates: {
+      death1: '3/5/20',
+      death10: '3/12/20',
+      death50: '3/16/20',
+      death250: '3/22/20',
+      localSchoolClosings: '03/11/20',
+      wideSchoolClosings: '03/20/20',
+      localLockdown: '03/16/20', // Limited movement in some areas, calls to social distance
+      wideLockdown: '03/20/20', // Limited movement in most areas, restaurants closed
+      fullLockdown: '', // Only essential services
+    }
   },
 
   'ph': { // Philippines

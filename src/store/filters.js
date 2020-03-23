@@ -1,3 +1,5 @@
+import { REGIONS } from '../data/geoData'
+
 function filterAll (a, options) {
   return a.daily.deaths && a.daily.cases && a.latestTotal.cases > 0
 }
@@ -17,41 +19,39 @@ function filterRelevant (a, options) {
 }
 
 function filterAmericas (a, options) {
-  return (a.region === 'americas')
+  return REGIONS.americas.indexOf(a.codeCountry) >= 0
 }
 
 function filterUSA (a, options) {
-  return (a.code.startsWith('us.'))
+  return a.codeCountry === 'us' || a.codeCountry === 'pr'
 }
 
-const LATAM_COUNTRIES = [
-  'Mexico', 'Panama', 'Costa Rica', 'El Salvador', 'Honduras', 'Guatemala',
-  'Nicaragua', 'Dominican Republic', 'Cuba', 'Haiti', 'USA > Puerto Rico',
-  'Colombia', 'Venezuela', 'Brazil', 'Ecuador', 'Bolivia', 'Peru', 'Uruguay',
-  'Argentina', 'Paraguay', 'Chile'
-]
 function filterLatam (a, options) {
-  return (LATAM_COUNTRIES.indexOf(a.name) >= 0)
+  return REGIONS.america_latam.indexOf(a.codeCountry) >= 0
 }
 
 function filterEurope (a, options) {
-  return (a.region === 'europe')
+  return REGIONS.europe.indexOf(a.codeCountry) >= 0
 }
 
 function filterMiddleEast (a, options) {
-  return (a.region === 'middle east')
+  return REGIONS.middleeast.indexOf(a.codeCountry) >= 0
+}
+
+function filterSEAsia (a, options) {
+  return REGIONS.seasia.indexOf(a.codeCountry) >= 0
 }
 
 function filterAfrica (a, options) {
-  return (a.region === 'africa')
+  return REGIONS.africa.indexOf(a.codeCountry) >= 0
 }
 
 function filterAsiaOceania (a, options) {
-  return (a.region === 'asia' || a.region === 'oceania')
+  return REGIONS.asia.indexOf(a.codeCountry) >= 0 || REGIONS.oceania.indexOf(a.codeCountry) >= 0
 }
 
 function filterOtherRegions (a, options) {
-  return (a.region === 'other' || !a.region)
+  return (a.code.indexOf('other') === 0)
 }
 
 const FILTERERS = {
@@ -62,6 +62,7 @@ const FILTERERS = {
   latam: filterLatam,
   europe: filterEurope,
   middleEast: filterMiddleEast,
+  seAsia: filterSEAsia,
   africa: filterAfrica,
   asiaOceania: filterAsiaOceania,
   otherRegions: filterOtherRegions
@@ -77,6 +78,7 @@ export const FILTER_ALIASES = {
   latam: 'latam',
   europe: 'europe',
   middleEast: 'middleEast',
+  seAsia: 'seAsia',
   africa: 'africa',
   asiaOceania: 'asiaOceania',
   otherRegions: 'otherRegions',
@@ -88,6 +90,7 @@ export const FILTER_ALIASES = {
   northAmerica: 'americas',
   centralAmerica: 'americas',
   southAmerica: 'americas',
+  seasia: 'seasia',
 }
 
 export const FILTER_DESCRIPTIONS = {
@@ -97,12 +100,14 @@ export const FILTER_DESCRIPTIONS = {
   latam: 'Outbreaks in Latin America',
   europe: 'Outbreaks in Europe',
   africa: 'Outbreaks in Africa',
+  middleEast: 'Outbreaks in the Middle East',
+  seAsia: 'Outbreaks in South-East Asia',
   asiaOceania: 'Outbreaks in Asia & Oceania',
   otherRegions: 'Outbreaks in other regions',
   all: 'All outbreaks'
 }
 
-export const FILTER_TYPES = ['all', 'relevant', 'asiaOceania', 'europe', 'americas', 'usa', 'latam', 'africa', 'otherRegions']
+export const FILTER_TYPES = ['all', 'relevant', 'asiaOceania', 'seAsia', 'europe', 'americas', 'usa', 'latam', 'africa', 'middleEast', 'otherRegions']
 
 export function viewOptionsForFiltering(filter, moreOptions) {
   filter = FILTER_ALIASES[filter] || FILTER_ALIASES.default

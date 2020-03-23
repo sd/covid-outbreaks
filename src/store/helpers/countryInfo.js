@@ -27,6 +27,8 @@ let nameToCodeIndex = {
   'Cruise Ship > Diamond Princess': 'other.diamond_princess',
   'Grand Princess': 'other.grand_princess',
 
+  'Netherlands > Aruba': 'aw',
+
   'Canada > Alberta': 'ca.ab',
   'Canada > British Columbia': 'ca.bc',
   'Canada > Manitoba': 'ca.mb',
@@ -99,6 +101,8 @@ nameToCodeIndex = {...nameToCodeIndex, ...{ // Overrides post-data loding
   'US > Washington, D.C.': 'us.dc',
   'US > District of Columbia': 'us.dc',
   'US > Virgin Islands, U.S.': 'us.vi',
+  'US > United States Virgin Islands': 'us.vi',
+  'US > US': 'ignore',
 }}
 codeToNameIndex = {...codeToNameIndex, ...{ // Overrides post-data loding
   'us.wa': 'USA: Washington State',
@@ -131,7 +135,12 @@ export const CSSE_OVERLAY = {
 
   'other.Mayotte': 'fr.Mayotte',
   'other.French Guiana': 'fr.French Guiana',
+  'yt': 'fr.Mayotte',
+  'gf': 'fr.French Guiana',
+  're': 'fr.Reunion',
 
+  'dk.Greenland': 'gl',
+  'us.Guam': 'gu'
 }
 
 export function countryForCSSName(name) {
@@ -176,6 +185,8 @@ export function attributesForCountry(code) {
       parts[0].charCodeAt(1) + UNICODE_REGIONAL_INDICATOR_SYMBOL_OFFSET
     )
   }
+  attrs.codeCountry = parts[0]
+  attrs.codeSubCountry = parts[1]
 
   attrs.name = codeToNameIndex[code]
   attrs.esName = countryNamesES[code]

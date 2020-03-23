@@ -24,6 +24,7 @@ const TableView = ({
     viewOptions = viewOptionsForSorting(sort, viewOptions)
     viewOptions = viewOptionsForFiltering(filter, viewOptions)
 
+
     data = data.sort((a, b) => viewOptions.sorter(a, b, viewOptions ))
     data = data.filter((a) => viewOptions.filterer(a, viewOptions ))
 
