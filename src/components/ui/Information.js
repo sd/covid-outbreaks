@@ -1,5 +1,5 @@
 import React from 'react'
-import Popup from 'reactjs-popup'
+import ReactModal from 'react-modal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
@@ -7,7 +7,11 @@ import { VelocityWithStyles, AccelerationWithStyles } from '../entries/OneTableE
 
 import './Information.css'
 
+ReactModal.setAppElement('#root')
+
 const Information = ({content, position, trigger}) => {
+  const [modalIsOpen, setIsOpen] = React.useState(false);
+
   let ContentClass = null
   const contentComponents = {
     numbers: InfoNumbers,
@@ -18,32 +22,39 @@ const Information = ({content, position, trigger}) => {
 
   if (ContentClass) {
     return (
-      <Popup
-        modal
-        closeOnDocumentClick
-        className='ViewControls-popup'
-        overlayStyle={{
-          zIndex: 1000
-        }}
-        contentStyle={{
-          zIndex: 1001,
-          backgroundColor: '#cca',
-          color: '#333',
-          minWidth: '50vh',
-          maxWidth: '70vh',
-          maxHeight: '60vh',
-          overflow: 'auto'
-        }}
-        trigger={
-          trigger || <span className='Information-trigger'><FontAwesomeIcon icon={faQuestionCircle} /></span>
-        }
-      >
-        {close => (
+      <>
+        <span onClick={() => setIsOpen(true)}>
+          { trigger || <span className='Information-trigger'><FontAwesomeIcon icon={faQuestionCircle} /></span> }
+        </span>
+
+        <ReactModal
+          isOpen={modalIsOpen}
+          shouldCloseOnOverlayClick={true}
+          shouldCloseOnEsc={true}
+          onRequestClose={() => setIsOpen(false)}
+          style={{
+            overlay: {
+              background: 'rgba(99, 99, 99, 0.3)',
+              backgroundOpacity: 0.3,
+            },
+            content: {
+              backgroundColor: '#ffb',
+              minWidth: '25em',
+              maxWidth: '75vw',
+              maxHeight: '60vh',
+              marginTop: '10em',
+              marginLeft: 'auto',
+              marginRight: 'auto',
+              padding: 0,
+              border: 0,
+            }
+          }}
+        >
           <div className='Information-content lightTheme yellowTheme content'>
             {ContentClass && <ContentClass />}
           </div>
-        )}
-      </Popup>
+        </ReactModal>
+      </>
     )
   } else {
     return null

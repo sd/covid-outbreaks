@@ -183,63 +183,63 @@
 }
 
 
-.TableView .outbreakDay {
+.outbreakDay {
   color: #7ae;
 }
-.TableView .lightTheme .outbreakDay {
+.lightTheme .outbreakDay {
   color: #59d;
 }
 
-.TableView .velocity {
+.velocity {
   color: #bb6;
 }
 
-.TableView .lightTheme .velocity {
+.lightTheme .velocity {
   color: #993;
 }
 
-.TableView .acceleration {
+.acceleration {
   color: #fa6;
 }
 
-.TableView .acceleration.decreasing {
+.acceleration.decreasing {
   color: #5d5;
 }
-.TableView .acceleration.increasing {
+.acceleration.increasing {
   color: #d55;
 }
 
-.TableView .lightTheme .acceleration.decreasing {
+.lightTheme .acceleration.decreasing {
   color: #4c4;
 }
-.TableView .lightTheme .acceleration.increasing {
+.lightTheme .acceleration.increasing {
   color: #c44;
 }
 
-.TableView .acceleration .arrow {
+.acceleration .arrow {
   font-size: 60%;
   position: relative;
   top: -0.1rem;
   left: -0.1rem;
 }
 
-.TableView .velocity.good {
+.velocity.good {
   color: #7b7;
 }
 
-.TableView .velocity.medium {
+.velocity.medium {
   color: #aa3;
 }
 
-.TableView .velocity.bad {
+.velocity.bad {
   color: #c96;
 }
 
-.TableView .velocity.verybad {
+.velocity.verybad {
   color: #c66;
 }
 
-.TableView .velocity.terrible {
+.velocity.terrible {
   color: #d33;
   font-weight: bold;
 }

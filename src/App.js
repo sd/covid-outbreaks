@@ -41,7 +41,7 @@ class App extends React.Component {
     return (
       <div className={ classNames('App', { mobile: isMobile, tablet: isTablet, desktop: isDesktop }) }>
 
-        <PageHeader />
+        <PageHeader listRef={this.listRef} />
 
         {!error &&
           <div className="App-content">
@@ -85,16 +85,15 @@ class App extends React.Component {
         }
 
         <PageFooter />
-
       </div>
     )
   }
 }
 
-const PageHeader = () => {
+const PageHeader = ({listRef}) => {
   return (
     <header className='App-header'>
-      <h1 onClick={() => window.scrollTo(0, 0)} style={{cursor: 'pointer'}}>
+      <h1 onClick={() => listRef.current.scrollTo(0, 0)} style={{cursor: 'pointer'}}>
         <img src='covid-128.png' alt='*' className='logo' />
         <Trans i18nKey='general.title'>COVID-19 Outbreaks</Trans>
       </h1>
