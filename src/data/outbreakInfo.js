@@ -103,6 +103,7 @@ export const OUTBREAK_ATTRIBUTES = {
 
   'it': { // Italy
     links: { 'Protezione Civile': 'http://www.protezionecivile.gov.it/media-communication/press-release',
+             '@dpcgov': 'https://twitter.com/dpcgov',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy' },
     keyDates: {
       death1: '2/21/20',
