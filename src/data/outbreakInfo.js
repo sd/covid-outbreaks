@@ -152,6 +152,7 @@ export const OUTBREAK_ATTRIBUTES = {
 
   'gb': { // United Kingdom
     links: { 'Gov.uk': 'https://www.gov.uk/guidance/coronavirus-covid-19-information-for-the-public',
+             '@DHSCgovuk': 'https://twitter.com/DHSCgovuk',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Kingdom' },
     keyDates: {
       death1: '3/5/20',
