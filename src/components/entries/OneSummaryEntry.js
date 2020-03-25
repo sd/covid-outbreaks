@@ -111,7 +111,7 @@ const OneTableEntry = ({
             }
             {entry.latestDaily.deaths &&
               <div>
-                {dates.slice(-4).reverse().map(date => (
+                {dates.slice(-4).map(date => (
                   <section key={date}>
                     +{numeral(entry.daily.deaths[date]).format('0,000')}
                   </section>
