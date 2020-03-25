@@ -1,5 +1,5 @@
 export function formatDateMonthDD (d, i18n) {
-  let parts = d.match(/(\d+)\/(\d+)\/(\d+)/)
+  let parts = d && d.match(/(\d+)\/(\d+)\/(\d+)/)
 
   if (parts) {
     if (i18n) {
@@ -15,7 +15,7 @@ export function formatDateMonthDD (d, i18n) {
   }
 }
 export function formatDateMonthAbbrDD (d, i18n) {
-  let parts = d.match(/(\d+)\/(\d+)\/(\d+)/)
+  let parts = d && d.match(/(\d+)\/(\d+)\/(\d+)/)
 
   if (parts) {
     if (i18n) {
@@ -32,7 +32,7 @@ export function formatDateMonthAbbrDD (d, i18n) {
 }
 
 export function formatDateWeekdayAbbrDD (d, i18n) {
-  let parts = d.match(/(\d+)\/(\d+)\/(\d+)/)
+  let parts = d && d.match(/(\d+)\/(\d+)\/(\d+)/)
   const date = new Date(d)
   const weekday = date.getDay()
 
@@ -51,7 +51,7 @@ export function formatDateWeekdayAbbrDD (d, i18n) {
 }
 
 export function formatDateMonDD (d) {
-  let parts = d.match(/(\d+)\/(\d+)\/(\d+)/)
+  let parts = d && d.match(/(\d+)\/(\d+)\/(\d+)/)
 
   if (parts) {
     return `${ABBREVIATED_MONTHS[parts[1]]} ${parts[2]}`

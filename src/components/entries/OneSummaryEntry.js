@@ -29,8 +29,8 @@ const OneTableEntry = ({
 
   const { t, i18n } = useTranslation();
 
-  if (!entry.daily.deaths[dates[dates.length - 1]] && !entry.daily.cases[dates[dates.length - 1]]) {
-    dates = dates.slice(0, dates.length - 2)
+  if (!entry.daily.deaths[dates[dates.length - 1]]) {
+    dates = dates.slice(0, dates.length - 1)
   }
 
   let comparisonOffset = 0
