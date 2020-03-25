@@ -5,6 +5,7 @@ import { Trans, useTranslation } from 'react-i18next';
 
 import './TableView.css'
 
+import MarkerLegend from '../components/ui/MarkerLegend'
 import ViewControls from '../components/ui/ViewControls'
 import OneTableEntry from './entries/OneTableEntry'
 import OneSummaryEntry from './entries/OneSummaryEntry'
@@ -107,7 +108,7 @@ const ActualTableView = ({
 
   const getEntryHeight = React.useCallback((index) => {
     if (index === 0) {
-      return 140 // first row with ViewControls
+      return view === 'compact' ? 100 : 140 // first row with ViewControls
     }
     else {
       return entryHeights.current[data[index - 1].code] || 300
@@ -115,7 +116,7 @@ const ActualTableView = ({
   }, [data])
 
   const sharedProps = { dates, allDates, pinEntry, unpinEntry, expandEntry, collapseEntry }
-console.log(view)
+
   const EntryView = { 'classic': OneTableEntry, 'compact': OneSummaryEntry }[view] || OneTableEntry
 
   return (
@@ -136,7 +137,13 @@ console.log(view)
         >
           {({ index, style }) => {
             if (index === 0) {
-              return <ViewControls isMobile={isMobile} />
+              return (
+                <div>
+                  <ViewControls isMobile={isMobile} />
+
+                  { view !== 'compact' && <MarkerLegend /> }
+                </div>
+              )
             } else {
               const code = data[index - 1] && data[index - 1].code
 

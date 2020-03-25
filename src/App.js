@@ -97,8 +97,6 @@ const PageHeader = ({listRef}) => {
         <img src='covid-128.png' alt='*' className='logo' />
         <Trans i18nKey='general.title'>COVID-19 Outbreaks</Trans>
       </h1>
-
-      <MarkerLegend />
     </header>
   )
 }
