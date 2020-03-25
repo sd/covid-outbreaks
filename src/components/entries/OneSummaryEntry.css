@@ -1,62 +1,91 @@
 .SummaryView-row {
   width: 100%;
   min-width: 200px;
-  max-width: 600px;
+  max-width: 30em;
   margin-left: auto;
   margin-right: auto;
   padding-top: 1em;
   clear: both;
 }
 
+.mobile .SummaryView-row {
+  width: 100%;
+  min-width: 200px;
+  max-width: 30em;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1em;
+  clear: both;
+}
+
+.tablet .SummaryView-row {
+  width: 100%;
+  min-width: 200px;
+  max-width: 50em;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1em;
+  clear: both;
+}
+
+.desktop .SummaryView-row {
+  width: 100%;
+  min-width: 200px;
+  max-width: 50em;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1em;
+  clear: both;
+}
+
+
 .SummaryView-row-inner {
   display: grid;
 
-  grid-template-columns: 1fr auto;
+  grid-template-columns: auto 1fr;
   grid-template-rows: auto;
   grid-template-areas:
-    "title title"
-    "totals chart"
-    "metrics chart"
-    "tools chart"
+    "title totals"
+    "chart metrics"
+    "chart tools"
     "more more";
   border-top: 1px solid #555;
 }
 
-.mobile .SummaryView-row-inner {
+/* .mobile .SummaryView-row-inner {
   grid-template-areas:
-    "title title"
+    "metrics title"
     "totals chart"
-    "metrics chart"
     "tools chart"
     "more more";
-}
+} */
 
 .SummaryView-row-inner > .chart {
   grid-area: chart;
   text-align: right;
-  min-height: 6em;
-  margin-left: 0.6em;
-  margin-right: 0.6em;
 }
 
 .SummaryView-row-inner > .title {
   grid-area: title;
-  text-align: right;
+  text-align: left;
+  align-self: middle;
 }
 
 .SummaryView-row-inner > .totals {
   grid-area: totals;
-  text-align: right;
+  text-align: left;
+  align-self: center;
 }
 
 .SummaryView-row-inner > .metrics {
   grid-area: metrics;
-  text-align: right;
+  text-align: left;
+  align-self: middle;
 }
 
 .SummaryView-row-inner > .tools {
   grid-area: tools;
-  text-align: right;
+  text-align: left;
   align-self: end;
 }
 
@@ -70,19 +99,16 @@
 
 .mobile .SummaryView-row-inner > .chart {
   text-align: right;
-  min-height: 6em;
-  margin-left: 0.6em;
-  margin-right: 0.6em;
 }
 
 .SummaryView-row-inner .metrics section {
   display: inline-block;
-  margin-right: 1em;
+  margin-right: 0.8em;
+  margin-bottom: 0.5em;
 }
 
 .SummaryView-row-inner .totals section {
   display: inline-block;
-  margin-right: 1em;
 }
 
 
@@ -95,17 +121,19 @@
   text-align: right;
   font-size: 120%;
   font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
 }
 
 .SummaryView-row .title .name {
-  display: inline-block;
+  flex: 1;
 }
 
 .SummaryView-row .title .flag {
-  display: inline-block;
+  flex: 0;
   margin-left: 0.5em;
-  position: relative;
-  top: 0.2em;
 
   font-size: 160%;
   text-shadow: 0 0 0.2em #999;
@@ -113,6 +141,25 @@
 
 .mobile .SummaryView-row .title .flag {
   margin-right: 0.2em;
+}
+
+.SummaryView-row-inner > .totals {
+  margin-left: 0.6em;
+  font-size: 110%;
+  font-weight: bold;
+  text-align: left;
+}
+
+.mobile .SummaryView-row-inner > .totals {
+  font-size: 100%;
+}
+
+.SummaryView-row-inner > .metrics {
+  margin-left: 0.6em;
+}
+
+.mobile .SummaryView-row-inner > .metrics {
+  font-size: 90%;
 }
 
 /* .mobile .SummaryView-row .title .flag {

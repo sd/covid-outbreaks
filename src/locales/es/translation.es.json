@@ -20,6 +20,7 @@
     "show_label": "Incluir",
     "sort_label": "Ordenados por",
     "weeks_label": "Limitados a",
+    "view_label": "Estilo",
     "totals_label": "Mostrar Totales",
     "no_scaling_label": "Mantener Escala Vertical",
     "reset_button": "Reiniciar",
@@ -87,6 +88,10 @@
       "eight": "Últimas 8 semanas",
       "all": "Todas las fechas"
     }
+  },
+  "description": {
+    "classic": "Clasica",
+    "compact": "Compacta"
   },
   "date": {
     "formats": {

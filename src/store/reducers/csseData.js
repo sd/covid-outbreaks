@@ -257,12 +257,14 @@ export function fetchDataDispatcher (dispatch) {
       let allDates = deathsResults.dates
       let lastDate = deathsResults.dates[deathsResults.dates.length - 1]
 
+      let last2weeks = allDates.slice(-14)
+      let last3weeks = allDates.slice(-21)
       let last4weeks = allDates.slice(-28)
       let last6weeks = allDates.slice(-42)
       let last8weeks = allDates.slice(-56)
 
       dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', values: {
-        data, allDates, last4weeks, last6weeks, last8weeks,
+        data, allDates, last2weeks, last3weeks, last4weeks, last6weeks, last8weeks,
         lastDate
       }})
       return data

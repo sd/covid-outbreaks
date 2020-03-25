@@ -6,6 +6,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import './TableView.css'
 
 import MarkerLegend from '../components/ui/MarkerLegend'
+import Information from '../components/ui/Information'
 import ViewControls from '../components/ui/ViewControls'
 import OneTableEntry from './entries/OneTableEntry'
 import OneSummaryEntry from './entries/OneSummaryEntry'
@@ -17,11 +18,11 @@ import { totalizeEntries } from '../store/totalize'
 export const TableViewContext = React.createContext({})
 
 const TableView = ({
-  loaded, data, allDates, last4weeks, last6weeks, last8weeks,
+  loaded, data, allDates, last2weeks, last3weeks, last4weeks, last6weeks, last8weeks,
   view, sort, filter, noScaling, weeks, totals,
   pinPositions, pinEntry, unpinEntry,
   isExpanded, expandEntry, collapseEntry,
-  isMobile, isTablet,
+  isMobile, isTablet, isDesktop,
   listRef, tableViewRef, listHeight
 }) => {
   const { t } = useTranslation();
@@ -48,7 +49,11 @@ const TableView = ({
     }
 
     let dates
-    if (weeks === 'four') {
+    if (weeks === 'two') {
+      dates = last2weeks
+    } else if (weeks === 'three') {
+      dates = last3weeks
+    } else if (weeks === 'four') {
       dates = last4weeks
     } else if (weeks === 'six') {
       dates = last6weeks
@@ -71,7 +76,7 @@ const TableView = ({
       viewOptions, pinPositions, isExpanded, pinEntry, unpinEntry, expandEntry, collapseEntry,
       totalsEntry, comparisonEntry,
       listRef, tableViewRef, listHeight,
-      isMobile, view
+      isMobile, isTablet, isDesktop, view
     }
     return (
       <ActualTableView {...actualProps} />
@@ -94,7 +99,7 @@ const ActualTableView = ({
   isExpanded, expandEntry, collapseEntry,
   totalsEntry, comparisonEntry,
   listRef, tableViewRef, listHeight,
-  isMobile
+  isMobile, isTablet, isDesktop
 }) => {
   const entryHeights = React.useRef({});
 
@@ -108,16 +113,16 @@ const ActualTableView = ({
 
   const getEntryHeight = React.useCallback((index) => {
     if (index === 0) {
-      return view === 'compact' ? 100 : 140 // first row with ViewControls
+      return view === 'classic' ? 140 : 100 // first row with ViewControls
     }
     else {
-      return entryHeights.current[data[index - 1].code] || 300
+      return entryHeights.current[data[index - 1].code] || 120
     }
-  }, [data])
+  }, [data, view])
 
-  const sharedProps = { dates, allDates, pinEntry, unpinEntry, expandEntry, collapseEntry }
+  const sharedProps = { dates, allDates, pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile, isTablet, isDesktop }
 
-  const EntryView = { 'classic': OneTableEntry, 'compact': OneSummaryEntry }[view] || OneTableEntry
+  const EntryView = { 'classic': OneTableEntry, 'compact': OneSummaryEntry }[view] || OneSummaryEntry
 
   return (
     <TableViewContext.Provider value={{ setEntryHeight }}>
@@ -141,7 +146,9 @@ const ActualTableView = ({
                 <div>
                   <ViewControls isMobile={isMobile} />
 
-                  { view !== 'compact' && <MarkerLegend /> }
+                  <Information content='numbers' trigger={<button>what do these numbers mean?</button>} />
+
+                  { view === 'classic' && <MarkerLegend /> }
                 </div>
               )
             } else {
@@ -169,6 +176,8 @@ const mapStateToProps = (state, ownProps) => ({
   loaded: state.csseData.loaded,
   data: state.csseData.data,
   allDates: state.csseData.allDates,
+  last2weeks: state.csseData.last2weeks,
+  last3weeks: state.csseData.last3weeks,
   last4weeks: state.csseData.last4weeks,
   last6weeks: state.csseData.last6weeks,
   last8weeks: state.csseData.last8weeks,

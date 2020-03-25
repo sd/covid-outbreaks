@@ -89,8 +89,8 @@ const ViewControls = ({
             <div className='form-label'><Trans i18nKey='view_controls.view_label'>Style</Trans></div>
             <div className='form-field'>
               <select value={view || ''} onChange={(event) => setUI({view: event.target.value})}>
-                <option value={undefined}>{t(`view.description.default`, 'Default')}</option>
-                <option value={'compact'}>{t(`view.description.compact`, 'Compact')}</option>
+              <option value={undefined}>{t(`view.description.compact`, 'Compact')}</option>
+                <option value={'classic'}>{t(`view.description.classic`, 'Classic')}</option>
               </select>
             </div>
           </div>

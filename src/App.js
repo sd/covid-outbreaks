@@ -5,7 +5,6 @@ import classNames from 'classnames'
 import { Trans } from 'react-i18next'
 
 import TableView from './components/TableView'
-import MarkerLegend from './components/ui/MarkerLegend'
 import DataLoader from './components/DataLoader'
 import Information from './components/ui/Information'
 

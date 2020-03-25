@@ -9,14 +9,13 @@ import './OneSummaryEntry.css'
 import DailySparklineChart from './DailySparklineChart'
 import OutbreakTable from './OutbreakTable'
 import { Trans, useTranslation } from 'react-i18next';
-import Information from '../ui/Information'
 import { TableViewContext } from '../TableView'
 
 export const DEATHS_SCALE = 10
 export const CASES_SCALE = 100
 
 const OneTableEntry = ({
-  entry, index, dates,
+  entry, index, dates, allDates,
   comparisonEntry,
   pinned, expanded, sideBySide,
   pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile
@@ -29,8 +28,15 @@ const OneTableEntry = ({
 
   const { t, i18n } = useTranslation();
 
-  if (!entry.daily.deaths[dates[dates.length - 1]]) {
-    dates = dates.slice(0, dates.length - 1)
+  // if (!entry.daily.deaths[dates[dates.length - 1]]) {
+  //   dates = dates.slice(0, dates.length - 1)
+  // }
+
+  let chartDates
+  if (isMobile) {
+    chartDates = allDates.slice(-21)
+  } else {
+    chartDates = allDates.slice(-35)
   }
 
   let comparisonOffset = 0
@@ -46,10 +52,10 @@ const OneTableEntry = ({
   return (
     <div ref={entryRef} className={classNames('SummaryView-row', { pinned, expanded })}>
       <div className='SummaryView-row-inner'>
-        <div className='chart' style={{width: '15em'}}>
+        <div className='chart'>
           <DailySparklineChart
-            entry={entry} dates={dates}
-            pointsToShow={21} aspectRatio={2}
+            entry={entry} dates={chartDates}
+            aspectRatio={2}
             comparisonEntry={comparisonEntry} comparisonOffset={comparisonOffset}
           />
         </div>
@@ -61,22 +67,28 @@ const OneTableEntry = ({
           <span className='flag'>{entry.emoji}</span>
         </div>
 
+
         <div className='metrics'>
-          {entry.latestOutbreakDay.deaths &&
-            <section className='outbreakDay'>
-              <Trans i18nKey='entry.outbreak_day'>
-              day {{ day: entry.latestOutbreakDay.deaths }}
-              </Trans>
-              <Information content='numbers' />
-            </section>
+          {entry.latestDaily.deaths &&
+            <div>
+              {dates.slice(-4).reverse().map(date => (
+                <section key={date}>
+                  {entry.daily.deaths[date]
+                    ? <span>+{numeral(entry.daily.deaths[date]).format('0,000')}</span>
+                    : <span>n/a</span>
+                  }
+                </section>
+              ))}
+            </div>
           }
           {entry.latestAcceleration.deaths &&
-            <section className='velocitySummary acceleration'>
-               <Trans i18nKey='entry.days_to_tenx'>
-                 <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={false} format={'0,000.0'} /> days to 10x
-               </Trans>
-              <Information content='numbers' />
-            </section>
+            <div>
+              <section className='velocitySummary acceleration'>
+                <Trans i18nKey='entry.days_to_tenx'>
+                  <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={false} format={'0,000.0'} /> days to 10x
+                </Trans>
+              </section>
+            </div>
           }
         </div>
 
@@ -109,19 +121,18 @@ const OneTableEntry = ({
                 </Trans>
               </b></section>
             }
-            {entry.latestDaily.deaths &&
-              <div>
-                {dates.slice(-4).map(date => (
-                  <section key={date}>
-                    +{numeral(entry.daily.deaths[date]).format('0,000')}
-                  </section>
-                ))}
-              </div>
-            }
             {!entry.latestTotal.deaths &&
               <section>
                 <Trans i18nKey='entry.deaths_total_no_deaths'>
                   no deaths
+                </Trans>
+              </section>
+            }
+            {entry.latestOutbreakDay.deaths &&
+              <section className='outbreakDay'>
+                &nbsp;•&nbsp;
+                <Trans i18nKey='entry.outbreak_day'>
+                day {{ day: entry.latestOutbreakDay.deaths }}
                 </Trans>
               </section>
             }

@@ -13,13 +13,13 @@ const SVG_STYLES = {
     strokeWidth: 1,
   },
   canvas: {
-    hPadding: 30,
+    hPadding: 35,
     vPadding: 10,
     fill: '' //'#302a2a'
   },
   legend: {
     hPadding: 8,
-    fontSize: 11,
+    fontSize: 13,
     fill: '#c00',
     fontWeight: 'bold'
   },
@@ -28,7 +28,7 @@ const SVG_STYLES = {
     stroke: '#444',
   },
   gridLabel: {
-    fontSize: 11,
+    fontSize: 12,
     fill: '#444',
     hPadding: 2,
     vPadding: 2,
@@ -38,42 +38,29 @@ const SVG_STYLES = {
 const VERTICAL_SCALE = 3
 
 const DailySparklineChart =  ({
-  entry, dates, pointsToShow, aspectRatio,
+  entry, dates, aspectRatio,
   idPrefix, style,
   comparisonEntry, comparisonOffset,
 }) => {
-  if (!entry || !entry.daily || !entry.daily.deaths || !entry.daily.cases) return null
-
-  pointsToShow = pointsToShow || 21
-  aspectRatio = aspectRatio || 2
-
-  dates = [...dates]
-  if (entry.daily.deaths[dates[dates.length - 1]]) {
-    dates = dates.slice(-pointsToShow)
-  } else {
-    dates = dates.slice(-pointsToShow - 1, -1)
-  }
+  aspectRatio = (dates.length / 7)
 
   idPrefix = [idPrefix, 'sparkline', entry.code].map(x => x).join('-')
 
   let values = dates.map(d => entry.daily.deaths[d])
 
-  let highestValue = Math.max(...values)
+  let highestValue = Math.max(...values.filter(v => v), 1)
 
   let strokeScale = Math.max(Math.log10(highestValue), 0.8)
   let radiusScale = Math.min(Math.max(Math.log10(highestValue), 1.5), 2.5)
 
-  // let scaledValues = values.map(v => v && ((Math.log10(v) - Math.log10(lowestValue)) / (Math.log10(highestValue) -  Math.log10(lowestValue)) * 100))
-  // let valueRange = highestValue - lowestValue
-  // let scaleRange = valueRange * VERTICAL_SCALE
-  // let scaledValues = values.map(v => v && ((v - lowestValue) / scaleRange * 100))
-
   let allZerosSoFar = true
   let indexOfFirstNonZero = 0
+  let indexOfLastNonZero = 0
 
   let scaledValues = values.map((v, index) => {
     if (v) {
       allZerosSoFar = false
+      indexOfLastNonZero = index
       return ((Math.log10(v)) / VERTICAL_SCALE) * 100
     } else if (allZerosSoFar) {
       indexOfFirstNonZero = indexOfFirstNonZero + 1
@@ -83,117 +70,115 @@ const DailySparklineChart =  ({
     }
   })
 
-  let horizontalStep = 100 * aspectRatio / (pointsToShow - 1)
-  // console.log('values', entry.code, strokeScale, highestValue)
-  // console.log(values, scaledValues)
+  let horizontalStep = 100 * aspectRatio / (dates.length - 1)
 
   let lines = [0, 10, 100, 1000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / VERTICAL_SCALE * 100}))
 
-  if (highestValue > 0) {
-    return (
-      <div className='DailySparklineChart' style={style}>
-        <svg viewBox={`0 0 ${100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} ${100 + 2 * SVG_STYLES.canvas.vPadding}`}>
-          {SVG_STYLES.canvas.fill &&
-            <rect
-              x='0' y='0'
-              width={100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} height={100 + 2 * SVG_STYLES.canvas.vPadding}
-              fill={SVG_STYLES.canvas.fill}
+  return (
+    <div className='DailySparklineChart' style={{height: '6em', width: `${6 * aspectRatio}em`}}>
+      <svg viewBox={`0 0 ${100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} ${100 + 2 * SVG_STYLES.canvas.vPadding}`}>
+        {SVG_STYLES.canvas.fill &&
+          <rect
+            x='0' y='0'
+            width={100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} height={100 + 2 * SVG_STYLES.canvas.vPadding}
+            fill={SVG_STYLES.canvas.fill}
+          />
+        }
+
+        {lines.map(({label, value}, index) => (
+          <React.Fragment key={`grid-${index}`}>
+            <line
+              key={`gridline-${index}`}
+              x1={SVG_STYLES.canvas.hPadding}
+              y1={100 + SVG_STYLES.canvas.vPadding - value}
+              x2={100 * aspectRatio + SVG_STYLES.canvas.hPadding}
+              y2={100 + SVG_STYLES.canvas.vPadding - value}
+              strokeWidth={SVG_STYLES.grid.strokeWidth}
+              stroke={SVG_STYLES.grid.stroke}
             />
-          }
+            <text
+              key={`gridlabel-${index}`}
+              x={SVG_STYLES.canvas.hPadding - SVG_STYLES.gridLabel.vPadding }
+              y={100 + SVG_STYLES.canvas.vPadding - value}
+              fontSize={SVG_STYLES.gridLabel.fontSize}
+              fill={SVG_STYLES.gridLabel.fill}
+              textAnchor='end'
+              dominantBaseline='central'
+              fontWeight={SVG_STYLES.gridLabel.fontWeight}
+            >
+              {label}
+            </text>
+          </React.Fragment>
+        ))}
+        {scaledValues.map((value, index) => {
+          let style = SVG_STYLES.line
 
-          {lines.map(({label, value}, index) => (
-            <React.Fragment key={`grid-${index}`}>
-              <line
-                key={`gridline-${index}`}
-                x1={SVG_STYLES.canvas.hPadding}
-                y1={100 + SVG_STYLES.canvas.vPadding - value}
-                x2={100 * aspectRatio + SVG_STYLES.canvas.hPadding}
-                y2={100 + SVG_STYLES.canvas.vPadding - value}
-                strokeWidth={SVG_STYLES.grid.strokeWidth}
-                stroke={SVG_STYLES.grid.stroke}
-              />
-              <text
-                key={`gridlabel-${index}`}
-                x={SVG_STYLES.canvas.hPadding - SVG_STYLES.gridLabel.vPadding }
-                y={100 + SVG_STYLES.canvas.vPadding - value}
-                fontSize={SVG_STYLES.gridLabel.fontSize}
-                fill={SVG_STYLES.gridLabel.fill}
-                textAnchor='end'
-                dominantBaseline='central'
-                fontWeight={SVG_STYLES.gridLabel.fontWeight}
-              >
-                {label}
-              </text>
-            </React.Fragment>
-          ))}
-          {scaledValues.map((value, index) => {
-            let style = SVG_STYLES.line
+          if (value === undefined) return null
+          if (scaledValues[index + 1] === undefined) return null
 
-            if (value === undefined) return null
-            if (scaledValues[index + 1] === undefined) return null
-
-            return (
-              <React.Fragment key={`line-${index}`}>
-                <mask key={`mask-${index}`} id={`${idPrefix}-mask-${index}`}>
-                  <rect
-                    x='0' y='0'
-                    width={100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} height={100 + 2 * SVG_STYLES.canvas.vPadding}
-                    fill='white'
+          return (
+            <React.Fragment key={`line-${index}`}>
+              <mask key={`mask-${index}`} id={`${idPrefix}-mask-${index}`}>
+                <rect
+                  x='0' y='0'
+                  width={100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} height={100 + 2 * SVG_STYLES.canvas.vPadding}
+                  fill='white'
+                />
+                <circle
+                  cx={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
+                  cy={100 + SVG_STYLES.canvas.vPadding - value}
+                  r={SVG_STYLES.marker.radius * radiusScale + SVG_STYLES.marker.clipRadiusDelta}
+                  fill='black'
+                />
+                <circle
+                  cx={SVG_STYLES.canvas.hPadding + ((index + 1) * horizontalStep)}
+                  cy={100 + SVG_STYLES.canvas.vPadding - scaledValues[index + 1]}
+                  r={SVG_STYLES.marker.radius * radiusScale + SVG_STYLES.marker.clipRadiusDelta}
+                  fill='black'
+                />
+              </mask>
+              {value === scaledValues[index + 1]  // Chrome ignores masks on perfect horizontal lines
+                ? <rect
+                    key={`maskedline-${index}`}
+                    mask={`url(#${idPrefix}-mask-${index})`}
+                    x={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
+                    y={100 + SVG_STYLES.canvas.vPadding - value - (style.strokeWidth * strokeScale / 2)}
+                    width={horizontalStep}
+                    height={style.strokeWidth * strokeScale}
+                    strokeWidth={0}
+                    fill={style.stroke}
                   />
-                  <circle
-                    cx={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-                    cy={100 + SVG_STYLES.canvas.vPadding - value}
-                    r={SVG_STYLES.marker.radius * radiusScale + SVG_STYLES.marker.clipRadiusDelta}
-                    fill='black'
+                : <line
+                    key={`maskedline-${index}`}
+                    mask={`url(#${idPrefix}-mask-${index})`}
+                    x1={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
+                    y1={100 + SVG_STYLES.canvas.vPadding - value}
+                    x2={SVG_STYLES.canvas.hPadding + ((index + 1 ) * horizontalStep)}
+                    y2={100 + SVG_STYLES.canvas.vPadding - scaledValues[index + 1]}
+                    strokeWidth={style.strokeWidth * strokeScale}
+                    stroke={style.stroke}
                   />
-                  <circle
-                    cx={SVG_STYLES.canvas.hPadding + ((index + 1) * horizontalStep)}
-                    cy={100 + SVG_STYLES.canvas.vPadding - scaledValues[index + 1]}
-                    r={SVG_STYLES.marker.radius * radiusScale + SVG_STYLES.marker.clipRadiusDelta}
-                    fill='black'
-                  />
-                </mask>
-                {value === scaledValues[index + 1]  // Chrome ignores masks on perfect horizontal lines
-                  ? <rect
-                      key={`maskedline-${index}`}
-                      mask={`url(#${idPrefix}-mask-${index})`}
-                      x={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-                      y={100 + SVG_STYLES.canvas.vPadding - value - (style.strokeWidth * strokeScale / 2)}
-                      width={horizontalStep}
-                      height={style.strokeWidth * strokeScale}
-                      strokeWidth={0}
-                      fill={style.stroke}
-                    />
-                  : <line
-                      key={`maskedline-${index}`}
-                      mask={`url(#${idPrefix}-mask-${index})`}
-                      x1={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-                      y1={100 + SVG_STYLES.canvas.vPadding - value}
-                      x2={SVG_STYLES.canvas.hPadding + ((index + 1 ) * horizontalStep)}
-                      y2={100 + SVG_STYLES.canvas.vPadding - scaledValues[index + 1]}
-                      strokeWidth={style.strokeWidth * strokeScale}
-                      stroke={style.stroke}
-                    />
-                }
-            </React.Fragment>
-            )
-          })}
-          {scaledValues.map((value, index) => {
-            let style = SVG_STYLES.marker
+              }
+          </React.Fragment>
+          )
+        })}
+        {scaledValues.map((value, index) => {
+          let style = SVG_STYLES.marker
 
-            if (value === undefined) return null
+          if (value === undefined) return null
 
-            return (
-              <circle
-                key={index}
-                cx={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-                cy={100 + SVG_STYLES.canvas.vPadding - value}
-                r={style.radius * radiusScale}
-                fill={style.fill}
-              />
-            )
-          })}
+          return (
+            <circle
+              key={index}
+              cx={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
+              cy={100 + SVG_STYLES.canvas.vPadding - value}
+              r={style.radius * radiusScale}
+              fill={style.fill}
+            />
+          )
+        })}
 
+        {values[indexOfFirstNonZero] &&
           <text
             x={SVG_STYLES.canvas.hPadding + (indexOfFirstNonZero * horizontalStep) - SVG_STYLES.legend.hPadding}
             y={100 + SVG_STYLES.canvas.vPadding - scaledValues[indexOfFirstNonZero]}
@@ -205,24 +190,23 @@ const DailySparklineChart =  ({
           >
             {values[indexOfFirstNonZero]}
           </text>
-
+        }
+        {values[indexOfLastNonZero] &&
           <text
-            x={SVG_STYLES.canvas.hPadding + (pointsToShow - 1) * horizontalStep + SVG_STYLES.legend.hPadding}
-            y={100 + SVG_STYLES.canvas.vPadding - scaledValues[pointsToShow-1]}
+            x={SVG_STYLES.canvas.hPadding + (indexOfLastNonZero) * horizontalStep + SVG_STYLES.legend.hPadding}
+            y={100 + SVG_STYLES.canvas.vPadding - scaledValues[indexOfLastNonZero]}
             fontSize={SVG_STYLES.legend.fontSize}
             fill={SVG_STYLES.legend.fill}
             textAnchor='start'
             dominantBaseline='central'
             fontWeight={SVG_STYLES.legend.fontWeight}
           >
-            {values[pointsToShow - 1]}
+            {values[indexOfLastNonZero]}
           </text>
-        </svg>
-      </div>
-    )
-  } else {
-    return null
-  }
+        }
+      </svg>
+    </div>
+  )
 }
 
 export default  React.memo(DailySparklineChart)
