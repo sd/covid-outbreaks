@@ -55,7 +55,7 @@ const SVG_STYLES = {
   }
 }
 
-const OutbreakSparklineSVG =  ({
+const DeathsChart =  ({
   entry, dates,
   comparisonEntry, comparisonOffset,
   sideBySide,
@@ -73,7 +73,7 @@ const OutbreakSparklineSVG =  ({
 
   if (entry.daily.deaths) {
     return (
-      <div className='OutbreakSparkline'>
+      <div className='DeathsChart'>
         <svg width={'100%'} viewBox={`0 0 ${canvasWidth} ${canvasHeight}`}>
           {dates.map((date, index) => (
             ((index + mondayOffset) % 7 === 0) && /* + 2 moves the lines to a monday */
@@ -101,7 +101,7 @@ const OutbreakSparklineSVG =  ({
             )
           )}
           {dates.map((date, index) => (
-            <OutbreakSparklineOneDaySVG
+            <DeathsChartOneDay
               key={`empty_${date}`}
               dayIndex={index}
               count={1}
@@ -112,7 +112,7 @@ const OutbreakSparklineSVG =  ({
           ))}
           {dates.map((date, index) => (
             entry.daily.cases[date] &&
-              <OutbreakSparklineOneDaySVG
+              <DeathsChartOneDay
                 key={`cases_${date}`}
                 dayIndex={index}
                 count={entry.daily.cases[date] / casesScale / scale }
@@ -127,7 +127,7 @@ const OutbreakSparklineSVG =  ({
               const compDate = dates[index - comparisonOffset]
               if (comparisonEntry.daily.deaths[compDate]) {
                 return (
-                  <OutbreakSparklineOneDaySVG
+                  <DeathsChartOneDay
                     key={`comp_deaths_${date}`}
                     dayIndex={index}
                     count={comparisonEntry.daily.deaths[compDate] / scale}
@@ -146,7 +146,7 @@ const OutbreakSparklineSVG =  ({
           }
           {dates.map((date, index) => (
             (entry.daily.deaths[date] &&
-              <OutbreakSparklineOneDaySVG
+              <DeathsChartOneDay
                 key={`deaths_${date}`}
                 dayIndex={index}
                 count={entry.daily.deaths[date] / scale}
@@ -165,7 +165,7 @@ const OutbreakSparklineSVG =  ({
   }
 }
 
-const OutbreakSparklineOneDaySVG = ({
+const DeathsChartOneDay = ({
   dayIndex, count, columns, round, height, markerStyle,
   xOffset = 0, yOffset = 0
 }) => {
@@ -201,7 +201,7 @@ const OutbreakSparklineOneDaySVG = ({
 
   return columnCounts.map(
     (count, index) => (
-      <OutbreakSparklineOneColumnSVG
+      <DeathsChartOneColumn
           key={`column_${index + 1}`}
           dayIndex={dayIndex}
           count={count}
@@ -214,7 +214,7 @@ const OutbreakSparklineOneDaySVG = ({
   )
 }
 
-const OutbreakSparklineOneColumnSVG = ({dayIndex, count, xOffset, yOffset, height, style}) => {
+const DeathsChartOneColumn = ({dayIndex, count, xOffset, yOffset, height, style}) => {
   let markers = []
 
   let rounded = Math.round(count)
@@ -254,7 +254,7 @@ const OutbreakSparklineOneColumnSVG = ({dayIndex, count, xOffset, yOffset, heigh
   )
 }
 
-export const OutbreakSparklineSampleMarker = ({ type }) => {
+export const DeathsChartSampleMarker = ({ type }) => {
   let style = SVG_STYLES[type]
 
   if (style) {
@@ -278,4 +278,4 @@ export const OutbreakSparklineSampleMarker = ({ type }) => {
   }
 
 }
-export default  React.memo(OutbreakSparklineSVG)
+export default  React.memo(DeathsChart)

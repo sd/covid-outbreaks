@@ -10,7 +10,7 @@ import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../.
 
 const ViewControls = ({
   setUI, resetUI,
-  sort, filter, noScaling, weeks, totals,
+  view, sort, filter, noScaling, weeks, totals,
   isMobile
 }) => {
   const { t } = useTranslation();
@@ -53,7 +53,7 @@ const ViewControls = ({
           <div className='form-row'>
             <div className='form-label'><Trans i18nKey='view_controls.show_label'>Show</Trans></div>
             <div className='form-field'>
-              <select value={viewOptions.filter} onChange={(event) => setUI({filter: event.target.value})}>
+              <select value={viewOptions.filter || ''} onChange={(event) => setUI({filter: event.target.value})}>
                 {FILTER_TYPES.map(option => (
                   <option key={option} value={option}>{t(`filter.description.${option}`, FILTER_DESCRIPTIONS[option])}</option>
                 ))}
@@ -64,7 +64,7 @@ const ViewControls = ({
           <div className='form-row'>
             <div className='form-label'><Trans i18nKey='view_controls.sort_label'>Show</Trans></div>
             <div className='form-field'>
-              <select value={viewOptions.sort} onChange={(event) => setUI({sort: event.target.value})}>
+              <select value={viewOptions.sort || ''} onChange={(event) => setUI({sort: event.target.value})}>
                 {SORTER_TYPES.map(option => (
                   <option key={option} value={option}>{t(`sort.description.${option}`, SORTER_DESCRIPTIONS[option])}</option>
                 ))}
@@ -75,12 +75,22 @@ const ViewControls = ({
           <div className='form-row'>
             <div className='form-label'><Trans i18nKey='view_controls.weeks_label'>Limit To</Trans></div>
             <div className='form-field'>
-              <select value={weeks} onChange={(event) => setUI({weeks: event.target.value})}>
+              <select value={weeks || ''} onChange={(event) => setUI({weeks: event.target.value})}>
                 <option value={''}>{t(`weeks.description.fit`, 'What fits on screen')}</option>
                 <option value={'four'}>{t(`weeks.description.four`, 'Last 4 weeks')}</option>
                 <option value={'six'}>{t(`weeks.description.six`, 'Last 6 weeks')}</option>
                 <option value={'eight'}>{t(`weeks.description.eight`, 'Last 8 weeks')}</option>
                 <option value={'all'}>{t(`weeks.description.all`, 'All available dates')}</option>
+              </select>
+            </div>
+          </div>
+
+          <div className='form-row'>
+            <div className='form-label'><Trans i18nKey='view_controls.view_label'>Style</Trans></div>
+            <div className='form-field'>
+              <select value={view || ''} onChange={(event) => setUI({view: event.target.value})}>
+                <option value={undefined}>{t(`view.description.default`, 'Default')}</option>
+                <option value={'compact'}>{t(`view.description.compact`, 'Compact')}</option>
               </select>
             </div>
           </div>
@@ -125,6 +135,7 @@ const ViewControls = ({
 
 export default connect(
   (state, ownProps) => ({
+    view: state.ui.view,
     sort: state.ui.sort,
     filter: state.ui.filter,
     weeks: state.ui.weeks,

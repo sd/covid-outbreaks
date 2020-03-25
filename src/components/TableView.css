@@ -130,7 +130,7 @@
   margin-top: 1em;
 }
 
-.TableView .title {
+.TableView-title .title {
   line-height: 130%;
   margin-left: auto;
   margin-right: auto;
@@ -138,25 +138,25 @@
   font-size: 110%;
 }
 
-.TableView .title .info {
+.TableView-title .title .info {
   font-size: 80%;
   position: relative;
   top: -0.15em;
 }
 
 @media only screen and (max-width: 600px) {
-  .TableView .title {
+  .TableView-title .title {
     margin-left: 0;
     margin-right: 0;
     text-align: left;
   }
 }
 
-.TableView .title .name {
+.TableView-title .title .name {
   display: inline-block;
 }
 
-.TableView .title .flag {
+.TableView-title .title .flag {
   float: left;
   margin-right: 0.2em;
 
@@ -164,20 +164,20 @@
   text-shadow: 0 0 0.2em #999;
 }
 
-.TableView .title .info {
+.TableView-title .title .info {
   display: inline-block;
 }
 
-.TableView .totals .cases {
+.TableView-title .totals .cases {
   white-space: nowrap;
 }
 
-.TableView .totals .cases {
+.TableView-title .totals .cases {
   font-size: 80%;
   opacity: 0.4;
 }
 
-.TableView .totals .velocitySummary {
+.TableView-title .totals .velocitySummary {
   white-space: nowrap;
   font-size: 80%;
 }

@@ -1,5 +1,5 @@
 const initialState = {
-  view: 'table',
+  view: undefined,
   sort: undefined,
   filter: undefined,
   pinned: undefined,
@@ -40,6 +40,7 @@ function reducer (state = initialState, action) {
       return initialState
 
     case 'UI.SET':
+      console.log('ui set', action.values)
       return { ...state, ...action.values }
 
     case 'UI.SET_PINNED_ENTRIES':

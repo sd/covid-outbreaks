@@ -1,0 +1,143 @@
+.SummaryView-row {
+  width: 100%;
+  min-width: 200px;
+  max-width: 600px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-top: 1em;
+  clear: both;
+}
+
+.SummaryView-row-inner {
+  display: grid;
+
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "title title"
+    "totals chart"
+    "metrics chart"
+    "tools chart"
+    "more more";
+  border-top: 1px solid #555;
+}
+
+.mobile .SummaryView-row-inner {
+  grid-template-areas:
+    "title title"
+    "totals chart"
+    "metrics chart"
+    "tools chart"
+    "more more";
+}
+
+.SummaryView-row-inner > .chart {
+  grid-area: chart;
+  text-align: right;
+  min-height: 6em;
+  margin-left: 0.6em;
+  margin-right: 0.6em;
+}
+
+.SummaryView-row-inner > .title {
+  grid-area: title;
+  text-align: right;
+}
+
+.SummaryView-row-inner > .totals {
+  grid-area: totals;
+  text-align: right;
+}
+
+.SummaryView-row-inner > .metrics {
+  grid-area: metrics;
+  text-align: right;
+}
+
+.SummaryView-row-inner > .tools {
+  grid-area: tools;
+  text-align: right;
+  align-self: end;
+}
+
+.SummaryView-row-inner > .more {
+  grid-area: more;
+  width: 100%;
+  padding-top: 1em;
+  padding-bottom: 1em;
+}
+
+
+.mobile .SummaryView-row-inner > .chart {
+  text-align: right;
+  min-height: 6em;
+  margin-left: 0.6em;
+  margin-right: 0.6em;
+}
+
+.SummaryView-row-inner .metrics section {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+.SummaryView-row-inner .totals section {
+  display: inline-block;
+  margin-right: 1em;
+}
+
+
+.pinned .SummaryView-row-inner {
+  border-top: 2px solid #ff0;
+  border-bottom: 1px solid #ff0;
+}
+
+.SummaryView-row .title {
+  text-align: right;
+  font-size: 120%;
+  font-weight: bold;
+}
+
+.SummaryView-row .title .name {
+  display: inline-block;
+}
+
+.SummaryView-row .title .flag {
+  display: inline-block;
+  margin-left: 0.5em;
+  position: relative;
+  top: 0.2em;
+
+  font-size: 160%;
+  text-shadow: 0 0 0.2em #999;
+}
+
+.mobile .SummaryView-row .title .flag {
+  margin-right: 0.2em;
+}
+
+/* .mobile .SummaryView-row .title .flag {
+  display: inline-block;
+  position: relative;
+  top: 0.2em;
+  margin-top: -0.5em;
+  margin-right: 0.2em;
+} */
+
+.SummaryView-row .totals .cases {
+  font-size: 80%;
+  opacity: 0.4;
+}
+
+.SummaryView-row .tools button {
+  display: inline-block;
+  margin-top: 0.7em;
+  margin-right: 2em;
+}
+
+.SummaryView-row .more {
+  margin-bottom: 2em;
+}
+
+.SummaryView-row .more section {
+  margin-top: 0.6em;
+}

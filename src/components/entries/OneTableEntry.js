@@ -4,7 +4,7 @@ import numeral from 'numeral'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbtack, faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons'
 
-import OutbreakSparklineSVG from './OutbreakSparklineSVG'
+import DeathsChart from './DeathsChart'
 import OutbreakTable from './OutbreakTable'
 import { Trans, useTranslation } from 'react-i18next';
 import Information from '../ui/Information'
@@ -41,7 +41,7 @@ const OneTableEntry = ({
 
   return (
     <div key={entry.code} ref={entryRef} className={classNames('TableView-row', { pinned, expanded })}>
-      <OutbreakSparklineSVG
+      <DeathsChart
         entry={entry} dates={dates}
         comparisonEntry={comparisonEntry} comparisonOffset={comparisonOffset}
         sideBySide={sideBySide}

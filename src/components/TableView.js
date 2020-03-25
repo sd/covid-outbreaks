@@ -7,6 +7,7 @@ import './TableView.css'
 
 import ViewControls from '../components/ui/ViewControls'
 import OneTableEntry from './entries/OneTableEntry'
+import OneSummaryEntry from './entries/OneSummaryEntry'
 
 import { viewOptionsForSorting } from '../store/sorters'
 import { viewOptionsForFiltering } from '../store/filters'
@@ -16,7 +17,7 @@ export const TableViewContext = React.createContext({})
 
 const TableView = ({
   loaded, data, allDates, last4weeks, last6weeks, last8weeks,
-  sort, filter, noScaling, weeks, totals,
+  view, sort, filter, noScaling, weeks, totals,
   pinPositions, pinEntry, unpinEntry,
   isExpanded, expandEntry, collapseEntry,
   isMobile, isTablet,
@@ -69,7 +70,7 @@ const TableView = ({
       viewOptions, pinPositions, isExpanded, pinEntry, unpinEntry, expandEntry, collapseEntry,
       totalsEntry, comparisonEntry,
       listRef, tableViewRef, listHeight,
-      isMobile
+      isMobile, view
     }
     return (
       <ActualTableView {...actualProps} />
@@ -87,7 +88,7 @@ const TableView = ({
 
 const ActualTableView = ({
   data, dates, allDates,
-  noScaling,
+  view, noScaling,
   pinPositions, pinEntry, unpinEntry,
   isExpanded, expandEntry, collapseEntry,
   totalsEntry, comparisonEntry,
@@ -109,17 +110,19 @@ const ActualTableView = ({
       return 140 // first row with ViewControls
     }
     else {
-      return entryHeights.current[data[index - 1].code] || 200
+      return entryHeights.current[data[index - 1].code] || 300
     }
   }, [data])
 
   const sharedProps = { dates, allDates, pinEntry, unpinEntry, expandEntry, collapseEntry }
+console.log(view)
+  const EntryView = { 'classic': OneTableEntry, 'compact': OneSummaryEntry }[view] || OneTableEntry
 
   return (
     <TableViewContext.Provider value={{ setEntryHeight }}>
       <div className='TableView' ref={tableViewRef}>
         {totalsEntry &&
-          <OneTableEntry {...sharedProps} pinEntry={undefined}
+          <EntryView {...sharedProps} pinEntry={undefined}
             entry={totalsEntry} index={0} pinned={true} expanded={isExpanded['totals']}
             sideBySide={!noScaling}
           />
@@ -139,7 +142,7 @@ const ActualTableView = ({
 
               return (
                 <div style={{...style}}>
-                  <OneTableEntry {...sharedProps}
+                  <EntryView {...sharedProps}
                     entry={data[index - 1]} index={index - 1} pinned={pinPositions[code]} expanded={isExpanded[code]}
                     sideBySide={!noScaling}
                     comparisonEntry={comparisonEntry}
@@ -162,6 +165,7 @@ const mapStateToProps = (state, ownProps) => ({
   last4weeks: state.csseData.last4weeks,
   last6weeks: state.csseData.last6weeks,
   last8weeks: state.csseData.last8weeks,
+  view: state.ui.view,
   sort: state.ui.sort,
   filter: state.ui.filter,
   noScaling: state.ui.noScaling,

@@ -222,7 +222,7 @@ function processOneFile (fieldName, rawData, entries ) {
         entry.latestTotal[fieldName] = entry.totals[fieldName][d]
         entry.latestDaily[fieldName] = entry.daily[fieldName][d]
         entry.latestVelocity[fieldName] = entry.velocity[fieldName][d]
-        entry.latestAcceleration[fieldName] = entry.acceleration[fieldName][d]
+        entry.latestAcceleration[fieldName] = entry.rollingAcceleration[fieldName][d]
         entry.latestOutbreakDay[fieldName] = entry.outbreakDay[fieldName][d]
 
         if (fieldName === 'deaths') {
