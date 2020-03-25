@@ -273,9 +273,10 @@ export const OLD_OUTBREAK_ATTRIBUTES = {
              'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }},
   'USA > New York': { emoji: '🇺🇸', region: 'americas',
-     links: { 'NY Dept. of Health': 'https://www.health.ny.gov/diseases/communicable/coronavirus/',
-          'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
-          'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }},
+    links: { 'NY Dept. of Health': 'https://www.health.ny.gov/diseases/communicable/coronavirus/',
+             'NBC News': 'https://www.nbcnewyork.com/news/local/how-many-in-tri-state-have-tested-positive-for-coronavirus-here-are-latest-cases-by-the-numbers/2317721/',
+             'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
+             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }},
 
   'Puerto Rico': { displayName: 'Puerto Rico', emoji: '🇵🇷', region: 'americas' },
 
