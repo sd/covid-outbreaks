@@ -28,12 +28,13 @@ export function covidProjection(country, options = {}) {
 
   console.log(`%c${entry.emoji} ${entry.code} • ${entry.name}`, 'font-weight: bold')
   console.log(
-    `%c${padStart(last7days[6], 10)}:  ${padStart(numeral(total).format('0,000'), 5)}`
-    + ` ${padStart('+' + numeral(entry.daily.deaths[last7days[6]]).format('0,000'), 5)}`
-    + `    v: ${padStart(numeral(velocity).format('0.000'), 6)}`
+    `%c${padStart(last7days[6], 10)}:  ${padStart(numeral(total).format('0,000'), 6)}`
+    + ` ${padStart('+' + numeral(entry.daily.deaths[last7days[6]]).format('0,000'), 6)}`
+    + `    v: ${padStart(numeral(velocity).format('0.000'), 7)}`
     + `    acc: ${padStart(numeral(acceleration).format('0.000'), 6)}`,
     'color: #000'
   )
+  console.log(`        assuming accDelta of ${numeral(accelerationDelta).format('0.000')} per day`)
 
   let weekLater, dateObj, newTotal, daily
   let table = last7days.map((date, index) => {
@@ -60,9 +61,9 @@ export function covidProjection(country, options = {}) {
 
   table.forEach(row => {
     console.log(
-      `%c${padStart(row.date, 10)}:  ${padStart(numeral(row.total).format('0,000'), 5)}`
-      + ` ${padStart('+' + numeral(row.daily).format('0,000'), 5)}`
-      + `    v: ${padStart(numeral(row.v).format('0.000'), 6)}`
+      `%c${padStart(row.date, 10)}:  ${padStart(numeral(row.total).format('0,000'), 6)}`
+      + ` ${padStart('+' + numeral(row.daily).format('0,000'), 6)}`
+      + `    v: ${padStart(numeral(row.v).format('0.000'), 7)}`
       + `    acc: ${padStart(numeral(row.acc).format('0.000'), 6)}`,
       'color: #777'
     )
