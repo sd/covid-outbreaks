@@ -3,7 +3,7 @@ import { connect } from 'react-redux'
 import { Trans } from 'react-i18next';
 import { withTranslation } from 'react-i18next'
 
-import { fetchDataDispatcher } from '../store/reducers/csseData'
+import { fetchDataDispatcher } from '../store/reducers/data'
 
 import { formatDateMonthDD } from '../utils/dateFormats'
 
@@ -50,10 +50,10 @@ class DataLoader extends Component {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  loading: state.csseData.loading,
-  loaded: state.csseData.loaded,
-  errorMessage: state.csseData.errorMessage,
-  lastDate: state.csseData.lastDate
+  loading: state.data.loading,
+  loaded: state.data.loaded,
+  errorMessage: state.data.errorMessage,
+  lastDate: state.data.lastDate
 })
 
 const mapDispatchToProps = (dispatch) => ({

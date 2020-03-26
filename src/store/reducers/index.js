@@ -1,11 +1,11 @@
 import { combineReducers } from 'redux'
 import ui from './ui'
-import csseData from './csseData'
+import data from './data'
 
 const rootReducer = combineReducers({
-  version: (version) => version || '20200325.1',
+  version: (version) => version || '20200326',
   ui,
-  csseData
+  data
 })
 
 export default rootReducer

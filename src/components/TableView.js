@@ -173,14 +173,14 @@ const ActualTableView = ({
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  loaded: state.csseData.loaded,
-  data: state.csseData.data,
-  allDates: state.csseData.allDates,
-  last2weeks: state.csseData.last2weeks,
-  last3weeks: state.csseData.last3weeks,
-  last4weeks: state.csseData.last4weeks,
-  last6weeks: state.csseData.last6weeks,
-  last8weeks: state.csseData.last8weeks,
+  loaded: state.data.loaded,
+  data: state.data.data,
+  allDates: state.data.allDates,
+  last2weeks: state.data.last2weeks,
+  last3weeks: state.data.last3weeks,
+  last4weeks: state.data.last4weeks,
+  last6weeks: state.data.last6weeks,
+  last8weeks: state.data.last8weeks,
   view: state.ui.view,
   sort: state.ui.sort,
   filter: state.ui.filter,

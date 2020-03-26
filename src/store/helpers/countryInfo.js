@@ -24,6 +24,27 @@ let nameToCodeIndex = {
   'United Kingdom': 'gb',
   'Northern Ireland': 'gb.Northern Ireland',
 
+  'Spain > Total': 'ignore',
+  'Spain > Andalucía': 'es.and',
+  'Spain > Aragón': 'es.ara',
+  'Spain > Asturias': 'es.ast',
+  'Spain > Baleares': 'es.bal',
+  'Spain > Canarias': 'es.can',
+  'Spain > Cantabria': 'es.cnt',
+  'Spain > Castilla-La Mancha': 'es.cma',
+  'Spain > Castilla y León': 'es.cle',
+  'Spain > Cataluña': 'es.cat',
+  'Spain > Ceuta': 'es.ceu',
+  'Spain > C. Valenciana': 'es.val',
+  'Spain > Extremadura': 'es.ext',
+  'Spain > Galicia': 'es.gal',
+  'Spain > Madrid': 'es.mad',
+  'Spain > Melilla': 'es.mel',
+  'Spain > Murcia': 'es.mur',
+  'Spain > Navarra': 'es.nav',
+  'Spain > País Vasco': 'es.pva',
+  'Spain > La Rioja': 'es.rio',
+
   'Cruise Ship > Diamond Princess': 'other.diamond_princess',
   'Grand Princess': 'other.grand_princess',
 
@@ -82,6 +103,26 @@ let codeToNameIndex = {
   'au.nsw': 'Australia: New South Wales',
   'au.act': 'Australia: Capital Territory',
   'au.tas': 'Australia: Tasmania',
+
+  'es.and': 'Spain > Andalucía',
+  'es.ara': 'Spain > Aragón',
+  'es.ast': 'Spain > Asturias',
+  'es.bal': 'Spain > Baleares',
+  'es.can': 'Spain > Canarias',
+  'es.cnt': 'Spain > Cantabria',
+  'es.cma': 'Spain > Castilla-La Mancha',
+  'es.cle': 'Spain > Castilla y León',
+  'es.cat': 'Spain > Cataluña',
+  'es.ceu': 'Spain > Ceuta',
+  'es.val': 'Spain > C. Valenciana',
+  'es.ext': 'Spain > Extremadura',
+  'es.gal': 'Spain > Galicia',
+  'es.mad': 'Spain > Madrid',
+  'es.mel': 'Spain > Melilla',
+  'es.mur': 'Spain > Murcia',
+  'es.nav': 'Spain > Navarra',
+  'es.pva': 'Spain > País Vasco',
+  'es.rio': 'Spain > La Rioja'
 }
 
 countryByAbbreviation.forEach(row => {
@@ -143,7 +184,7 @@ export const CSSE_OVERLAY = {
   'us.Guam': 'gu'
 }
 
-export function countryForCSSName(name) {
+export function countryForCSSEName(name) {
   if (nameToCodeIndex[name]) {
     return nameToCodeIndex[name]
   }

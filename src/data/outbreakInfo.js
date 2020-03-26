@@ -402,6 +402,7 @@ export const OLD_OUTBREAK_ATTRIBUTES = {
     esDisplayName: 'España',
     links: { 'Ministerio de Sanidad': 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm',
              'RTVE': 'https://www.rtve.es/noticias/20200314/mapa-del-coronavirus-espana/2004681.shtml',
+             'Datadista': 'https://github.com/datadista/datasets/tree/master/COVID%2019',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain' }},
   'Portugal': { emoji: '🇵🇹', region: 'europe' },
   'France': { emoji: '🇫🇷', region: 'europe',

@@ -4,7 +4,7 @@
   max-width: 30em;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 1em;
+  margin-top: 2em;
   clear: both;
 }
 
@@ -14,7 +14,7 @@
   max-width: 30em;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 1em;
+  margin-top: 1em;
   clear: both;
 }
 
@@ -24,7 +24,7 @@
   max-width: 50em;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 1em;
+  margin-top: 1em;
   clear: both;
 }
 
@@ -34,7 +34,8 @@
   max-width: 50em;
   margin-left: auto;
   margin-right: auto;
-  padding-top: 1em;
+  margin-top: 2em;
+  padding-bottom: 3em;
   clear: both;
 }
 
@@ -49,7 +50,7 @@
     "chart metrics"
     "chart tools"
     "more more";
-  border-top: 1px solid #555;
+  /* border-top: 1px solid #555; */
 }
 
 /* .mobile .SummaryView-row-inner {

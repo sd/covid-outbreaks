@@ -1,14 +1,12 @@
 import { csv as d3CSV } from 'd3-fetch'
 
-import { findAggregateMapping, findOverlayMapping, countryForCSSName, attributesForCountry } from '../helpers/countryInfo'
-import { DATA_OVERRIDES } from '../../data/dataOverrides'
+import { findAggregateMapping, findOverlayMapping, countryForCSSEName, attributesForCountry } from '../helpers/countryInfo'
 import { setupConsoleTools } from '../../utils/consoleTools'
 
-import rawcases from '../../data/rawcases.csv'
-import rawdeaths from '../../data/rawdeaths.csv'
-
-// const CASES_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Confirmed.csv'
-// const DEATHS_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/master/csse_covid_19_data/csse_covid_19_time_series/time_series_19-covid-Deaths.csv'
+import csseCases from '../../data/csse.cases.csv'
+import csseDeaths from '../../data/csse.deaths.csv'
+import usDeaths from '../../data/us.deaths.csv'
+import esDeaths from '../../data/es.deaths.csv'
 
 const initialState = {
   loaded: false,
@@ -19,13 +17,13 @@ const initialState = {
 
 export function reducer (state = initialState, action) {
   switch(action.type) {
-    case 'CSSE_DATA.LOAD.BEGIN':
+    case 'DATA.LOAD.BEGIN':
       return { ...state, loading: true, error: undefined, errorMessage: '', lastDate: undefined }
 
-    case 'CSSE_DATA.LOAD.SUCCESS':
+    case 'DATA.LOAD.SUCCESS':
       return { ...state, loading: false, loaded: true, ...action.values }
 
-    case 'CSSE_DATA.LOAD.FAILURE':
+    case 'DATA.LOAD.FAILURE':
       return { ...state, loading: false, loaded: false, error: action.error, errorMessage: action.errorMessage }
 
     default:
@@ -35,24 +33,44 @@ export function reducer (state = initialState, action) {
 
 /* ================================================================================================================== */
 
-function parseRawData (rawData, overrides) {
-  overrides = overrides || {}
-
-  let dates = Object.keys(rawData[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
-  let rows = {}
-  let sources = {}
+function parseRawCSSEData (rawData, data = {}) {
+  let dates = data.dates || Object.keys(rawData[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
+  let rows = data.rows || {}
+  let sources = data.sources || {}
   let name
 
   rawData.forEach(rawRow => {
-    name = countryForCSSName([rawRow['Country/Region'], rawRow['Province/State']].filter(x => x).join(' > '))
+    name = countryForCSSEName([rawRow['Country/Region'], rawRow['Province/State']].filter(x => x).join(' > '))
 
     if (name) {
       rows[name] = {}
 
       dates.forEach(d => {
-        if (overrides[name] && (overrides[name][d] || overrides[name][d] === 0)) {
-          rows[name][d] = overrides[name][d]
-        } else if (rawRow[d] || rawRow[d] === '0') {
+        if (rawRow[d] || rawRow[d] === '0') {
+          rows[name][d] = parseInt(rawRow[d], 10)
+        }
+      })
+    }
+  })
+
+  return { dates, rows, codes: Object.keys(rows), sources }
+}
+
+
+function parseRawESData (rawData, data = {}) {
+  let dates = data.dates || Object.keys(rawData[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
+  let rows = data.rows || {}
+  let sources = data.sources || {}
+  let name
+
+  rawData.forEach(rawRow => {
+    name = countryForCSSEName(['Spain', rawRow['CCAA']].filter(x => x).join(' > '))
+
+    if (name) {
+      rows[name] = {}
+
+      dates.forEach(d => {
+        if (rawRow[d] || rawRow[d] === '0') {
           rows[name][d] = parseInt(rawRow[d], 10)
         }
       })
@@ -134,16 +152,16 @@ function prepareEntries (data, fieldName, entries) {
     entry.outbreakDay[fieldName] = {}
 
     entry.latestTotal = entry.latestTotal || {}
-    entry.latestTotal[fieldName] = 0
+    entry.latestTotal[fieldName] = entry.latestTotal[fieldName] || 0
 
     entry.latestDaily = entry.latestDaily || {}
-    entry.latestDaily[fieldName] = 0
+    entry.latestDaily[fieldName] = entry.latestDaily[fieldName] || 0
 
     entry.latestVelocity = entry.latestVelocity || {}
-    entry.latestVelocity[fieldName] = 0
+    entry.latestVelocity[fieldName] = entry.latestVelocity[fieldName] || 0
 
     entry.latestAcceleration = entry.latestAcceleration || {}
-    entry.latestAcceleration[fieldName] = 0
+    entry.latestAcceleration[fieldName] = entry.latestAcceleration[fieldName] || 0
 
     entry.latestOutbreakDay = entry.latestOutbreakDay || {}
 
@@ -153,9 +171,7 @@ function prepareEntries (data, fieldName, entries) {
   return entries
 }
 
-function processOneFile (fieldName, rawData, entries ) {
-  let data
-  data = parseRawData(rawData, DATA_OVERRIDES[fieldName])
+function processOneFile (fieldName, data, entries ) {
   data = combineRows(data, (a, b) => (a === undefined || b === undefined ? (a || b) : (a || 0) + (b || 0)), findAggregateMapping)
   data = combineRows(data, (a, b) => Math.max(a || 0, b || 0), findOverlayMapping)
 
@@ -244,19 +260,24 @@ function processOneFile (fieldName, rawData, entries ) {
 }
 
 export function fetchDataDispatcher (dispatch) {
-  dispatch({type: 'CSSE_DATA.LOAD.BEGIN'})
-  return Promise.all([d3CSV(rawcases), d3CSV(rawdeaths)])
+  dispatch({type: 'DATA.LOAD.BEGIN'})
+  return Promise.all([d3CSV(csseCases), d3CSV(csseDeaths), d3CSV(usDeaths), d3CSV(esDeaths)])
     .then(results => {
-      let caseData = results[0]
-      let deathData = results[1]
+      let [csseCaseData, csseDeathData, usDeathData, esDeathData] = results
 
-      let casesResults = processOneFile('cases', caseData, {})
-      let deathsResults = processOneFile('deaths', deathData, casesResults.entries)
+      let deathData = parseRawCSSEData(csseDeathData)
+      deathData = parseRawCSSEData(usDeathData, deathData)
+      deathData = parseRawESData(esDeathData, deathData)
+      let caseData = parseRawCSSEData(csseCaseData, { dates: deathData.dates })
 
-      let data = Object.keys(deathsResults.entries).filter(k => k !== 'ignore').map(k => deathsResults.entries[k])
+      let deathsResults = processOneFile('deaths', deathData, {})
 
-      let allDates = deathsResults.dates
-      let lastDate = deathsResults.dates[deathsResults.dates.length - 1]
+      let combinedResults = processOneFile('cases', caseData, deathsResults.entries)
+
+      let data = Object.keys(combinedResults.entries).filter(k => k !== 'ignore').map(k => combinedResults.entries[k])
+
+      let allDates = combinedResults.dates
+      let lastDate = combinedResults.dates[combinedResults.dates.length - 1]
 
       let last2weeks = allDates.slice(-14)
       let last3weeks = allDates.slice(-21)
@@ -264,7 +285,7 @@ export function fetchDataDispatcher (dispatch) {
       let last6weeks = allDates.slice(-42)
       let last8weeks = allDates.slice(-56)
 
-      dispatch({type: 'CSSE_DATA.LOAD.SUCCESS', values: {
+      dispatch({type: 'DATA.LOAD.SUCCESS', values: {
         data, allDates, last2weeks, last3weeks, last4weeks, last6weeks, last8weeks,
         lastDate
       }})
@@ -275,7 +296,7 @@ export function fetchDataDispatcher (dispatch) {
     })
     // .catch(error => {
     //   debugger
-    //   dispatch({type: 'CSSE_DATA.LOAD.FAILURE', error})
+    //   dispatch({type: 'DATA.LOAD.FAILURE', error})
     // })
 }
 
