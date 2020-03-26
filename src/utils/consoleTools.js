@@ -15,6 +15,7 @@ export function setupConsoleTools (data, dates) {
 export function covidProjection(country, options = {}) {
   const entry = window.covid.entries[country]
 
+  // let dayCount = options.days || 7
 
   let last7days = window.covid.dates.slice(-7)
   if (!entry.totals.deaths[last7days[6]]) {
@@ -37,7 +38,8 @@ export function covidProjection(country, options = {}) {
   console.log(`        assuming accDelta of ${numeral(accelerationDelta).format('0.000')} per day`)
 
   let weekLater, dateObj, newTotal, daily
-  let table = last7days.map((date, index) => {
+  let table = []
+  last7days.forEach((date, index) => {
     dateObj = new Date(date)
     dateObj = new Date(dateObj.setDate(dateObj.getDate() + 7))
     weekLater = `${dateObj.getMonth() + 1}/${dateObj.getDate()}/20`
@@ -49,14 +51,14 @@ export function covidProjection(country, options = {}) {
     daily = newTotal - total
     total = newTotal
 
-    return {
+    table.push({
       date: weekLater,
       total,
       daily,
       v: velocity,
       acc: acceleration,
       explain: `(on ${date}: ${numeral(entry.totals.deaths[date]).format('0,000')} * 10^${numeral(velocity).format('0.000')} = ${numeral(total).format('0,000')})`
-    }
+    })
   })
 
   table.forEach(row => {
