@@ -104,25 +104,25 @@ let codeToNameIndex = {
   'au.act': 'Australia: Capital Territory',
   'au.tas': 'Australia: Tasmania',
 
-  'es.and': 'Spain > Andalucía',
-  'es.ara': 'Spain > Aragón',
-  'es.ast': 'Spain > Asturias',
-  'es.bal': 'Spain > Baleares',
-  'es.can': 'Spain > Canarias',
-  'es.cnt': 'Spain > Cantabria',
-  'es.cma': 'Spain > Castilla-La Mancha',
-  'es.cle': 'Spain > Castilla y León',
-  'es.cat': 'Spain > Cataluña',
-  'es.ceu': 'Spain > Ceuta',
-  'es.val': 'Spain > C. Valenciana',
-  'es.ext': 'Spain > Extremadura',
-  'es.gal': 'Spain > Galicia',
-  'es.mad': 'Spain > Madrid',
-  'es.mel': 'Spain > Melilla',
-  'es.mur': 'Spain > Murcia',
-  'es.nav': 'Spain > Navarra',
-  'es.pva': 'Spain > País Vasco',
-  'es.rio': 'Spain > La Rioja'
+  'es.and': 'Spain: Andalucía',
+  'es.ara': 'Spain: Aragón',
+  'es.ast': 'Spain: Asturias',
+  'es.bal': 'Spain: Baleares',
+  'es.can': 'Spain: Canarias',
+  'es.cnt': 'Spain: Cantabria',
+  'es.cma': 'Spain: Castilla-La Mancha',
+  'es.cle': 'Spain: Castilla y León',
+  'es.cat': 'Spain: Cataluña',
+  'es.ceu': 'Spain: Ceuta',
+  'es.val': 'Spain: C. Valenciana',
+  'es.ext': 'Spain: Extremadura',
+  'es.gal': 'Spain: Galicia',
+  'es.mad': 'Spain: Madrid',
+  'es.mel': 'Spain: Melilla',
+  'es.mur': 'Spain: Murcia',
+  'es.nav': 'Spain: Navarra',
+  'es.pva': 'Spain: País Vasco',
+  'es.rio': 'Spain: La Rioja'
 }
 
 countryByAbbreviation.forEach(row => {
@@ -212,7 +212,6 @@ export function countryForCSSEName(name) {
 
   return `other.${name}`
 }
-
 
 const UNICODE_REGIONAL_INDICATOR_SYMBOL_OFFSET = 127397 - 32 // offset between lowercase ascii and regional indicator symbols
 
