@@ -2,6 +2,7 @@ import { csv as d3CSV } from 'd3-fetch'
 
 import { findAggregateMapping, findOverlayMapping, countryForCSSName, attributesForCountry } from '../helpers/countryInfo'
 import { DATA_OVERRIDES } from '../../data/dataOverrides'
+import { setupConsoleTools } from '../../utils/consoleTools'
 
 import rawcases from '../../data/rawcases.csv'
 import rawdeaths from '../../data/rawdeaths.csv'
@@ -267,6 +268,9 @@ export function fetchDataDispatcher (dispatch) {
         data, allDates, last2weeks, last3weeks, last4weeks, last6weeks, last8weeks,
         lastDate
       }})
+
+      setupConsoleTools(data, allDates)
+
       return data
     })
     // .catch(error => {
