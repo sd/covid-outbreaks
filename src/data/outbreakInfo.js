@@ -120,6 +120,7 @@ export const OUTBREAK_ATTRIBUTES = {
 
   'es': { // Spain
     links: { 'Ministerio de Sanidad': 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm',
+             'Datadista': 'https://github.com/datadista/datasets/tree/master/COVID%2019',
              'RTVE': 'https://www.rtve.es/noticias/20200314/mapa-del-coronavirus-espana/2004681.shtml',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain' },
     keyDates: {
@@ -200,6 +201,23 @@ export const OUTBREAK_ATTRIBUTES = {
   },
   'at': { // Austria
     links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_Austria' }
+  },
+
+  'ar': { // Argentina
+    links: { 'gob.ar': 'https://www.argentina.gob.ar/coronavirus/informe-diario' }
+  },
+
+  'ec': { // Ecuador
+    links: { 'gob.ec': 'https://www.gestionderiesgos.gob.ec/informes-de-situacion-covid-19-desde-el-13-de-marzo-del-2020/',
+              '@Riesgos_Ec': 'https://twitter.com/Riesgos_Ec' }
+  },
+
+  'pe': { // Peru
+    links: { 'gob.pe': 'https://www.gob.pe/8662' }
+  },
+
+  'co': { // Colombia
+    links: { '@MinSaludCol': 'https://twitter.com/MinSaludCol' }
   },
 
   'other.diamond_princess': {
