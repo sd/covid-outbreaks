@@ -9,6 +9,7 @@ import OutbreakTable from './OutbreakTable'
 import { Trans, useTranslation } from 'react-i18next';
 import Information from '../ui/Information'
 import { TableViewContext } from '../TableView'
+import { AccelerationWithStyles } from '../ui/NumbersWithStyles'
 
 export const DEATHS_SCALE = 10
 export const CASES_SCALE = 100
@@ -191,76 +192,6 @@ const OneTableEntry = ({
       )}
     </div>
   )
-}
-
-export const VelocityWithStyles = ({value}) => {
-  return (
-    <span className={classNames('velocity', {
-      // good: value < 1.5,
-      // medium: value > 2,
-      // bad: value > 4,
-      // terrible: value > 10
-    })}
-    >
-    {value
-      ? `${numeral(value).format('0,000.00')}`
-      : <span>&nbsp;</span>
-    }
-    </span>
-  )
-}
-
-export const AccelerationWithStyles = ({value, arrows = true, colors = true, isPercent = false, format}) => {
-  return <NumberWithStyles value={value} className='acceleration' arrows={arrows} percent={isPercent} colors={colors} format={format} />
-}
-
-export const NumberWithStyles = ({value, className, arrows = false, percent = false, colors = false, format}) => {
-  if (percent) {
-    return (
-      <span className={classNames(className, {
-        increasing: colors && value > 1,
-        decreasing: colors && value < 1
-      })}
-      >
-        {value > 1 &&
-          <span>
-            {arrows && <span className='arrow'>▲</span>}
-            {numeral((value - 1) * 100).format(format || '0,000.0')}%
-          </span>
-        }
-        {value < 1 &&
-          <span>
-            {arrows && <span className='arrow'>▼</span>}
-            {numeral((1 - value) * 100).format(format || '0,000.0')}%
-          </span>
-        }
-        {!value && <span>&nbsp;</span>}
-      </span>
-    )
-  } else {
-    return (
-      <span className={classNames(className, {
-        increasing: colors && value > 0,
-        decreasing: colors && value < 0
-      })}
-      >
-        {value > 0 &&
-          <span>
-            {arrows && <span className='arrow'>▲</span>}
-            {numeral(value).format(format || '0,000.00')}
-          </span>
-        }
-        {value === 0 && <span>&nbsp;</span>}
-        {value < 0 &&
-          <span>
-            {arrows && <span className='arrow'>▼</span>}
-            {numeral(value).format(format || '0,000.00')}
-          </span>
-        }
-        {!value && <span>&nbsp;</span>}
-      </span>
-    )
-  }
 }
 
 function calculateScale (entry, dates, { sideBySide, deathsScale = DEATHS_SCALE, casesScale = CASES_SCALE }) {

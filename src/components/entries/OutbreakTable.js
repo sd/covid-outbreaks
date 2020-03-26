@@ -6,7 +6,7 @@ import Information from '../ui/Information'
 
 import { formatDateMonthAbbrDD, formatDateWeekdayAbbrDD } from '../../utils/dateFormats'
 
-import { VelocityWithStyles, AccelerationWithStyles } from './OneTableEntry'
+import { VelocityWithStyles, AccelerationWithStyles } from '../ui/NumbersWithStyles'
 
 import './OutbreakTable.css'
 

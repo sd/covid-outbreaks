@@ -3,7 +3,7 @@ import ReactModal from 'react-modal'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faQuestionCircle } from '@fortawesome/free-solid-svg-icons'
 
-import { VelocityWithStyles, AccelerationWithStyles } from '../entries/OneTableEntry'
+import { VelocityWithStyles, AccelerationWithStyles } from './NumbersWithStyles'
 
 import './Information.css'
 
