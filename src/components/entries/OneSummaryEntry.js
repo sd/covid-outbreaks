@@ -15,11 +15,11 @@ import { AccelerationWithStyles } from '../ui/NumbersWithStyles'
 export const DEATHS_SCALE = 10
 export const CASES_SCALE = 100
 
-const OneTableEntry = ({
+const OneSummaryEntry = ({
   entry, index, dates, allDates,
   comparisonEntry,
   pinned, expanded, sideBySide,
-  pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile
+  pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile, isTablet
 }) => {
   const { setEntryHeight } = React.useContext(TableViewContext)
   const entryRef = React.useRef()
@@ -36,8 +36,10 @@ const OneTableEntry = ({
   let chartDates
   if (isMobile) {
     chartDates = allDates.slice(-21)
+  } else if (isTablet) {
+    chartDates = allDates.slice(-28)
   } else {
-    chartDates = allDates.slice(-35)
+    chartDates = allDates.slice(-42)
   }
 
   let comparisonOffset = 0
@@ -230,4 +232,4 @@ const OneTableEntry = ({
   )
 }
 
-export default OneTableEntry
+export default OneSummaryEntry

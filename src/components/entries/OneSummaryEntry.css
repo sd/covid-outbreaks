@@ -42,7 +42,7 @@
 .SummaryView-row-inner {
   display: grid;
 
-  grid-template-columns: auto 1fr;
+  grid-template-columns: auto minmax(24em,1fr);
   grid-template-rows: auto;
   grid-template-areas:
     "title totals"
@@ -65,6 +65,16 @@
   text-align: right;
 }
 
+.SummaryView-row-inner > .chart svg {
+  height: 6em;
+}
+
+@media only screen and (max-width: 400px) {
+  .SummaryView-row-inner > .chart svg {
+    height: 5.5em;
+  }
+}
+
 .SummaryView-row-inner > .title {
   grid-area: title;
   text-align: left;
@@ -72,6 +82,7 @@
 }
 
 .SummaryView-row-inner > .totals {
+  min-width: 24em;
   grid-area: totals;
   text-align: left;
   align-self: center;
@@ -135,7 +146,7 @@
   flex: 0;
   margin-left: 0.5em;
 
-  font-size: 160%;
+  font-size: 140%;
   text-shadow: 0 0 0.2em #999;
 }
 

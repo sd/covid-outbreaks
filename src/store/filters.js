@@ -10,11 +10,13 @@ function filterRelevant (a, options) {
   } else if (options.sort === 'casesTotal') {
     return a.latestTotal.cases > 0
   } else if (options.sort === 'deathsLatest') {
-    return a.latestTotal.cases > 100
+    return a.latestTotal.deaths > 1
   } else if (options.sort === 'deathsTotal') {
-    return a.latestTotal.cases > 100
+    return a.latestTotal.deaths > 1
+  } else if (options.sort === 'acceleration') {
+    return a.latestTotal.deaths > 50
   } else {
-    return a.latestTotal.cases > 0
+    return a.latestTotal.deaths > 0
   }
 }
 
