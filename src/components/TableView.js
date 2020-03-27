@@ -38,7 +38,7 @@ const TableView = ({
 
     if (search) {
       let lcSearch = search.toLowerCase()
-      if (lcSearch[0] === '.') {
+      if (lcSearch[0] === '.' || lcSearch[0] === '=') {
         lcSearch = lcSearch.slice(1)
         data = data.filter(entry => filterBySearch(entry, { codes: lcSearch.split(','), language: i18n.language } ))
       } else {
