@@ -168,29 +168,11 @@ const DataLine = ({scaledValues, aspectRatio, strokeScale, radiusScale, horizont
           fill={style.stroke}
         />
       )
+    } else {
+      return null
     }
   })
 }
-
-const DataPoints = ({scaledValues, horizontalStep, radiusScale}) => (
-  <>
-    {scaledValues.map((value, index) => {
-      let style = SVG_STYLES.marker
-
-      if (value === undefined) return null
-
-      return (
-        <circle
-          key={index}
-          cx={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-          cy={100 + SVG_STYLES.canvas.vPadding - value}
-          r={style.radius * radiusScale}
-          fill={style.fill}
-        />
-      )
-    })}
-  </>
-)
 
 const FirstAndLastNumbers = ({scaledValues, values, horizontalStep, indexOfFirstNonZero, indexOfLastNonZero}) => (
   <>

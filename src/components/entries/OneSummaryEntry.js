@@ -67,7 +67,7 @@ const OneSummaryEntry = ({
           <span className='name'>
             {entry[`${i18n.language}Name`] || entry.name || entry.code}
           </span>
-          <span className='flag'>{entry.emoji}</span>
+          <span className='flag' title={entry.code}>{entry.emoji}</span>
         </div>
 
 
