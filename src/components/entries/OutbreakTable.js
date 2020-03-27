@@ -17,7 +17,7 @@ const OutbreakTable = ({entry, dates}) => {
   reversedDates.reverse()
 
   // Remove dates without data at the end of the series
-  while (!entry.totals.deaths[reversedDates[0]] && !entry.totals.cases[reversedDates[0]]) {
+  while (!entry.totals.deaths[reversedDates[0]]) {
     reversedDates = reversedDates.slice(1)
   }
 
