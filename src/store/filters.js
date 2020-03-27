@@ -1,5 +1,19 @@
 import { REGIONS } from '../data/geoData'
 
+export function filterBySearch (a, search) {
+  if (search.code) {
+    return (a.code || '').toLowerCase().startsWith(search.code)
+  } else if (search.name) {
+    return (a[`${search.language}Name`] || a.name || a.code || '').toLowerCase().indexOf(search.name) >= 0
+  } else if (search.codes) {
+    let value = (a.code || '').toLowerCase()
+    return search.codes.find(code => value.startsWith(code))
+  } else if (search.names) {
+    let value = (a[`${search.language}Name`] || a.name || a.code || '').toLowerCase()
+    return search.names.find(name => value.startsWith(name))
+  }
+}
+
 function filterAll (a, options) {
   return (a.daily.deaths && a.latestTotal.deaths > 0) || (a.daily.cases && a.latestTotal.cases > 0)
 }

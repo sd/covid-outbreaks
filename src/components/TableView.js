@@ -11,7 +11,7 @@ import OneTableEntry from './entries/OneTableEntry'
 import OneSummaryEntry from './entries/OneSummaryEntry'
 
 import { viewOptionsForSorting } from '../store/sorters'
-import { viewOptionsForFiltering } from '../store/filters'
+import { viewOptionsForFiltering, filterBySearch } from '../store/filters'
 import { totalizeEntries } from '../store/totalize'
 
 export const TableViewContext = React.createContext({})
@@ -40,14 +40,9 @@ const TableView = ({
       let lcSearch = search.toLowerCase()
       if (lcSearch[0] === '.') {
         lcSearch = lcSearch.slice(1)
-        data = data.filter(entry => {
-          return (entry.code || '').toLowerCase().startsWith(lcSearch)
-        })
-      } else {
-        data = data.filter(entry => {
-          return (entry[`${i18n.language}Name`] || entry.name || entry.code || '').toLowerCase().indexOf(lcSearch) >= 0
-        })
-      }
+        data = data.filter(entry => filterBySearch(entry, { codes: lcSearch.split(','), language: i18n.language } ))
+      } else { }
+      data = data.filter(entry => filterBySearch(entry, { names: lcSearch.split(','), language: i18n.language }))
     }
 
     let totalsEntry

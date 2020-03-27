@@ -13,11 +13,11 @@ const SVG_STYLES = {
   },
   line: {
     stroke: '#c00',
-    strokeWidth: 1,
+    strokeWidth: 2,
   },
   comparableLine: {
     stroke: '#633',
-    strokeWidth: 0.7,
+    strokeWidth: 1,
   },
   canvas: {
     hPadding: 35,
@@ -122,14 +122,17 @@ const DailySparklineChart =  ({
           scaledValues={scaledValues} aspectRatio={aspectRatio}
           strokeScale={strokeScale} radiusScale={radiusScale}
           horizontalStep={horizontalStep} idPrefix={idPrefix}
-          masked={true} style={SVG_STYLES.line}
+          masked={false} style={SVG_STYLES.line}
         />
 
-        <DataPoints
-          scaledValues={scaledValues} values={values}
-          horizontalStep={horizontalStep} radiusScale={radiusScale}
-          indexOfFirstNonZero={indexOfFirstNonZero} indexOfLastNonZero={indexOfLastNonZero} />
+        {/* <DataPoints
+          scaledValues={scaledValues}
+          horizontalStep={horizontalStep} radiusScale={radiusScale} /> */}
 
+        <FirstAndLastNumbers
+          scaledValues={scaledValues} values={values}
+          horizontalStep={horizontalStep}
+          indexOfFirstNonZero={indexOfFirstNonZero} indexOfLastNonZero={indexOfLastNonZero} />
 
       </svg>
     </div>
@@ -165,7 +168,7 @@ const DataLine = ({scaledValues, aspectRatio, strokeScale, radiusScale, horizont
             />
           </mask>
         }
-        {(Math.abs(value - scaledValues[index + 1]) < 1)  // Chrome ignores masks on perfect horizontal lines
+        {(masked && Math.abs(value - scaledValues[index + 1]) < 1)  // Chrome ignores masks on perfect horizontal lines
           ? <rect
               key={`maskedline-${index}`}
               mask={masked ? `url(#${idPrefix}-mask-${index})` : ''}
@@ -185,6 +188,7 @@ const DataLine = ({scaledValues, aspectRatio, strokeScale, radiusScale, horizont
               y2={100 + SVG_STYLES.canvas.vPadding - scaledValues[index + 1]}
               strokeWidth={style.strokeWidth * strokeScale}
               stroke={style.stroke}
+              strokeLinecap='round'
             />
         }
       </React.Fragment>
@@ -192,7 +196,7 @@ const DataLine = ({scaledValues, aspectRatio, strokeScale, radiusScale, horizont
   })
 }
 
-const DataPoints = ({scaledValues, values, horizontalStep, radiusScale, indexOfFirstNonZero, indexOfLastNonZero}) => (
+const DataPoints = ({scaledValues, horizontalStep, radiusScale}) => (
   <>
     {scaledValues.map((value, index) => {
       let style = SVG_STYLES.marker
@@ -209,7 +213,11 @@ const DataPoints = ({scaledValues, values, horizontalStep, radiusScale, indexOfF
         />
       )
     })}
+  </>
+)
 
+const FirstAndLastNumbers = ({scaledValues, values, horizontalStep, indexOfFirstNonZero, indexOfLastNonZero}) => (
+  <>
     {values[indexOfFirstNonZero] &&
       <text
         x={SVG_STYLES.canvas.hPadding + (indexOfFirstNonZero * horizontalStep) - SVG_STYLES.legend.hPadding}
