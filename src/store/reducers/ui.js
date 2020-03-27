@@ -2,6 +2,7 @@ const initialState = {
   view: undefined,
   sort: undefined,
   filter: undefined,
+  search: undefined,
   pinned: undefined,
   pinPositions: {},
   expanded: undefined,

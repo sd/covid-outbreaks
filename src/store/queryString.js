@@ -32,6 +32,10 @@ function setupQueryStringSync (store) {
           valueToString: arrayToString,
           stringToValue: stringToArray
         },
+        search: {
+          selector: state => state.ui.search,
+          action: value => ({ type: 'UI.SET', values: {search: value} })
+        },
         view: {
           selector: state => state.ui.view,
           action: value => ({ type: 'UI.SET', values: {view: value} })

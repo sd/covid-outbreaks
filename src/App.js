@@ -7,6 +7,7 @@ import { Trans } from 'react-i18next'
 import TableView from './components/TableView'
 import DataLoader from './components/DataLoader'
 import Information from './components/ui/Information'
+import ViewControls from './components/ui/ViewControls'
 
 class App extends React.Component {
   constructor(props) {
@@ -40,7 +41,7 @@ class App extends React.Component {
     return (
       <div className={ classNames('App', { mobile: isMobile, tablet: isTablet, desktop: isDesktop }) }>
 
-        <PageHeader listRef={this.listRef} />
+        <PageHeader listRef={this.listRef} isMobile={isMobile} />
 
         {!error &&
           <div className="App-content">
@@ -89,13 +90,16 @@ class App extends React.Component {
   }
 }
 
-const PageHeader = ({listRef}) => {
+const PageHeader = ({listRef, isMobile}) => {
   return (
     <header className='App-header'>
       <h1 onClick={() => listRef.current.scrollTo(0, 0)} style={{cursor: 'pointer'}}>
         <img src='covid-128.png' alt='*' className='logo' />
         <Trans i18nKey='general.title'>COVID-19 Outbreaks</Trans>
       </h1>
+
+      <ViewControls isMobile={isMobile} />
+
     </header>
   )
 }

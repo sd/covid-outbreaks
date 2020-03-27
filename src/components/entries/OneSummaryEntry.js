@@ -36,8 +36,6 @@ const OneSummaryEntry = ({
   let chartDates
   if (isMobile) {
     chartDates = allDates.slice(-21)
-  } else if (isTablet) {
-    chartDates = allDates.slice(-28)
   } else {
     chartDates = allDates.slice(-42)
   }
@@ -213,7 +211,7 @@ const OneSummaryEntry = ({
             }
 
             <section>
-              <OutbreakTable entry={entry} dates={dates} />
+              <OutbreakTable entry={entry} dates={allDates} />
             </section>
 
             {entry && entry.sources && entry.sources.deaths && (

@@ -111,4 +111,20 @@
   margin-bottom: 0.5em;
 }
 
+button {
+  display: inline;
+  border: 0px;
+  padding: 0px;
+  color: #883;
+  background-color: inherit;
+  font-size: 1em;
+}
 
+button.activated {
+  color: #ff0;
+}
+
+button:hover {
+  cursor: pointer;
+  color: #ff0;
+}

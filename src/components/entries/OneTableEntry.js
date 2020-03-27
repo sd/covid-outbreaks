@@ -15,7 +15,7 @@ export const DEATHS_SCALE = 10
 export const CASES_SCALE = 100
 
 const OneTableEntry = ({
-  entry, index, dates,
+  entry, index, dates, allDates,
   comparisonEntry,
   pinned, expanded, sideBySide,
   pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile
@@ -176,7 +176,7 @@ const OneTableEntry = ({
           }
 
           <section>
-            <OutbreakTable entry={entry} dates={dates} />
+            <OutbreakTable entry={entry} dates={allDates} />
           </section>
 
           {entry && entry.sources && entry.sources.deaths && (
@@ -196,8 +196,8 @@ const OneTableEntry = ({
 
 function calculateScale (entry, dates, { sideBySide, deathsScale = DEATHS_SCALE, casesScale = CASES_SCALE }) {
   let scale = 1
-  let maxDeaths = Math.max(...dates.map(d => entry.daily.deaths[d] || 0), 0)
-  let maxCases = Math.max(...dates.map(d => entry.daily.cases[d] || 0), 0) / casesScale
+  let maxDeaths = Math.max(...dates.map(d => (entry.daily.deaths && entry.daily.deaths[d]) || 0), 0)
+  let maxCases = Math.max(...dates.map(d => (entry.daily.cases && entry.daily.cases[d]) || 0), 0) / casesScale
 
   if (maxDeaths >= 100 && sideBySide) {
     scale = deathsScale

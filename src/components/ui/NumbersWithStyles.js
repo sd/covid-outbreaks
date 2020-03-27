@@ -55,7 +55,7 @@ export const NumberWithStyles = ({
     )
   } else {
     const displayValue = abs ? Math.abs(value) : value
-// console.log(abs, value, displayValue)
+
     return (
       <span className={classNames(className, {
         increasing: colors && value > 0,

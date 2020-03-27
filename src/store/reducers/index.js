@@ -3,7 +3,7 @@ import ui from './ui'
 import data from './data'
 
 const rootReducer = combineReducers({
-  version: (version) => version || '20200326',
+  version: (version) => version || '20200326.2',
   ui,
   data
 })

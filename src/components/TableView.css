@@ -1,5 +1,5 @@
 .TableView > div {
-  padding: 4em 0.3em 8em 0.3em;
+  padding: 6em 0.3em 8em 0.3em;
   position: relative;
 }
 
@@ -48,6 +48,7 @@
 .TableView-title .tools {
   text-align: left;
   grid-area: tools;
+  font-size: 80%;
 }
 
 .TableView-title .totals {
@@ -97,23 +98,6 @@
   .TableView-title .tools .segment {
     display: inline-block;
   }
-}
-
-.TableView button {
-  display: inline;
-  border: 0px;
-  padding: 0px;
-  color: #883;
-  background-color: inherit;
-}
-
-.TableView button.activated {
-  color: #ff0;
-}
-
-.TableView button:hover {
-  cursor: pointer;
-  color: #ff0;
 }
 
 .pinned .TableView-title {

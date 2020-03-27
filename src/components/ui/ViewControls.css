@@ -60,7 +60,7 @@
   margin-top: 1em;
 }
 
-.ViewControls-popup  button {
+.ViewControls-popup button {
   color: #24c;
   font-size: 1em;
 }
@@ -68,4 +68,30 @@
 .ViewControls-popup select {
   background-color: #f0f0f0;
   font-size: 1em;
+}
+
+.ViewControls .search, .ViewControls .search button {
+  color: #cc2;
+}
+
+.ViewControls .search input {
+  font-size: 1em;
+  background: none;
+  outline: none;
+  color: #cc2;
+  border: 0;
+  border-bottom: 1px solid #cc2;
+  margin-right: 0.5em;
+}
+
+.ViewControls > section {
+  display: inline-block;
+}
+
+.mobile .ViewControls > section {
+  display: block;
+}
+
+.mobile .ViewControls > .separator {
+  display: none;
 }

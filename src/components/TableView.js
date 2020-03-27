@@ -7,7 +7,6 @@ import './TableView.css'
 
 import MarkerLegend from '../components/ui/MarkerLegend'
 import Information from '../components/ui/Information'
-import ViewControls from '../components/ui/ViewControls'
 import OneTableEntry from './entries/OneTableEntry'
 import OneSummaryEntry from './entries/OneSummaryEntry'
 
@@ -19,13 +18,13 @@ export const TableViewContext = React.createContext({})
 
 const TableView = ({
   loaded, data, allDates, last2weeks, last3weeks, last4weeks, last6weeks, last8weeks,
-  view, sort, filter, noScaling, weeks, totals,
+  search, view, sort, filter, noScaling, weeks, totals,
   pinPositions, pinEntry, unpinEntry,
   isExpanded, expandEntry, collapseEntry,
   isMobile, isTablet, isDesktop,
   listRef, tableViewRef, listHeight
 }) => {
-  const { t } = useTranslation();
+  const { t, i18n } = useTranslation();
 
   if (loaded) {
     let viewOptions = { pinPositions }
@@ -34,6 +33,20 @@ const TableView = ({
 
     data = data.sort((a, b) => viewOptions.sorter(a, b, viewOptions ))
     data = data.filter((a) => viewOptions.filterer(a, viewOptions ))
+
+    if (search) {
+      let lcSearch = search.toLowerCase()
+      if (lcSearch[0] === '.') {
+        lcSearch = lcSearch.slice(1)
+        data = data.filter(entry => {
+          return (entry.code || '').toLowerCase().startsWith(lcSearch)
+        })
+      } else {
+        data = data.filter(entry => {
+          return (entry[`${i18n.language}Name`] || entry.name || entry.code || '').toLowerCase().indexOf(lcSearch) >= 0
+        })
+      }
+    }
 
     let totalsEntry
     if (totals) {
@@ -136,7 +149,7 @@ const ActualTableView = ({
 
         <VariableSizeList
           height={listHeight}
-          itemCount={data.length}
+          itemCount={data.length + 1}
           itemSize={getEntryHeight}
           ref={listRef}
         >
@@ -144,8 +157,6 @@ const ActualTableView = ({
             if (index === 0) {
               return (
                 <div>
-                  <ViewControls isMobile={isMobile} />
-
                   <Information content='numbers' trigger={<button>what do these numbers mean?</button>} />
 
                   { view === 'classic' && <MarkerLegend /> }
@@ -153,7 +164,6 @@ const ActualTableView = ({
               )
             } else {
               const code = data[index - 1] && data[index - 1].code
-
               return (
                 <div style={{...style}}>
                   <EntryView {...sharedProps}
@@ -181,6 +191,7 @@ const mapStateToProps = (state, ownProps) => ({
   last4weeks: state.data.last4weeks,
   last6weeks: state.data.last6weeks,
   last8weeks: state.data.last8weeks,
+  search: state.ui.search,
   view: state.ui.view,
   sort: state.ui.sort,
   filter: state.ui.filter,
@@ -193,7 +204,6 @@ const mapStateToProps = (state, ownProps) => ({
 
 const mapDispatchToProps = (dispatch, props) => ({
   pinEntry: (entry) => {
-    console.log('pin', props)
     props.listRef.current.resetAfterIndex(0)
     dispatch({ type: 'UI.PIN_ENTRY', value: entry.code })
   },
@@ -201,8 +211,14 @@ const mapDispatchToProps = (dispatch, props) => ({
     props.listRef.current.resetAfterIndex(0)
     dispatch({ type: 'UI.UNPIN_ENTRY', value: entry.code })
   },
-  expandEntry: (entry) => dispatch({ type: 'UI.EXPAND_ENTRY', value: entry.code }),
-  collapseEntry: (entry) => dispatch({ type: 'UI.COLLAPSE_ENTRY', value: entry.code })
+  expandEntry: (entry) => {
+    props.listRef.current.resetAfterIndex(0)
+    dispatch({ type: 'UI.EXPAND_ENTRY', value: entry.code })
+  },
+  collapseEntry: (entry) => {
+    props.listRef.current.resetAfterIndex(0)
+    dispatch({ type: 'UI.COLLAPSE_ENTRY', value: entry.code })
+  }
 })
 
 const ConnectedTableView = connect(
