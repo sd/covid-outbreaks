@@ -126,7 +126,7 @@ const ActualTableView = ({
 
   const getEntryHeight = React.useCallback((index) => {
     if (index === 0) {
-      return view === 'classic' ? 140 : 100 // first row with ViewControls
+      return view === 'classic' ? 140 : 120 // first row with ViewControls
     }
     else {
       return entryHeights.current[data[index - 1].code] || 120
@@ -156,7 +156,7 @@ const ActualTableView = ({
           {({ index, style }) => {
             if (index === 0) {
               return (
-                <div>
+                <div style={{padding: '2em'}}>
                   <Information content='numbers' trigger={<button>what do these numbers mean?</button>} />
 
                   { view === 'classic' && <MarkerLegend /> }
