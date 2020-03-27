@@ -78,6 +78,7 @@ const DailySparklineChart =  ({
       return undefined
     }
   })
+  if (indexOfLastNonZero === indexOfFirstNonZero) indexOfLastNonZero = undefined
 
   let comparisonValues = undefined
   if (comparisonEntry) {
@@ -143,56 +144,31 @@ const DataLine = ({scaledValues, aspectRatio, strokeScale, radiusScale, horizont
   return scaledValues.map((value, index) => {
     style = style || SVG_STYLES.line
 
-    if (value === undefined || scaledValues[index + 1] === undefined) return null
-
-    return (
-      <React.Fragment key={`line-${index}`}>
-        {masked &&
-          <mask key={`mask-${index}`} id={`${idPrefix}-mask-${index}`}>
-            <rect
-              x='0' y='0'
-              width={100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} height={100 + 2 * SVG_STYLES.canvas.vPadding}
-              fill='white'
-            />
-            <circle
-              cx={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-              cy={100 + SVG_STYLES.canvas.vPadding - value}
-              r={SVG_STYLES.marker.radius * radiusScale + SVG_STYLES.marker.clipRadiusDelta}
-              fill='black'
-            />
-            <circle
-              cx={SVG_STYLES.canvas.hPadding + ((index + 1) * horizontalStep)}
-              cy={100 + SVG_STYLES.canvas.vPadding - scaledValues[index + 1]}
-              r={SVG_STYLES.marker.radius * radiusScale + SVG_STYLES.marker.clipRadiusDelta}
-              fill='black'
-            />
-          </mask>
-        }
-        {(masked && Math.abs(value - scaledValues[index + 1]) < 1)  // Chrome ignores masks on perfect horizontal lines
-          ? <rect
-              key={`maskedline-${index}`}
-              mask={masked ? `url(#${idPrefix}-mask-${index})` : ''}
-              x={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-              y={100 + SVG_STYLES.canvas.vPadding - value - (style.strokeWidth * strokeScale / 2)}
-              width={horizontalStep}
-              height={style.strokeWidth * strokeScale}
-              strokeWidth={0}
-              fill={style.stroke}
-            />
-          : <line
-              key={`maskedline-${index}`}
-              mask={masked ? `url(#${idPrefix}-mask-${index})` : ''}
-              x1={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-              y1={100 + SVG_STYLES.canvas.vPadding - value}
-              x2={SVG_STYLES.canvas.hPadding + ((index + 1 ) * horizontalStep)}
-              y2={100 + SVG_STYLES.canvas.vPadding - scaledValues[index + 1]}
-              strokeWidth={style.strokeWidth * strokeScale}
-              stroke={style.stroke}
-              strokeLinecap='round'
-            />
-        }
-      </React.Fragment>
-    )
+    if (value !== undefined && scaledValues[index + 1] !== undefined) {
+      return (
+        <line
+          key={`maskedline-${index}`}
+          mask={masked ? `url(#${idPrefix}-mask-${index})` : ''}
+          x1={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
+          y1={100 + SVG_STYLES.canvas.vPadding - value}
+          x2={SVG_STYLES.canvas.hPadding + ((index + 1 ) * horizontalStep)}
+          y2={100 + SVG_STYLES.canvas.vPadding - scaledValues[index + 1]}
+          strokeWidth={style.strokeWidth * strokeScale}
+          stroke={style.stroke}
+          strokeLinecap='round'
+        />
+      )
+    } else if (value !== undefined && index !== (scaledValues.length - 1) ) {
+      return (
+        <circle
+          key={index}
+          cx={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
+          cy={100 + SVG_STYLES.canvas.vPadding - value}
+          r={style.strokeWidth * strokeScale / 2}
+          fill={style.stroke}
+        />
+      )
+    }
   })
 }
 
