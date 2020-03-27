@@ -8,7 +8,7 @@ export function filterBySearch (a, search) {
   } else if (search.names) {
     let value = (a[`${search.language}Name`] || a.name || a.code || '').toLowerCase()
 
-    return !!search.names.find(name => value.startsWith(name))
+    return !!search.names.find(name => value.indexOf(name) >= 0)
   }
 }
 
