@@ -147,7 +147,7 @@ const ViewControls = ({
         <section className='search'>
           <button onClick={handleSearchClick}>
             <FontAwesomeIcon icon={faSearch} />&nbsp;
-            Search
+            <Trans i18nKey='view_controls.search_button'>Search</Trans>
           </button>
         </section>
       }

@@ -23,7 +23,8 @@
     "totals_label": "Show Totals",
     "no_scaling_label": "Preserve Vertical Scale",
     "reset_button": "Reset to defaults",
-    "done_button": "Done"
+    "done_button": "Done",
+    "search_button": "Search"
   },
   "entry": {
     "totals_title": "TOTALS FOR {{filter}}",

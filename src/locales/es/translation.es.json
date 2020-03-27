@@ -24,7 +24,8 @@
     "totals_label": "Mostrar Totales",
     "no_scaling_label": "Mantener Escala Vertical",
     "reset_button": "Reiniciar",
-    "done_button": "Listo"
+    "done_button": "Listo",
+    "search_button": "Buscar"
   },
   "entry": {
     "totals_title": "TOTALES para {{filter}}",
