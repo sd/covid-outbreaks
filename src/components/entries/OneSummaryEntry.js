@@ -45,8 +45,10 @@ const OneSummaryEntry = ({
   if (comparisonEntry) {
     if (comparisonEntry.code === entry.code) {
       comparisonEntry = undefined
-    } else if (entry.keyDates.death5 && comparisonEntry.keyDates.death5) {
-      comparisonOffset = Math.ceil((entry.keyDates.death5.getTime() - comparisonEntry.keyDates.death5.getTime()) / (1000*60*60*24))
+    } else if (entry.keyDates.deaths10 && comparisonEntry.keyDates.deaths10) {
+      let d1 = new Date(entry.keyDates.deaths10)
+      let d2 = new Date(comparisonEntry.keyDates.deaths10)
+      comparisonOffset = Math.ceil((d1 - d2) / (1000*60*60*24))
     }
   }
 

@@ -15,6 +15,10 @@ const SVG_STYLES = {
     stroke: '#c00',
     strokeWidth: 1,
   },
+  comparableLine: {
+    stroke: '#633',
+    strokeWidth: 0.7,
+  },
   canvas: {
     hPadding: 35,
     vPadding: 10,
@@ -75,6 +79,19 @@ const DailySparklineChart =  ({
     }
   })
 
+  let comparisonValues = undefined
+  if (comparisonEntry) {
+    let offsetValues = dates.map((d, index) => comparisonEntry.daily.deaths[dates[index - comparisonOffset]])
+
+    comparisonValues = offsetValues.map((v, index) => {
+      if (v) {
+        return ((Math.log10(v)) / VERTICAL_SCALE) * 100
+      } else {
+        return undefined
+      }
+    })
+  }
+
   let horizontalStep = 100 * aspectRatio / (dates.length - 1)
 
   let lines = [0, 10, 100, 1000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / VERTICAL_SCALE * 100}))
@@ -86,166 +103,208 @@ const DailySparklineChart =  ({
   return (
     <div className='DailySparklineChart' style={divStyle}>
       <svg viewBox={`0 0 ${100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} ${100 + 2 * SVG_STYLES.canvas.vPadding}`}>
-        {SVG_STYLES.canvas.fill &&
-          <rect
-            x='0' y='0'
-            width={100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} height={100 + 2 * SVG_STYLES.canvas.vPadding}
-            fill={SVG_STYLES.canvas.fill}
+
+        <CanvasAndGridLines
+          dates={dates} lines={lines} aspectRatio={aspectRatio}
+          mondayOffset={mondayOffset} horizontalStep={horizontalStep} i18n={i18n}
+        />
+
+        {comparisonValues &&
+          <DataLine
+            scaledValues={comparisonValues} aspectRatio={aspectRatio}
+            strokeScale={strokeScale} radiusScale={radiusScale}
+            horizontalStep={horizontalStep} idPrefix={`${idPrefix}-comp`}
+            masked={false} style={SVG_STYLES.comparableLine}
           />
         }
 
-        {lines.map(({label, value}, index) => (
-          <React.Fragment key={`grid-${index}`}>
-            <line
-              key={`gridline-${index}`}
-              x1={SVG_STYLES.canvas.hPadding}
-              y1={100 + SVG_STYLES.canvas.vPadding - value}
-              x2={100 * aspectRatio + SVG_STYLES.canvas.hPadding}
-              y2={100 + SVG_STYLES.canvas.vPadding - value}
-              strokeWidth={SVG_STYLES.grid.strokeWidth}
-              stroke={SVG_STYLES.grid.stroke}
-            />
-            <text
-              key={`gridlabel-${index}`}
-              x={SVG_STYLES.canvas.hPadding - SVG_STYLES.gridLabel.vPadding }
-              y={100 + SVG_STYLES.canvas.vPadding - value}
-              fontSize={SVG_STYLES.gridLabel.fontSize}
-              fill={SVG_STYLES.gridLabel.fill}
-              textAnchor='end'
-              dominantBaseline='central'
-              fontWeight={SVG_STYLES.gridLabel.fontWeight}
-            >
-              {label}
-            </text>
-          </React.Fragment>
-        ))}
+        <DataLine
+          scaledValues={scaledValues} aspectRatio={aspectRatio}
+          strokeScale={strokeScale} radiusScale={radiusScale}
+          horizontalStep={horizontalStep} idPrefix={idPrefix}
+          masked={true} style={SVG_STYLES.line}
+        />
 
-        {dates.map((date, index) => (
-          ((index + mondayOffset) % 7 === 0) && /* + 2 moves the lines to a monday */
-            <line
-              key={`line_${index}`}
-              x1={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-              y1={SVG_STYLES.canvas.vPadding}
-              x2={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-              y2={100 + SVG_STYLES.canvas.vPadding}
-              strokeWidth={SVG_STYLES.grid.strokeWidth}
-              stroke={SVG_STYLES.grid.stroke}
-            />
-          )
-        )}
-        {dates.map((date, index) => (
-          ((index + mondayOffset) % 7 === 0) && /* + 2 moves the lines to a monday */
-            <text
-              key={`text_${index}`}
-              x={SVG_STYLES.canvas.hPadding + (index * horizontalStep) + 4 }
-              y={SVG_STYLES.canvas.vPadding + SVG_STYLES.gridLabel.fontSize}
-              fontSize={SVG_STYLES.gridLabel.fontSize}
-              fill={SVG_STYLES.gridLabel.fill}
-              textAnchor='start'
-              dominantBaseline='text-top'
-              fontWeight={SVG_STYLES.gridLabel.fontWeight}
-            >
-              {formatDateMonthAbbrDD(date, i18n)}
-            </text>
-          )
-        )}
+        <DataPoints
+          scaledValues={scaledValues} values={values}
+          horizontalStep={horizontalStep} radiusScale={radiusScale}
+          indexOfFirstNonZero={indexOfFirstNonZero} indexOfLastNonZero={indexOfLastNonZero} />
 
-        {scaledValues.map((value, index) => {
-          let style = SVG_STYLES.line
 
-          if (value === undefined || scaledValues[index + 1] === undefined) return null
-
-          return (
-            <React.Fragment key={`line-${index}`}>
-              <mask key={`mask-${index}`} id={`${idPrefix}-mask-${index}`}>
-                <rect
-                  x='0' y='0'
-                  width={100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} height={100 + 2 * SVG_STYLES.canvas.vPadding}
-                  fill='white'
-                />
-                <circle
-                  cx={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-                  cy={100 + SVG_STYLES.canvas.vPadding - value}
-                  r={SVG_STYLES.marker.radius * radiusScale + SVG_STYLES.marker.clipRadiusDelta}
-                  fill='black'
-                />
-                <circle
-                  cx={SVG_STYLES.canvas.hPadding + ((index + 1) * horizontalStep)}
-                  cy={100 + SVG_STYLES.canvas.vPadding - scaledValues[index + 1]}
-                  r={SVG_STYLES.marker.radius * radiusScale + SVG_STYLES.marker.clipRadiusDelta}
-                  fill='black'
-                />
-              </mask>
-              {(Math.abs(value - scaledValues[index + 1]) < 1)  // Chrome ignores masks on perfect horizontal lines
-                ? <rect
-                    key={`maskedline-${index}`}
-                    mask={`url(#x${idPrefix}-mask-${index})`}
-                    x={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-                    y={100 + SVG_STYLES.canvas.vPadding - value - (style.strokeWidth * strokeScale / 2)}
-                    width={horizontalStep}
-                    height={style.strokeWidth * strokeScale}
-                    strokeWidth={0}
-                    fill={style.stroke}
-                  />
-                : <line
-                    key={`maskedline-${index}`}
-                    mask={`url(#x${idPrefix}-mask-${index})`}
-                    x1={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-                    y1={100 + SVG_STYLES.canvas.vPadding - value}
-                    x2={SVG_STYLES.canvas.hPadding + ((index + 1 ) * horizontalStep)}
-                    y2={100 + SVG_STYLES.canvas.vPadding - scaledValues[index + 1]}
-                    strokeWidth={style.strokeWidth * strokeScale}
-                    stroke={style.stroke}
-                  />
-              }
-          </React.Fragment>
-          )
-        })}
-        {scaledValues.map((value, index) => {
-          let style = SVG_STYLES.marker
-
-          if (value === undefined) return null
-
-          return (
-            <circle
-              key={index}
-              cx={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-              cy={100 + SVG_STYLES.canvas.vPadding - value}
-              r={style.radius * radiusScale}
-              fill={style.fill}
-            />
-          )
-        })}
-
-        {values[indexOfFirstNonZero] &&
-          <text
-            x={SVG_STYLES.canvas.hPadding + (indexOfFirstNonZero * horizontalStep) - SVG_STYLES.legend.hPadding}
-            y={100 + SVG_STYLES.canvas.vPadding - scaledValues[indexOfFirstNonZero]}
-            fontSize={SVG_STYLES.legend.fontSize}
-            fill={SVG_STYLES.legend.fill}
-            textAnchor='end'
-            dominantBaseline='central'
-            fontWeight={SVG_STYLES.legend.fontWeight}
-          >
-            {values[indexOfFirstNonZero]}
-          </text>
-        }
-        {values[indexOfLastNonZero] &&
-          <text
-            x={SVG_STYLES.canvas.hPadding + (indexOfLastNonZero) * horizontalStep + SVG_STYLES.legend.hPadding}
-            y={100 + SVG_STYLES.canvas.vPadding - scaledValues[indexOfLastNonZero]}
-            fontSize={SVG_STYLES.legend.fontSize}
-            fill={SVG_STYLES.legend.fill}
-            textAnchor='start'
-            dominantBaseline='central'
-            fontWeight={SVG_STYLES.legend.fontWeight}
-          >
-            {values[indexOfLastNonZero]}
-          </text>
-        }
       </svg>
     </div>
   )
 }
+
+const DataLine = ({scaledValues, aspectRatio, strokeScale, radiusScale, horizontalStep, idPrefix, masked, style}) => {
+  return scaledValues.map((value, index) => {
+    style = style || SVG_STYLES.line
+
+    if (value === undefined || scaledValues[index + 1] === undefined) return null
+
+    return (
+      <React.Fragment key={`line-${index}`}>
+        {masked &&
+          <mask key={`mask-${index}`} id={`${idPrefix}-mask-${index}`}>
+            <rect
+              x='0' y='0'
+              width={100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} height={100 + 2 * SVG_STYLES.canvas.vPadding}
+              fill='white'
+            />
+            <circle
+              cx={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
+              cy={100 + SVG_STYLES.canvas.vPadding - value}
+              r={SVG_STYLES.marker.radius * radiusScale + SVG_STYLES.marker.clipRadiusDelta}
+              fill='black'
+            />
+            <circle
+              cx={SVG_STYLES.canvas.hPadding + ((index + 1) * horizontalStep)}
+              cy={100 + SVG_STYLES.canvas.vPadding - scaledValues[index + 1]}
+              r={SVG_STYLES.marker.radius * radiusScale + SVG_STYLES.marker.clipRadiusDelta}
+              fill='black'
+            />
+          </mask>
+        }
+        {(Math.abs(value - scaledValues[index + 1]) < 1)  // Chrome ignores masks on perfect horizontal lines
+          ? <rect
+              key={`maskedline-${index}`}
+              mask={masked ? `url(#${idPrefix}-mask-${index})` : ''}
+              x={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
+              y={100 + SVG_STYLES.canvas.vPadding - value - (style.strokeWidth * strokeScale / 2)}
+              width={horizontalStep}
+              height={style.strokeWidth * strokeScale}
+              strokeWidth={0}
+              fill={style.stroke}
+            />
+          : <line
+              key={`maskedline-${index}`}
+              mask={masked ? `url(#${idPrefix}-mask-${index})` : ''}
+              x1={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
+              y1={100 + SVG_STYLES.canvas.vPadding - value}
+              x2={SVG_STYLES.canvas.hPadding + ((index + 1 ) * horizontalStep)}
+              y2={100 + SVG_STYLES.canvas.vPadding - scaledValues[index + 1]}
+              strokeWidth={style.strokeWidth * strokeScale}
+              stroke={style.stroke}
+            />
+        }
+      </React.Fragment>
+    )
+  })
+}
+
+const DataPoints = ({scaledValues, values, horizontalStep, radiusScale, indexOfFirstNonZero, indexOfLastNonZero}) => (
+  <>
+    {scaledValues.map((value, index) => {
+      let style = SVG_STYLES.marker
+
+      if (value === undefined) return null
+
+      return (
+        <circle
+          key={index}
+          cx={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
+          cy={100 + SVG_STYLES.canvas.vPadding - value}
+          r={style.radius * radiusScale}
+          fill={style.fill}
+        />
+      )
+    })}
+
+    {values[indexOfFirstNonZero] &&
+      <text
+        x={SVG_STYLES.canvas.hPadding + (indexOfFirstNonZero * horizontalStep) - SVG_STYLES.legend.hPadding}
+        y={100 + SVG_STYLES.canvas.vPadding - scaledValues[indexOfFirstNonZero]}
+        fontSize={SVG_STYLES.legend.fontSize}
+        fill={SVG_STYLES.legend.fill}
+        textAnchor='end'
+        dominantBaseline='central'
+        fontWeight={SVG_STYLES.legend.fontWeight}
+      >
+        {values[indexOfFirstNonZero]}
+      </text>
+    }
+    {values[indexOfLastNonZero] &&
+      <text
+        x={SVG_STYLES.canvas.hPadding + (indexOfLastNonZero) * horizontalStep + SVG_STYLES.legend.hPadding}
+        y={100 + SVG_STYLES.canvas.vPadding - scaledValues[indexOfLastNonZero]}
+        fontSize={SVG_STYLES.legend.fontSize}
+        fill={SVG_STYLES.legend.fill}
+        textAnchor='start'
+        dominantBaseline='central'
+        fontWeight={SVG_STYLES.legend.fontWeight}
+      >
+        {values[indexOfLastNonZero]}
+      </text>
+    }
+  </>
+)
+
+const CanvasAndGridLines = ({dates, lines, aspectRatio, mondayOffset, horizontalStep, i18n}) => (
+  <>
+    {SVG_STYLES.canvas.fill &&
+      <rect
+        x='0' y='0'
+        width={100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} height={100 + 2 * SVG_STYLES.canvas.vPadding}
+        fill={SVG_STYLES.canvas.fill}
+      />
+    }
+
+    {lines.map(({label, value}, index) => (
+      <React.Fragment key={`grid-${index}`}>
+        <line
+          key={`gridline-${index}`}
+          x1={SVG_STYLES.canvas.hPadding}
+          y1={100 + SVG_STYLES.canvas.vPadding - value}
+          x2={100 * aspectRatio + SVG_STYLES.canvas.hPadding}
+          y2={100 + SVG_STYLES.canvas.vPadding - value}
+          strokeWidth={SVG_STYLES.grid.strokeWidth}
+          stroke={SVG_STYLES.grid.stroke}
+        />
+        <text
+          key={`gridlabel-${index}`}
+          x={SVG_STYLES.canvas.hPadding - SVG_STYLES.gridLabel.vPadding }
+          y={100 + SVG_STYLES.canvas.vPadding - value}
+          fontSize={SVG_STYLES.gridLabel.fontSize}
+          fill={SVG_STYLES.gridLabel.fill}
+          textAnchor='end'
+          dominantBaseline='central'
+          fontWeight={SVG_STYLES.gridLabel.fontWeight}
+        >
+          {label}
+        </text>
+      </React.Fragment>
+    ))}
+
+    {dates.map((date, index) => (
+      ((index + mondayOffset) % 7 === 0) && /* + 2 moves the lines to a monday */
+        <line
+          key={`line_${index}`}
+          x1={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
+          y1={SVG_STYLES.canvas.vPadding}
+          x2={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
+          y2={100 + SVG_STYLES.canvas.vPadding}
+          strokeWidth={SVG_STYLES.grid.strokeWidth}
+          stroke={SVG_STYLES.grid.stroke}
+        />
+      )
+    )}
+    {dates.map((date, index) => (
+      ((index + mondayOffset) % 7 === 0) && /* + 2 moves the lines to a monday */
+        <text
+          key={`text_${index}`}
+          x={SVG_STYLES.canvas.hPadding + (index * horizontalStep) + 4 }
+          y={SVG_STYLES.canvas.vPadding + SVG_STYLES.gridLabel.fontSize}
+          fontSize={SVG_STYLES.gridLabel.fontSize}
+          fill={SVG_STYLES.gridLabel.fill}
+          textAnchor='start'
+          dominantBaseline='text-top'
+          fontWeight={SVG_STYLES.gridLabel.fontWeight}
+        >
+          {formatDateMonthAbbrDD(date, i18n)}
+        </text>
+      )
+    )}
+  </>
+)
 
 export default  React.memo(DailySparklineChart)

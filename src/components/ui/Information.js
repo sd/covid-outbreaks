@@ -105,11 +105,8 @@ const InfoNumbers = () => {
 
       <p>
         A counter for how many days have passed since this outbreak started.
-      </p>
-
-      <p>
-        We start counting on the first day with new deaths,
-        but reset it back to zero after three consecutive days with no new deaths.
+        {' '}
+        <b>Starting on the day when the outbreak passes 10 total deaths.</b>
       </p>
 
 
@@ -117,7 +114,7 @@ const InfoNumbers = () => {
       <h3>Velocity • <VelocityWithStyles value={2.2} /></h3>
 
       <p>
-        How much larger is the total number of deaths, compared to 7 days before, but using a logarithmic (base 10) scale.
+        How much larger is the total number of deaths, <b>compared to 7 days before</b>, but using a <b>logarithmic (base 10) scale</b>.
       </p>
 
       <p>
@@ -135,7 +132,7 @@ const InfoNumbers = () => {
       </p>
 
       <p>
-        This is the best indicator that progress of the outbreak is speeding up or slowing down.
+        <b>This is the best indicator that progress of the outbreak is speeding up or slowing down.</b>
       </p>
 
       <p>
@@ -160,7 +157,7 @@ const InfoNumbers = () => {
       <h3>DISCLAIMER</h3>
 
       <p>
-        I'm not an Epidemiologist or a Statisticial, nor do I play one on TV.
+        <b>I'm not an Epidemiologist or a Statistician, nor do I play one on TV.</b>{ ' ' }
         I believe these metrics are sound mathematically and give good insights into the progression of each outbreak,
         but it's possible that I'm wrong about their interpretation or calculation. If that's the case,
         and you're a real expert in this subject, please reach out on twitter <a target='_blank' rel='noreferrer noopener' href='https://twitter.com/sd'>@sd</a> to discuss.

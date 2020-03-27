@@ -54,6 +54,10 @@
     "table_cases_label": "Casos",
     "includes_data_for": "Incluye datos agrupados bajo"
   },
+  "information": {
+    "what_do_these_mean": "¿Que son estos números?",
+    "compared_to_italy": "Comparado a Italia"
+  },
   "filter": {
     "description": {
       "relevant": "Brotes importantes",

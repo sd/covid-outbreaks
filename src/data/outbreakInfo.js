@@ -42,10 +42,6 @@ export const OUTBREAK_ATTRIBUTES = {
              'Wikipedia CA': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_California',
              'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' },
     keyDates: {
-      death1: '',
-      death10: '',
-      death50: '',
-      death250: '',
       localSchoolClosings: '',
       wideSchoolClosings: '3/16/20',
       localLockdown: '3/9/20', // Widespread work from home
@@ -58,10 +54,6 @@ export const OUTBREAK_ATTRIBUTES = {
              'Wikipedia NY': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_New_York_(state)',
              'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' },
     keyDates: {
-      death1: '3/14/20',
-      death10: '3/16/20',
-      death50: '3/21/20',
-      death250: '',
       localSchoolClosings: '3/07/20',
       wideSchoolClosings: '3/14/20',
       localLockdown: '3/10/20', // Limited movement in New Rochelle, calls to social distance
@@ -71,10 +63,6 @@ export const OUTBREAK_ATTRIBUTES = {
   },
   'us.fl': {
     keyDates: {
-      death1: '',
-      death10: '',
-      death50: '',
-      death250: '',
       localSchoolClosings: '',
       wideSchoolClosings: '',
       localLockdown: '3/9/20', // Widespread work from home
@@ -106,10 +94,6 @@ export const OUTBREAK_ATTRIBUTES = {
              '@dpcgov': 'https://twitter.com/dpcgov',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy' },
     keyDates: {
-      death1: '2/21/20',
-      death10: '2/25/20',
-      death50: '3/2/20',
-      death250: '3/8/20',
       localSchoolClosings: '02/22/20',
       wideSchoolClosings: '03/04/20',
       localLockdown: '03/08/20', // Limited movement in some areas
@@ -124,10 +108,6 @@ export const OUTBREAK_ATTRIBUTES = {
              'RTVE': 'https://www.rtve.es/noticias/20200314/mapa-del-coronavirus-espana/2004681.shtml',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain' },
     keyDates: {
-      death1: '3/3/20',
-      death10: '3/7/20',
-      death50: '3/9/20',
-      death250: '3/15/20',
       localSchoolClosings: '03/09/20',
       wideSchoolClosings: '03/12/20',
       localLockdown: '03/08/20', // Limited movement in some areas
@@ -140,10 +120,6 @@ export const OUTBREAK_ATTRIBUTES = {
     links: { 'Santé publique France': 'https://www.santepubliquefrance.fr/maladies-et-traumatismes/maladies-et-infections-respiratoires/infection-a-coronavirus/articles/infection-au-nouveau-coronavirus-sars-cov-2-covid-19-france-et-monde',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_France' },
     keyDates: {
-      death1: '2/26/20',
-      death10: '3/7/20',
-      death50: '3/12/20',
-      death250: '3/18/20',
       localSchoolClosings: '',
       wideSchoolClosings: '03/16/20',
       localLockdown: '', // Limited movement in some areas
@@ -157,10 +133,6 @@ export const OUTBREAK_ATTRIBUTES = {
              '@DHSCgovuk': 'https://twitter.com/DHSCgovuk',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Kingdom' },
     keyDates: {
-      death1: '3/5/20',
-      death10: '3/12/20',
-      death50: '3/16/20',
-      death250: '3/22/20',
       localSchoolClosings: '03/11/20',
       wideSchoolClosings: '03/20/20',
       localLockdown: '03/16/20', // Limited movement in some areas, calls to social distance

@@ -224,12 +224,7 @@ function processOneFile (fieldName, data, entries ) {
           entry.rollingAcceleration[fieldName][d] = sum / cnt
         }
 
-        if (
-          !entry.daily[fieldName][d]
-          && !entry.daily[fieldName][dates[index - 1]]
-          && !entry.daily[fieldName][dates[index - 2]]
-          && !entry.daily[fieldName][dates[index - 3]]
-        ) {
+        if (entry.totals[fieldName][d] < 10) {
           outbreakCounter = undefined
         } else {
           outbreakCounter = (outbreakCounter || 0) + 1
@@ -243,10 +238,9 @@ function processOneFile (fieldName, data, entries ) {
         entry.latestOutbreakDay[fieldName] = entry.outbreakDay[fieldName][d]
 
         if (fieldName === 'deaths') {
-          let parsedDate = new Date(d)
-          ;[1, 5, 25, 125, 625].forEach(n => {
-            if (!entry.keyDates[`death${n}`] && entry.totals.deaths[d] >= n) {
-              entry.keyDates[`death${n}`] = parsedDate
+          ;[1, 5, 10, 25, 100, 125, 250, 500, 625].forEach(n => {
+            if (!entry.keyDates[`${fieldName}${n}`] && entry.totals[fieldName][d] >= n) {
+              entry.keyDates[`${fieldName}${n}`] = d
             }
           })
         }

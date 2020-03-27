@@ -54,6 +54,10 @@
     "table_cases_label": "Cases",
     "includes_data_for": "Includes data grouped under"
   },
+  "information": {
+    "what_do_these_mean": "What do these numbers mean?",
+    "compared_to_italy": "Compared to Italy"
+  },
   "filter": {
     "description": {
       "relevant": "Important outbreaks",

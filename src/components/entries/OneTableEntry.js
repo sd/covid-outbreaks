@@ -31,14 +31,14 @@ const OneTableEntry = ({
   const { scale, maxScaledValue, columns } = calculateScale (entry, dates, { sideBySide, deathsScale: DEATHS_SCALE, casesScale: CASES_SCALE })
 
   let comparisonOffset = 0
-
-  if (comparisonEntry) {
-    if (comparisonEntry.code === entry.code) {
-      comparisonEntry = undefined
-    } else if (entry.keyDates.death5 && comparisonEntry.keyDates.death5) {
-      comparisonOffset = Math.ceil((entry.keyDates.death5.getTime() - comparisonEntry.keyDates.death5.getTime()) / (1000*60*60*24))
-    }
-  }
+comparisonEntry = null
+  // if (comparisonEntry) {
+  //   if (comparisonEntry.code === entry.code) {
+  //     comparisonEntry = undefined
+  //   } else if (entry.keyDates.death5 && comparisonEntry.keyDates.death5) {
+  //     comparisonOffset = Math.ceil((entry.keyDates.death5.getTime() - comparisonEntry.keyDates.death5.getTime()) / (1000*60*60*24))
+  //   }
+  // }
 
   return (
     <div key={entry.code} ref={entryRef} className={classNames('TableView-row', { pinned, expanded })}>

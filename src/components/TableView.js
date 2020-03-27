@@ -27,6 +27,8 @@ const TableView = ({
   const { t, i18n } = useTranslation();
 
   if (loaded) {
+    const comparisonEntry = data.find(entry => entry.code === 'it')
+
     let viewOptions = { pinPositions }
     viewOptions = viewOptionsForSorting(sort, viewOptions)
     viewOptions = viewOptionsForFiltering(filter, viewOptions)
@@ -81,8 +83,6 @@ const TableView = ({
     } else {
       dates = last6weeks
     }
-
-    const comparisonEntry = undefined //data.find(entry => entry.code === 'it')
 
     const actualProps = {
       data, dates, allDates,
@@ -157,9 +157,26 @@ const ActualTableView = ({
             if (index === 0) {
               return (
                 <div style={{padding: '2em'}}>
-                  <Information content='numbers' trigger={<button>what do these numbers mean?</button>} />
+                  <Information content='numbers' trigger={
+                    <button>
+                      <Trans i18nKey='information.what_do_these_mean'>
+                        What do these numbers mean?
+                      </Trans>
+                    </button>
+                  } />
 
                   { view === 'classic' && <MarkerLegend /> }
+                  { view !== 'classic' &&
+                    <>
+                      &nbsp;&nbsp;&nbsp;&nbsp;
+                      <span className='comparedTo'>
+                        {' –– '}
+                        <Trans i18nKey='information.compared_to_italy'>
+                          Compared to Italy
+                        </Trans>
+                      </span>
+                    </>
+                  }
                 </div>
               )
             } else {

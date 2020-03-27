@@ -239,10 +239,20 @@ export function attributesForCountry(code) {
     attrs.population = Math.round(codeToPopulationIndex[code] / 1000000)
   }
 
+  let links = {}, keyDates = {}
+  if (OUTBREAK_ATTRIBUTES[parts[0]]) {
+    links = {...OUTBREAK_ATTRIBUTES[parts[0]].links}
+    keyDates = {...OUTBREAK_ATTRIBUTES[parts[0]].keyDates}
+  }
+  if (OUTBREAK_ATTRIBUTES[code]) {
+    links = {...OUTBREAK_ATTRIBUTES[code].links}
+    keyDates = {...OUTBREAK_ATTRIBUTES[code].keyDates}
+  }
+
   return {
     ...attrs,
-    ...OUTBREAK_ATTRIBUTES[parts[0]],
-    ...OUTBREAK_ATTRIBUTES[code]
+    links: links === {} ? undefined : links,
+    keyDates: keyDates === {} ? undefined : keyDates
   }
 }
 
