@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import Popup from 'reactjs-popup'
 import { Trans, useTranslation } from 'react-i18next';
+import KeyboardEventHandler from 'react-keyboard-event-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes, faFilter } from '@fortawesome/free-solid-svg-icons'
 
@@ -21,17 +22,29 @@ const ViewControls = ({
   //   setEntryHeight(entry.code, index, entryRef.current.getBoundingClientRect().height)
   // })
 
-  const handleSearchClick = () => {
-    setUI({search: ''})
-    window.setTimeout(() => {searchRef.current && searchRef.current.focus()}, 1)
-  }
-
   let viewOptions = {}
   viewOptions = viewOptionsForSorting(sort, viewOptions)
   viewOptions = viewOptionsForFiltering(filter, viewOptions)
 
   const filterDescription = t(`filter.description.${viewOptions.filter}`, viewOptions.filterDescription)
   const sortDescription = t(`sort.description.${viewOptions.sort}`, viewOptions.sortDescription)
+
+
+  const handleSearchClick = () => {
+    setUI({search: ''})
+    window.setTimeout(() => {searchRef.current && searchRef.current.focus()}, 1)
+  }
+
+  const handleFindKey = (key, event) => {
+    if (key === 'ctrl+f' || key === 'meta+f') {
+      setUI({search: ''})
+      window.setTimeout(() => {searchRef.current && searchRef.current.focus()}, 1)
+    } else if (key === 'esc') {
+      setUI({search: undefined})
+    }
+    event.stopPropagation()
+    event.preventDefault()
+  }
 
   return (
     <div className='ViewControls'>
@@ -160,6 +173,13 @@ const ViewControls = ({
           </button>
         </section>
       }
+
+      <KeyboardEventHandler
+        handleKeys={['ctrl+f', 'meta+f', 'esc']}
+        handleFocusableElements={true}
+        onKeyEvent={handleFindKey}
+      />
+
     </div>
   )
 }
