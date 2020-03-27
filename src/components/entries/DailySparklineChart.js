@@ -71,7 +71,7 @@ const DailySparklineChart =  ({
       indexOfFirstNonZero = indexOfFirstNonZero + 1
       return undefined
     } else {
-      return v === 0 ? 0 : undefined
+      return undefined
     }
   })
 
@@ -153,8 +153,7 @@ const DailySparklineChart =  ({
         {scaledValues.map((value, index) => {
           let style = SVG_STYLES.line
 
-          if (value === undefined) return null
-          if (scaledValues[index + 1] === undefined) return null
+          if (value === undefined || scaledValues[index + 1] === undefined) return null
 
           return (
             <React.Fragment key={`line-${index}`}>
