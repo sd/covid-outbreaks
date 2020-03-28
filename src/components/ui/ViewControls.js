@@ -194,8 +194,14 @@ export default connect(
     totals: state.ui.totals,
     noScaling: state.ui.noScaling
   }),
-  (dispatch) => ({
-    setUI: (values) => dispatch({ type: 'UI.SET', values }),
-    resetUI: () => dispatch({ type: 'UI.RESET' }),
+  (dispatch, props) => ({
+    setUI: (values) => {
+      props.listRef && props.listRef.current.resetAfterIndex(0)
+      dispatch({ type: 'UI.SET', values })
+    },
+    resetUI: () => {
+      props.listRef && props.listRef.current.resetAfterIndex(0)
+      dispatch({ type: 'UI.RESET' })
+    },
   })
 )(ViewControls)

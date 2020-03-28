@@ -98,7 +98,7 @@ const PageHeader = ({listRef, isMobile}) => {
         <Trans i18nKey='general.title'>COVID-19 Outbreaks</Trans>
       </h1>
 
-      <ViewControls isMobile={isMobile} />
+      <ViewControls isMobile={isMobile} listRef={listRef} />
 
     </header>
   )
