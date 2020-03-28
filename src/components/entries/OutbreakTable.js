@@ -1,18 +1,15 @@
 import React from 'react'
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import numeral from 'numeral'
-
 import Information from '../ui/Information'
 
-import { formatDateMonthAbbrDD, formatDateWeekdayAbbrDD } from '../../utils/dateFormats'
+import { formatDateWeekdayAbbrDDorFirstOfMonth } from '../../utils/dateFormats'
 
 import { VelocityWithStyles, AccelerationWithStyles } from '../ui/NumbersWithStyles'
 
 import './OutbreakTable.css'
 
 const OutbreakTable = ({entry, dates}) => {
-  const { i18n } = useTranslation();
-
   let reversedDates = [...dates]
   reversedDates.reverse()
 
@@ -28,7 +25,7 @@ const OutbreakTable = ({entry, dates}) => {
           {reversedDates.map((date, index)=> (
             <div key={date} className='row'>
 
-              <div className='date'><DateHeader d={date} i18n={i18n} /></div>
+              <div className='date'>{formatDateWeekdayAbbrDDorFirstOfMonth(date)}</div>
 
               <div className='outbreakDay'>
                 {entry.outbreakDay.deaths[date]
@@ -127,20 +124,6 @@ const OutbreakTable = ({entry, dates}) => {
     )
   } else {
     return null
-  }
-}
-
- /* Sat 29   MAR 1   Mon 2   Tue 3 ... */
-const DateHeader = ({d, i18n}) => {
-  if (d) {
-    const date = new Date(d)
-    if (date.getDate() === 1) {
-      return <b>{formatDateMonthAbbrDD(d, i18n).toUpperCase()}</b>
-    } else {
-      return formatDateWeekdayAbbrDD(d, i18n)
-    }
-  } else {
-    return ''
   }
 }
 

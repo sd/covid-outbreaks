@@ -1,4 +1,6 @@
 import { csv as d3CSV } from 'd3-fetch'
+import padStart from 'lodash/padStart'
+import sortedUniq from 'lodash/sortedUniq'
 
 import { findAggregateMapping, findOverlayMapping, countryForCSSEName, attributesForCountry } from '../helpers/countryInfo'
 import { setupConsoleTools } from '../../utils/consoleTools'
@@ -34,7 +36,8 @@ export function reducer (state = initialState, action) {
 /* ================================================================================================================== */
 
 function parseRawCSSEData (rawData, data = {}) {
-  let dates = data.dates || Object.keys(rawData[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
+  let dates = Object.keys(rawData[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
+  let isoDates = data.dates || []
   let rows = data.rows || {}
   let sources = data.sources || {}
   let name
@@ -43,22 +46,28 @@ function parseRawCSSEData (rawData, data = {}) {
     name = countryForCSSEName([rawRow['Country/Region'], rawRow['Province/State']].filter(x => x).join(' > '))
 
     if (name) {
-      rows[name] = {}
+      rows[name] = rows[name] || {}
 
       dates.forEach(d => {
+        let [month, day] = d.split('/')
+        let isoDate = `2020-${padStart(month, 2, '0')}-${padStart(day, 2, '0')}`
+        isoDates = isoDates.concat(isoDate)
+
         if (rawRow[d] || rawRow[d] === '0') {
-          rows[name][d] = parseInt(rawRow[d], 10)
+          rows[name][isoDate] = parseInt(rawRow[d], 10)
         }
       })
     }
   })
 
-  return { dates, rows, codes: Object.keys(rows), sources }
+  isoDates = sortedUniq(isoDates.sort())
+  return { dates: isoDates, rows, codes: Object.keys(rows), sources }
 }
 
 
 function parseRawESData (rawData, data = {}) {
-  let dates = data.dates || Object.keys(rawData[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
+  let dates = Object.keys(rawData[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
+  let isoDates = data.dates || []
   let rows = data.rows || {}
   let sources = data.sources || {}
   let name
@@ -67,17 +76,22 @@ function parseRawESData (rawData, data = {}) {
     name = countryForCSSEName(['Spain', rawRow['CCAA']].filter(x => x).join(' > '))
 
     if (name) {
-      rows[name] = {}
+      rows[name] = rows[name] || {}
 
       dates.forEach(d => {
+        let [month, day] = d.split('/')
+        let isoDate = `2020-${padStart(month, 2, '0')}-${padStart(day, 2, '0')}`
+        isoDates = isoDates.concat(isoDate)
+
         if (rawRow[d] || rawRow[d] === '0') {
-          rows[name][d] = parseInt(rawRow[d], 10)
+          rows[name][isoDate] = parseInt(rawRow[d], 10)
         }
       })
     }
   })
 
-  return { dates, rows, codes: Object.keys(rows), sources }
+  isoDates = sortedUniq(isoDates.sort())
+  return { dates: isoDates, rows, codes: Object.keys(rows), sources }
 }
 
 function combineRows (data, combinationMethod, combinationRules) {

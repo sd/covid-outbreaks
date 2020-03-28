@@ -1,6 +1,6 @@
 import React from 'react'
-import { useTranslation } from 'react-i18next';
 import { formatDateMonthAbbrDD } from '../../utils/dateFormats'
+import { DateTime } from 'luxon'
 
 const markerWidth = 12
 const markerHeight = 4
@@ -61,15 +61,14 @@ const DeathsChart =  ({
   sideBySide,
   scale, maxScaledValue, columns, casesScale
 }) => {
-  const { i18n } = useTranslation();
   if (!entry || !entry.daily || !entry.daily.deaths || !entry.daily.cases) return null
 
   let canvasWidth = dates.length * SVG_STYLES.emptyMarker.markerWidth
 
   let canvasHeight = ((maxScaledValue / columns) + 1) * SVG_STYLES.emptyMarker.markerHeight + 10
 
-  const firstDateObj = new Date(dates[0])
-  const mondayOffset = firstDateObj.getDay() - 1
+  const firstDateObj = DateTime.fromISO(dates[0])
+  const mondayOffset = firstDateObj.weekday - 1
 
   if (entry.daily.deaths) {
     return (
@@ -96,7 +95,7 @@ const DeathsChart =  ({
                 y={8}
                 style={{fontSize: '9px', fill: `${SVG_STYLES.weekLines.stroke}`}}
               >
-                {formatDateMonthAbbrDD(date, i18n)}
+                {formatDateMonthAbbrDD(date)}
               </text>
             )
           )}

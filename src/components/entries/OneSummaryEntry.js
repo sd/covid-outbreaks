@@ -3,6 +3,7 @@ import classNames from 'classnames'
 import numeral from 'numeral'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbtack, faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons'
+import { DateTime } from 'luxon'
 
 import './OneSummaryEntry.css'
 
@@ -46,9 +47,9 @@ const OneSummaryEntry = ({
     if (comparisonEntry.code === entry.code) {
       comparisonEntry = undefined
     } else if (entry.keyDates.deaths10 && comparisonEntry.keyDates.deaths10) {
-      let d1 = new Date(entry.keyDates.deaths10)
-      let d2 = new Date(comparisonEntry.keyDates.deaths10)
-      comparisonOffset = Math.ceil((d1 - d2) / (1000*60*60*24))
+      let d1 = DateTime.fromISO(entry.keyDates.deaths10)
+      let d2 = DateTime.fromISO(comparisonEntry.keyDates.deaths10)
+      comparisonOffset = d1.diff(d2, 'days').days
     }
   }
 

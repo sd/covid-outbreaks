@@ -13,13 +13,13 @@ class DataLoader extends Component {
   }
 
   render() {
-    const { loading, loaded, errorMessage, lastDate, i18n } = this.props
+    const { loading, loaded, errorMessage, lastDate } = this.props
 
     if (loading) {
       if (lastDate) {
         return (
           <div className='DataLoader'>
-            <Trans i18nKey="view_description.as_of_date">Up to {{date: formatDateMonthDD(lastDate, i18n)}}</Trans>
+            <Trans i18nKey="view_description.as_of_date">Up to {{date: formatDateMonthDD(lastDate)}}</Trans>
           </div>
         )
       } else {
@@ -32,7 +32,7 @@ class DataLoader extends Component {
     } if (loaded) {
       return (
         <div className='DataLoader'>
-          <Trans i18nKey="view_description.as_of_date">Up to {{date: formatDateMonthDD(lastDate, i18n)}}</Trans>
+          <Trans i18nKey="view_description.as_of_date">Up to {{date: formatDateMonthDD(lastDate)}}</Trans>
         </div>
       )
     } else if (errorMessage) {

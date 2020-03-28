@@ -1,6 +1,9 @@
 import i18n from 'i18next';
 import { initReactI18next } from 'react-i18next';
+import { Settings as LuxonSettings } from 'luxon'
 import numeral from 'numeral'
+import 'numeral/locales/es'
+
 
 // import Backend from 'i18next-xhr-backend';
 import LanguageDetector from 'i18next-browser-languagedetector';
@@ -19,6 +22,14 @@ i18n
   .use(initReactI18next)
   // init i18next
   // for all options read: https://www.i18next.com/overview/configuration-options
+  .on('languageChanged', function(lng) {
+    if (lng === 'es') {
+      numeral.locale(lng)
+      LuxonSettings.defaultLocale = lng
+    } else {
+      LuxonSettings.defaultLocale = 'en-US'
+    }
+  })
   .init({
     whitelist: ['en', 'es'],
     nonExplicitWhitelist: true, // accept en-US
@@ -48,9 +59,5 @@ i18n
       order: [ 'navigator' ]
     }
   })
-
-i18n.on('languageChanged', function(lng) {
-  numeral.locale(lng);
-})
 
 export default i18n;

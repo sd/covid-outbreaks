@@ -1,5 +1,6 @@
 import numeral from 'numeral'
 import padStart from 'lodash/padStart'
+import { DateTime } from 'luxon'
 
 export function setupConsoleTools (data, dates) {
   console.log('🦠📈COVID Outbreak Tracker. Console tools available.')
@@ -40,9 +41,9 @@ export function covidProjection(country, options = {}) {
   let weekLater, dateObj, newTotal, daily
   let table = []
   last7days.forEach((date, index) => {
-    dateObj = new Date(date)
-    dateObj = new Date(dateObj.setDate(dateObj.getDate() + 7))
-    weekLater = `${dateObj.getMonth() + 1}/${dateObj.getDate()}/20`
+    dateObj = DateTime.fromISO(date)
+    dateObj = dateObj.plus({days: 7})
+    weekLater = `${dateObj.month + 1}/${dateObj.day}`
 
     acceleration = acceleration + accelerationDelta
     velocity = velocity + acceleration

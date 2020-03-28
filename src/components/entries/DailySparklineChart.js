@@ -1,4 +1,5 @@
 import React from 'react'
+import { DateTime } from 'luxon'
 
 import numeral from 'numeral'
 import { useTranslation } from 'react-i18next';
@@ -101,8 +102,8 @@ const DailySparklineChart =  ({
     lines = [0, 10, 100, 1000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / verticalScale * 100}))
   }
 
-  const firstDateObj = new Date(dates[0])
-  const mondayOffset = firstDateObj.getDay() - 1
+  const firstDateObj = DateTime.fromISO(dates[0])
+  const mondayOffset = firstDateObj.weekday - 1
 
   let divStyle = {}// {height: '6em', width: `${6 * aspectRatio}em`}
   return (
@@ -270,7 +271,7 @@ const CanvasAndGridLines = ({dates, lines, aspectRatio, mondayOffset, horizontal
           dominantBaseline='text-top'
           fontWeight={SVG_STYLES.gridLabel.fontWeight}
         >
-          {formatDateMonthAbbrDD(date, i18n)}
+          {formatDateMonthAbbrDD(date)}
         </text>
       )
     )}

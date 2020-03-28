@@ -98,49 +98,5 @@
   "description": {
     "classic": "Clasica",
     "compact": "Compacta"
-  },
-  "date": {
-    "formats": {
-      "month_dd": "{{month}} {{day}}",
-      "month_abbr_dd": "{{month}} {{day}}",
-      "weekday_abbr_dd": "{{weekday}} {{day}}"
-    },
-    "months": {
-      "1": "Enero",
-      "2": "Febrero",
-      "3": "Marzo",
-      "4": "Abril",
-      "5": "Mayo",
-      "6": "Junio",
-      "7": "Julio",
-      "8": "Agosto",
-      "9": "Septiembre",
-      "10": "Octubre",
-      "11": "Noviembre",
-      "12": "Diciembre"
-    },
-    "months_abbr": {
-      "1": "Ene",
-      "2": "Feb",
-      "3": "Mar",
-      "4": "Abr",
-      "5": "May",
-      "6": "Jun",
-      "7": "Jul",
-      "8": "Ago",
-      "9": "Sep",
-      "10": "Oct",
-      "11": "Nov",
-      "12": "Dic"
-    },
-    "weekdays_abbr": {
-      "0": "Dom",
-      "1": "Lun",
-      "2": "Mar",
-      "3": "Mie",
-      "4": "Jue",
-      "5": "Vie",
-      "6": "Sab"
-    }
   }
 }
