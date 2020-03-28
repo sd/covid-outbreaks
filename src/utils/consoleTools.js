@@ -2,7 +2,7 @@ import numeral from 'numeral'
 import padStart from 'lodash/padStart'
 import { DateTime } from 'luxon'
 
-export function setupConsoleTools (data, dates) {
+export function setupConsoleTools (data, dates, dispatch) {
   console.log('🦠📈COVID Outbreak Tracker. Console tools available.')
   window.covid = window.covid || {}
 
@@ -10,7 +10,11 @@ export function setupConsoleTools (data, dates) {
   data.forEach(entry => window.covid.entries[entry.code] = entry)
 
   window.covid.dates = dates
+  window.covid.dates = dates
   window.covid.projection = covidProjection
+  window.covid.config = (values) => {
+    dispatch({ type: 'UI.SET', values })
+  }
 }
 
 export function covidProjection(country, options = {}) {

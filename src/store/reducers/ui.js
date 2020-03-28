@@ -10,6 +10,7 @@ const initialState = {
   weeks: undefined,
   totals: undefined,
   keyDate: undefined,
+  showHospitalized: false,
   isExpanded: {}
 }
 

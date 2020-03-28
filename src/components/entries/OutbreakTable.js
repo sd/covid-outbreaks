@@ -5,7 +5,7 @@ import Information from '../ui/Information'
 
 import { formatDateWeekdayAbbrDDorFirstOfMonth } from '../../utils/dateFormats'
 
-import { VelocityWithStyles, AccelerationWithStyles, NumberWithStyles } from '../ui/NumbersWithStyles'
+import { VelocityWithStyles, AccelerationWithStyles } from '../ui/NumbersWithStyles'
 
 import './OutbreakTable.css'
 

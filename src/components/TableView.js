@@ -18,9 +18,10 @@ export const TableViewContext = React.createContext({})
 
 const TableView = ({
   loaded, data, allDates, last2weeks, last3weeks, last4weeks, last6weeks, last8weeks,
-  search, view, sort, filter, noScaling, weeks, totals,
-  pinPositions, pinEntry, unpinEntry,
-  isExpanded, expandEntry, collapseEntry,
+
+  ui,
+  pinEntry, unpinEntry,
+  expandEntry, collapseEntry,
   isMobile, isTablet, isDesktop,
   listRef, tableViewRef, listHeight
 }) => {
@@ -29,15 +30,15 @@ const TableView = ({
   if (loaded) {
     const comparisonEntry = data.find(entry => entry.code === 'it')
 
-    let viewOptions = { pinPositions }
-    viewOptions = viewOptionsForSorting(sort, viewOptions)
-    viewOptions = viewOptionsForFiltering(filter, viewOptions)
+    let viewOptions = { pinPositions: ui.pinPositions }
+    viewOptions = viewOptionsForSorting(ui.sort, viewOptions)
+    viewOptions = viewOptionsForFiltering(ui.filter, viewOptions)
 
     data = data.sort((a, b) => viewOptions.sorter(a, b, viewOptions ))
     data = data.filter((a) => viewOptions.filterer(a, viewOptions ))
 
-    if (search) {
-      let lcSearch = search.toLowerCase()
+    if (ui.search) {
+      let lcSearch = ui.search.toLowerCase()
       if (lcSearch[0] === '.' || lcSearch[0] === '=') {
         lcSearch = lcSearch.slice(1)
         data = data.filter(entry => filterBySearch(entry, { codes: lcSearch.split(','), language: i18n.language } ))
@@ -47,7 +48,7 @@ const TableView = ({
     }
 
     let totalsEntry
-    if (totals) {
+    if (ui.totals) {
       totalsEntry = totalizeEntries(data, allDates)
 
       totalsEntry.displayName = t(
@@ -61,17 +62,17 @@ const TableView = ({
     }
 
     let dates
-    if (weeks === 'two') {
+    if (ui.weeks === 'two') {
       dates = last2weeks
-    } else if (weeks === 'three') {
+    } else if (ui.weeks === 'three') {
       dates = last3weeks
-    } else if (weeks === 'four') {
+    } else if (ui.weeks === 'four') {
       dates = last4weeks
-    } else if (weeks === 'six') {
+    } else if (ui.weeks === 'six') {
       dates = last6weeks
-    } else if (weeks === 'eight') {
+    } else if (ui.weeks === 'eight') {
       dates = last8weeks
-    } else if (weeks === 'all') {
+    } else if (ui.weeks === 'all') {
       dates = allDates
     } else if (isMobile) {
       dates = last4weeks
@@ -83,10 +84,10 @@ const TableView = ({
 
     const actualProps = {
       data, dates, allDates,
-      viewOptions, pinPositions, isExpanded, pinEntry, unpinEntry, expandEntry, collapseEntry,
+      viewOptions, ui, pinEntry, unpinEntry, expandEntry, collapseEntry,
       totalsEntry, comparisonEntry,
       listRef, tableViewRef, listHeight,
-      isMobile, isTablet, isDesktop, view
+      isMobile, isTablet, isDesktop
     }
     return (
       <ActualTableView {...actualProps} />
@@ -104,9 +105,8 @@ const TableView = ({
 
 const ActualTableView = ({
   data, dates, allDates,
-  view, noScaling,
-  pinPositions, pinEntry, unpinEntry,
-  isExpanded, expandEntry, collapseEntry,
+  ui, pinEntry, unpinEntry,
+  expandEntry, collapseEntry,
   totalsEntry, comparisonEntry,
   listRef, tableViewRef, listHeight,
   isMobile, isTablet, isDesktop
@@ -123,24 +123,24 @@ const ActualTableView = ({
 
   const getEntryHeight = React.useCallback((index) => {
     if (index === 0) {
-      return view === 'classic' ? 140 : 120 // first row with ViewControls
+      return ui.view === 'classic' ? 140 : 120 // first row with ViewControls
     }
     else {
       return entryHeights.current[data[index - 1].code] || 120
     }
-  }, [data, view])
+  }, [data, ui.view])
 
   const sharedProps = { dates, allDates, pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile, isTablet, isDesktop }
 
-  const EntryView = { 'classic': OneTableEntry, 'compact': OneSummaryEntry }[view] || OneSummaryEntry
+  const EntryView = { 'classic': OneTableEntry, 'compact': OneSummaryEntry }[ui.view] || OneSummaryEntry
 
   return (
     <TableViewContext.Provider value={{ setEntryHeight }}>
       <div className='TableView' ref={tableViewRef}>
         {totalsEntry &&
           <EntryView {...sharedProps} pinEntry={undefined}
-            entry={totalsEntry} index={0} pinned={true} expanded={isExpanded['totals']}
-            sideBySide={!noScaling}
+            entry={totalsEntry} index={0} pinned={true} expanded={ui.isExpanded['totals']}
+            sideBySide={!ui.noScaling}
           />
         }
 
@@ -162,8 +162,8 @@ const ActualTableView = ({
                     </button>
                   } />
 
-                  { view === 'classic' && <MarkerLegend /> }
-                  { view !== 'classic' &&
+                  { ui.view === 'classic' && <MarkerLegend /> }
+                  { ui.view !== 'classic' &&
                     <>
                       &nbsp;&nbsp;&nbsp;&nbsp;
                       <span className='comparedTo'>
@@ -181,8 +181,8 @@ const ActualTableView = ({
               return (
                 <div style={{...style}}>
                   <EntryView {...sharedProps}
-                    entry={data[index - 1]} index={index - 1} pinned={pinPositions[code]} expanded={isExpanded[code]}
-                    sideBySide={!noScaling}
+                    entry={data[index - 1]} index={index - 1} pinned={ui.pinPositions[code]} expanded={ui.isExpanded[code]}
+                    ui={ui}
                     comparisonEntry={comparisonEntry}
                   />
                 </div>
@@ -205,15 +205,7 @@ const mapStateToProps = (state, ownProps) => ({
   last4weeks: state.data.last4weeks,
   last6weeks: state.data.last6weeks,
   last8weeks: state.data.last8weeks,
-  search: state.ui.search,
-  view: state.ui.view,
-  sort: state.ui.sort,
-  filter: state.ui.filter,
-  noScaling: state.ui.noScaling,
-  weeks: state.ui.weeks,
-  totals: state.ui.totals,
-  pinPositions: state.ui.pinPositions,
-  isExpanded: state.ui.isExpanded
+  ui: state.ui
 })
 
 const mapDispatchToProps = (dispatch, props) => ({

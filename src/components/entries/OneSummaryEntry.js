@@ -19,7 +19,7 @@ export const CASES_SCALE = 100
 const OneSummaryEntry = ({
   entry, index, dates, allDates,
   comparisonEntry,
-  pinned, expanded, sideBySide,
+  pinned, expanded, ui,
   pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile, isTablet
 }) => {
   const { setEntryHeight } = React.useContext(TableViewContext)
@@ -61,6 +61,7 @@ const OneSummaryEntry = ({
             entry={entry} dates={chartDates}
             aspectRatio={2} verticalScale={ entry.code === 'totals' ? 4 : undefined }
             comparisonEntry={comparisonEntry} comparisonOffset={comparisonOffset}
+            ui={ui}
           />
         </div>
 

@@ -12,9 +12,13 @@ const SVG_STYLES = {
     radius: 1.2,
     clipRadiusDelta: 1,
   },
-  line: {
+  deathsLine: {
     stroke: '#c00',
     strokeWidth: 2,
+  },
+  hospitalizedLine: {
+    stroke: '#663',
+    strokeWidth: 1,
   },
   comparableLine: {
     stroke: '#633',
@@ -44,7 +48,8 @@ const SVG_STYLES = {
 }
 
 const DailySparklineChart =  ({
-  entry, dates, aspectRatio, verticalScale,
+  entry, dates, ui,
+  aspectRatio, verticalScale,
   idPrefix, style,
   comparisonEntry, comparisonOffset,
 }) => {
@@ -93,6 +98,19 @@ const DailySparklineChart =  ({
     })
   }
 
+  let hospitalizedValues = undefined
+  if (ui.showHospitalized && entry.daily.hospitalized) {
+    let vs = dates.map(d => entry.daily.hospitalized[d])
+
+    hospitalizedValues = vs.map((v, index) => {
+      if (v) {
+        return ((Math.log10(v)) / verticalScale) * 100 / 2
+      } else {
+        return undefined
+      }
+    })
+  }
+
   let horizontalStep = 100 * aspectRatio / (dates.length - 1)
 
   let lines
@@ -124,11 +142,20 @@ const DailySparklineChart =  ({
           />
         }
 
+        {hospitalizedValues &&
+          <DataLine
+            scaledValues={hospitalizedValues} aspectRatio={aspectRatio}
+            strokeScale={strokeScale} radiusScale={radiusScale}
+            horizontalStep={horizontalStep} idPrefix={idPrefix}
+            masked={false} style={SVG_STYLES.hospitalizedLine}
+          />
+        }
+
         <DataLine
           scaledValues={scaledValues} aspectRatio={aspectRatio}
           strokeScale={strokeScale} radiusScale={radiusScale}
           horizontalStep={horizontalStep} idPrefix={idPrefix}
-          masked={false} style={SVG_STYLES.line}
+          masked={false} style={SVG_STYLES.deathsLine}
         />
 
         {/* <DataPoints
@@ -147,7 +174,7 @@ const DailySparklineChart =  ({
 
 const DataLine = ({scaledValues, aspectRatio, strokeScale, radiusScale, horizontalStep, idPrefix, masked, style}) => {
   return scaledValues.map((value, index) => {
-    style = style || SVG_STYLES.line
+    style = style || SVG_STYLES.deathsLine
 
     if (value !== undefined && scaledValues[index + 1] !== undefined) {
       return (

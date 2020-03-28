@@ -17,7 +17,7 @@ export const CASES_SCALE = 100
 const OneTableEntry = ({
   entry, index, dates, allDates,
   comparisonEntry,
-  pinned, expanded, sideBySide,
+  pinned, expanded, ui,
   pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile
 }) => {
   const { setEntryHeight } = React.useContext(TableViewContext)
@@ -27,6 +27,7 @@ const OneTableEntry = ({
   })
 
   const { t, i18n } = useTranslation();
+  const sideBySide = !ui.noScaling
 
   const { scale, maxScaledValue, columns } = calculateScale (entry, dates, { sideBySide, deathsScale: DEATHS_SCALE, casesScale: CASES_SCALE })
 

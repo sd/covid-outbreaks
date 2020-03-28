@@ -7,8 +7,8 @@ import { setupConsoleTools } from '../../utils/consoleTools'
 
 import csseCases from '../../data/csse.cases.csv'
 import csseDeaths from '../../data/csse.deaths.csv'
-import usDeaths from '../../data/us.deaths.csv'
-import esDeaths from '../../data/es.deaths.csv'
+import otherDeaths from '../../data/other.deaths.csv'
+import otherHospitalized from '../../data/other.hospitalized.csv'
 
 const initialState = {
   loaded: false,
@@ -65,34 +65,34 @@ function parseRawCSSEData (rawData, data = {}) {
 }
 
 
-function parseRawESData (rawData, data = {}) {
-  let dates = Object.keys(rawData[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
-  let isoDates = data.dates || []
-  let rows = data.rows || {}
-  let sources = data.sources || {}
-  let name
+// function parseRawESData (rawData, data = {}) {
+//   let dates = Object.keys(rawData[0]).filter(k => k.match(/\d+\/\d+\/\d+/))
+//   let isoDates = data.dates || []
+//   let rows = data.rows || {}
+//   let sources = data.sources || {}
+//   let name
 
-  rawData.forEach(rawRow => {
-    name = countryForCSSEName(['Spain', rawRow['CCAA']].filter(x => x).join(' > '))
+//   rawData.forEach(rawRow => {
+//     name = countryForCSSEName(['Spain', rawRow['CCAA']].filter(x => x).join(' > '))
 
-    if (name) {
-      rows[name] = rows[name] || {}
+//     if (name) {
+//       rows[name] = rows[name] || {}
 
-      dates.forEach(d => {
-        let [month, day] = d.split('/')
-        let isoDate = `2020-${padStart(month, 2, '0')}-${padStart(day, 2, '0')}`
-        isoDates = isoDates.concat(isoDate)
+//       dates.forEach(d => {
+//         let [month, day] = d.split('/')
+//         let isoDate = `2020-${padStart(month, 2, '0')}-${padStart(day, 2, '0')}`
+//         isoDates = isoDates.concat(isoDate)
 
-        if (rawRow[d] || rawRow[d] === '0') {
-          rows[name][isoDate] = parseInt(rawRow[d], 10)
-        }
-      })
-    }
-  })
+//         if (rawRow[d] || rawRow[d] === '0') {
+//           rows[name][isoDate] = parseInt(rawRow[d], 10)
+//         }
+//       })
+//     }
+//   })
 
-  isoDates = sortedUniq(isoDates.sort())
-  return { dates: isoDates, rows, codes: Object.keys(rows), sources }
-}
+//   isoDates = sortedUniq(isoDates.sort())
+//   return { dates: isoDates, rows, codes: Object.keys(rows), sources }
+// }
 
 function combineRows (data, combinationMethod, combinationRules) {
   let targetCodes
@@ -269,18 +269,19 @@ function processOneFile (fieldName, data, entries ) {
 
 export function fetchDataDispatcher (dispatch) {
   dispatch({type: 'DATA.LOAD.BEGIN'})
-  return Promise.all([d3CSV(csseCases), d3CSV(csseDeaths), d3CSV(usDeaths), d3CSV(esDeaths)])
+  return Promise.all([d3CSV(csseCases), d3CSV(csseDeaths), d3CSV(otherDeaths), d3CSV(otherHospitalized)])
     .then(results => {
-      let [csseCaseData, csseDeathData, usDeathData, esDeathData] = results
+      let [csseCaseData, csseDeathData, otherDeathData, otherHospitalizedData] = results
 
       let deathData = parseRawCSSEData(csseDeathData)
-      deathData = parseRawCSSEData(usDeathData, deathData)
-      deathData = parseRawESData(esDeathData, deathData)
+      deathData = parseRawCSSEData(otherDeathData, deathData)
       let caseData = parseRawCSSEData(csseCaseData, { dates: deathData.dates })
+      let hospitalizedData = parseRawCSSEData(otherHospitalizedData, { dates: deathData.dates })
 
-      let deathsResults = processOneFile('deaths', deathData, {})
-
-      let combinedResults = processOneFile('cases', caseData, deathsResults.entries)
+      let combinedResults = { entries: {} }
+      combinedResults = processOneFile('deaths', deathData, combinedResults.entries)
+      combinedResults = processOneFile('cases', caseData, combinedResults.entries)
+      combinedResults = processOneFile('hospitalized', hospitalizedData, combinedResults.entries)
 
       let data = Object.keys(combinedResults.entries).filter(k => k !== 'ignore').map(k => combinedResults.entries[k])
 
@@ -298,7 +299,7 @@ export function fetchDataDispatcher (dispatch) {
         lastDate
       }})
 
-      setupConsoleTools(data, allDates)
+      setupConsoleTools(data, allDates, dispatch)
 
       return data
     })
