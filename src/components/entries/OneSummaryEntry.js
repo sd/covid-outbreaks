@@ -58,7 +58,7 @@ const OneSummaryEntry = ({
         <div className='chart'>
           <DailySparklineChart
             entry={entry} dates={chartDates}
-            aspectRatio={2}
+            aspectRatio={2} verticalScale={ entry.code === 'totals' ? 4 : 3 }
             comparisonEntry={comparisonEntry} comparisonOffset={comparisonOffset}
           />
         </div>

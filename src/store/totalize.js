@@ -2,6 +2,7 @@
 export function totalizeEntries (data, dates) {
   let totalsEntry = {
     name: 'totals',
+    code: 'totals',
     daily: { deaths: {}, cases: {} },
     totals: { deaths: {}, cases: {} },
     velocity: { deaths: {}, cases: {} },

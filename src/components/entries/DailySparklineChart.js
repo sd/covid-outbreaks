@@ -42,15 +42,14 @@ const SVG_STYLES = {
   }
 }
 
-const VERTICAL_SCALE = 3
-
 const DailySparklineChart =  ({
-  entry, dates, aspectRatio,
+  entry, dates, aspectRatio, verticalScale,
   idPrefix, style,
   comparisonEntry, comparisonOffset,
 }) => {
   const { i18n } = useTranslation();
 
+  verticalScale = verticalScale || 3
   aspectRatio = (dates.length / 7)
 
   idPrefix = [idPrefix, 'sparkline', entry.code].map(x => x).join('-')
@@ -70,7 +69,7 @@ const DailySparklineChart =  ({
     if (v) {
       allZerosSoFar = false
       indexOfLastNonZero = index
-      return ((Math.log10(v)) / VERTICAL_SCALE) * 100
+      return ((Math.log10(v)) / verticalScale) * 100
     } else if (allZerosSoFar) {
       indexOfFirstNonZero = indexOfFirstNonZero + 1
       return undefined
@@ -86,7 +85,7 @@ const DailySparklineChart =  ({
 
     comparisonValues = offsetValues.map((v, index) => {
       if (v) {
-        return ((Math.log10(v)) / VERTICAL_SCALE) * 100
+        return ((Math.log10(v)) / verticalScale) * 100
       } else {
         return undefined
       }
@@ -95,7 +94,12 @@ const DailySparklineChart =  ({
 
   let horizontalStep = 100 * aspectRatio / (dates.length - 1)
 
-  let lines = [0, 10, 100, 1000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / VERTICAL_SCALE * 100}))
+  let lines
+  if (verticalScale > 3) {
+    lines = [0, 10, 100, 1000, 10000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / verticalScale * 100}))
+  } else {
+    lines = [0, 10, 100, 1000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / verticalScale * 100}))
+  }
 
   const firstDateObj = new Date(dates[0])
   const mondayOffset = firstDateObj.getDay() - 1

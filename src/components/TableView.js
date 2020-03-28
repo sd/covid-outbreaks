@@ -49,6 +49,7 @@ const TableView = ({
     let totalsEntry
     if (totals) {
       totalsEntry = totalizeEntries(data, allDates)
+
       totalsEntry.displayName = t(
         'entry.totals_title', "{{filter}} • TOTALS",
         {
