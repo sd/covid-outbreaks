@@ -35,9 +35,9 @@ const OneSummaryEntry = ({
 
   let chartDates
   if (isMobile) {
-    chartDates = allDates.slice(-21)
+    chartDates = allDates.slice(-35)
   } else {
-    chartDates = allDates.slice(-42)
+    chartDates = allDates.slice(-56)
   }
 
   let comparisonOffset = 0
@@ -58,7 +58,7 @@ const OneSummaryEntry = ({
         <div className='chart'>
           <DailySparklineChart
             entry={entry} dates={chartDates}
-            aspectRatio={2} verticalScale={ entry.code === 'totals' ? 4 : 3 }
+            aspectRatio={2} verticalScale={ entry.code === 'totals' ? 4 : undefined }
             comparisonEntry={comparisonEntry} comparisonOffset={comparisonOffset}
           />
         </div>

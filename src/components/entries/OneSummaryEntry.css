@@ -22,7 +22,7 @@
 .SummaryView-row-inner {
   display: grid;
 
-  grid-template-columns: auto minmax(24em,1fr);
+  grid-template-columns: 50% 50%;
   grid-template-rows: auto;
   grid-template-areas:
     "title totals"
@@ -46,7 +46,7 @@
 }
 
 .SummaryView-row-inner > .chart svg {
-  height: 6em;
+  height: 7em;
 }
 
 @media only screen and (max-width: 400px) {
@@ -77,6 +77,8 @@
 .SummaryView-row-inner > .tools {
   grid-area: tools;
   text-align: left;
+  margin-left: 0.7em;
+  margin-bottom: 0.8em;
   align-self: end;
   font-size: 80%;
 }

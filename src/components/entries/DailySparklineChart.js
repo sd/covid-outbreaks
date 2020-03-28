@@ -49,8 +49,8 @@ const DailySparklineChart =  ({
 }) => {
   const { i18n } = useTranslation();
 
-  verticalScale = verticalScale || 3
-  aspectRatio = (dates.length / 7)
+  verticalScale = verticalScale || 3.5
+  aspectRatio = (dates.length / 18)
 
   idPrefix = [idPrefix, 'sparkline', entry.code].map(x => x).join('-')
 
@@ -95,7 +95,7 @@ const DailySparklineChart =  ({
   let horizontalStep = 100 * aspectRatio / (dates.length - 1)
 
   let lines
-  if (verticalScale > 3) {
+  if (verticalScale > 3.8) {
     lines = [0, 10, 100, 1000, 10000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / verticalScale * 100}))
   } else {
     lines = [0, 10, 100, 1000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / verticalScale * 100}))
@@ -262,8 +262,8 @@ const CanvasAndGridLines = ({dates, lines, aspectRatio, mondayOffset, horizontal
       ((index + mondayOffset) % 7 === 0) && /* + 2 moves the lines to a monday */
         <text
           key={`text_${index}`}
-          x={SVG_STYLES.canvas.hPadding + (index * horizontalStep) + 4 }
-          y={SVG_STYLES.canvas.vPadding + SVG_STYLES.gridLabel.fontSize}
+          x={SVG_STYLES.canvas.hPadding + (index * horizontalStep) + 2 }
+          y={SVG_STYLES.canvas.vPadding + SVG_STYLES.gridLabel.fontSize - 2}
           fontSize={SVG_STYLES.gridLabel.fontSize}
           fill={SVG_STYLES.gridLabel.fill}
           textAnchor='start'
