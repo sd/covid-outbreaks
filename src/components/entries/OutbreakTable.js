@@ -5,7 +5,7 @@ import Information from '../ui/Information'
 
 import { formatDateWeekdayAbbrDDorFirstOfMonth } from '../../utils/dateFormats'
 
-import { VelocityWithStyles, AccelerationWithStyles } from '../ui/NumbersWithStyles'
+import { VelocityWithStyles, AccelerationWithStyles, NumberWithStyles } from '../ui/NumbersWithStyles'
 
 import './OutbreakTable.css'
 
@@ -49,20 +49,23 @@ const OutbreakTable = ({entry, dates}) => {
               </div>
 
               {entry.latestVelocity.deaths &&
-                <div className='velocity'>
+                <div className='velocity' title={`${entry.velocity.deaths[date]}`}>
                   <VelocityWithStyles value={entry.velocity.deaths[date]} />
                 </div>
               }
 
               {entry.latestAcceleration.deaths &&
                 <>
-                  <div className='acceleration'>
+                  <div className='acceleration' title={`${entry.acceleration.deaths[date]}`}>
                     <AccelerationWithStyles value={entry.acceleration.deaths[date]} />
                   </div>
-                  <div className='acceleration'>
+                  <div className='acceleration' title={`${entry.rollingAcceleration.deaths[date]}`}>
                     <AccelerationWithStyles value={entry.rollingAcceleration.deaths[date]} />
                   </div>
-                  <div className='acceleration'>
+                  <div className='acceleration change' title={`${entry.rollingAcceleration.deaths[date] / entry.rollingAcceleration.deaths[reversedDates[index + 1]]}`}>
+                    <AccelerationWithStyles percentChange={true} signs={true} arrows={false} format={'0'} value={entry.rollingAcceleration.deaths[date] / entry.rollingAcceleration.deaths[reversedDates[index + 1]]} />
+                  </div>
+                  <div className='acceleration' title={`${1 / entry.rollingAcceleration.deaths[date]}`}>
                     <AccelerationWithStyles value={1 / entry.rollingAcceleration.deaths[date]} arrows={false} colors={false} format={'0,000.0'} />
                   </div>
                 </>
@@ -107,6 +110,9 @@ const OutbreakTable = ({entry, dates}) => {
                 </div>
                 <div className='acceleration'>
                   <Trans i18nKey='entry.table_average_acceleration_label'>3-day Average</Trans>
+                </div>
+                <div className='acceleration change'>
+                  &nbsp;
                 </div>
                 <div className='acceleration'>
                   <Trans i18nKey='entry.table_days_to_tenx_label'>Days to 10x</Trans>

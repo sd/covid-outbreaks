@@ -12,7 +12,7 @@ export const VelocityWithStyles = ({value}) => {
     })}
     >
     {value
-      ? `${numeral(value).format('0,000.00')}`
+      ? `${numeral(value).format('0,000.000')}`
       : <span>&nbsp;</span>
     }
     </span>
@@ -21,17 +21,17 @@ export const VelocityWithStyles = ({value}) => {
 
 export const AccelerationWithStyles = (props) => {
   return <NumberWithStyles {...{
-    arrows: true, colors: true, abs: false, isPercent: false, className: 'acceleration',
+    arrows: true, colors: true, className: 'acceleration', format: '0,000.000',
     ...props
   }} />
 }
 
 export const NumberWithStyles = ({
   value, className, format,
-  arrows = false, percent = false, colors = false, abs = false
+  arrows = false, signs = false, percentChange = false, colors = false, abs = false
 }) => {
 
-  if (percent) {
+  if (percentChange) {
     return (
       <span className={classNames(className, {
         increasing: colors && value > 1,
@@ -41,12 +41,14 @@ export const NumberWithStyles = ({
         {value > 1 &&
           <span>
             {arrows && <span className='arrow'>▲</span>}
+            {signs && <span>+</span>}
             {numeral((value - 1) * 100).format(format || '0,000.0')}%
           </span>
         }
         {value < 1 &&
           <span>
             {arrows && <span className='arrow'>▼</span>}
+            {signs && <span>-</span>}
             {numeral((1 - value) * 100).format(format || '0,000.0')}%
           </span>
         }

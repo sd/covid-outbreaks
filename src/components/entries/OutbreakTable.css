@@ -65,3 +65,9 @@
   margin-top: 0.4em;
   font-size: 100%;
 }
+
+.OutbreakTable .acceleration.change {
+  font-weight: normal;
+  font-size: 80%;
+  margin-bottom: 0.5em;
+}
