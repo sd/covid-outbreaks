@@ -34,12 +34,14 @@ const OneSummaryEntry = ({
   //   dates = dates.slice(0, dates.length - 1)
   // }
 
-  let chartDates
+  let weeksToShow
   if (isMobile) {
-    chartDates = allDates.slice(-35)
+    weeksToShow = expanded ? 8 : 5
   } else {
-    chartDates = allDates.slice(-56)
+    weeksToShow = expanded ? 12 : 9
   }
+
+  let chartDates = allDates.slice(-(7 * weeksToShow))
 
   let comparisonOffset = 0
 

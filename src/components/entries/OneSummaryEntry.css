@@ -45,14 +45,44 @@
   text-align: right;
 }
 
+
 .SummaryView-row-inner > .chart svg {
-  height: 7em;
+  width: 22em;
+}
+
+.mobile .SummaryView-row-inner > .chart svg {
+  width: 18em;
+}
+
+.mobile .SummaryView-row-inner {
+  grid-template-columns: 60% 40%;
 }
 
 @media only screen and (max-width: 400px) {
   .SummaryView-row-inner > .chart svg {
-    height: 5.5em;
+    width: 12em;
   }
+}
+
+.expanded .SummaryView-row-inner > .chart svg {
+  width: 38em;
+}
+.expanded .SummaryView-row-inner {
+  grid-template-columns: 75% 25%;
+}
+
+.mobile .expanded .SummaryView-row-inner {
+  grid-template-columns: 60% 40%;
+  grid-template-areas:
+    "title totals"
+    ".     metrics"
+    "chart chart"
+    ".     tools"
+    "more more";
+}
+
+.mobile .expanded .SummaryView-row-inner > .chart svg {
+  width: 30em;
 }
 
 .SummaryView-row-inner > .title {

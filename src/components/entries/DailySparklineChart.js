@@ -14,7 +14,7 @@ const SVG_STYLES = {
   },
   deathsLine: {
     stroke: '#c00',
-    strokeWidth: 2,
+    strokeWidth: 1.2,
   },
   hospitalizedLine: {
     stroke: '#663',
@@ -22,15 +22,17 @@ const SVG_STYLES = {
   },
   comparableLine: {
     stroke: '#633',
-    strokeWidth: 1,
+    strokeWidth: 0.8,
   },
   canvas: {
-    hPadding: 35,
-    vPadding: 10,
+    paddingTop: 10,
+    paddingBottom: 10,
+    paddingLeft: 50,
+    paddingRight: 50,
     fill: '' //'#302a2a'
   },
   legend: {
-    hPadding: 8,
+    paddingLeft: 6,
     fontSize: 13,
     fill: '#c00',
     fontWeight: 'bold'
@@ -40,15 +42,18 @@ const SVG_STYLES = {
     stroke: '#444',
   },
   gridLabel: {
-    fontSize: 12,
-    fill: '#444',
-    hPadding: 2,
-    vPadding: 2,
+    fontSize: 10,
+    fill: '#555',
+    paddingLeft: 2,
+    paddingTop: -2,
+    paddingRight: 2,
+    paddingBottom: 0,
   }
 }
 
 const DailySparklineChart =  ({
   entry, dates, ui,
+  gridSize,
   aspectRatio, verticalScale,
   idPrefix, style,
   comparisonEntry, comparisonOffset,
@@ -56,7 +61,8 @@ const DailySparklineChart =  ({
   const { i18n } = useTranslation();
 
   verticalScale = verticalScale || (ui.showHospitalized ? 5 : 3.5)
-  aspectRatio = (dates.length / 21)
+
+  aspectRatio = (dates.length / 7) / verticalScale
 
   idPrefix = [idPrefix, 'sparkline', entry.code].map(x => x).join('-')
 
@@ -113,14 +119,15 @@ const DailySparklineChart =  ({
 
   let horizontalStep = 100 * aspectRatio / (dates.length - 1)
 
-  let lines
+  let gridLevels
   if (verticalScale > 4.8) {
-    lines = [0, 10, 100, 1000, 10000, 100000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / verticalScale * 100}))
+    gridLevels = [0, 10, 100, 1000, 10000, 100000]
   } if (verticalScale > 3.8) {
-    lines = [0, 10, 100, 1000, 10000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / verticalScale * 100}))
+    gridLevels = [0, 10, 100, 1000, 10000]
   } else {
-    lines = [0, 10, 100, 1000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / verticalScale * 100}))
+    gridLevels = [0, 10, 100, 1000]
   }
+  let lines = gridLevels.map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / verticalScale * 100}))
 
   const firstDateObj = DateTime.fromISO(dates[0])
   const mondayOffset = firstDateObj.weekday - 1
@@ -128,7 +135,7 @@ const DailySparklineChart =  ({
   let divStyle = {}// {height: '6em', width: `${6 * aspectRatio}em`}
   return (
     <div className='DailySparklineChart' style={divStyle}>
-      <svg viewBox={`0 0 ${100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} ${100 + 2 * SVG_STYLES.canvas.vPadding}`}>
+      <svg viewBox={`0 0 ${100 * aspectRatio + SVG_STYLES.canvas.paddingLeft + SVG_STYLES.canvas.paddingRight} ${100 + SVG_STYLES.canvas.paddingTop + SVG_STYLES.canvas.paddingBottom}`}>
 
         <CanvasAndGridLines
           dates={dates} lines={lines} aspectRatio={aspectRatio}
@@ -183,10 +190,10 @@ const DataLine = ({scaledValues, aspectRatio, strokeScale, radiusScale, horizont
         <line
           key={`maskedline-${index}`}
           mask={masked ? `url(#${idPrefix}-mask-${index})` : ''}
-          x1={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-          y1={100 + SVG_STYLES.canvas.vPadding - value}
-          x2={SVG_STYLES.canvas.hPadding + ((index + 1 ) * horizontalStep)}
-          y2={100 + SVG_STYLES.canvas.vPadding - scaledValues[index + 1]}
+          x1={SVG_STYLES.canvas.paddingLeft + (index * horizontalStep)}
+          y1={100 + SVG_STYLES.canvas.paddingTop - value}
+          x2={SVG_STYLES.canvas.paddingLeft + ((index + 1 ) * horizontalStep)}
+          y2={100 + SVG_STYLES.canvas.paddingTop - scaledValues[index + 1]}
           strokeWidth={style.strokeWidth * strokeScale}
           stroke={style.stroke}
           strokeLinecap='round'
@@ -196,8 +203,8 @@ const DataLine = ({scaledValues, aspectRatio, strokeScale, radiusScale, horizont
       return (
         <circle
           key={index}
-          cx={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-          cy={100 + SVG_STYLES.canvas.vPadding - value}
+          cx={SVG_STYLES.canvas.paddingLeft + (index * horizontalStep)}
+          cy={100 + SVG_STYLES.canvas.paddingTop - value}
           r={style.strokeWidth * strokeScale / 2}
           fill={style.stroke}
         />
@@ -212,28 +219,28 @@ const FirstAndLastNumbers = ({scaledValues, values, horizontalStep, indexOfFirst
   <>
     {values[indexOfFirstNonZero] &&
       <text
-        x={SVG_STYLES.canvas.hPadding + (indexOfFirstNonZero * horizontalStep) - SVG_STYLES.legend.hPadding}
-        y={100 + SVG_STYLES.canvas.vPadding - scaledValues[indexOfFirstNonZero]}
+        x={SVG_STYLES.canvas.paddingLeft + (indexOfFirstNonZero * horizontalStep) - SVG_STYLES.legend.paddingLeft}
+        y={100 + SVG_STYLES.canvas.paddingTop - scaledValues[indexOfFirstNonZero]}
         fontSize={SVG_STYLES.legend.fontSize}
         fill={SVG_STYLES.legend.fill}
         textAnchor='end'
         dominantBaseline='central'
         fontWeight={SVG_STYLES.legend.fontWeight}
       >
-        {values[indexOfFirstNonZero]}
+        {numeral(values[indexOfFirstNonZero]).format('0,000')}
       </text>
     }
     {values[indexOfLastNonZero] &&
       <text
-        x={SVG_STYLES.canvas.hPadding + (indexOfLastNonZero) * horizontalStep + SVG_STYLES.legend.hPadding}
-        y={100 + SVG_STYLES.canvas.vPadding - scaledValues[indexOfLastNonZero]}
+        x={SVG_STYLES.canvas.paddingLeft + (indexOfLastNonZero) * horizontalStep + SVG_STYLES.legend.paddingLeft}
+        y={100 + SVG_STYLES.canvas.paddingTop - scaledValues[indexOfLastNonZero]}
         fontSize={SVG_STYLES.legend.fontSize}
         fill={SVG_STYLES.legend.fill}
         textAnchor='start'
         dominantBaseline='central'
         fontWeight={SVG_STYLES.legend.fontWeight}
       >
-        {values[indexOfLastNonZero]}
+        {numeral(values[indexOfLastNonZero]).format('0,000')}
       </text>
     }
   </>
@@ -244,7 +251,7 @@ const CanvasAndGridLines = ({dates, lines, aspectRatio, mondayOffset, horizontal
     {SVG_STYLES.canvas.fill &&
       <rect
         x='0' y='0'
-        width={100 * aspectRatio + 2 * SVG_STYLES.canvas.hPadding} height={100 + 2 * SVG_STYLES.canvas.vPadding}
+        width={100 * aspectRatio + SVG_STYLES.canvas.paddingLeft + SVG_STYLES.canvas.paddingRight} height={100 + SVG_STYLES.canvas.paddingTop + SVG_STYLES.canvas.paddingBottom}
         fill={SVG_STYLES.canvas.fill}
       />
     }
@@ -253,17 +260,17 @@ const CanvasAndGridLines = ({dates, lines, aspectRatio, mondayOffset, horizontal
       <React.Fragment key={`grid-${index}`}>
         <line
           key={`gridline-${index}`}
-          x1={SVG_STYLES.canvas.hPadding}
-          y1={100 + SVG_STYLES.canvas.vPadding - value}
-          x2={100 * aspectRatio + SVG_STYLES.canvas.hPadding}
-          y2={100 + SVG_STYLES.canvas.vPadding - value}
+          x1={SVG_STYLES.canvas.paddingLeft}
+          y1={100 + SVG_STYLES.canvas.paddingTop - value}
+          x2={100 * aspectRatio + SVG_STYLES.canvas.paddingLeft}
+          y2={100 + SVG_STYLES.canvas.paddingTop - value}
           strokeWidth={SVG_STYLES.grid.strokeWidth}
           stroke={SVG_STYLES.grid.stroke}
         />
         <text
           key={`gridlabel-${index}`}
-          x={SVG_STYLES.canvas.hPadding - SVG_STYLES.gridLabel.vPadding }
-          y={100 + SVG_STYLES.canvas.vPadding - value}
+          x={SVG_STYLES.canvas.paddingLeft - SVG_STYLES.gridLabel.paddingRight }
+          y={100 + SVG_STYLES.canvas.paddingTop - value}
           fontSize={SVG_STYLES.gridLabel.fontSize}
           fill={SVG_STYLES.gridLabel.fill}
           textAnchor='end'
@@ -279,10 +286,10 @@ const CanvasAndGridLines = ({dates, lines, aspectRatio, mondayOffset, horizontal
       ((index + mondayOffset) % 7 === 0) && /* + 2 moves the lines to a monday */
         <line
           key={`line_${index}`}
-          x1={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-          y1={SVG_STYLES.canvas.vPadding}
-          x2={SVG_STYLES.canvas.hPadding + (index * horizontalStep)}
-          y2={100 + SVG_STYLES.canvas.vPadding}
+          x1={SVG_STYLES.canvas.paddingLeft + (index * horizontalStep)}
+          y1={SVG_STYLES.canvas.paddingTop}
+          x2={SVG_STYLES.canvas.paddingLeft + (index * horizontalStep)}
+          y2={100 + SVG_STYLES.canvas.paddingTop}
           strokeWidth={SVG_STYLES.grid.strokeWidth}
           stroke={SVG_STYLES.grid.stroke}
         />
@@ -292,8 +299,8 @@ const CanvasAndGridLines = ({dates, lines, aspectRatio, mondayOffset, horizontal
       ((index + mondayOffset) % 7 === 0) && /* + 2 moves the lines to a monday */
         <text
           key={`text_${index}`}
-          x={SVG_STYLES.canvas.hPadding + (index * horizontalStep) + 2 }
-          y={SVG_STYLES.canvas.vPadding + SVG_STYLES.gridLabel.fontSize - 2}
+          x={SVG_STYLES.canvas.paddingLeft + (index * horizontalStep) + SVG_STYLES.gridLabel.paddingLeft }
+          y={SVG_STYLES.canvas.paddingTop + SVG_STYLES.gridLabel.fontSize + SVG_STYLES.gridLabel.paddingTop}
           fontSize={SVG_STYLES.gridLabel.fontSize}
           fill={SVG_STYLES.gridLabel.fill}
           textAnchor='start'

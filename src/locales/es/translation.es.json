@@ -32,7 +32,7 @@
     "pin_button": "fijar",
     "unpin_button": "fijado al tope",
     "expand_button": "mostrar más",
-    "collapse_button": "esconder",
+    "collapse_button": "mostrar menos",
     "outbreak_day": "Día {{day}}",
     "days_to_up_tenx": "<0 /> días para subir 10x",
     "days_to_down_tenx": "<0 /> días para bajar 10x",
