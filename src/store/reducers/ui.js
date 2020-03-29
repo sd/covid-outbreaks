@@ -11,6 +11,7 @@ const initialState = {
   totals: undefined,
   keyDate: undefined,
   showHospitalized: false,
+  compareTo: undefined,
   isExpanded: {}
 }
 

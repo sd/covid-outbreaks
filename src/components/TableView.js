@@ -28,7 +28,7 @@ const TableView = ({
   const { t, i18n } = useTranslation();
 
   if (loaded) {
-    const comparisonEntry = data.find(entry => entry.code === 'it')
+    const comparisonEntry = data.find(entry => entry.code === (ui.compareTo || 'it'))
 
     let viewOptions = { pinPositions: ui.pinPositions }
     viewOptions = viewOptionsForSorting(ui.sort, viewOptions)
