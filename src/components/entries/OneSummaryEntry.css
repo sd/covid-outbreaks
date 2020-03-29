@@ -64,21 +64,17 @@
   }
 }
 
-.expanded .SummaryView-row-inner > .chart svg {
-  width: 38em;
-}
 .expanded .SummaryView-row-inner {
-  grid-template-columns: 75% 25%;
-}
-
-.mobile .expanded .SummaryView-row-inner {
-  grid-template-columns: 60% 40%;
   grid-template-areas:
     "title totals"
     ".     metrics"
     "chart chart"
     ".     tools"
     "more more";
+}
+
+.expanded .SummaryView-row-inner > .chart svg {
+  width: 50em;
 }
 
 .mobile .expanded .SummaryView-row-inner > .chart svg {

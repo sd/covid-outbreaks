@@ -38,7 +38,7 @@ const OneSummaryEntry = ({
   if (isMobile) {
     weeksToShow = expanded ? 8 : 5
   } else {
-    weeksToShow = expanded ? 12 : 9
+    weeksToShow = expanded ? 14 : 9
   }
 
   let chartDates = allDates.slice(-(7 * weeksToShow))
