@@ -21,7 +21,7 @@ export const VelocityWithStyles = ({value}) => {
 
 export const AccelerationWithStyles = (props) => {
   return <NumberWithStyles {...{
-    arrows: true, colors: true, className: 'acceleration', format: '0,000.000',
+    arrows: true, false: true, className: 'acceleration', format: '0,000.000',
     ...props
   }} />
 }
@@ -40,14 +40,14 @@ export const NumberWithStyles = ({
       >
         {value > 1 &&
           <span>
-            {arrows && <span className='arrow'>▲</span>}
+            {arrows && <span className='arrow increasing'>▲</span>}
             {signs && <span>+</span>}
             {numeral((value - 1) * 100).format(format || '0,000.0')}%
           </span>
         }
         {value < 1 &&
           <span>
-            {arrows && <span className='arrow'>▼</span>}
+            {arrows && <span className='arrow decreasing'>▼</span>}
             {signs && <span>-</span>}
             {numeral((1 - value) * 100).format(format || '0,000.0')}%
           </span>
@@ -66,14 +66,14 @@ export const NumberWithStyles = ({
       >
         {value > 0 &&
           <span>
-            {arrows && <span className='arrow'>▲</span>}
+            {arrows && <span className='arrow increasing'>▲</span>}
             {numeral(displayValue).format(format || '0,000.00')}
           </span>
         }
         {value === 0 && <span>&nbsp;</span>}
         {value < 0 &&
           <span>
-            {arrows && <span className='arrow'>▼</span>}
+            {arrows && <span className='arrow decreasing'>▼</span>}
             {numeral(displayValue).format(format || '0,000.00')}
           </span>
         }

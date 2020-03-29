@@ -197,6 +197,13 @@
   color: #d55;
 }
 
+.arrow.decreasing {
+  color: #5d5;
+}
+.arrow.increasing {
+  color: #d55;
+}
+
 .lightTheme .acceleration.decreasing {
   color: #4c4;
 }

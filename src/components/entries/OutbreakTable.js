@@ -63,7 +63,7 @@ const OutbreakTable = ({entry, dates}) => {
                     <AccelerationWithStyles value={entry.rollingAcceleration.deaths[date]} />
                   </div>
                   <div className='acceleration change' title={`${entry.rollingAcceleration.deaths[date] / entry.rollingAcceleration.deaths[reversedDates[index + 1]]}`}>
-                    <AccelerationWithStyles percentChange={true} signs={true} arrows={false} format={'0'} value={entry.rollingAcceleration.deaths[date] / entry.rollingAcceleration.deaths[reversedDates[index + 1]]} />
+                    <AccelerationWithStyles percentChange={true} signs={true} colors={true} arrows={false} format={'0'} value={entry.rollingAcceleration.deaths[date] / entry.rollingAcceleration.deaths[reversedDates[index + 1]]} />
                   </div>
                   <div className='acceleration' title={`${1 / entry.rollingAcceleration.deaths[date]}`}>
                     <AccelerationWithStyles value={1 / entry.rollingAcceleration.deaths[date]} arrows={false} colors={false} format={'0,000.0'} />
