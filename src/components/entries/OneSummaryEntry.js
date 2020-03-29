@@ -8,6 +8,7 @@ import { DateTime } from 'luxon'
 import './OneSummaryEntry.css'
 
 import DailySparklineChart from './DailySparklineChart'
+import AccelerationChart from './AccelerationChart'
 import OutbreakTable from './OutbreakTable'
 import { Trans, useTranslation } from 'react-i18next';
 import { TableViewContext } from '../TableView'
@@ -60,10 +61,11 @@ const OneSummaryEntry = ({
       <div className='SummaryView-row-inner'>
         <div className='chart'>
           <DailySparklineChart
-            entry={entry} dates={chartDates}
-            aspectRatio={2} verticalScale={ entry.code === 'totals' ? 4 : undefined }
+            entry={entry} dates={chartDates} ui={ui}
             comparisonEntry={comparisonEntry} comparisonOffset={comparisonOffset}
-            ui={ui}
+          />
+          <AccelerationChart
+            entry={entry} dates={chartDates} ui={ui}
           />
         </div>
 

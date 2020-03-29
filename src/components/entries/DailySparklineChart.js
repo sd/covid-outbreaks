@@ -53,16 +53,14 @@ const SVG_STYLES = {
 
 const DailySparklineChart =  ({
   entry, dates, ui,
-  gridSize,
-  aspectRatio, verticalScale,
   idPrefix, style,
   comparisonEntry, comparisonOffset,
 }) => {
   const { i18n } = useTranslation();
 
-  verticalScale = verticalScale || (ui.showHospitalized ? 5 : 3.5)
+  let verticalScale = ui.showHospitalized ? 5 : 3.5
 
-  aspectRatio = (dates.length / 7) / verticalScale
+  let aspectRatio = (dates.length / 7) / verticalScale
 
   idPrefix = [idPrefix, 'sparkline', entry.code].map(x => x).join('-')
 
@@ -147,7 +145,7 @@ const DailySparklineChart =  ({
             scaledValues={comparisonValues} aspectRatio={aspectRatio}
             strokeScale={strokeScale} radiusScale={radiusScale}
             horizontalStep={horizontalStep} idPrefix={`${idPrefix}-comp`}
-            masked={false} style={SVG_STYLES.comparableLine}
+            style={SVG_STYLES.comparableLine}
           />
         }
 
@@ -156,7 +154,7 @@ const DailySparklineChart =  ({
             scaledValues={hospitalizedValues} aspectRatio={aspectRatio}
             strokeScale={strokeScale} radiusScale={radiusScale}
             horizontalStep={horizontalStep} idPrefix={idPrefix}
-            masked={false} style={SVG_STYLES.hospitalizedLine}
+            style={SVG_STYLES.hospitalizedLine}
           />
         }
 
@@ -164,7 +162,7 @@ const DailySparklineChart =  ({
           scaledValues={scaledValues} aspectRatio={aspectRatio}
           strokeScale={strokeScale} radiusScale={radiusScale}
           horizontalStep={horizontalStep} idPrefix={idPrefix}
-          masked={false} style={SVG_STYLES.deathsLine}
+          style={SVG_STYLES.deathsLine}
         />
 
         {/* <DataPoints
@@ -174,7 +172,8 @@ const DailySparklineChart =  ({
         <FirstAndLastNumbers
           scaledValues={scaledValues} values={values}
           horizontalStep={horizontalStep}
-          indexOfFirstNonZero={indexOfFirstNonZero} indexOfLastNonZero={indexOfLastNonZero} />
+          indexOfFirstNonZero={indexOfFirstNonZero} indexOfLastNonZero={indexOfLastNonZero}
+        />
 
       </svg>
     </div>
@@ -188,8 +187,7 @@ const DataLine = ({scaledValues, aspectRatio, strokeScale, radiusScale, horizont
     if (value !== undefined && scaledValues[index + 1] !== undefined) {
       return (
         <line
-          key={`maskedline-${index}`}
-          mask={masked ? `url(#${idPrefix}-mask-${index})` : ''}
+          key={`line-${index}`}
           x1={SVG_STYLES.canvas.paddingLeft + (index * horizontalStep)}
           y1={100 + SVG_STYLES.canvas.paddingTop - value}
           x2={SVG_STYLES.canvas.paddingLeft + ((index + 1 ) * horizontalStep)}
