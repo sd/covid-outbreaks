@@ -7,6 +7,11 @@ export function formatDateMonthDD (d) {
   return date.toFormat('LLLL d')
 }
 
+export function formatDateMMDD (d) {
+  const date = DateTime.fromISO(d)
+  return date.toLocaleString().replace('/2020', '')
+}
+
 export function formatDateMonthAbbrDD (d) {
   const date = DateTime.fromISO(d)
   return date.toFormat('LLL d')

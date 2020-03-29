@@ -44,6 +44,7 @@ let nameToCodeIndex = {
   'Spain > Navarra': 'es.nav',
   'Spain > País Vasco': 'es.pva',
   'Spain > La Rioja': 'es.rio',
+  'Spain > ignore': 'ignore',
 
   'Cruise Ship > Diamond Princess': 'other.diamond_princess',
   'Grand Princess': 'other.grand_princess',

@@ -4,7 +4,7 @@ import { DateTime } from 'luxon'
 import numeral from 'numeral'
 import { useTranslation } from 'react-i18next';
 
-import { formatDateMonthAbbrDD } from '../../utils/dateFormats'
+import { formatDateMMDD } from '../../utils/dateFormats'
 
 const SVG_STYLES = {
   marker: {
@@ -55,8 +55,8 @@ const DailySparklineChart =  ({
 }) => {
   const { i18n } = useTranslation();
 
-  verticalScale = verticalScale || 3.5
-  aspectRatio = (dates.length / 18)
+  verticalScale = verticalScale || (ui.showHospitalized ? 5 : 3.5)
+  aspectRatio = (dates.length / 21)
 
   idPrefix = [idPrefix, 'sparkline', entry.code].map(x => x).join('-')
 
@@ -104,7 +104,7 @@ const DailySparklineChart =  ({
 
     hospitalizedValues = vs.map((v, index) => {
       if (v) {
-        return ((Math.log10(v)) / verticalScale) * 100 / 2
+        return ((Math.log10(v)) / verticalScale) * 100
       } else {
         return undefined
       }
@@ -114,7 +114,9 @@ const DailySparklineChart =  ({
   let horizontalStep = 100 * aspectRatio / (dates.length - 1)
 
   let lines
-  if (verticalScale > 3.8) {
+  if (verticalScale > 4.8) {
+    lines = [0, 10, 100, 1000, 10000, 100000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / verticalScale * 100}))
+  } if (verticalScale > 3.8) {
     lines = [0, 10, 100, 1000, 10000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / verticalScale * 100}))
   } else {
     lines = [0, 10, 100, 1000].map(n => ({label: numeral(n).format('0,000'), value: n === 0 ? 0 : Math.log10(n) / verticalScale * 100}))
@@ -298,7 +300,7 @@ const CanvasAndGridLines = ({dates, lines, aspectRatio, mondayOffset, horizontal
           dominantBaseline='text-top'
           fontWeight={SVG_STYLES.gridLabel.fontWeight}
         >
-          {formatDateMonthAbbrDD(date)}
+          {formatDateMMDD(date)}
         </text>
       )
     )}
