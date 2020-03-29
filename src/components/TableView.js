@@ -7,12 +7,12 @@ import './TableView.css'
 
 import MarkerLegend from '../components/ui/MarkerLegend'
 import Information from '../components/ui/Information'
-import OneTableEntry from './entries/OneTableEntry'
+// import OneTableEntry from './entries/OneTableEntry'
 import OneSummaryEntry from './entries/OneSummaryEntry'
 
 import { viewOptionsForSorting } from '../store/sorters'
 import { viewOptionsForFiltering, filterBySearch } from '../store/filters'
-import { totalizeEntries } from '../store/totalize'
+// import { totalizeEntries } from '../store/totalize'
 
 export const TableViewContext = React.createContext({})
 
@@ -25,7 +25,7 @@ const TableView = ({
   isMobile, isTablet, isDesktop,
   listRef, tableViewRef, listHeight
 }) => {
-  const { t, i18n } = useTranslation();
+  const { i18n } = useTranslation();
 
   if (loaded) {
     const comparisonEntry = data.find(entry => entry.code === (ui.compareTo || 'it'))
@@ -48,39 +48,39 @@ const TableView = ({
     }
 
     let totalsEntry
-    if (ui.totals) {
-      totalsEntry = totalizeEntries(data, allDates)
+    // if (ui.totals) {
+    //   totalsEntry = totalizeEntries(data, allDates)
 
-      totalsEntry.displayName = t(
-        'entry.totals_title', "{{filter}} • TOTALS",
-        {
-          filter: t(`filter.description.${viewOptions.filter}`, viewOptions.filterDescription)
-        }
-      )
+    //   totalsEntry.displayName = t(
+    //     'entry.totals_title', "{{filter}} • TOTALS",
+    //     {
+    //       filter: t(`filter.description.${viewOptions.filter}`, viewOptions.filterDescription)
+    //     }
+    //   )
 
-      totalsEntry.emoji = '🌎'
-    }
+    //   totalsEntry.emoji = '🌎'
+    // }
 
     let dates
-    if (ui.weeks === 'two') {
-      dates = last2weeks
-    } else if (ui.weeks === 'three') {
-      dates = last3weeks
-    } else if (ui.weeks === 'four') {
-      dates = last4weeks
-    } else if (ui.weeks === 'six') {
-      dates = last6weeks
-    } else if (ui.weeks === 'eight') {
-      dates = last8weeks
-    } else if (ui.weeks === 'all') {
+    // if (ui.weeks === 'two') {
+    //   dates = last2weeks
+    // } else if (ui.weeks === 'three') {
+    //   dates = last3weeks
+    // } else if (ui.weeks === 'four') {
+    //   dates = last4weeks
+    // } else if (ui.weeks === 'six') {
+    //   dates = last6weeks
+    // } else if (ui.weeks === 'eight') {
+    //   dates = last8weeks
+    // } else if (ui.weeks === 'all') {
       dates = allDates
-    } else if (isMobile) {
-      dates = last4weeks
-    } else if (isTablet) {
-      dates = last6weeks
-    } else {
-      dates = last6weeks
-    }
+    // } else if (isMobile) {
+    //   dates = last4weeks
+    // } else if (isTablet) {
+    //   dates = last6weeks
+    // } else {
+    //   dates = last6weeks
+    // }
 
     const actualProps = {
       data, dates, allDates,
@@ -132,7 +132,10 @@ const ActualTableView = ({
 
   const sharedProps = { dates, allDates, pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile, isTablet, isDesktop }
 
-  const EntryView = { 'classic': OneTableEntry, 'compact': OneSummaryEntry }[ui.view] || OneSummaryEntry
+  const EntryView = {
+    // 'classic': OneTableEntry,
+    'compact': OneSummaryEntry
+  }[ui.view] || OneSummaryEntry
 
   return (
     <TableViewContext.Provider value={{ setEntryHeight }}>

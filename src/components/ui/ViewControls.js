@@ -111,7 +111,7 @@ const ViewControls = ({
               </div>
             </div>
 
-            <div className='form-row'>
+            {/* <div className='form-row'>
               <div className='form-label'><Trans i18nKey='view_controls.view_label'>Style</Trans></div>
               <div className='form-field'>
                 <select value={view || ''} onChange={(event) => setUI({view: event.target.value})}>
@@ -119,9 +119,9 @@ const ViewControls = ({
                   <option value={'classic'}>{t(`view.description.classic`, 'Classic')}</option>
                 </select>
               </div>
-            </div>
+            </div> */}
 
-            <div className='form-row'>
+            {/* <div className='form-row'>
               <div className='form-label'>
                 <input
                   type='checkbox' id='totals' name='noScaling' checked={!!totals}
@@ -131,9 +131,9 @@ const ViewControls = ({
               <div className='form-field'>
                 <label htmlFor='totals'><Trans i18nKey='view_controls.totals_label'>Show Totals</Trans></label>
               </div>
-            </div>
+            </div> */}
 
-            <div className='form-row'>
+            {/* <div className='form-row'>
               <div className='form-label'>
                 <input
                   type='checkbox' id='noScaling' name='noScaling' checked={!!noScaling}
@@ -143,7 +143,7 @@ const ViewControls = ({
               <div className='form-field'>
                 <label htmlFor='noScaling'><Trans i18nKey='view_controls.no_scaling_label'>Preserve vertical scale</Trans></label>
               </div>
-            </div>
+            </div> */}
 
             <div className='form-row form-single buttons'>
               <button onClick={() => { resetUI(); close() }}><Trans i18nKey='view_controls.reset_button'>Reset to defaults</Trans></button>

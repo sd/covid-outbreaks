@@ -5,7 +5,7 @@ import sortedUniq from 'lodash/sortedUniq'
 import { findAggregateMapping, findOverlayMapping, countryForCSSEName, attributesForCountry } from '../helpers/countryInfo'
 import { setupConsoleTools } from '../../utils/consoleTools'
 
-import csseCases from '../../data/csse.cases.csv'
+// import csseCases from '../../data/csse.cases.csv'
 import csseDeaths from '../../data/csse.deaths.csv'
 import otherDeaths from '../../data/other.deaths.csv'
 import otherHospitalized from '../../data/other.hospitalized.csv'
@@ -269,18 +269,18 @@ function processOneFile (fieldName, data, entries ) {
 
 export function fetchDataDispatcher (dispatch) {
   dispatch({type: 'DATA.LOAD.BEGIN'})
-  return Promise.all([d3CSV(csseCases), d3CSV(csseDeaths), d3CSV(otherDeaths), d3CSV(otherHospitalized)])
+  return Promise.all([/*d3CSV(csseCases),*/ d3CSV(csseDeaths), d3CSV(otherDeaths), d3CSV(otherHospitalized)])
     .then(results => {
-      let [csseCaseData, csseDeathData, otherDeathData, otherHospitalizedData] = results
+      let [/*csseCaseData,*/ csseDeathData, otherDeathData, otherHospitalizedData] = results
 
       let deathData = parseRawCSSEData(csseDeathData)
       deathData = parseRawCSSEData(otherDeathData, deathData)
-      let caseData = parseRawCSSEData(csseCaseData, { dates: deathData.dates })
+      // let caseData = parseRawCSSEData(csseCaseData, { dates: deathData.dates })
       let hospitalizedData = parseRawCSSEData(otherHospitalizedData, { dates: deathData.dates })
 
       let combinedResults = { entries: {} }
       combinedResults = processOneFile('deaths', deathData, combinedResults.entries)
-      combinedResults = processOneFile('cases', caseData, combinedResults.entries)
+      // combinedResults = processOneFile('cases', caseData, combinedResults.entries)
       combinedResults = processOneFile('hospitalized', hospitalizedData, combinedResults.entries)
 
       let data = Object.keys(combinedResults.entries).filter(k => k !== 'ignore').map(k => combinedResults.entries[k])
