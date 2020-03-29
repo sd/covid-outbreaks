@@ -22,7 +22,7 @@
 .SummaryView-row-inner {
   display: grid;
 
-  grid-template-columns: 50% 50%;
+  grid-template-columns: 60% 40%;
   grid-template-rows: auto;
   grid-template-areas:
     "title totals"
@@ -51,11 +51,11 @@
 }
 
 .mobile .SummaryView-row-inner > .chart svg {
-  width: 18em;
+  width: 16em;
 }
 
 .mobile .SummaryView-row-inner {
-  grid-template-columns: 60% 40%;
+  grid-template-columns: 55% 45%;
 }
 
 @media only screen and (max-width: 400px) {
