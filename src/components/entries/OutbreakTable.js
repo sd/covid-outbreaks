@@ -54,7 +54,7 @@ const OutbreakTable = ({entry, dates}) => {
                 </div>
               }
 
-              {entry.latestAcceleration.deaths &&
+              {entry.latestAcceleration.deaths !== undefined &&
                 <>
                   <div className='acceleration' title={`${entry.acceleration.deaths[date]}`}>
                     <AccelerationWithStyles value={entry.acceleration.deaths[date]} />
@@ -103,7 +103,7 @@ const OutbreakTable = ({entry, dates}) => {
 
               </div>
             }
-            {entry.latestAcceleration.deaths &&
+            {entry.latestAcceleration.deaths !== undefined &&
               <>
                 <div className='acceleration'>
                   <Trans i18nKey='entry.table_acceleration_label'>Acceleration</Trans>
@@ -119,11 +119,6 @@ const OutbreakTable = ({entry, dates}) => {
                 </div>
               </>
             }
-
-            <div className='cases totals'><Trans i18nKey='entry.table_cases_label'>Cases</Trans></div>
-            <div className='cases daily'>&nbsp;</div>
-
-            {/* <div className='velocity'>&nbsp;</div> */}
           </div>
         </div>
       </div>

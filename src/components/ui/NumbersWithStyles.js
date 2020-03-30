@@ -52,7 +52,7 @@ export const NumberWithStyles = ({
             {numeral((1 - value) * 100).format(format || '0,000.0')}%
           </span>
         }
-        {!value && <span>&nbsp;</span>}
+        {!!value && <span>&nbsp;</span>}
       </span>
     )
   } else {
@@ -70,7 +70,8 @@ export const NumberWithStyles = ({
             {numeral(displayValue).format(format || '0,000.00')}
           </span>
         }
-        {value === 0 && <span>&nbsp;</span>}
+        {value === 0 && <span>0</span>}
+        {isNaN(value) && <span>-</span>}
         {value < 0 &&
           <span>
             {arrows && <span className='arrow decreasing'>▼</span>}
