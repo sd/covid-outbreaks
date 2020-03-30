@@ -57,7 +57,9 @@
   },
   "information": {
     "what_do_these_mean": "What do these numbers mean?",
-    "compared_to_italy": "Compared to Italy"
+    "legend_deaths": "Daily deaths",
+    "legend_compared": "Compared to {{name}}",
+    "legend_acceleration": "Acceleration"
   },
   "filter": {
     "description": {

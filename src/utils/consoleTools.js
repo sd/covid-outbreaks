@@ -30,7 +30,7 @@ export function covidProjection(country, options = {}) {
   let total = entry.totals.deaths[last7days[6]]
   let velocity = entry.velocity.deaths[last7days[6]]
   let acceleration = options.acc || entry.rollingAcceleration.deaths[last7days[6]]
-  let accelerationDelta = options.delta || (entry.rollingAcceleration.deaths[last7days[6]] - entry.rollingAcceleration.deaths[last7days[3]]) / 3
+  let accelerationDelta = options.delta || ((entry.rollingAcceleration.deaths[last7days[6]] - entry.rollingAcceleration.deaths[last7days[1]]) / 5)
 
   console.log(`%c${entry.emoji} ${entry.code} • ${entry.name}`, 'font-weight: bold')
   console.log(

@@ -11,24 +11,17 @@ import DailySparklineChart from './DailySparklineChart'
 import AccelerationChart from './AccelerationChart'
 import OutbreakTable from './OutbreakTable'
 import { Trans, useTranslation } from 'react-i18next';
-import { TableViewContext } from '../TableView'
 import { AccelerationWithStyles } from '../ui/NumbersWithStyles'
 
 export const DEATHS_SCALE = 10
 export const CASES_SCALE = 100
 
 const OneSummaryEntry = ({
-  entry, index, dates, allDates,
+  entry, dates, allDates,
   comparisonEntry,
   pinned, expanded, ui,
   pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile, isTablet
 }) => {
-  const { setEntryHeight } = React.useContext(TableViewContext)
-  const entryRef = React.useRef()
-  React.useEffect(() => {
-    setEntryHeight(entry.code, index, entryRef.current.getBoundingClientRect().height)
-  })
-
   const { t, i18n } = useTranslation();
 
   // if (!entry.daily.deaths[dates[dates.length - 1]]) {
@@ -57,7 +50,7 @@ const OneSummaryEntry = ({
   }
 
   return (
-    <div ref={entryRef} className={classNames('SummaryView-row', { pinned, expanded })}>
+    <div className={classNames('SummaryView-row', { pinned, expanded })}>
       <div className='SummaryView-row-inner'>
         <div className='chart'>
           <DailySparklineChart

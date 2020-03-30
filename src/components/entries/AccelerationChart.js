@@ -10,7 +10,7 @@ const SVG_STYLES = {
     clipRadiusDelta: 1,
   },
   accelerationLine: {
-    stroke: '#fa6',
+    stroke: '#e91',
     strokeWidth: 1.2,
   },
   canvas: {

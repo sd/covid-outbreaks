@@ -1,10 +1,13 @@
-.TableView > div {
-  padding: 5em 0.3em 8em 0.3em;
-  position: relative;
+.VariableSizeRow.first .VariableSizeRow-inner {
+  padding-top: 6em;
 }
 
-.mobile .TableView > div {
-  padding: 6em 0.3em 8em 0.3em;
+.mobile .VariableSizeRow.first .VariableSizeRow-inner {
+  padding-top: 8em;
+}
+
+.VariableSizeRow.last .VariableSizeRow-inner {
+  padding-bottom: 5em;
 }
 
 .TableView-row {
@@ -239,6 +242,20 @@
   font-weight: bold;
 }
 
-.comparedTo {
+.legend {
+  padding-bottom: 2em;
+}
+
+.legend section {
+  display: inline-block;
+  margin-left: 1em;
+  margin-right: 1em;
+}
+
+.legend .comparedTo {
   color: #633;
+}
+
+.legend .deaths {
+  color: #c00;
 }

@@ -57,7 +57,9 @@
   },
   "information": {
     "what_do_these_mean": "¿Que son estos números?",
-    "compared_to_italy": "Comparado a Italia"
+    "legend_deaths": "Muertes diarias",
+    "legend_compared": "Comparado a {{name}}",
+    "legend_acceleration": "Aceleración"
   },
   "filter": {
     "description": {
