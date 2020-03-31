@@ -19,10 +19,6 @@
   "view_controls": {
     "show_label": "Incluir",
     "sort_label": "Ordenados por",
-    "weeks_label": "Limitados a",
-    "view_label": "Estilo",
-    "totals_label": "Mostrar Totales",
-    "no_scaling_label": "Mantener Escala Vertical",
     "reset_button": "Reiniciar",
     "done_button": "Listo",
     "search_button": "Buscar"
@@ -87,18 +83,5 @@
       "acceleration": "Aceleración",
       "outbreakDay": "Días en el brote"
     }
-  },
-  "weeks": {
-    "description": {
-      "fit": "Lo que quepa",
-      "four": "Últimas 4 semanas",
-      "six": "Últimas 6 semanas",
-      "eight": "Últimas 8 semanas",
-      "all": "Todas las fechas"
-    }
-  },
-  "description": {
-    "classic": "Clasica",
-    "compact": "Compacta"
   }
 }

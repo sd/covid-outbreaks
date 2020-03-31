@@ -98,53 +98,6 @@ const ViewControls = ({
               </div>
             </div>
 
-            <div className='form-row'>
-              <div className='form-label'><Trans i18nKey='view_controls.weeks_label'>Limit To</Trans></div>
-              <div className='form-field'>
-                <select value={weeks || ''} onChange={(event) => setUI({weeks: event.target.value})}>
-                  <option value={''}>{t(`weeks.description.fit`, 'What fits on screen')}</option>
-                  <option value={'four'}>{t(`weeks.description.four`, 'Last 4 weeks')}</option>
-                  <option value={'six'}>{t(`weeks.description.six`, 'Last 6 weeks')}</option>
-                  <option value={'eight'}>{t(`weeks.description.eight`, 'Last 8 weeks')}</option>
-                  <option value={'all'}>{t(`weeks.description.all`, 'All available dates')}</option>
-                </select>
-              </div>
-            </div>
-
-            {/* <div className='form-row'>
-              <div className='form-label'><Trans i18nKey='view_controls.view_label'>Style</Trans></div>
-              <div className='form-field'>
-                <select value={view || ''} onChange={(event) => setUI({view: event.target.value})}>
-                <option value={undefined}>{t(`view.description.compact`, 'Compact')}</option>
-                  <option value={'classic'}>{t(`view.description.classic`, 'Classic')}</option>
-                </select>
-              </div>
-            </div> */}
-
-            {/* <div className='form-row'>
-              <div className='form-label'>
-                <input
-                  type='checkbox' id='totals' name='noScaling' checked={!!totals}
-                  onChange={(event) => setUI({totals: event.target.checked})}
-                />
-              </div>
-              <div className='form-field'>
-                <label htmlFor='totals'><Trans i18nKey='view_controls.totals_label'>Show Totals</Trans></label>
-              </div>
-            </div> */}
-
-            {/* <div className='form-row'>
-              <div className='form-label'>
-                <input
-                  type='checkbox' id='noScaling' name='noScaling' checked={!!noScaling}
-                  onChange={(event) => setUI({noScaling: event.target.checked})}
-                />
-              </div>
-              <div className='form-field'>
-                <label htmlFor='noScaling'><Trans i18nKey='view_controls.no_scaling_label'>Preserve vertical scale</Trans></label>
-              </div>
-            </div> */}
-
             <div className='form-row form-single buttons'>
               <button onClick={() => { resetUI(); close() }}><Trans i18nKey='view_controls.reset_button'>Reset to defaults</Trans></button>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

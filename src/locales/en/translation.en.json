@@ -18,10 +18,6 @@
   "view_controls": {
     "show_label": "Show",
     "sort_label": "Sort by",
-    "weeks_label": "Limit to",
-    "view_label": "Style",
-    "totals_label": "Show Totals",
-    "no_scaling_label": "Preserve Vertical Scale",
     "reset_button": "Reset to defaults",
     "done_button": "Done",
     "search_button": "Search"
@@ -86,21 +82,6 @@
       "velocity": "Velocity",
       "acceleration": "Acceleration",
       "outbreakDay": "Days into outbreak"
-    }
-  },
-  "weeks": {
-    "description": {
-      "fit": "What fits on screen",
-      "four": "Last 4 weeks",
-      "six": "Last 6 weeks",
-      "eight": "Last 8 weeks",
-      "all": "All available dates"
-    }
-  },
-  "view": {
-    "description": {
-      "classic": "Classic",
-      "compact": "Compact"
     }
   }
 }

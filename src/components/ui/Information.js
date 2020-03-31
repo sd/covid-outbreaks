@@ -77,6 +77,14 @@ const InfoSources = () => {
       </p>
 
       <p>
+        For the USA, we use the numbers collected by <a href='https://covidtracking.com/'>The COVID Tracking Project</a>, all from the best official sources.
+      </p>
+
+      <p>
+        For Spain, we use <a href='https://github.com/datadista/datasets/tree/master/COVID%2019'>The files collected by Datadista</a>.
+      </p>
+
+      <p>
         We also try to update some numbers during the day from reliable data sources, and mostly for countries with large numbers of deaths.
         For this we look at official pages, but also at
         {' '}<a target='_blank' rel='noreferrer noopener' href='https://www.worldometers.info/coronavirus/#countries'>Worldometers</a>,
