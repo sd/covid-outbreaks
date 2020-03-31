@@ -11,6 +11,7 @@ let nameToCodeIndex = {
   'Taiwan*': 'tw',
   'Holy See': 'va',
   'occupied Palestinian territory': 'ps',
+  'West Bank and Gaza': 'ps',
   'Czechia': 'cz',
   'Korea, South': 'kr',
   'Congo (Kinshasa)': 'cg',
@@ -23,8 +24,9 @@ let nameToCodeIndex = {
   'Eswatini': 'sz',
   'United Kingdom': 'gb',
   'Northern Ireland': 'gb.Northern Ireland',
+  'Libya': 'ly',
+  'Burma': 'mm', // Myanmar
 
-  'Spain > Total': 'ignore',
   'Spain > Andalucía': 'es.and',
   'Spain > Aragón': 'es.ara',
   'Spain > Asturias': 'es.ast',
@@ -44,10 +46,10 @@ let nameToCodeIndex = {
   'Spain > Navarra': 'es.nav',
   'Spain > País Vasco': 'es.pva',
   'Spain > La Rioja': 'es.rio',
-  'Spain > ignore': 'ignore',
 
   'Cruise Ship > Diamond Princess': 'other.diamond_princess',
   'Grand Princess': 'other.grand_princess',
+  'MS Zaandam': 'other.ms_zaandam',
 
   'Netherlands > Aruba': 'aw',
 
@@ -74,6 +76,7 @@ let nameToCodeIndex = {
 let codeToNameIndex = {
   'other.diamond_princess': 'Diamond Princess',
   'other.grand_princess': 'Grand Princess',
+  'other.ms_zaandam': 'MS Zaandam',
   'cn.hubei': 'China: Hubei',
   'cn.other': 'China: Other',
   'tw': 'Taiwan',
@@ -84,6 +87,7 @@ let codeToNameIndex = {
   'xk': 'Kosovo',
   'sz': 'Eswatini',
   'gb': 'United Kingdom',
+  'ly': 'Libya',
 
   'ca.ab': 'Canada: Alberta',
   'ca.bc': 'Canada: British Columbia',
@@ -160,6 +164,8 @@ countryByPopulation.forEach(row => {
 
 export const CSSE_AGGREGATE = {
   'other.US > Diamond Princess': 'other.diamond_princess',
+  'other.Diamond Princess': 'other.diamond_princess',
+  'ca.Diamond Princess': 'other.diamond_princess',
   'au.From Diamond Princess': 'other.diamond_princess',
   'other.US > Grand Princess': 'other.grand_princess',
   'ca.Grand Princess': 'other.grand_princess',
@@ -193,6 +199,10 @@ export function countryForCSSEName(name) {
   let parts = name.match(/^(.+) > (\1)$/)
   if (parts) {
     return nameToCodeIndex[parts[1]]
+  }
+
+  if (name.match(/> ignore/)) {
+    return 'ignore'
   }
 
   // CSSE Used to have data for counties and some cities, but that should be ignored now
@@ -242,10 +252,12 @@ export function attributesForCountry(code) {
 
   let links = {}, keyDates = {}
   if (OUTBREAK_ATTRIBUTES[parts[0]]) {
+    attrs.emoji = attrs.emoji || OUTBREAK_ATTRIBUTES[parts[0]].emoji
     links = {...OUTBREAK_ATTRIBUTES[parts[0]].links}
     keyDates = {...OUTBREAK_ATTRIBUTES[parts[0]].keyDates}
   }
   if (OUTBREAK_ATTRIBUTES[code]) {
+    attrs.emoji = attrs.emoji || OUTBREAK_ATTRIBUTES[code].emoji
     links = {...OUTBREAK_ATTRIBUTES[code].links}
     keyDates = {...OUTBREAK_ATTRIBUTES[code].keyDates}
   }

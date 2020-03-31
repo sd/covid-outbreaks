@@ -193,13 +193,18 @@ export const OUTBREAK_ATTRIBUTES = {
   },
 
   'other.diamond_princess': {
-    displayName: 'Diamond Princess (out of Japan)',
+    name: 'Diamond Princess (out of Japan)',
     emoji: '🛳',
     links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_on_cruise_ships#Diamond_Princess' }
   },
   'other.grand_princess': {
-    displayName: 'Grand Princess (out of US)',
+    name: 'Grand Princess (out of US)',
     emoji: '🛳'
+  },
+  'other.ms_zaandam': {
+    name: 'MS Zanadam',
+    emoji: '🛳',
+    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/MS_Zaandam#Coronavirus_pandemic' }
   }
 }
 
