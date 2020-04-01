@@ -6,7 +6,7 @@ require 'pp'
 # Fetch data from Datadista
 class FetchDatadista
   LOCAL_FILE = './src/data/other.deaths.csv'.freeze
-  URL = 'https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/ccaa_covid19_fallecidos.csv'.freeze
+  DATA_URL = 'https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/ccaa_covid19_fallecidos.csv'.freeze
 
   # New instance
   # rubocop:disable Metrics/AbcSize
@@ -30,8 +30,7 @@ class FetchDatadista
   def fetch
     puts "Reading Datadista Data for #{@today_iso}"
 
-    new_data = CSV.new(URI.parse(URL).open, headers: :first_row).read
-    current_data = CSV.read(FetchDatadista::LOCAL_FILE, headers: :first_row)
+    new_data = CSV.new(URI.parse(DATA_URL).open, headers: :first_row).read
 
     new_data.each_with_index do |row, index|
       row[:line] = index + 2
@@ -40,11 +39,6 @@ class FetchDatadista
       when 'Total'
         row[:key] = 'Spain'
       end
-    end
-
-    current_data.each_with_index do |row, index|
-      row[:line] = index + 2
-      row[:key] = [row['Country/Region'], row['Province/State']].compact.join(', ')
     end
 
     data = new_data.collect { |row| row[@today_iso] }.join("\n")

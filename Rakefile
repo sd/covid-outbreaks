@@ -8,6 +8,7 @@ require 'irb'
 require './tasks/fetch_csse'
 require './tasks/fetch_datadista'
 require './tasks/fetch_italy'
+require './tasks/fetch_france'
 
 desc 'Fetch CSSE'
 task :csse do
@@ -21,7 +22,12 @@ end
 
 desc 'Fetch Italy'
 task :it do
-  FetchItaly.new.fetch_all
+  FetchItaly.new.fetch
+end
+
+desc 'Fetch France'
+task :fr do
+  FetchFrance.new.fetch
 end
 
 desc 'Fetch All'

@@ -19,6 +19,7 @@
   "view_controls": {
     "show_label": "Incluir",
     "sort_label": "Ordenados por",
+    "aggregateCountries_label": "Totales para Italia, España, EEUU y Francia",
     "reset_button": "Reiniciar",
     "done_button": "Listo",
     "search_button": "Buscar"

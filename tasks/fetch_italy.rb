@@ -7,7 +7,7 @@ require 'pp'
 # Fetch data from Datadista
 class FetchItaly
   LOCAL_FILE = './src/data/other.deaths.csv'.freeze
-  URL = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-regioni/dpc-covid19-ita-regioni-[date].csv'.freeze
+  DATA_URL = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-regioni/dpc-covid19-ita-regioni-[date].csv'.freeze
 
   # New instance
   # rubocop:disable Metrics/AbcSize
@@ -29,24 +29,18 @@ class FetchItaly
   # Main fetch task
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def fetch
-    puts "Reading Italy Data for #{@yesterday_iso}"
+    puts "Reading Italy Data for #{@today_iso}"
 
-    url = URL.gsub('[date]', @yesterday.to_time.utc.strftime('%Y%m%d'))
+    url = DATA_URL.gsub('[date]', @now.to_time.utc.strftime('%Y%m%d'))
 
     new_data = CSV.new(URI.parse(url).open, headers: :first_row).read
-    current_data = CSV.read(FetchDatadista::LOCAL_FILE, headers: :first_row)
 
     new_data.each_with_index do |row, index|
       row[:line] = index + 2
       row[:key] = ['Italy', row['denominazione_regione']].compact.join(', ')
     end
 
-    current_data.each_with_index do |row, index|
-      row[:line] = index + 2
-      row[:key] = [row['Country/Region'], row['Province/State']].compact.join(', ')
-    end
-
-    data = new_data.collect { |row| row['deceduti'] }.join("\n")
+    data = (new_data.collect { |row| row['deceduti'] } + [new_data.collect { |row| row['deceduti'].to_i }.sum]).join("\n")
 
     IO.popen('pbcopy', 'w') { |f| f << data }
     puts "Italy data for #{@today_mmdd} copied to clipboard!!!"
@@ -57,10 +51,10 @@ class FetchItaly
     data_cols = []
     while date
       begin
-        dateiso = date.to_time.utc.strftime('%Y%m%d')
-        puts "Reading Italy Data for #{dateiso}"
+        date_iso = date.to_time.utc.strftime('%Y%m%d')
+        puts "Reading Italy Data for #{date_iso}"
 
-        url = URL.gsub('[date]', dateiso)
+        url = URL.gsub('[date]', date_iso)
 
         new_data = CSV.new(URI.parse(url).open, headers: :first_row).read
 

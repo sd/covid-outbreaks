@@ -31,7 +31,7 @@ const TableView = ({
   if (loaded) {
     const comparisonEntry = data.find(entry => entry.code === (ui.compareTo || 'it'))
 
-    let viewOptions = { pinPositions: ui.pinPositions }
+    let viewOptions = { pinPositions: ui.pinPositions, aggregateCountries: ui.aggregateCountries }
     viewOptions = viewOptionsForSorting(ui.sort, viewOptions)
     viewOptions = viewOptionsForFiltering(ui.filter, viewOptions)
 

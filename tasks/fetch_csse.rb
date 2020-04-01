@@ -6,7 +6,7 @@ require 'pp'
 # Fetch data from CSSE
 class FetchCSSE
   LOCAL_FILE = './src/data/csse.deaths.csv'.freeze
-  URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/' \
+  DATA_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/' \
         'master/csse_covid_19_data/csse_covid_19_daily_reports/[date].csv'.freeze
 
   # New instance
@@ -31,7 +31,7 @@ class FetchCSSE
   def fetch
     puts "Reading CSSE Data for #{@yesterday_iso}"
 
-    url = URL.gsub('[date]', @yesterday.to_time.utc.strftime('%m-%d-%Y'))
+    url = DATA_URL.gsub('[date]', @yesterday.to_time.utc.strftime('%m-%d-%Y'))
 
     new_data = CSV.new(URI.parse(url).open, headers: :first_row).read
     current_data = CSV.read(FetchCSSE::LOCAL_FILE, headers: :first_row)

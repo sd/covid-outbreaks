@@ -56,6 +56,10 @@ function setupQueryStringSync (store) {
           selector: state => state.ui.weeks,
           action: value => ({ type: 'UI.SET', values: {weeks: value} })
         },
+        aggregate: {
+          selector: state => state.ui.aggregateCountries,
+          action: value => ({ type: 'UI.SET', values: {aggregateCountries: value} })
+        },
         totals: {
           selector: state => state.ui.totals,
           action: value => ({ type: 'UI.SET', values: {totals: value} })

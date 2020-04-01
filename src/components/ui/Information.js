@@ -77,15 +77,19 @@ const InfoSources = () => {
       </p>
 
       <p>
-        For the USA, we use the numbers collected by <a href='https://covidtracking.com/'>The COVID Tracking Project</a>, all from the best official sources.
+        For the USA, we use the numbers collected by <a target='_blank' rel='noreferrer noopener' href='https://covidtracking.com/'>The COVID Tracking Project</a>, all from the best official sources.
       </p>
 
       <p>
-        For Spain, we use <a href='https://github.com/datadista/datasets/tree/master/COVID%2019'>The files collected by Datadista</a>.
+        For Spain, we use <a target='_blank' rel='noreferrer noopener' href='https://github.com/datadista/datasets/tree/master/COVID%2019'>the files collected by Datadista</a>.
       </p>
 
       <p>
-        For Italy, we use <a href='https://github.com/pcm-dpc/COVID-19'>the official github repository for the Presidenza del Consiglio dei Ministri - Dipartimento della Protezione Civile</a>.
+        For Italy, we use <a target='_blank' rel='noreferrer noopener' href='https://github.com/pcm-dpc/COVID-19'>the official github repository for the Presidenza del Consiglio dei Ministri - Dipartimento della Protezione Civile</a>.
+      </p>
+
+      <p>
+        For France, we use <a target='_blank' rel='noreferrer noopener' href='https://github.com/cedricguadalupe/FRANCE-COVID-19'>the files collected by Cedric Guadalupe</a>.
       </p>
 
       <p>

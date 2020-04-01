@@ -13,7 +13,7 @@ import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../.
 
 const ViewControls = ({
   setUI, resetUI,
-  search, view, sort, filter, noScaling, weeks, totals,
+  search, sort, filter, weeks, aggregateCountries,
   isMobile
 }) => {
   const { t } = useTranslation();
@@ -98,6 +98,29 @@ const ViewControls = ({
               </div>
             </div>
 
+            <div className='form-row'>
+              <div className='form-label'><Trans i18nKey='view_controls.weeks_label'>Limit To</Trans></div>
+              <div className='form-field'>
+                <select value={weeks || ''} onChange={(event) => setUI({weeks: event.target.value})}>
+                  <option value={''}>{t(`weeks.description.fit`, 'What fits on screen')}</option>
+                  <option value={'four'}>{t(`weeks.description.four`, 'Last 4 weeks')}</option>
+                  <option value={'six'}>{t(`weeks.description.six`, 'Last 6 weeks')}</option>
+                  <option value={'eight'}>{t(`weeks.description.eight`, 'Last 8 weeks')}</option>
+                  <option value={'all'}>{t(`weeks.description.all`, 'All available dates')}</option>
+                </select>
+              </div>
+            </div>
+
+            <div className='form-row'>
+              <div className='form-single'>
+                <input
+                  type='checkbox' id='aggregateCountries' name='aggregateCountries' checked={!!aggregateCountries}
+                  onChange={(event) => setUI({aggregateCountries: event.target.checked})}
+                />
+                <label htmlFor='aggregateCountries'><Trans i18nKey='view_controls.aggregateCountries_label'>Show totals for US, Spain, Italy, France</Trans></label>
+              </div>
+            </div>
+
             <div className='form-row form-single buttons'>
               <button onClick={() => { resetUI(); close() }}><Trans i18nKey='view_controls.reset_button'>Reset to defaults</Trans></button>
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -140,12 +163,10 @@ const ViewControls = ({
 export default connect(
   (state, ownProps) => ({
     search: state.ui.search,
-    view: state.ui.view,
     sort: state.ui.sort,
     filter: state.ui.filter,
     weeks: state.ui.weeks,
-    totals: state.ui.totals,
-    noScaling: state.ui.noScaling
+    aggregateCountries: state.ui.aggregateCountries,
   }),
   (dispatch, props) => ({
     setUI: (values) => {

@@ -18,6 +18,7 @@
   "view_controls": {
     "show_label": "Show",
     "sort_label": "Sort by",
+    "aggregateCountries_label": "Show totals for Italy, Spain, USA & France",
     "reset_button": "Reset to defaults",
     "done_button": "Done",
     "search_button": "Search"
