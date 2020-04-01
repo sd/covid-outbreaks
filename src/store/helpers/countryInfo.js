@@ -88,6 +88,7 @@ let codeToNameIndex = {
   'sz': 'Eswatini',
   'gb': 'United Kingdom',
   'ly': 'Libya',
+  'cz': 'Czechia',
 
   'ca.ab': 'Canada: Alberta',
   'ca.bc': 'Canada: British Columbia',
