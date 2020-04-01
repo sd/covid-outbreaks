@@ -1,0 +1,50 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    airrecord (1.0.5)
+      faraday (>= 0.10, < 2.0)
+      net-http-persistent (>= 2.9)
+    byebug (11.1.1)
+    childprocess (3.0.0)
+    coderay (1.1.2)
+    connection_pool (2.2.2)
+    faraday (1.0.1)
+      multipart-post (>= 1.2, < 3)
+    method_source (1.0.0)
+    mini_portile2 (2.4.0)
+    multipart-post (2.1.1)
+    net-http-persistent (3.1.0)
+      connection_pool (~> 2.2)
+    nokogiri (1.10.9)
+      mini_portile2 (~> 2.4.0)
+    pry (0.13.0)
+      coderay (~> 1.1)
+      method_source (~> 1.0)
+    pry-byebug (3.9.0)
+      byebug (~> 11.0)
+      pry (~> 0.13.0)
+    rake (13.0.1)
+    regexp_parser (1.7.0)
+    rubyzip (2.3.0)
+    selenium-webdriver (3.142.7)
+      childprocess (>= 0.5, < 4.0)
+      rubyzip (>= 1.2.2)
+    watir (6.16.5)
+      regexp_parser (~> 1.2)
+      selenium-webdriver (~> 3.6)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  airrecord
+  nokogiri
+  pry-byebug
+  rake
+  watir
+
+RUBY VERSION
+   ruby 2.6.3p62
+
+BUNDLED WITH
+   2.0.2

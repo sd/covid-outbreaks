@@ -1,0 +1,26 @@
+Layout/LineLength:
+  Max: 120
+
+Style/NegatedIf:
+  Enabled: false
+
+Style/GuardClause:
+  Enabled: false
+
+Lint/RaiseException:
+  Enabled: true
+
+Lint/StructNewOverride:
+  Enabled: true
+
+Style/HashEachMethods:
+  Enabled: true
+
+Style/HashTransformKeys:
+  Enabled: true
+
+Style/HashTransformValues:
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
