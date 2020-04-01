@@ -61,6 +61,9 @@ export const OUTBREAK_ATTRIBUTES = {
       fullLockdown: '3/22/20', // Only essential services
     }
   },
+  'us.nyc': {
+    links: { 'NYC Health github': 'https://github.com/nychealth/coronavirus-data' }
+  },
   'us.fl': {
     keyDates: {
       localSchoolClosings: '',

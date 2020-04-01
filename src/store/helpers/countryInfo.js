@@ -53,6 +53,8 @@ let nameToCodeIndex = {
 
   'Netherlands > Aruba': 'aw',
 
+  'US > New York City': 'us.nyc',
+
   'Canada > Alberta': 'ca.ab',
   'Canada > British Columbia': 'ca.bc',
   'Canada > Manitoba': 'ca.mb',
@@ -133,6 +135,8 @@ let codeToNameIndex = {
   'gb': 'United Kingdom',
   'ly': 'Libya',
   'cz': 'Czechia',
+
+  'us.nyc': 'USA: New York City',
 
   'ca.ab': 'Canada: Alberta',
   'ca.bc': 'Canada: British Columbia',

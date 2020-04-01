@@ -99,19 +99,6 @@ const ViewControls = ({
             </div>
 
             <div className='form-row'>
-              <div className='form-label'><Trans i18nKey='view_controls.weeks_label'>Limit To</Trans></div>
-              <div className='form-field'>
-                <select value={weeks || ''} onChange={(event) => setUI({weeks: event.target.value})}>
-                  <option value={''}>{t(`weeks.description.fit`, 'What fits on screen')}</option>
-                  <option value={'four'}>{t(`weeks.description.four`, 'Last 4 weeks')}</option>
-                  <option value={'six'}>{t(`weeks.description.six`, 'Last 6 weeks')}</option>
-                  <option value={'eight'}>{t(`weeks.description.eight`, 'Last 8 weeks')}</option>
-                  <option value={'all'}>{t(`weeks.description.all`, 'All available dates')}</option>
-                </select>
-              </div>
-            </div>
-
-            <div className='form-row'>
               <div className='form-single'>
                 <input
                   type='checkbox' id='aggregateCountries' name='aggregateCountries' checked={!!aggregateCountries}
