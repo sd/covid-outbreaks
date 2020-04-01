@@ -85,6 +85,10 @@ const InfoSources = () => {
       </p>
 
       <p>
+        For Italy, we use <a href='https://github.com/pcm-dpc/COVID-19'>the official github repository for the Presidenza del Consiglio dei Ministri - Dipartimento della Protezione Civile</a>.
+      </p>
+
+      <p>
         We also try to update some numbers during the day from reliable data sources, and mostly for countries with large numbers of deaths.
         For this we look at official pages, but also at
         {' '}<a target='_blank' rel='noreferrer noopener' href='https://www.worldometers.info/coronavirus/#countries'>Worldometers</a>,
