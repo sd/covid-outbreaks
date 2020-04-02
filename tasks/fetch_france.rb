@@ -28,7 +28,7 @@ class FetchFrance
 
   # Main fetch task
   def fetch
-    puts "Reading France Data for #{@yesterday_iso}"
+    puts "Reading France Data for #{@today_iso}"
 
     new_data = CSV.new(URI.parse(DATA_URL).open, headers: :first_row).read
     regions = new_data.headers.reject { |k| k == 'Date' }
@@ -44,14 +44,14 @@ class FetchFrance
       end
     end
 
-    data = regions.collect { |region| real_rows[region][@yesterday_iso] }.join("\n")
+    data = regions.collect { |region| real_rows[region][@today_iso] }.join("\n")
 
     IO.popen('pbcopy', 'w') { |f| f << data }
     puts "France data for #{@today_mmdd} copied to clipboard!!!"
   end
 
   def fetch_all
-    puts "Reading France Data for #{@yesterday_iso}"
+    puts "Reading France Data for #{@today_iso}"
 
     new_data = CSV.new(URI.parse(DATA_URL).open, headers: :first_row).read
     regions = new_data.headers.reject { |k| k == 'Date' }
