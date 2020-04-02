@@ -29,7 +29,8 @@ export const OUTBREAK_ATTRIBUTES = {
   },
 
   'us': {
-    links: { 'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
+    links: { 'Data: covidtracking.com': 'https://covidtracking.com/data/',
+             'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }
   },
   'us.wa': {
@@ -62,7 +63,7 @@ export const OUTBREAK_ATTRIBUTES = {
     }
   },
   'us.nyc': {
-    links: { 'NYC Health github': 'https://github.com/nychealth/coronavirus-data' }
+    links: { 'Data: gh/nychealth': 'https://github.com/nychealth/coronavirus-data' }
   },
   'us.fl': {
     keyDates: {
@@ -93,7 +94,8 @@ export const OUTBREAK_ATTRIBUTES = {
   },
 
   'it': { // Italy
-    links: { 'Protezione Civile': 'http://www.protezionecivile.gov.it/media-communication/press-release',
+    links: { 'Data: gh/pcm-dcp': 'https://github.com/pcm-dpc/COVID-19',
+             'Protezione Civile': 'http://www.protezionecivile.gov.it/media-communication/press-release',
              '@dpcgov': 'https://twitter.com/dpcgov',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy' },
     keyDates: {
@@ -106,8 +108,8 @@ export const OUTBREAK_ATTRIBUTES = {
   },
 
   'es': { // Spain
-    links: { 'Ministerio de Sanidad': 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm',
-             'Datadista': 'https://github.com/datadista/datasets/tree/master/COVID%2019',
+    links: { 'Data: gh/datadista': 'https://github.com/datadista/datasets/tree/master/COVID%2019',
+             'Ministerio de Sanidad': 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm',
              'RTVE': 'https://www.rtve.es/noticias/20200314/mapa-del-coronavirus-espana/2004681.shtml',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain' },
     keyDates: {
@@ -120,7 +122,9 @@ export const OUTBREAK_ATTRIBUTES = {
   },
 
   'fr': { // France
-    links: { 'Santé publique France': 'https://www.santepubliquefrance.fr/maladies-et-traumatismes/maladies-et-infections-respiratoires/infection-a-coronavirus/articles/infection-au-nouveau-coronavirus-sars-cov-2-covid-19-france-et-monde',
+    links: { 'Data: gh/cedricguadalupe': 'https://github.com/cedricguadalupe/FRANCE-COVID-19',
+             'Santé publique France': 'https://www.santepubliquefrance.fr/maladies-et-traumatismes/maladies-et-infections-respiratoires/infection-a-coronavirus/articles/infection-au-nouveau-coronavirus-sars-cov-2-covid-19-france-et-monde',
+             'data.gouv.fr': 'https://www.data.gouv.fr/en/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_France' },
     keyDates: {
       localSchoolClosings: '',
