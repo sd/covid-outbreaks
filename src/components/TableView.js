@@ -39,13 +39,7 @@ const TableView = ({
     data = data.filter((a) => viewOptions.filterer(a, viewOptions ))
 
     if (ui.search) {
-      let lcSearch = ui.search.toLowerCase()
-      if (lcSearch[0] === '.' || lcSearch[0] === '=') {
-        lcSearch = lcSearch.slice(1)
-        data = data.filter(entry => filterBySearch(entry, { codes: lcSearch.split(','), language: i18n.language } ))
-      } else {
-        data = data.filter(entry => filterBySearch(entry, { names: lcSearch.split(','), language: i18n.language }))
-      }
+      data = data.filter(entry => filterBySearch(entry, ui.search, i18n.language))
     }
 
     let totalsEntry

@@ -1,15 +1,24 @@
 import { REGIONS } from '../data/geoData'
 
-export function filterBySearch (a, search) {
-  if (search.codes) {
-    let value = (a.code || '').toLowerCase()
+export function filterBySearch (a, search, language) {
+  let searches = (search || '').toLowerCase().split(',')
 
-    return !!search.codes.find(code => code.endsWith('*') ? value.startsWith(code.slice(0, -1)) : value === code)
-  } else if (search.names) {
-    let value = (a[`${search.language}Name`] || a.name || a.code || '').toLowerCase()
+  return !!searches.find(oneSearch => {
+    if (oneSearch[0] === '.' || oneSearch[0] === '=') {
+      oneSearch = oneSearch.slice(1)
+      let value = (a.code || '').toLowerCase()
 
-    return !!search.names.find(name => value.indexOf(name) >= 0)
-  }
+      return oneSearch.endsWith('*') ? value.startsWith(oneSearch.slice(0, -1)) : value === oneSearch
+    } else if (oneSearch.match(/^\w\w(\.[\w*]+|\*|)$/)) {
+        let value = (a.code || '').toLowerCase()
+
+        return oneSearch.endsWith('*') ? value.startsWith(oneSearch.slice(0, -1)) : value === oneSearch
+    } else {
+      let value = (a[`${language}Name`] || a.name || a.code || '').toLowerCase()
+
+      return value.indexOf(oneSearch) >= 0
+    }
+  })
 }
 
 function filterAll (a, options) {

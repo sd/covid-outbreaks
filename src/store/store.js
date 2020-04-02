@@ -30,7 +30,9 @@ export function configureStore (state) {
           pinned: urlUi.pinned || storedUi.pinned,
           expanded: urlUi.expanded || storedUi.expanded,
           weeks: urlUi.weeks || storedUi.weeks,
-          totals: urlUi.totals || storedUi.totals
+          totals: urlUi.totals || storedUi.totals,
+          search: urlUi.search || storedUi.search,
+          aggregateCountries: urlUi.aggregaaggregateCountrieste || storedUi.aggregateCountries,
         }
       }
     }
