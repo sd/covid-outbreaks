@@ -4,7 +4,7 @@ require 'open-uri'
 require 'csv'
 require 'pp'
 
-# Fetch data from Datadista
+# Fetch data for France
 class FetchFrance
   LOCAL_FILE = './src/data/other.deaths.csv'.freeze
   DATA_URL = 'https://raw.githubusercontent.com/cedricguadalupe/FRANCE-COVID-19/' \

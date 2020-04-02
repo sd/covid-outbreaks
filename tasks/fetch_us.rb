@@ -1,0 +1,115 @@
+
+require 'date'
+require 'open-uri'
+require 'csv'
+require 'pp'
+
+# Fetch data from Covid Tracking Project
+class FetchUS
+  LOCAL_FILE = './src/data/other.deaths.csv'.freeze
+  DATA_URL = 'http://covidtracking.com/api/states/daily.csv'.freeze
+
+  # New instance
+  def initialize
+    @now = DateTime.now
+    @today_iso = @now.to_time.utc.strftime('%Y-%m-%d')
+    @today_mmdd = @now.to_time.utc.strftime('%m/%d/20')
+
+    @yesterday = @now - 1
+    @yesterday_iso = @yesterday.to_time.utc.strftime('%Y-%m-%d')
+    @yesterday_mmdd = @yesterday.to_time.utc.strftime('%m/%d/20')
+
+    @day_before = @now - 2
+    @day_before_iso = @day_before.to_time.utc.strftime('%Y-%m-%d')
+    @day_before_mmdd = @day_before.to_time.utc.strftime('%m/%d/20')
+  end
+
+  # Main fetch task
+  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
+  def fetch
+    puts "Reading US Data for #{@today_iso}"
+
+    new_data = CSV.new(URI.parse(DATA_URL).open, headers: :first_row).read
+
+    sorted_state_names = US_STATES_BY_CODE.values.sort
+
+    real_rows = sorted_state_names.map { |state| [state, {}] }.to_h
+
+    new_data.each do |row|
+      date = DateTime.parse(row['date'])
+      date_iso = date.to_time.utc.strftime('%Y-%m-%d')
+      state = US_STATES_BY_CODE[row['state']]
+      if !state
+        puts "Unknown state #{row['state']}"
+      end
+
+      real_rows[state][date_iso] = row['death']
+    end
+
+    data = sorted_state_names.collect { |state| [real_rows[state][@yesterday_iso], real_rows[state][@today_iso]].join("\t") }.join("\n")
+
+    IO.popen('pbcopy', 'w') { |f| f << data }
+    puts "USA data for #{@today_mmdd} copied to clipboard!!!"
+  end
+
+  US_STATES_BY_CODE = {
+    'AL' => 'Alabama',
+    'AK' => 'Alaska',
+    'AS' => 'American Samoa',
+    'AZ' => 'Arizona',
+    'AR' => 'Arkansas',
+    'CA' => 'California',
+    'CO' => 'Colorado',
+    'CT' => 'Connecticut',
+    'DE' => 'Delaware',
+    'DC' => 'D.C.',
+    'FL' => 'Florida',
+    'GA' => 'Georgia',
+    'GU' => 'Guam',
+    'HI' => 'Hawaii',
+    'ID' => 'Idaho',
+    'IL' => 'Illinois',
+    'IN' => 'Indiana',
+    'IA' => 'Iowa',
+    'KS' => 'Kansas',
+    'KY' => 'Kentucky',
+    'LA' => 'Louisiana',
+    'ME' => 'Maine',
+    'MA' => 'Massachusetts',
+    'MD' => 'Maryland',
+    'MI' => 'Michigan',
+    'MN' => 'Minnesota',
+    'MP' => 'Northern Mariana Islands',
+    'MS' => 'Mississippi',
+    'MO' => 'Missouri',
+    'MT' => 'Montana',
+    'NE' => 'Nebraska',
+    'NV' => 'Nevada',
+    'NH' => 'New Hampshire',
+    'NJ' => 'New Jersey',
+    'NM' => 'New Mexico',
+    'NY' => 'New York',
+    'NC' => 'North Carolina',
+    'ND' => 'North Dakota',
+    'OH' => 'Ohio',
+    'OK' => 'Oklahoma',
+    'OR' => 'Oregon',
+    'PA' => 'Pennsylvania',
+    'PR' => 'Puerto Rico',
+    'RI' => 'Rhode Island',
+    'SC' => 'South Carolina',
+    'SD' => 'South Dakota',
+    'TN' => 'Tennessee',
+    'TX' => 'Texas',
+    'UT' => 'Utah',
+    'VT' => 'Vermont',
+    'VA' => 'Virginia',
+    'VI' => 'US Virgin Islands',
+    'WA' => 'Washington',
+    'WV' => 'West Virginia',
+    'WI' => 'Wisconsin',
+    'WY' => 'Wyoming'
+  }.freeze
+
+  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
+end

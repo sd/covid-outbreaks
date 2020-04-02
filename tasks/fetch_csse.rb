@@ -37,7 +37,10 @@ class FetchCSSE
     current_data = CSV.read(FetchCSSE::LOCAL_FILE, headers: :first_row)
 
     new_data = new_data.reject { |row| row['Country_Region'] == 'US' }
-                       .sort_by { |row| [row['Country_Region'] || '', row['Province_State'] || 'zzz'] }
+                       .sort_by { |row| [
+                         row['Country_Region'].downcase || '',
+                         (row['Province_State'] || 'zzz').downcase
+                        ] }
 
     new_data.each_with_index do |row, index|
       row[:line] = index + 2
@@ -47,6 +50,12 @@ class FetchCSSE
         row[:key] = 'Spain, ignore'
       when 'Canada, Recovered'
         row[:key] = 'Canada, ignore'
+      when 'France'
+        row[:key] = 'France, ignore'
+      when /France, .*/
+        row[:key] = 'France, ignore'
+      when 'Italy'
+        row[:key] = 'Italy, ignore'
       end
     end
 
@@ -76,7 +85,7 @@ class FetchCSSE
     end
 
     if added_keys.empty? && removed_keys.empty?
-      data = ([@yesterday_mmdd] + new_data.collect { |row| row['Deaths'] }).join("\n")
+      data = ([@yesterday_mmdd] + new_data.collect { |row| "#{row['Deaths']}\t#{row[:key]}" }).join("\n")
 
       new_data.each do |row|
         current_row = current_index[row[:key]][0]
