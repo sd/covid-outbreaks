@@ -63,7 +63,10 @@ export const OUTBREAK_ATTRIBUTES = {
     }
   },
   'us.nyc': {
-    links: { 'Data: gh/nychealth': 'https://github.com/nychealth/coronavirus-data' }
+    links: {
+      'Data: gh/nychealth': 'https://github.com/nychealth/coronavirus-data',
+      'NYC Health': 'https://www1.nyc.gov/site/doh/covid/covid-19-data.page'
+    }
   },
   'us.fl': {
     keyDates: {
