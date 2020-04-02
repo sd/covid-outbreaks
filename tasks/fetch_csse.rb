@@ -9,8 +9,9 @@ class FetchCSSE
   DATA_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/' \
         'master/csse_covid_19_data/csse_covid_19_daily_reports/[date].csv'.freeze
 
+  UPDATE_TIME = '8pm EDT (12am UTC)'.freeze
+
   # New instance
-  # rubocop:disable Metrics/AbcSize
   def initialize
     @now = DateTime.now
     @today_iso = @now.to_time.utc.strftime('%Y-%m-%d')
@@ -24,46 +25,25 @@ class FetchCSSE
     @day_before_iso = @day_before.to_time.utc.strftime('%Y-%m-%d')
     @day_before_mmdd = @day_before.to_time.utc.strftime('%m/%d/20')
   end
-  # rubocop:enable Metrics/AbcSize
 
   # Main fetch task
-  # rubocop:disable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/AbcSize
   def fetch
     puts "Reading CSSE Data for #{@yesterday_iso}"
 
-    url = DATA_URL.gsub('[date]', @yesterday.to_time.utc.strftime('%m-%d-%Y'))
+    new_data = load_new_data(@yesterday)
+    current_data = load_current_data
 
-    new_data = CSV.new(URI.parse(url).open, headers: :first_row).read
-    current_data = CSV.read(FetchCSSE::LOCAL_FILE, headers: :first_row)
+    print_warnings(@yesterday_mmdd, new_data, current_data)
 
-    new_data = new_data.reject { |row| row['Country_Region'] == 'US' }
-                       .sort_by { |row| [
-                         row['Country_Region'].downcase || '',
-                         (row['Province_State'] || 'zzz').downcase
-                        ] }
+    data = ([@yesterday_mmdd] + new_data.collect { |row| "#{row['Deaths']}\t#{row[:key]}" }).join("\n")
 
-    new_data.each_with_index do |row, index|
-      row[:line] = index + 2
-      row[:key] = [row['Country_Region'], row['Province_State']].compact.join(', ')
-      case row[:key]
-      when 'Spain'
-        row[:key] = 'Spain, ignore'
-      when 'Canada, Recovered'
-        row[:key] = 'Canada, ignore'
-      when 'France'
-        row[:key] = 'France, ignore'
-      when /France, .*/
-        row[:key] = 'France, ignore'
-      when 'Italy'
-        row[:key] = 'Italy, ignore'
-      end
-    end
+    IO.popen('pbcopy', 'w') { |f| f << data }
+    puts "CSSE Rows match. Data for #{@yesterday_mmdd} copied to clipboard!!!"
+  end
 
-    current_data.each_with_index do |row, index|
-      row[:line] = index + 2
-      row[:key] = [row['Country/Region'], row['Province/State']].compact.join(', ')
-    end
+  private
 
+  def print_warnings(date_mmdd, new_data, current_data)
     new_index = new_data.group_by { |row| row[:key] }
     current_index = current_data.group_by { |row| row[:key] }
 
@@ -85,18 +65,56 @@ class FetchCSSE
     end
 
     if added_keys.empty? && removed_keys.empty?
-      data = ([@yesterday_mmdd] + new_data.collect { |row| "#{row['Deaths']}\t#{row[:key]}" }).join("\n")
-
       new_data.each do |row|
         current_row = current_index[row[:key]][0]
-        if current_row[@yesterday_mmdd] && row['Deaths'] < current_row[@yesterday_mmdd]
-          puts " ! • #{row[:key]} #{row['Deaths']} is less than existing #{current_row[@yesterday_mmdd]}"
+        if current_row[date_mmdd] && row['Deaths'] < current_row[date_mmdd]
+          puts " ! • #{row[:key]} #{row['Deaths']} is less than existing #{current_row[date_mmdd]}"
         end
       end
-
-      IO.popen('pbcopy', 'w') { |f| f << data }
-      puts "CSSE Rows match. Data for #{@yesterday_mmdd} copied to clipboard!!!"
     end
   end
-  # rubocop:enable Metrics/PerceivedComplexity, Metrics/CyclomaticComplexity, Metrics/MethodLength, Metrics/AbcSize
+
+  def load_new_data(date)
+    url = DATA_URL.gsub('[date]', date.to_time.utc.strftime('%m-%d-%Y'))
+
+    new_data = CSV.new(URI.parse(url).open, headers: :first_row).read
+    new_data =  new_data
+                .reject { |row| row['Country_Region'] == 'US' }
+                .sort_by { |row|
+                  [
+                    row['Country_Region'].downcase || '',
+                    (row['Province_State'] || 'zzz').downcase
+                  ]
+                }
+
+    new_data.each_with_index do |row, index|
+      row[:line] = index + 2
+      row[:key] = [row['Country_Region'], row['Province_State']].compact.join(', ')
+      case row[:key]
+      when 'Spain'
+        row[:key] = 'Spain, ignore'
+      when 'Canada, Recovered'
+        row[:key] = 'Canada, ignore'
+      when 'France'
+        row[:key] = 'France, ignore'
+      when /France, .*/
+        row[:key] = 'France, ignore'
+      when 'Italy'
+        row[:key] = 'Italy, ignore'
+      end
+    end
+
+    new_data
+  end
+
+  def load_current_data
+    current_data = CSV.read(FetchCSSE::LOCAL_FILE, headers: :first_row)
+
+    current_data.each_with_index do |row, index|
+      row[:line] = index + 2
+      row[:key] = [row['Country/Region'], row['Province/State']].compact.join(', ')
+    end
+
+    current_data
+  end
 end

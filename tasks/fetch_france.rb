@@ -1,4 +1,3 @@
-
 require 'date'
 require 'open-uri'
 require 'csv'
@@ -10,8 +9,9 @@ class FetchFrance
   DATA_URL = 'https://raw.githubusercontent.com/cedricguadalupe/FRANCE-COVID-19/' \
         'master/france_coronavirus_time_series-deaths.csv'.freeze
 
+  UPDATE_INFO = '3pm EDT (9pm CEST)'.freeze
+
   # New instance
-  # rubocop:disable Metrics/AbcSize
   def initialize
     @now = DateTime.now
     @today_iso = @now.to_time.utc.strftime('%Y-%m-%d')
@@ -25,10 +25,8 @@ class FetchFrance
     @day_before_iso = @day_before.to_time.utc.strftime('%Y-%m-%d')
     @day_before_mmdd = @day_before.to_time.utc.strftime('%m/%d/20')
   end
-  # rubocop:enable Metrics/AbcSize
 
   # Main fetch task
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def fetch
     puts "Reading France Data for #{@yesterday_iso}"
 
@@ -76,6 +74,4 @@ class FetchFrance
     IO.popen('pbcopy', 'w') { |f| f << data }
     puts 'All France data copied to clipboard!!!'
   end
-
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

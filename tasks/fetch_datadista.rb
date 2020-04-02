@@ -8,8 +8,9 @@ class FetchDatadista
   LOCAL_FILE = './src/data/other.deaths.csv'.freeze
   DATA_URL = 'https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/ccaa_covid19_fallecidos.csv'.freeze
 
+  UPDATE_INFO = '6am EDT (12pm CEST)'.freeze
+
   # New instance
-  # rubocop:disable Metrics/AbcSize
   def initialize
     @now = DateTime.now
     @today_iso = @now.to_time.utc.strftime('%Y-%m-%d')
@@ -23,10 +24,8 @@ class FetchDatadista
     @day_before_iso = @day_before.to_time.utc.strftime('%Y-%m-%d')
     @day_before_mmdd = @day_before.to_time.utc.strftime('%m/%d/20')
   end
-  # rubocop:enable Metrics/AbcSize
 
   # Main fetch task
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def fetch
     puts "Reading Datadista Data for #{@today_iso}"
 
@@ -46,5 +45,4 @@ class FetchDatadista
     IO.popen('pbcopy', 'w') { |f| f << data }
     puts "Datadista data for #{@today_mmdd} copied to clipboard!!!"
   end
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

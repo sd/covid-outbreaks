@@ -1,4 +1,3 @@
-
 require 'date'
 require 'open-uri'
 require 'csv'
@@ -7,10 +6,12 @@ require 'pp'
 # Fetch data for Italy
 class FetchItaly
   LOCAL_FILE = './src/data/other.deaths.csv'.freeze
-  DATA_URL = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/dati-regioni/dpc-covid19-ita-regioni-[date].csv'.freeze
+  DATA_URL = 'https://raw.githubusercontent.com/pcm-dpc/COVID-19/master/' \
+             'dati-regioni/dpc-covid19-ita-regioni-[date].csv'.freeze
+
+  UPDATE_INFO = '12pm EDT (7pm CEST)'.freeze
 
   # New instance
-  # rubocop:disable Metrics/AbcSize
   def initialize
     @now = DateTime.now
     @today_iso = @now.to_time.utc.strftime('%Y-%m-%d')
@@ -24,10 +25,8 @@ class FetchItaly
     @day_before_iso = @day_before.to_time.utc.strftime('%Y-%m-%d')
     @day_before_mmdd = @day_before.to_time.utc.strftime('%m/%d/20')
   end
-  # rubocop:enable Metrics/AbcSize
 
   # Main fetch task
-  # rubocop:disable Metrics/AbcSize, Metrics/MethodLength
   def fetch
     puts "Reading Italy Data for #{@today_iso}"
 
@@ -40,7 +39,8 @@ class FetchItaly
       row[:key] = ['Italy', row['denominazione_regione']].compact.join(', ')
     end
 
-    data = (new_data.collect { |row| row['deceduti'] } + [new_data.collect { |row| row['deceduti'].to_i }.sum]).join("\n")
+    data = (new_data.collect { |row| row['deceduti'] } + [new_data.collect { |row| row['deceduti'].to_i }.sum])
+           .join("\n")
 
     IO.popen('pbcopy', 'w') { |f| f << data }
     puts "Italy data for #{@today_mmdd} copied to clipboard!!!"
@@ -74,6 +74,4 @@ class FetchItaly
     IO.popen('pbcopy', 'w') { |f| f << data }
     puts 'Italy data copied to clipboard!!!'
   end
-
-  # rubocop:enable Metrics/AbcSize, Metrics/MethodLength
 end

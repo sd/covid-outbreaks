@@ -36,6 +36,11 @@ task :us do
   FetchUS.new.fetch
 end
 
+desc 'Fetch USA'
+task :us_now do
+  FetchUS.new.fetch_current
+end
+
 desc 'Fetch All'
 task :default do
   FetchCSSE.new.fetch
