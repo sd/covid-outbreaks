@@ -6,10 +6,9 @@ require 'pp'
 # Fetch data for France
 class FetchFrance
   LOCAL_FILE = './src/data/other.deaths.csv'.freeze
-  DATA_URL = 'https://raw.githubusercontent.com/cedricguadalupe/FRANCE-COVID-19/' \
-        'master/france_coronavirus_time_series-deaths.csv'.freeze
 
   OFFICIAL_DATA_URL = 'https://www.data.gouv.fr/fr/datasets/r/63352e38-d353-4b54-bfd1-f1b3ee1cabd7'.freeze
+
   UPDATE_INFO = '3pm EDT (9pm CEST)'.freeze
 
   # New instance
@@ -27,7 +26,7 @@ class FetchFrance
     @day_before_mmdd = @day_before.to_time.utc.strftime('%m/%d/20')
   end
 
-   # Main fetch task
+  # Main fetch task
   def fetch
     puts "Reading France Data for #{@today_iso}"
 
@@ -98,55 +97,6 @@ class FetchFrance
 
     IO.popen('pbcopy', 'w') { |f| f << data }
     puts "France data for #{@today_mmdd} copied to clipboard!!!"
-  end
-
-  # Main fetch task
-  def fetch_cedric
-    puts "Reading France Data for #{@today_iso}"
-
-    new_data = CSV.new(URI.parse(DATA_URL).open, headers: :first_row).read
-    regions = new_data.headers.reject { |k| k == 'Date' }
-
-    real_rows = {}
-    new_data.each do |row|
-      date_parts = row['Date'].split('/')
-      date_iso = "#{date_parts[2]}-#{date_parts[1]}-#{date_parts[0]}"
-
-      regions.each do |region|
-        real_rows[region] ||= {}
-        real_rows[region][date_iso] = row[region]
-      end
-    end
-
-    data = regions.collect { |region| real_rows[region][@today_iso] }.join("\n")
-
-    IO.popen('pbcopy', 'w') { |f| f << data }
-    puts "France data for #{@today_mmdd} copied to clipboard!!!"
-  end
-
-  def fetch_all_cedric
-    puts "Reading France Data for #{@today_iso}"
-
-    new_data = CSV.new(URI.parse(DATA_URL).open, headers: :first_row).read
-    regions = new_data.headers.reject { |k| k == 'Date' }
-    dates = []
-
-    real_rows = {}
-    new_data.each do |row|
-      date_parts = row['Date'].split('/')
-      date_iso = "#{date_parts[2]}-#{date_parts[1]}-#{date_parts[0]}"
-      dates << date_iso
-
-      regions.each do |region|
-        real_rows[region] ||= {}
-        real_rows[region][date_iso] = row[region]
-      end
-    end
-
-    data = regions.collect { |region| dates.collect { |date| real_rows[region][date] }.join("\t") }.join("\n")
-
-    IO.popen('pbcopy', 'w') { |f| f << data }
-    puts 'All France data copied to clipboard!!!'
   end
 
   # https://en.wikipedia.org/wiki/Departments_of_France

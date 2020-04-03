@@ -89,7 +89,7 @@ const InfoSources = () => {
       </p>
 
       <p>
-        For France, we use <a target='_blank' rel='noreferrer noopener' href='https://github.com/cedricguadalupe/FRANCE-COVID-19'>the files collected by Cedric Guadalupe</a>.
+        For France, we use <a target='_blank' rel='noreferrer noopener' href='https://www.data.gouv.fr/en/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/'>the official data at data.gouv.fr</a>.
       </p>
 
       <p>
