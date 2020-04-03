@@ -22,11 +22,11 @@ export function filterBySearch (a, search, language) {
 }
 
 function filterAll (a, options) {
-  if (options.aggregateCountries) {
-    return (a.daily.deaths && a.latestTotal.deaths > 0) || (a.daily.cases && a.latestTotal.cases > 0)
-  } else {
+  if (options.hideAggregates) {
     return ((a.code !== 'us') && (a.code !== 'it') && (a.code !== 'es') && (a.code !== 'fr')) &&
       ((a.daily.deaths && a.latestTotal.deaths > 0) || (a.daily.cases && a.latestTotal.cases > 0))
+  } else {
+    return (a.daily.deaths && a.latestTotal.deaths > 0) || (a.daily.cases && a.latestTotal.cases > 0)
   }
 }
 

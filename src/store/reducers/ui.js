@@ -6,7 +6,7 @@ const initialState = {
   pinned: undefined,
   pinPositions: {},
   expanded: undefined,
-  aggregateCountries: undefined,
+  hideAggregates: undefined,
   noScaling: undefined,
   weeks: undefined,
   totals: undefined,

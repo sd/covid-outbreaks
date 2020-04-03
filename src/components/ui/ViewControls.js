@@ -13,7 +13,7 @@ import { viewOptionsForFiltering, FILTER_TYPES, FILTER_DESCRIPTIONS } from '../.
 
 const ViewControls = ({
   setUI, resetUI,
-  search, sort, filter, weeks, aggregateCountries,
+  search, sort, filter, weeks, hideAggregates,
   isMobile
 }) => {
   const { t } = useTranslation();
@@ -101,8 +101,8 @@ const ViewControls = ({
             <div className='form-row'>
               <div className='form-single'>
                 <input
-                  type='checkbox' id='aggregateCountries' name='aggregateCountries' checked={!!aggregateCountries}
-                  onChange={(event) => setUI({aggregateCountries: event.target.checked})}
+                  type='checkbox' id='aggregateCountries' name='aggregateCountries' checked={!hideAggregates}
+                  onChange={(event) => setUI({hideAggregates: !event.target.checked})}
                 />
                 <label htmlFor='aggregateCountries'><Trans i18nKey='view_controls.aggregateCountries_label'>Show totals for US, Spain, Italy, France</Trans></label>
               </div>
@@ -153,7 +153,7 @@ export default connect(
     sort: state.ui.sort,
     filter: state.ui.filter,
     weeks: state.ui.weeks,
-    aggregateCountries: state.ui.aggregateCountries,
+    hideAggregates: state.ui.hideAggregates,
   }),
   (dispatch, props) => ({
     setUI: (values) => {

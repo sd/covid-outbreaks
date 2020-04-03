@@ -32,7 +32,7 @@ export function configureStore (state) {
           weeks: urlUi.weeks || storedUi.weeks,
           totals: urlUi.totals || storedUi.totals,
           search: urlUi.search || storedUi.search,
-          aggregateCountries: urlUi.aggregaaggregateCountrieste || storedUi.aggregateCountries,
+          hideAggregates: urlUi.hideAggregates || storedUi.hideAggregates,
         }
       }
     }
