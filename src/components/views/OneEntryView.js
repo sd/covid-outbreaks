@@ -27,7 +27,7 @@ const OneEntryView = ({
     viewOptions = viewOptionsForSorting(ui.sort, viewOptions)
 
     data = data.sort((a, b) => viewOptions.sorter(a, b, viewOptions ))
-console.log(entryName)
+
     if (entryName) {
       if (!entryName.match(/[\*,]/)) {
         entryName = `${entryName},${entryName}*`
@@ -36,6 +36,13 @@ console.log(entryName)
     }
 
     let dates = allDates
+
+    if (data[0]) {
+      ui = {
+        ...ui,
+        isExpanded: { ...ui.isExpanded, [data[0].code]: true }
+      }
+    }
 
     const actualProps = {
       data, dates, allDates,

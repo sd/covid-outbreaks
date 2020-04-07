@@ -124,7 +124,6 @@ const VariableSizeRow = ({children, index, itemCount, style}) => {
 }
 
 const mapStateToProps = (state, ownProps) => ({
-  ui: state.ui
 })
 
 const mapDispatchToProps = (dispatch, props) => ({
