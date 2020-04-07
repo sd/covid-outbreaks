@@ -10,7 +10,7 @@
   padding-bottom: 5em;
 }
 
-.TableView-row {
+.Entries-row {
   width: 100%;
   min-width: 200px;
   max-width: 600px;
@@ -20,7 +20,7 @@
   clear: both;
 }
 
-.TableView-loading {
+.Entries-loading {
   display: flex;
   align-items: center;
   justify-content: center;
@@ -31,20 +31,20 @@
   right: 0;
 }
 
-.desktop .TableView-row {
+.desktop .Entries-row {
   max-width: 800px;
 }
 
-.TableView a, .TableView a:link {
+.SummaryView a, .SummaryView a:link {
   color: #FFF;
   text-decoration: underline;
 }
 
-.TableView a:active, .TableView a:visited {
+.SummaryView a:active, .SummaryView a:visited {
   color: #FFF;
 }
 
-.TableView-title {
+.Entries-title {
   border-top: 1px solid #999;
   display: grid;
   font-weight: bold;
@@ -52,76 +52,76 @@
   padding-top: 0.2em;
 }
 
-.TableView-title .tools {
+.Entries-title .tools {
   text-align: left;
   grid-area: tools;
   font-size: 80%;
 }
 
-.TableView-title .totals {
+.Entries-title .totals {
   grid-area: totals;
   text-align: right;
 }
 
-.TableView-title .title {
+.Entries-title .title {
   grid-area: title;
   float: left;
   text-align: center;
 }
 
-.TableView-title .tools .segment {
+.Entries-title .tools .segment {
   display: inline-block;
   padding: 0.3em 1em 0.3em 0;
 }
 
-.TableView-title .totals .segment {
+.Entries-title .totals .segment {
   display: block;
   margin-left: 0.5em;
 }
 
-.TableView-title {
+.Entries-title {
   grid-template-columns: 10em auto 11em;
   grid-template-rows: auto;
   grid-template-areas:
     "tools title totals"
     "tools title summary";
 }
-.TableView-title .name { text-align: center }
-.TableView-title .tools { text-align: left }
-.TableView-title .tools .segment {
+.Entries-title .name { text-align: center }
+.Entries-title .tools { text-align: left }
+.Entries-title .tools .segment {
   display: block;
 }
 
 @media only screen and (max-width: 600px) {
-  .TableView-title {
+  .Entries-title {
     grid-template-columns: auto 11em;
     grid-template-rows: auto;
     grid-template-areas:
       "title   totals"
       "tools  summary";
   }
-  .TableView-title .name { text-align: left }
-  .TableView-title .tools { text-align: left }
-  .TableView-title .tools .segment {
+  .Entries-title .name { text-align: left }
+  .Entries-title .tools { text-align: left }
+  .Entries-title .tools .segment {
     display: inline-block;
   }
 }
 
-.pinned .TableView-title {
+.pinned .Entries-title {
   border-top: 2px solid #ff0;
 }
 
-.TableView-more {
+.Entries-more {
   margin-top: 1em;
   margin-bottom: 6em;
   text-align: center;
 }
 
-.TableView-more section {
+.Entries-more section {
   margin-top: 1em;
 }
 
-.TableView-title .title {
+.Entries-title .title {
   line-height: 130%;
   margin-left: auto;
   margin-right: auto;
@@ -129,25 +129,25 @@
   font-size: 110%;
 }
 
-.TableView-title .title .info {
+.Entries-title .title .info {
   font-size: 80%;
   position: relative;
   top: -0.15em;
 }
 
 @media only screen and (max-width: 600px) {
-  .TableView-title .title {
+  .Entries-title .title {
     margin-left: 0;
     margin-right: 0;
     text-align: left;
   }
 }
 
-.TableView-title .title .name {
+.Entries-title .title .name {
   display: inline-block;
 }
 
-.TableView-title .title .flag {
+.Entries-title .title .flag {
   float: left;
   margin-right: 0.2em;
 
@@ -155,20 +155,20 @@
   text-shadow: 0 0 0.2em #999;
 }
 
-.TableView-title .title .info {
+.Entries-title .title .info {
   display: inline-block;
 }
 
-.TableView-title .totals .cases {
+.Entries-title .totals .cases {
   white-space: nowrap;
 }
 
-.TableView-title .totals .cases {
+.Entries-title .totals .cases {
   font-size: 80%;
   opacity: 0.4;
 }
 
-.TableView-title .totals .velocitySummary {
+.Entries-title .totals .velocitySummary {
   white-space: nowrap;
   font-size: 80%;
 }

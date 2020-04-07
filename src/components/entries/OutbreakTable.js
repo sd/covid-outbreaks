@@ -99,7 +99,7 @@ const OutbreakTable = ({entry, dates}) => {
             {entry.latestVelocity.deaths &&
               <div className='velocity'>
                 <Trans i18nKey='entry.table_velocity_label'>Velocity</Trans>
-                <Information content='numbers' />
+                <Information to='/explain' />
 
               </div>
             }

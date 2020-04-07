@@ -1,13 +1,18 @@
 import { applyMiddleware, createStore } from 'redux'
 import thunkMiddleware from 'redux-thunk'
 import { composeWithDevTools } from 'redux-devtools-extension'
-import rootReducer from './reducers'
-import setupQueryStringSync from './queryString'
+import { createBrowserHistory } from 'history'
 import { persistStore, persistReducer } from 'redux-persist'
+import { routerMiddleware } from 'connected-react-router'
 import defaultStorage from 'redux-persist/lib/storage'
 
+import createRootReducer from './reducers'
+import setupQueryStringSync from './queryString'
+
+export const history = createBrowserHistory()
+
 export function configureStore (state) {
-  let reducer = rootReducer
+  let reducer = createRootReducer(history)
 
   const persistConfig = {
     key: "root",
@@ -41,7 +46,7 @@ export function configureStore (state) {
   reducer = persistReducer(persistConfig, reducer)
 
 
-  const middlewares = [thunkMiddleware]
+  const middlewares = [thunkMiddleware, routerMiddleware(history)]
 
   // Add more middleware here
 
@@ -71,5 +76,5 @@ export function configureStore (state) {
 
   const persistor = persistStore(store, state)
 
-  return { store, persistor }
+  return { store, persistor, history }
 }

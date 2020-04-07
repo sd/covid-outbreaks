@@ -25,6 +25,16 @@
   font-weight: bolder;
 }
 
+.App-header h1 a, .App-header h1 a:link, .App-header h1 a:visited {
+  color: #fff;
+  text-decoration: none;
+}
+
+.App-header h1 a:hover, .App-header h1 a:active {
+  color: #ff6;
+  text-decoration: underline;
+}
+
 .App-header h1 light {
   font-weight: lighter !important;
   color: #ddd;
@@ -127,4 +137,79 @@ button.activated {
 button:hover {
   cursor: pointer;
   color: #ff0;
+}
+
+.App-content .ScrollView {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  overflow: auto;
+}
+
+.App-content .ScrollView > div {
+  margin-top: 8em;
+  max-width: 40em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-bottom: 3em;
+}
+
+.App-content .information {
+  background-color: #ffb;
+  color: #333;
+  font-size: 1rem;
+  line-height: 1.5em;
+  padding: 0.5em 1em;
+  text-align: left;
+  font-weight: normal;
+  white-space: normal;
+}
+.App-content .information p {
+  margin-top: 0em;
+}
+
+.App-content .information h3 {
+  margin-bottom: 0em;
+}
+
+.App-content .backLink {
+  float: right;
+}
+
+.App-content button.backLink  {
+  color: #000066;
+}
+
+.App-content button:hover.backLink {
+  color: #0000aa;
+}
+
+.Information-icon {
+  margin-left: 0.5em;
+  margin-right: 0.5em;
+  display: inline-block;
+  position: relative;
+  top: 0.2em;
+  width: 1em;
+  height: 1em;
+  border: 0.1em solid;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+.Information-icon-i {
+  font-size: 1em;
+  position: relative;
+  top: -0.35em;
+}
+.Information-trigger {
+  margin-left: 0.3em;
+  font-size: 90%;
+  position: relative;
+  top: -0.1em;
+  opacity: 0.6;
+  cursor: pointer;
 }

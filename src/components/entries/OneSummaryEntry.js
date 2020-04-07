@@ -4,6 +4,7 @@ import numeral from 'numeral'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faThumbtack, faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons'
 import { DateTime } from 'luxon'
+import { Link } from 'react-router-dom'
 
 import './OneSummaryEntry.css'
 
@@ -64,7 +65,9 @@ const OneSummaryEntry = ({
 
         <div className='title'>
           <span className='name'>
-            {entry[`${i18n.language}Name`] || entry.name || entry.code}
+            <Link to={`/${entry.code}`}>
+              {entry[`${i18n.language}Name`] || entry.name || entry.code}
+            </Link>
           </span>
           <span className='flag' title={entry.code}>{entry.emoji}</span>
         </div>

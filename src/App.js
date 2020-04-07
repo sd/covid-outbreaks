@@ -1,20 +1,35 @@
 import React from 'react';
-import './App.css';
+import { connect } from 'react-redux'
 import withSizes from 'react-sizes'
 import classNames from 'classnames'
 import { Trans } from 'react-i18next'
+import {
+  BrowserRouter as Router,
+  Switch,
+  Route,
+  Link
+} from "react-router-dom";
 
-import TableView from './components/TableView'
-import DataLoader from './components/DataLoader'
-import Information from './components/ui/Information'
+import './App.css';
+
+import { fetchDataDispatcher } from './store/reducers/data'
+
 import ViewControls from './components/ui/ViewControls'
+
+import AllEntriesView from './components/views/AllEntriesView'
+import OneEntryView from './components/views/OneEntryView'
+import CreditsView from './components/views/CreditsView'
+import ExplainNumbersView from './components/views/ExplainNumbersView'
 
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = { error: null, errorInfo: null }
     this.listRef = React.createRef()
-    this.tableViewRef = React.createRef()
+  }
+
+  componentDidMount() {
+    this.props.loadData()
   }
 
   componentDidCatch(error, errorInfo) {
@@ -38,54 +53,59 @@ class App extends React.Component {
     const { isMobile, isTablet, isDesktop, windowHeight } = this.props
     const { error, errorInfo } = this.state
 
+    const commonViewProps = { isMobile, isTablet, isDesktop, windowHeight, listRef: this.listRef }
+
     return (
-      <div className={ classNames('App', { mobile: isMobile, tablet: isTablet, desktop: isDesktop }) }>
+      <Router>
+        <div className={ classNames('App', { mobile: isMobile, tablet: isTablet, desktop: isDesktop }) }>
 
-        <PageHeader listRef={this.listRef} isMobile={isMobile} />
+          <PageHeader {...commonViewProps} />
 
-        {!error &&
-          <div className="App-content">
-            <DataLoader />
+          {!error &&
+            <div className="App-content">
+              <Switch>
+                <Route exact path="/sources" render={() => <CreditsView {...commonViewProps} />} />
+                <Route exact path="/explain" render={() => <ExplainNumbersView {...commonViewProps} />} />
 
-            <TableView
-              listHeight={windowHeight}
-              tableViewRef={this.tableViewRef} listRef={this.listRef}
-              isMobile={isMobile} isTablet={isTablet} isDesktop={isDesktop}
-            />
-          </div>
-        }
+                <Route exact path="/" render={() => <AllEntriesView {...commonViewProps} />} />
+                <Route path="/:name" render={({match}) => <OneEntryView {...commonViewProps} entryName={match.params.name} />} />
 
-        {error &&
-          <div className="App-error">
-            <div>
-              <h2><Trans i18nKey={'general.error_title'}>ERROR</Trans></h2>
-
-              <Trans i18nKey={'general.error_text'}>
-                <p>
-                  Something unexpected happened. We suggest clicking the
-                  button below to reset cached data and try loading the page again.
-                </p>
-                <p>
-                  If an error is still happening, reach out to <a href='https://twitter.com/'>@sd on twitter</a>.
-                </p>
-              </Trans>
-
-              <button onClick={() => this.resetAndReload()}>
-                <Trans i18nKey={'general.reload_button'}>Try Again!</Trans>
-              </button>
+              </Switch>
             </div>
+          }
 
-            <div className="error-info">
-              <pre>
-                {/* <b>{error.message}</b><br /> */}
-                {errorInfo.componentStack}
-              </pre>
+          {error &&
+            <div className="App-error">
+              <div>
+                <h2><Trans i18nKey={'general.error_title'}>ERROR</Trans></h2>
+
+                <Trans i18nKey={'general.error_text'}>
+                  <p>
+                    Something unexpected happened. We suggest clicking the
+                    button below to reset cached data and try loading the page again.
+                  </p>
+                  <p>
+                    If an error is still happening, reach out to <a href='https://twitter.com/'>@sd on twitter</a>.
+                  </p>
+                </Trans>
+
+                <button onClick={() => this.resetAndReload()}>
+                  <Trans i18nKey={'general.reload_button'}>Try Again!</Trans>
+                </button>
+              </div>
+
+              <div className="error-info">
+                <pre>
+                  {/* <b>{error.message}</b><br /> */}
+                  {errorInfo.componentStack}
+                </pre>
+              </div>
             </div>
-          </div>
-        }
+          }
 
-        <PageFooter />
-      </div>
+          <PageFooter />
+        </div>
+      </Router>
     )
   }
 }
@@ -93,9 +113,11 @@ class App extends React.Component {
 const PageHeader = ({listRef, isMobile}) => {
   return (
     <header className='App-header'>
-      <h1 onClick={() => listRef.current.scrollTo(0, 0)} style={{cursor: 'pointer'}}>
-        <img src='covid-128.png' alt='*' className='logo' />
-        <Trans i18nKey='general.title'>COVID-19 Outbreaks</Trans>
+      <h1 onClick={() => listRef.current && listRef.current.scrollTo(0, 0)} style={{cursor: 'pointer'}}>
+        <Link to="/">
+          <img src='covid-128.png' alt='*' className='logo' />
+          <Trans i18nKey='general.title'>COVID-19 Outbreaks</Trans>
+        </Link>
       </h1>
 
       <ViewControls isMobile={isMobile} listRef={listRef} />
@@ -113,11 +135,28 @@ const PageFooter = () => {
         </Trans>
         {' • '}<a href='https://twitter.com/sd'>@sd</a>
         {' • '}<a href='https://github.com/sd/covid-outbreaks'>github</a>
-        {' • '}<Information content='sources' trigger={<span className='link'>Data Sources</span>}></Information>
+        {' • '}<Link to='/sources'>Data Sources</Link>
       </div>
     </footer>
   )
 }
+
+
+const mapStateToProps = (state, ownProps) => ({
+  loading: state.data.loading,
+  loaded: state.data.loaded,
+  errorMessage: state.data.errorMessage,
+  lastDate: state.data.lastDate
+})
+
+const mapDispatchToProps = (dispatch) => ({
+  loadData: () => fetchDataDispatcher(dispatch),
+})
+
+const ConnectedApp = connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App)
 
 const mapSizesToProps = ({ width, height }) => ({
   isMobile: width <= 480,
@@ -126,4 +165,6 @@ const mapSizesToProps = ({ width, height }) => ({
   windowHeight: height
 })
 
-export default withSizes(mapSizesToProps)(App)
+const ConnectedAndSizedApp = withSizes(mapSizesToProps)(ConnectedApp)
+
+export default ConnectedAndSizedApp

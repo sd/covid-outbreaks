@@ -147,6 +147,16 @@
   align-items: center;
 }
 
+
+.SummaryView-row .title a, .SummaryView-row .title a:link, .SummaryView-row .title a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+.SummaryView-row .title a:hover, .SummaryView-row .title a:active {
+  text-decoration: underline;
+}
+
+
 .SummaryView-row .title .name {
   flex: 1;
 }

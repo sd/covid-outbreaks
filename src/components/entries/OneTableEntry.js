@@ -88,7 +88,7 @@ comparisonEntry = null
                   <Trans i18nKey='entry.outbreak_day'>
                   day {{ day: entry.latestOutbreakDay.deaths }}
                   </Trans>
-                  <Information content='numbers' />
+                  <Information to='/explain' />
                 </span>
               }
           </span>
@@ -116,7 +116,7 @@ comparisonEntry = null
           {false && entry.latestAcceleration.deaths &&
             <div className='velocitySummary acceleration'>
               <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={false} format={'0,000.0'} /> days to 10x
-              <Information content='numbers' />
+              <Information to='/explain' />
             </div>
           }
 
