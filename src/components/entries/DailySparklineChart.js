@@ -58,7 +58,7 @@ const DailySparklineChart =  ({
 }) => {
   const { i18n } = useTranslation();
 
-  let verticalScale = ui.showHospitalized ? 5 : 3.5
+  let verticalScale = ui.showHospitalized ? 5 : 3.7
 
   let aspectRatio = (dates.length / 7) / verticalScale
 
