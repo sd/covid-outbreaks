@@ -29,7 +29,7 @@ const OneEntryView = ({
     data = data.sort((a, b) => viewOptions.sorter(a, b, viewOptions ))
 
     if (entryName) {
-      if (!entryName.match(/[\*,]/)) {
+      if (!entryName.match(/[*,]/)) {
         entryName = `${entryName},${entryName}*`
       }
       data = data.filter(entry => filterBySearch(entry, entryName, i18n.language))
