@@ -59,9 +59,17 @@
     "legend_compared": "Compared to {{name}}",
     "legend_acceleration": "Acceleration"
   },
+  "navigation": {
+    "top": "Top",
+    "all": "All",
+    "europe": "Europe",
+    "usa": "USA",
+    "latam": "Latam",
+    "asia": "Asia/Pacific"
+  },
   "filter": {
     "description": {
-      "relevant": "Top outbreaks",
+      "relevant": "Top Outbreaks",
       "americas": "Outbreaks in The Americas",
       "usa": "Outbreaks in USA",
       "latam": "Outbreaks in Latin America",

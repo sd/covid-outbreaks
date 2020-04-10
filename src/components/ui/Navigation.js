@@ -10,7 +10,6 @@ import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
 import './Navigation.css'
 
 const Navigation = ({sort, setUI, resetUI}) => {
-  const { t } = useTranslation()
   const searchRef = React.useRef()
   const history = useHistory()
   const location = useLocation()
@@ -50,22 +49,22 @@ const Navigation = ({sort, setUI, resetUI}) => {
   return (
     <div className='Navigation'>
       <section>
-        <NavLink to="/">Top</NavLink>
+        <NavLink to="/"><Trans i18nKey='navigation.top'>Top</Trans></NavLink>
       </section>
       <section>
-        <NavLink to="/all">All</NavLink>
+        <NavLink to="/all"><Trans i18nKey='navigation.all'>All</Trans></NavLink>
       </section>
       <section>
-        <NavLink to="/euro">Europe</NavLink>
+        <NavLink to="/euro"><Trans i18nKey='navigation.europe'>Europe</Trans></NavLink>
       </section>
       <section>
-        <NavLink to="/usa">USA</NavLink>
+        <NavLink to="/usa"><Trans i18nKey='navigation.usa'>USA</Trans></NavLink>
       </section>
       <section>
-        <NavLink to="/latam">Latam</NavLink>
+        <NavLink to="/latam"><Trans i18nKey='navigation.latam'>Latam</Trans></NavLink>
       </section>
       <section>
-        <NavLink to="/asia">Asia/Pacific</NavLink>
+        <NavLink to="/asia"><Trans i18nKey='navigation.asia'>Asia/Pacific</Trans></NavLink>
       </section>
       <section>
         {(search === null || search === undefined) &&

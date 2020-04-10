@@ -59,9 +59,17 @@
     "legend_compared": "Comparado a {{name}}",
     "legend_acceleration": "Aceleración"
   },
+  "navigation": {
+    "top": "Principales",
+    "all": "Todos",
+    "europe": "Europa",
+    "usa": "EEUU",
+    "latam": "Lat. Am.",
+    "asia": "Asia"
+  },
   "filter": {
     "description": {
-      "relevant": "Brotes importantes",
+      "relevant": "Brotes Principales",
       "americas": "Brotes en las Americas",
       "usa": "Brotes en los EEUU",
       "latam": "Brotes en Latinoamérica",

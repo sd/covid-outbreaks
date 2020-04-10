@@ -1,11 +1,13 @@
-.Navigation {
-
-}
-
 .Navigation section {
   display: inline-block;
-  margin-left: 0.3em;
-  margin-right: 0.3em;
+  margin-left: 0.4em;
+  margin-right: 0.4em;
+}
+
+.mobile .Navigation section {
+  padding: 0.2em;
+  margin-left: 0.1em;
+  margin-right: 0.1em;
 }
 
 .Navigation a, .Navigation a:link, .Navigation a:visited {
