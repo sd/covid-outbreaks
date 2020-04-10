@@ -21,23 +21,23 @@
 
 .App-header h1 {
   margin: 0;
-  color: #fff;
+  color: var(--text-highlight-color);
   font-weight: bolder;
 }
 
 .App-header h1 a, .App-header h1 a:link, .App-header h1 a:visited {
-  color: #fff;
+  color: var(--text-highlight-color);
   text-decoration: none;
 }
 
 .App-header h1 a:hover, .App-header h1 a:active {
-  color: #ff6;
+  color: var(--link-highlight-color);
   text-decoration: underline;
 }
 
 .App-header h1 light {
   font-weight: lighter !important;
-  color: #ddd;
+  opacity: 0.8;
 }
 
 .App-header .logo {
@@ -108,7 +108,7 @@
 
 .App-error  button {
   margin-top: 2em;
-  color: #24c;
+  color: var(--button-color);
   font-size: 1em;
 }
 
@@ -125,18 +125,18 @@ button {
   display: inline;
   border: 0px;
   padding: 0px;
-  color: #883;
+  color: var(--secondary-link-color);
   background-color: inherit;
   font-size: 1em;
 }
 
 button.activated {
-  color: #ff0;
+  color: var(--link-highlight-color);
 }
 
 button:hover {
   cursor: pointer;
-  color: #ff0;
+  color: var(--link-highlight-color);
 }
 
 .App-content .ScrollView {
@@ -158,8 +158,8 @@ button:hover {
 }
 
 .App-content .information {
-  background-color: #ffb;
-  color: #333;
+  background-color: var(--yellowTheme-background-color);
+  color: var(--yellowTheme-text-color);
   font-size: 1rem;
   line-height: 1.5em;
   padding: 0.5em 1em;
@@ -180,11 +180,11 @@ button:hover {
 }
 
 .App-content button.backLink  {
-  color: #000066;
+  color: var(--yellowTheme-secondary-link-color);
 }
 
 .App-content button:hover.backLink {
-  color: #0000aa;
+  color: var(--yellowTheme-link-highlight-color);
 }
 
 .Information-icon {

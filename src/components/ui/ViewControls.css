@@ -5,14 +5,14 @@
 }
 
 .ViewControls-trigger {
-  color: #cc2;
-  border-bottom: 1px dotted #cc2;
+  color: var(--link-color);
+  border-bottom: 1px dotted var(--link-color);
   cursor: pointer;
 }
 
 .ViewControls-trigger:hover {
-  color: #ff0;
-  border-bottom: 1px solid #ff0;
+  color: var(--link-highlight-color);
+  border-bottom: 1px solid var(--link-highlight-color);
   cursor: pointer;
 }
 
@@ -61,7 +61,7 @@
 }
 
 .ViewControls-popup button {
-  color: #24c;
+  color: var(--button-color);
   font-size: 1em;
 }
 
@@ -71,16 +71,16 @@
 }
 
 .ViewControls .search, .ViewControls .search button {
-  color: #cc2;
+  color: var(--link-color);
 }
 
 .ViewControls .search input {
   font-size: 1em;
   background: none;
   outline: none;
-  color: #cc2;
+  color: var(--link-color);
   border: 0;
-  border-bottom: 1px solid #cc2;
+  border-bottom: 1px solid var(--link-color);
   margin-right: 0.5em;
 }
 

@@ -31,19 +31,8 @@ function filterAll (a, options) {
 }
 
 function filterRelevant (a, options) {
-  if (options.sort === 'casesLatest') {
-    return a.latestTotal.cases > 0
-  } else if (options.sort === 'casesTotal') {
-    return a.latestTotal.cases > 0
-  } else if (options.sort === 'deathsLatest') {
-    return a.latestTotal.deaths > 1
-  } else if (options.sort === 'deathsTotal') {
-    return a.latestTotal.deaths > 1
-  } else if (options.sort === 'acceleration') {
-    return a.latestTotal.deaths > 50
-  } else {
-    return a.latestTotal.deaths > 0
-  }
+  if (a.code === 'us' || a.code === 'it' || a.code === 'fr' || a.code === 'es') return false
+  return a.latestDaily.deaths >= 20
 }
 
 function filterAmericas (a, options) {
@@ -122,7 +111,7 @@ export const FILTER_ALIASES = {
 }
 
 export const FILTER_DESCRIPTIONS = {
-  relevant: 'Important outbreaks',
+  relevant: 'Top outbreaks',
   americas: 'Outbreaks in The Americas',
   usa: 'Outbreaks in USA',
   latam: 'Outbreaks in Latin America',

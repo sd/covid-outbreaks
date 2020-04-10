@@ -10,16 +10,6 @@
   padding-bottom: 5em;
 }
 
-.Entries-row {
-  width: 100%;
-  min-width: 200px;
-  max-width: 600px;
-  margin-left: auto;
-  margin-right: auto;
-  padding-top: 2em;
-  clear: both;
-}
-
 .Entries-loading {
   display: flex;
   align-items: center;
@@ -31,187 +21,46 @@
   right: 0;
 }
 
-.desktop .Entries-row {
-  max-width: 800px;
-}
-
-.SummaryView a, .SummaryView a:link {
-  color: #FFF;
-  text-decoration: underline;
-}
-
-.SummaryView a:active, .SummaryView a:visited {
-  color: #FFF;
-}
-
-.Entries-title {
-  border-top: 1px solid #999;
-  display: grid;
-  font-weight: bold;
-  margin-top: 0.2em;
-  padding-top: 0.2em;
-}
-
-.Entries-title .tools {
-  text-align: left;
-  grid-area: tools;
-  font-size: 80%;
-}
-
-.Entries-title .totals {
-  grid-area: totals;
-  text-align: right;
-}
-
-.Entries-title .title {
-  grid-area: title;
-  float: left;
-  text-align: center;
-}
-
-.Entries-title .tools .segment {
-  display: inline-block;
-  padding: 0.3em 1em 0.3em 0;
-}
-
-.Entries-title .totals .segment {
-  display: block;
-  margin-left: 0.5em;
-}
-
-.Entries-title {
-  grid-template-columns: 10em auto 11em;
-  grid-template-rows: auto;
-  grid-template-areas:
-    "tools title totals"
-    "tools title summary";
-}
-.Entries-title .name { text-align: center }
-.Entries-title .tools { text-align: left }
-.Entries-title .tools .segment {
-  display: block;
-}
-
-@media only screen and (max-width: 600px) {
-  .Entries-title {
-    grid-template-columns: auto 11em;
-    grid-template-rows: auto;
-    grid-template-areas:
-      "title   totals"
-      "tools  summary";
-  }
-  .Entries-title .name { text-align: left }
-  .Entries-title .tools { text-align: left }
-  .Entries-title .tools .segment {
-    display: inline-block;
-  }
-}
-
-.pinned .Entries-title {
-  border-top: 2px solid #ff0;
-}
-
-.Entries-more {
-  margin-top: 1em;
-  margin-bottom: 6em;
-  text-align: center;
-}
-
-.Entries-more section {
-  margin-top: 1em;
-}
-
-.Entries-title .title {
-  line-height: 130%;
-  margin-left: auto;
-  margin-right: auto;
-  text-align: center;
-  font-size: 110%;
-}
-
-.Entries-title .title .info {
-  font-size: 80%;
-  position: relative;
-  top: -0.15em;
-}
-
-@media only screen and (max-width: 600px) {
-  .Entries-title .title {
-    margin-left: 0;
-    margin-right: 0;
-    text-align: left;
-  }
-}
-
-.Entries-title .title .name {
-  display: inline-block;
-}
-
-.Entries-title .title .flag {
-  float: left;
-  margin-right: 0.2em;
-
-  font-size: 160%;
-  text-shadow: 0 0 0.2em #999;
-}
-
-.Entries-title .title .info {
-  display: inline-block;
-}
-
-.Entries-title .totals .cases {
-  white-space: nowrap;
-}
-
-.Entries-title .totals .cases {
-  font-size: 80%;
-  opacity: 0.4;
-}
-
-.Entries-title .totals .velocitySummary {
-  white-space: nowrap;
-  font-size: 80%;
-}
-
-
 .outbreakDay {
-  color: #7ae;
+  color: var(--data-outbreakDay-color);
 }
 .lightTheme .outbreakDay {
-  color: #59d;
+  color: var(--lightTheme-data-outbreakDay-color);
 }
 
 .velocity {
-  color: #bb6;
+  color: var(--data-velocity-color);
 }
-
 .lightTheme .velocity {
-  color: #993;
+  color:var(--lightTheme-data-velocity-color);
 }
 
 .acceleration {
-  color: #fa6;
+  color: var(--data-acceleration-color);
+}
+.lightTheme .acceleration {
+  color: var(--lightTheme-data-acceleration-color);
 }
 
 .acceleration.decreasing {
-  color: #5d5;
+  color: var(--data-good-color);
 }
 .acceleration.increasing {
-  color: #d55;
+  color: var(--data-bad-color);
 }
 
 .arrow.decreasing {
-  color: #5d5;
+  color: var(--data-good-color);
 }
 .arrow.increasing {
-  color: #d55;
+  color: var(--data-bad-color);
 }
 
 .lightTheme .acceleration.decreasing {
-  color: #4c4;
+  color: var(--lightTheme-data-good-color);
 }
 .lightTheme .acceleration.increasing {
-  color: #c44;
+  color: var(--lightTheme-data-bad-color);
 }
 
 .acceleration .arrow {
@@ -221,24 +70,29 @@
   left: -0.1rem;
 }
 
-.velocity.good {
-  color: #7b7;
+.scaleVeryGood {
+  color: var(--data-scale-veryGood-color);
+  font-weight: bold;
 }
 
-.velocity.medium {
-  color: #aa3;
+.scaleGood {
+  color: var(--data-scale-good-color);
 }
 
-.velocity.bad {
-  color: #c96;
+.scaleMedium {
+  color: var(--data-scale-medium-color);
 }
 
-.velocity.verybad {
-  color: #c66;
+.scaleBad {
+  color: var(--data-scale-bad-color);
 }
 
-.velocity.terrible {
-  color: #d33;
+.scaleVeryBad {
+  color: var(--data-scale-veryBad-color);
+}
+
+.scaleTerrible {
+  color: var(--data-scale-terrible-color);
   font-weight: bold;
 }
 
@@ -253,9 +107,9 @@
 }
 
 .legend .comparedTo {
-  color: #633;
+  color: var(--data-comparedDeaths-color);
 }
 
 .legend .deaths {
-  color: #c00;
+  color: var(--data-deaths-color);
 }

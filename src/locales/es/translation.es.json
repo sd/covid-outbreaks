@@ -54,6 +54,7 @@
   },
   "information": {
     "what_do_these_mean": "¿Que son estos números?",
+    "explain": "significado?",
     "legend_deaths": "Muertes diarias",
     "legend_compared": "Comparado a {{name}}",
     "legend_acceleration": "Aceleración"

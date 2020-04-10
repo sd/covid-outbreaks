@@ -4,13 +4,8 @@ import { DateTime } from 'luxon'
 import numeral from 'numeral'
 
 const SVG_STYLES = {
-  marker: {
-    fill: '#c00',
-    radius: 1.2,
-    clipRadiusDelta: 1,
-  },
   accelerationLine: {
-    stroke: '#e91',
+    stroke: 'var(--data-acceleration-color)',
     strokeWidth: 1.2,
   },
   canvas: {
@@ -18,25 +13,19 @@ const SVG_STYLES = {
     paddingBottom: 4,
     paddingLeft: 50,
     paddingRight: 50,
-    fill: '' //'#302a2a'
-  },
-  legend: {
-    paddingLeft: 6,
-    fontSize: 13,
-    fill: '#c00',
-    fontWeight: 'bold'
+    fill: ''
   },
   grid: {
     strokeWidth: 0.5,
-    stroke: '#444',
+    stroke: 'var(--chart-grid-color)',
   },
   axisGrid: {
     strokeWidth: 0.5,
-    stroke: '#777',
+    stroke: 'var(--chart-axis-color)',
   },
   gridLabel: {
     fontSize: 10,
-    fill: '#555',
+    fill: 'var(--chart-grid-text-color)',
     paddingLeft: 2,
     paddingTop: -2,
     paddingRight: 2,
@@ -44,7 +33,7 @@ const SVG_STYLES = {
   },
   axisGridLabel: {
     fontSize: 10,
-    fill: '#777',
+    fill: 'var(--chart-axis-text-color)',
     paddingLeft: 2,
     paddingTop: -2,
     paddingRight: 2,
@@ -68,7 +57,7 @@ const AccelerationChart =  ({
 
   idPrefix = [idPrefix, 'acc-chart', entry.code].map(x => x).join('-')
 
-  let values = dates.map(d => entry.rollingAcceleration.deaths[d])
+  let values = dates.map(d => entry.rollingAcceleration.deaths && entry.rollingAcceleration.deaths[d])
 
   let scaledValues = values.map(v => {
     if (v !== undefined) {

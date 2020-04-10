@@ -54,13 +54,14 @@
   },
   "information": {
     "what_do_these_mean": "What do these numbers mean?",
+    "explain": "meaning?",
     "legend_deaths": "Daily deaths",
     "legend_compared": "Compared to {{name}}",
     "legend_acceleration": "Acceleration"
   },
   "filter": {
     "description": {
-      "relevant": "Important outbreaks",
+      "relevant": "Top outbreaks",
       "americas": "Outbreaks in The Americas",
       "usa": "Outbreaks in USA",
       "latam": "Outbreaks in Latin America",

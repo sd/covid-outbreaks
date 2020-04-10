@@ -14,7 +14,7 @@ import './App.css';
 
 import { fetchDataDispatcher } from './store/reducers/data'
 
-import ViewControls from './components/ui/ViewControls'
+import Navigation from './components/ui/Navigation'
 
 import AllEntriesView from './components/views/AllEntriesView'
 import OneEntryView from './components/views/OneEntryView'
@@ -53,22 +53,28 @@ class App extends React.Component {
     const { isMobile, isTablet, isDesktop, windowHeight } = this.props
     const { error, errorInfo } = this.state
 
-    const commonViewProps = { isMobile, isTablet, isDesktop, windowHeight, listRef: this.listRef }
+    const childProps = { isMobile, isTablet, isDesktop, windowHeight, listRef: this.listRef }
 
     return (
       <Router>
         <div className={ classNames('App', { mobile: isMobile, tablet: isTablet, desktop: isDesktop }) }>
 
-          <PageHeader {...commonViewProps} />
+          <PageHeader {...childProps} />
 
           {!error &&
             <div className="App-content">
               <Switch>
-                <Route exact path="/sources" render={() => <CreditsView {...commonViewProps} />} />
-                <Route exact path="/explain" render={() => <ExplainNumbersView {...commonViewProps} />} />
+                <Route exact path="/sources" render={() => <CreditsView {...childProps} />} />
+                <Route exact path="/explain" render={() => <ExplainNumbersView {...childProps} />} />
 
-                <Route exact path="/" render={() => <AllEntriesView {...commonViewProps} />} />
-                <Route path="/:name" render={({match}) => <OneEntryView {...commonViewProps} entryName={match.params.name} />} />
+                <Route exact path="/"        render={() => <AllEntriesView {...childProps} filter="relevant" />} />
+                <Route exact path="/all"     render={() => <AllEntriesView {...childProps} filter="all" />} />
+                <Route exact path="/euro"    render={() => <AllEntriesView {...childProps} filter="europe" />} />
+                <Route exact path="/usa"     render={() => <AllEntriesView {...childProps} filter="usa" />} />
+                <Route exact path="/latam"   render={() => <AllEntriesView {...childProps} filter="latam" />} />
+                <Route exact path="/asia"    render={() => <AllEntriesView {...childProps} filter="asia" />} />
+
+                <Route path="/:name" render={({match}) => <OneEntryView {...childProps} entryName={match.params.name} />} />
 
               </Switch>
             </div>
@@ -120,7 +126,7 @@ const PageHeader = ({listRef, isMobile}) => {
         </Link>
       </h1>
 
-      <ViewControls isMobile={isMobile} listRef={listRef} />
+      <Navigation isMobile={isMobile} listRef={listRef} />
 
     </header>
   )

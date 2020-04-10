@@ -50,7 +50,7 @@
 }
 
 .OutbreakTable .deaths {
-  color: #f99;
+  color: var(--data-deaths-lighter-color);
 }
 .OutbreakTable .deaths.totals {
   font-weight: bold;

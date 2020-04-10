@@ -1,12 +1,12 @@
 .Selection-trigger {
-  color: #cc2;
-  border-bottom: 1px dotted #cc2;
+  color: var(--link-color);
+  border-bottom: 1px dotted var(--link-color);
   cursor: pointer;
 }
 
 .Selection-trigger:hover {
-  color: #ff0;
-  border-bottom: 1px solid #ff0;
+  color: var(--link-highlight-color);
+  border-bottom: 1px solid var(--link-highlight-color);
   cursor: pointer;
 }
 

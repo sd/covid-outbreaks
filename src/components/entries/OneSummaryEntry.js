@@ -107,26 +107,6 @@ const OneSummaryEntry = ({
         </div>
 
         <div className='totals'>
-          {!entry.latestTotal.deaths &&
-            <div className='cases'>
-              {entry.latestTotal.cases > 0 && entry.latestDaily.cases > 0 &&
-                <Trans i18nKey='entry.cases_total_with_latest'>
-                  {{total: numeral(entry.latestTotal.cases).format('0,000')}} cases (+{{latest: numeral(entry.latestDaily.cases).format('0,000')}})
-                </Trans>
-              }
-              {entry.latestTotal.cases > 0 && !entry.latestDaily.cases &&
-                <Trans i18nKey='entry.cases_total_with_no_change'>
-                  {{total: numeral(entry.latestTotal.cases).format('0,000')}} cases
-                </Trans>
-              }
-              {!entry.latestTotal.cases &&
-                <Trans i18nKey='entry.cases_total_no_cases'>
-                  no cases
-                </Trans>
-              }
-            </div>
-          }
-
           <div className='deaths'>
             {entry.latestTotal.deaths > 0 &&
               <section><b>

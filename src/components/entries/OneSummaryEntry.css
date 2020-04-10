@@ -29,7 +29,6 @@
     "chart metrics"
     "chart tools"
     "more more";
-  /* border-top: 1px solid #555; */
 }
 
 /* .mobile .SummaryView-row-inner {
@@ -133,8 +132,8 @@
 
 
 .pinned .SummaryView-row-inner {
-  border-top: 2px solid #ff0;
-  border-bottom: 1px solid #ff0;
+  border-top: 2px solid var(--link-color);
+  border-bottom: 1px solid var(--link-color);
 }
 
 .SummaryView-row .title {
@@ -166,7 +165,7 @@
   margin-left: 0.5em;
 
   font-size: 140%;
-  text-shadow: 0 0 0.2em #999;
+  text-shadow: 0 0 0.2em var(--emoji-glow-color);
 }
 
 .mobile .SummaryView-row .title .flag {

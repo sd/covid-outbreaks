@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { useLocation } from 'react-router-dom'
 import { Trans, useTranslation } from 'react-i18next';
 
 import './Entries.css'
@@ -11,27 +12,33 @@ import { viewOptionsForSorting } from '../../store/sorters'
 import { viewOptionsForFiltering, filterBySearch } from '../../store/filters'
 
 const AllEntriesView = ({
-  ui, loaded, data, allDates,
+  loaded, data, allDates,
+  ui, filter,
   pinEntry, unpinEntry,
   expandEntry, collapseEntry,
   isMobile, isTablet, isDesktop,
   listRef, windowHeight
 }) => {
-  const { i18n } = useTranslation();
+  const { i18n } = useTranslation()
+  const location = useLocation()
+  const query = new URLSearchParams(location.search)
 
   if (loaded) {
     const comparisonEntry = data.find(entry => entry.code === (ui.compareTo || 'it'))
 
     let viewOptions = { pinPositions: ui.pinPositions, hideAggregates: ui.hideAggregates }
     viewOptions = viewOptionsForSorting(ui.sort, viewOptions)
-    viewOptions = viewOptionsForFiltering(ui.filter, viewOptions)
+    viewOptions = viewOptionsForFiltering(filter, viewOptions)
 
     data = data.sort((a, b) => viewOptions.sorter(a, b, viewOptions ))
     data = data.filter((a) => viewOptions.filterer(a, viewOptions ))
 
-    if (ui.search) {
-      data = data.filter(entry => filterBySearch(entry, ui.search, i18n.language))
+    if (query.get('search')) {
+      console.log('search', query.get('search'))
+      data = data.filter(entry => filterBySearch(entry, query.get('search'), i18n.language))
     }
+
+    if (data === []) return null
 
     let dates = allDates
 

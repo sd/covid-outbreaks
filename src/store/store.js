@@ -7,7 +7,6 @@ import { routerMiddleware } from 'connected-react-router'
 import defaultStorage from 'redux-persist/lib/storage'
 
 import createRootReducer from './reducers'
-import setupQueryStringSync from './queryString'
 
 export const history = createBrowserHistory()
 
@@ -17,28 +16,11 @@ export function configureStore (state) {
   const persistConfig = {
     key: "root",
     storage: defaultStorage,
-    stateReconciler: (stateFromStorage, stateFromQueryString) => {
-      if (!stateFromStorage.version || stateFromStorage.version !== stateFromQueryString.version) {
-        return stateFromQueryString
-      }
-
-      const storedUi = stateFromStorage.ui || {}
-      const urlUi = stateFromQueryString.ui || {}
-
-      return {
-        ...stateFromStorage,
-        ui: {
-          ...storedUi,
-          sort: urlUi.sort || storedUi.sort,
-          filter: urlUi.filter || storedUi.filter,
-          noScaling: urlUi.noScaling || storedUi.noScaling,
-          pinned: urlUi.pinned || storedUi.pinned,
-          expanded: urlUi.expanded || storedUi.expanded,
-          weeks: urlUi.weeks || storedUi.weeks,
-          totals: urlUi.totals || storedUi.totals,
-          search: urlUi.search || storedUi.search,
-          hideAggregates: urlUi.hideAggregates || storedUi.hideAggregates,
-        }
+    stateReconciler: (stateFromStorage, stateFromCode) => {
+      if (!stateFromStorage.version || stateFromStorage.version !== stateFromCode.version) {
+        return stateFromCode
+      } else {
+        return stateFromStorage
       }
     }
   }
@@ -71,8 +53,6 @@ export function configureStore (state) {
   if (process.env.NODE_ENV !== 'production' && module.hot) {
     module.hot.accept('./reducers', () => store.replaceReducer(reducer))
   }
-
-  setupQueryStringSync(store)
 
   const persistor = persistStore(store, state)
 

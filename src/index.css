@@ -1,3 +1,56 @@
+:root {
+  --background-color: #222;
+  --text-color: #ccc;
+  --text-highlight-color: #fff;
+  --scrollbar-color: #777;
+
+  --link-color: #cc2;
+  --link-highlight-color: #ff6;
+
+  --secondary-link-color: #883;
+  --button-color: #24c;
+
+  --lightTheme-link-color: #990;
+  --lightTheme-link-highlight-color: #dd3;
+
+  --yellowTheme-background-color: #ffb;
+  --yellowTheme-text-color: #333;
+  --yellowTheme-link-color: #009;
+  --yellowTheme-secondary-color: #006;
+  --yellowTheme-link-highlight-color: #00d;
+
+  --data-deaths-color: #c00;
+  --data-deaths-lighter-color: #f99;
+  --data-comparedDeaths-color: #633;
+  --data-hospitalized-color: #663;
+
+  --data-outbreakDay-color: #7ae;
+  --data-velocity-color: #bb6;
+  --data-acceleration-color: #fa6;
+  --data-bad-color: #d55;
+  --data-good-color: #5d5;
+
+  --data-scale-veryGood-color: #7b7;
+  --data-scale-good-color: #5d5;
+  --data-scale-medium-color: #aa3;
+  --data-scale-bad-color: #c96;
+  --data-scale-veryBad-color: #c66;
+  --data-scale-terrible-color: #d33;
+
+  --lightTheme-data-outbreakDay-color: #59d;
+  --lightTheme-data-velocity-color: #993;
+  --lightTheme-data-acceleration-color: #fa6;
+  --lightTheme-data-bad-color: #d55;
+  --lightTheme-data-good-color: #5d5;
+
+  --emoji-glow-color: #999;
+
+  --chart-grid-color: #444;
+  --chart-grid-text-color: #555;
+  --chart-axis-color: #777;
+  --chart-axis-text-color: #888;
+}
+
 html, body  {
   margin: 0;
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
@@ -6,27 +59,27 @@ html, body  {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  background-color: #222;
-  color: #ccc;
+  background-color: var(--background-color);
+  color: var(--text-color);
   font-size: 14px;
 
-  scrollbar-color: #777 #222;
+  scrollbar-color: var(--scrollbar-color) var(--background-color);
   scrollbar-width: 0.7em;
 }
 
 ::-webkit-scrollbar {
-  background: #222;
+  background: var(--background-color);
   width: 1em;
 }
 
 ::-webkit-scrollbar {
-  background: #222;
+  background: var(--background-color);
   width: 0.7em;
   height: 0.7em;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: #777;
+  background: var(--scrollbar-color);
 }
 
 @media only screen and (max-width: 600px) {
@@ -47,13 +100,13 @@ code {
 }
 
 a:link, a:visited, .link {
-  color: #cc2;
+  color: var(--link-color);
   cursor: pointer;
   text-decoration: underline;
 }
 
 a:hover, a:active, .link:hover {
-  color: #ff6;
+  color: var(--link-highlight-color);
   cursor: pointer;
 }
 
@@ -61,22 +114,25 @@ a:hover, a:active, .link:hover {
   white-space: nowrap;
 }
 
-
 .content.lightTheme a:link, .content.lightTheme a:visited {
-  color: #990;
+  color: var(--lightTheme-link-color);
 }
 
 .content.lightTheme a:hover, .content.lightTheme a:active {
-  color: #dd3;
+  color: var(--lightTheme-link-highlight-color);
 }
 
 .content.yellowTheme a:link, .content.yellowTheme a:visited {
-  color: #009;
+  color: var(--yellowTheme-link-highlight-color);
 }
 
 .content.yellowTheme a:hover, .content.yellowTheme a:active {
-  color: #00d;
+  color: var(--yellowTheme-link-highlight-color);
 }
+
+
+
+
 
 
 

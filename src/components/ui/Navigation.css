@@ -1,0 +1,35 @@
+.Navigation {
+
+}
+
+.Navigation section {
+  display: inline-block;
+  margin-left: 0.3em;
+  margin-right: 0.3em;
+}
+
+.Navigation a, .Navigation a:link, .Navigation a:visited {
+  color: var(--link-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.Navigation a:hover, .Navigation a:active {
+  color: var(--link-highlight-color);
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.Navigation .search {
+  color: var(--link-color);
+}
+
+.Navigation .search input {
+  font-size: 1em;
+  background: none;
+  outline: none;
+  color: var(--link-color);
+  border: 0;
+  border-bottom: 1px solid var(--link-color);
+  margin-right: 0.5em;
+}

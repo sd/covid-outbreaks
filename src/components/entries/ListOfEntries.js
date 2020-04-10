@@ -12,14 +12,19 @@ export const TableViewContext = React.createContext({})
 const ListOfEntries = ({
   entryComponent,
   data, dates, allDates,
-  ui, pinEntry, unpinEntry,
+  viewOptions, ui, pinEntry, unpinEntry,
   expandEntry, collapseEntry,
   totalsEntry, comparisonEntry,
   listRef, listHeight,
   isMobile, isTablet, isDesktop
 }) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const entryHeights = React.useRef({});
+
+  let title = ''
+  if (viewOptions && viewOptions.filter) {
+    title = t(`filter.description.${viewOptions.filter}`, viewOptions.filterDescription)
+  }
 
   const setEntryHeight = React.useCallback((index, size) => {
     const prev = entryHeights.current[index]
@@ -57,13 +62,9 @@ const ListOfEntries = ({
             if (index === 0) {
               return (
                 <VariableSizeRow style={style} index={index} itemCount={data.length + 1}>
-                  <div className='legend'>
-                    <Link to='/explain'>
-                      <Trans i18nKey='information.what_do_these_mean'>
-                        What do these numbers mean?
-                      </Trans>
-                    </Link>
+                  {title && <h2>{title}</h2>}
 
+                  <div className='legend'>
                     <div>
                       <section className='deaths'>
                         {' –– '}
@@ -82,6 +83,13 @@ const ListOfEntries = ({
                         <Trans i18nKey='information.legend_acceleration'>
                           Acceleration
                         </Trans>
+                      </section>
+                      <section>
+                        <Link to='/explain'>
+                          <Trans i18nKey='information.explain'>
+                            Explain?
+                          </Trans>
+                        </Link>
                       </section>
                     </div>
                   </div>

@@ -7,21 +7,16 @@ import { useTranslation } from 'react-i18next';
 import { formatDateMMDD } from '../../utils/dateFormats'
 
 const SVG_STYLES = {
-  marker: {
-    fill: '#c00',
-    radius: 1.2,
-    clipRadiusDelta: 1,
-  },
   deathsLine: {
-    stroke: '#c00',
+    stroke: 'var(--data-deaths-color)',
     strokeWidth: 1.2,
   },
   hospitalizedLine: {
-    stroke: '#663',
+    stroke: 'var(--data-hospitalized-color)',
     strokeWidth: 1,
   },
   comparableLine: {
-    stroke: '#633',
+    stroke: 'var(--data-comparedDeaths-color)',
     strokeWidth: 0.8,
   },
   canvas: {
@@ -29,21 +24,21 @@ const SVG_STYLES = {
     paddingBottom: 10,
     paddingLeft: 50,
     paddingRight: 50,
-    fill: '' //'#302a2a'
+    fill: ''
   },
   legend: {
     paddingLeft: 6,
     fontSize: 13,
-    fill: '#c00',
+    fill: 'var(--data-deaths-color)',
     fontWeight: 'bold'
   },
   grid: {
     strokeWidth: 0.5,
-    stroke: '#444',
+    stroke: 'var(--chart-grid-color)',
   },
   gridLabel: {
     fontSize: 10,
-    fill: '#555',
+    fill: 'var(--chart-grid-text-color)',
     paddingLeft: 2,
     paddingTop: -2,
     paddingRight: 2,
@@ -64,7 +59,7 @@ const DailySparklineChart =  ({
 
   idPrefix = [idPrefix, 'sparkline', entry.code].map(x => x).join('-')
 
-  let values = dates.map(d => entry.daily.deaths[d])
+  let values = dates.map(d => entry.daily.deaths && entry.daily.deaths[d])
 
   let highestValue = Math.max(...values.filter(v => v), 1)
 
