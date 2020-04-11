@@ -64,6 +64,7 @@ export const OUTBREAK_ATTRIBUTES = {
   },
   'us.nyc': {
     links: {
+      'John Hopkins University': 'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series',
       'Data: gh/nychealth': 'https://github.com/nychealth/coronavirus-data',
       'NYC Health': 'https://www1.nyc.gov/site/doh/covid/covid-19-data.page'
     }

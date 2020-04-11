@@ -283,7 +283,7 @@ export function fetchDataDispatcher (dispatch) {
       // combinedResults = processOneFile('cases', caseData, combinedResults.entries)
       combinedResults = processOneFile('hospitalized', hospitalizedData, combinedResults.entries)
 
-      let data = Object.keys(combinedResults.entries).filter(k => k !== 'ignore').map(k => combinedResults.entries[k])
+      let data = Object.keys(combinedResults.entries).filter(k => k.indexOf('ignore') < 0).map(k => combinedResults.entries[k])
 
       let allDates = combinedResults.dates
       let lastDate = combinedResults.dates[combinedResults.dates.length - 1]
