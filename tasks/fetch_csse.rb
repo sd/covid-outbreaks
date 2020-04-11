@@ -30,8 +30,9 @@ class FetchCSSE
   def fetch
     puts "Reading CSSE Data for #{@yesterday_iso}"
 
-    new_data = load_new_data(@yesterday)
-    current_data = load_current_data
+    new_data = load_new_data(@yesterday).reject { |row| row['Country_Region'] == 'US' }
+
+    current_data = load_current_data.reject { |row| row['Country_Region'] == 'US' }
 
     print_warnings(@yesterday_mmdd, new_data, current_data)
 
@@ -41,8 +42,7 @@ class FetchCSSE
     puts "CSSE Rows match. Data for #{@yesterday_mmdd} copied to clipboard!!!"
   end
 
-  private
-
+  # Print Warnings
   def print_warnings(date_mmdd, new_data, current_data)
     new_index = new_data.group_by { |row| row[:key] }
     current_index = current_data.group_by { |row| row[:key] }
@@ -74,22 +74,23 @@ class FetchCSSE
     end
   end
 
+  # Load new data
   def load_new_data(date)
     url = DATA_URL.gsub('[date]', date.to_time.utc.strftime('%m-%d-%Y'))
 
     new_data = CSV.new(URI.parse(url).open, headers: :first_row).read
-    new_data =  new_data
-                .reject { |row| row['Country_Region'] == 'US' }
-                .sort_by { |row|
-                  [
-                    row['Country_Region'].downcase || '',
-                    (row['Province_State'] || 'zzz').downcase
-                  ]
-                }
+
+    new_data =  new_data.sort_by { |row|
+      [
+        row['Country_Region'].downcase || '',
+        (row['Province_State'] || 'zzz').downcase,
+        (row['Admin2'] || 'zzz').downcase
+      ]
+    }
 
     new_data.each_with_index do |row, index|
       row[:line] = index + 2
-      row[:key] = [row['Country_Region'], row['Province_State']].compact.join(', ')
+      row[:key] = [row['Country_Region'], row['Province_State'], row['Admin2']].compact.join(', ')
       case row[:key]
       when 'Spain'
         row[:key] = 'Spain, ignore'
@@ -107,6 +108,7 @@ class FetchCSSE
     new_data
   end
 
+  # Load current data
   def load_current_data
     current_data = CSV.read(FetchCSSE::LOCAL_FILE, headers: :first_row)
 

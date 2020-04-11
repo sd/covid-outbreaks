@@ -9,7 +9,7 @@ class FetchUS
   DAILY_URL = 'http://covidtracking.com/api/states/daily.csv'.freeze
   CURRENT_URL = 'http://covidtracking.com/api/states.csv'.freeze
 
-  UPDATE_INFO = 'Continuously'
+  UPDATE_INFO = 'Continuously'.freeze
 
   # New instance
   def initialize
@@ -31,6 +31,7 @@ class FetchUS
     puts "Reading Daily US Data for #{@today_iso}"
 
     new_data = CSV.new(URI.parse(DAILY_URL).open, headers: :first_row).read
+    current_data = CSV.new(URI.parse(CURRENT_URL).open, headers: :first_row).read
 
     sorted_state_names = US_STATES_BY_CODE.values.sort
 
@@ -40,21 +41,29 @@ class FetchUS
       date = DateTime.parse(row['date'])
       date_iso = date.to_time.utc.strftime('%Y-%m-%d')
       state = US_STATES_BY_CODE[row['state']]
-      if !state
-        puts "Unknown state #{row['state']}"
-      end
+      puts "Unknown state #{row['state']}" if !state
 
       real_rows[state][date_iso] = row['death']
     end
 
+    current_data.each do |row|
+      state = US_STATES_BY_CODE[row['state']]
+
+      real_rows[state]['now'] = row['death']
+    end
+
     data = (
-      sorted_state_names.collect { |state|
-        [[real_rows[state][@yesterday_iso], real_rows[state][@today_iso]].join("\t")]
+      [[@yesterday_iso, 'current'].join("\t"), ''] \
+      + sorted_state_names.collect { |state|
+        [
+          real_rows[state][@yesterday_iso] > real_rows[state][@day_before_iso] ? real_rows[state][@yesterday_iso] : nil,
+          real_rows[state]['now'] > real_rows[state][@yesterday_iso] ? real_rows[state]['now'] : nil
+        ].join("\t")
       } \
       + [[
-        sorted_state_names.collect { |state| real_rows[state][@yesterday_iso].to_i }.sum,
-        sorted_state_names.collect { |state| real_rows[state][@today_iso].to_i }.sum
-      ].join("\t")]
+           sorted_state_names.collect { |state| real_rows[state][@yesterday_iso].to_i }.sum,
+           sorted_state_names.collect { |state| real_rows[state]['now'].to_i }.sum
+         ].join("\t")]
     ).join("\n")
 
     IO.popen('pbcopy', 'w') { |f| f << data }

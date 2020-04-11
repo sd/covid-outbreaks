@@ -8,6 +8,9 @@ class FetchNYC
   LOCAL_FILE = './src/data/other.deaths.csv'.freeze
   DATA_URL = 'https://raw.githubusercontent.com/nychealth/coronavirus-data/master/case-hosp-death.csv'.freeze
 
+  CSSE_DATA_URL = 'https://raw.githubusercontent.com/CSSEGISandData/COVID-19/' \
+                  'master/csse_covid_19_data/csse_covid_19_daily_reports/[date].csv'.freeze
+
   UPDATE_INFO = '6pm EDT'.freeze
 
   # New instance
@@ -27,6 +30,19 @@ class FetchNYC
 
   # Main fetch task
   def fetch
+    puts "Reading NYC CSSE Data for #{@yesterday_iso}"
+
+    csse = FetchCSSE.new
+    csse_data = csse.load_new_data(@yesterday)
+
+    data = csse_data.find { |row| row[:key] == 'US, New York, New York City' }['Deaths']
+
+    IO.popen('pbcopy', 'w') { |f| f << data }
+    puts "NYC data for #{@yesterday_mmdd} copied to clipboard!!!"
+  end
+
+  # Fetch NYCHealth data, as a row with previous dates
+  def fetch_nych
     puts "Reading NYC Data for #{@today_iso}"
 
     new_data = CSV.new(URI.parse(DATA_URL).open, headers: :first_row).read
@@ -41,7 +57,7 @@ class FetchNYC
 
       date_parts = row[0].split('/')
 
-      date_iso = Date.parse("20#{date_parts[2]}-#{date_parts[0]}-#{date_parts[1]}").strftime('%Y-%m-%d') rescue binding.pry
+      date_iso = Date.parse("20#{date_parts[2]}-#{date_parts[0]}-#{date_parts[1]}").strftime('%Y-%m-%d')
       dates << date_iso
 
       if row[3]

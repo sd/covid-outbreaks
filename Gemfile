@@ -1,8 +1,7 @@
 source 'https://rubygems.org'
 
-ruby '2.6.3'
+ruby '2.6.6'
 
-gem 'airrecord'
 gem 'nokogiri'
 gem 'pry-byebug'
 gem 'rake'
