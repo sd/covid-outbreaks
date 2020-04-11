@@ -70,12 +70,12 @@ class App extends React.Component {
 
                 <Route exact path="/t"        render={() => <TableView {...childProps} filter="relevant" />} />
 
-                <Route exact path="/"        render={() => <AllEntriesView {...childProps} filter="relevant" />} />
-                <Route exact path="/all"     render={() => <AllEntriesView {...childProps} filter="all" />} />
-                <Route exact path="/euro"    render={() => <AllEntriesView {...childProps} filter="europe" />} />
-                <Route exact path="/usa"     render={() => <AllEntriesView {...childProps} filter="usa" />} />
-                <Route exact path="/latam"   render={() => <AllEntriesView {...childProps} filter="latam" />} />
-                <Route exact path="/asia"    render={() => <AllEntriesView {...childProps} filter="asia" />} />
+                <Route exact path="/"        render={() => <TableView {...childProps} filter="relevant" />} />
+                <Route exact path="/all"     render={() => <TableView {...childProps} filter="all" />} />
+                <Route exact path="/euro"    render={() => <TableView {...childProps} filter="europe" />} />
+                <Route exact path="/usa"     render={() => <TableView {...childProps} filter="usa" />} />
+                <Route exact path="/latam"   render={() => <TableView {...childProps} filter="latam" />} />
+                <Route exact path="/asia"    render={() => <TableView {...childProps} filter="asia" />} />
 
                 <Route path="/:name" render={({match}) => <OneEntryView {...childProps} entryName={match.params.name} />} />
 

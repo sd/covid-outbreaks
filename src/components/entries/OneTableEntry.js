@@ -26,9 +26,9 @@ const OneTableEntry = ({
 
   let weeksToShow
   if (isMobile) {
-    weeksToShow = 3
+    weeksToShow = 4
   } else {
-    weeksToShow = 5
+    weeksToShow = 7
   }
 
   let chartDates = allDates.slice(-(7 * weeksToShow))
@@ -45,11 +45,13 @@ const OneTableEntry = ({
     }
   }
 
+  const clickHandler = (event) => { history.push(`/${entry.code}`); event.preventDefault(); event.stopPropagation() }
+
   return (
-    <div className={classNames('TableView-row')} onClick={(event) => { history.push(`/${entry.code}`); event.preventDefault() }}>
+    <div className={classNames('TableView-row')} onClick={clickHandler}>
       <section className='title'>
         <span className='name'>
-          <Link to={`/${entry.code}`}>
+          <Link to={`/${entry.code}`} onClick={clickHandler}>
             {entry[`${i18n.language}Name`] || entry.name || entry.code}
           </Link>
         </span>

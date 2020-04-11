@@ -51,7 +51,7 @@ const AccelerationChart =  ({
 
   let aspectRatio = (dates.length / 7) / dailyVerticalScale
 
-  let blockHeight = 25
+  let blockHeight = simple ? 60 : 25
   let blockCount = 1.5
   let accelerationScale = 0.16
 
@@ -113,7 +113,7 @@ const DataLine = ({scaledValues, blockHeight, blockCount, horizontalStep, style,
           y1={blockHeight + SVG_STYLES.canvas.paddingTop - value}
           x2={SVG_STYLES.canvas.paddingLeft + ((index + 1 ) * horizontalStep)}
           y2={blockHeight + SVG_STYLES.canvas.paddingTop - scaledValues[index + 1]}
-          strokeWidth={simple ? 3 * style.strokeWidth : style.strokeWidth}
+          strokeWidth={simple ? 2 * style.strokeWidth : style.strokeWidth}
           stroke={style.stroke}
           strokeLinecap='round'
         />

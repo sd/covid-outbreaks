@@ -13,11 +13,12 @@
 }
 
 .TableView-row {
-  padding-bottom: 1em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 
   display: grid;
 
-  grid-template-columns: 18em 6em 12em 6em 1fr ;
+  grid-template-columns: 1fr 7em 11em 7em 6em ;
   grid-template-rows: auto;
   grid-template-areas:
     "  title   deathsChart  deaths        accelerationChart   outbreakDay     "
@@ -31,8 +32,16 @@
   text-align: left;
 }
 
+.TableView-row {
+  cursor: pointer;
+}
+.TableView-row:hover {
+  background-color: var(--row-hover-color);
+}
+
 .mobile .TableView-row {
-  padding-bottom: 1.5em;
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
 
   grid-template-columns: 6em 11em 6em 1fr ;
   grid-template-areas:
@@ -140,7 +149,7 @@
 }
 
 .TableView .deathsChart svg, .TableView .accelerationChart svg {
-  width: 6em;
+  width: 7em;
 }
 
 .mobile .TableView .deathsChart svg, .mobile .TableView .accelerationChart svg {
