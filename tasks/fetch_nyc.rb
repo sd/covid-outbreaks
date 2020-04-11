@@ -72,4 +72,29 @@ class FetchNYC
     IO.popen('pbcopy', 'w') { |f| f << data }
     puts "NYC data for #{@today_mmdd}, starting on #{dates_with_total[0]} copied to clipboard!!!"
   end
+
+  NY_METRO_COUNTIES = [
+    'US, New York, New York City',
+    'US, New York, Westchester',
+    'US, New Jersey, Bergen',
+    'US, New Jersey, Hudson',
+    'US, New Jersey, Passaic',
+    'US, New York, Putnam',
+    'US, New York, Rockland'
+  ].freeze
+
+  NY_NJ_MSA_COUNTIES = NY_METRO_COUNTIES + [
+    'US, New York, Suffolk',
+    'US, New York, Nassau',
+    'US, New Jersey, Middlesex',
+    'US, New Jersey, Monmouth',
+    'US, New Jersey, Ocean',
+    'US, New Jersey, Somerset',
+    'US, New Jersey, Essex',
+    'US, New Jersey, Union',
+    'US, New Jersey, Morris',
+    'US, New Jersey, Sussex',
+    'US, New Jersey, Hunterdon',
+    'US, Pennsylvania, Pike',
+  ].freeze
 end

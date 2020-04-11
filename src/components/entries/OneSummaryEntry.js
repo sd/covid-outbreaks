@@ -80,7 +80,7 @@ const OneSummaryEntry = ({
                 <section key={date}>
                   {entry.daily.deaths[date]
                     ? <span>+{numeral(entry.daily.deaths[date]).format('0,000')}</span>
-                    : <span>n/a</span>
+                    : <span><Trans i18nKey='entry.not_available'>n/a</Trans></span>
                   }
                 </section>
               ))}

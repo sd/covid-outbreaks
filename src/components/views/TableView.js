@@ -5,13 +5,12 @@ import { Trans, useTranslation } from 'react-i18next';
 
 import './Entries.css'
 
-import ListOfEntries from '../entries/ListOfEntries'
-import OneSummaryEntry from '../entries/OneSummaryEntry'
+import OneTableEntry from '../entries/OneTableEntry'
 
 import { viewOptionsForSorting } from '../../store/sorters'
 import { viewOptionsForFiltering, filterBySearch } from '../../store/filters'
 
-const AllEntriesView = ({
+const TableView = ({
   loaded, data, allDates,
   ui, filter,
   pinEntry, unpinEntry,
@@ -19,7 +18,7 @@ const AllEntriesView = ({
   isMobile, isTablet, isDesktop,
   listRef, windowHeight
 }) => {
-  const { i18n } = useTranslation()
+  const { i18n, t } = useTranslation()
   const location = useLocation()
   const query = new URLSearchParams(location.search)
 
@@ -40,23 +39,40 @@ const AllEntriesView = ({
 
     if (data === []) return null
 
+    let title = ''
+    if (viewOptions && viewOptions.filter) {
+      title = t(`filter.description.${viewOptions.filter}`, viewOptions.filterDescription)
+    }
+
     let dates = allDates
 
-    const actualProps = {
-      data, dates, allDates,
-      viewOptions, ui, pinEntry, unpinEntry, expandEntry, collapseEntry,
-      comparisonEntry,
-      listRef, listHeight: windowHeight,
+    const sharedProps = {
+      ui, dates, allDates, comparisonEntry,
       isMobile, isTablet, isDesktop
     }
+
     return (
-      <div className='Entries AllEntriesView'>
-        <ListOfEntries {...actualProps} entryComponent={OneSummaryEntry} />
+      <div className='ScrollView'>
+        {title && <h2>{title}</h2>}
+
+        <div className='Entries TableView'>
+          {/* <div className='TableView-headers TableView-row'>
+            <section className='title header'>Outbreak</section>
+            <section className='outbreakDay header'>Day</section>
+            <section className='deaths header'>Deaths</section>
+            <section className='latestDaily header'>Last 4 days</section>
+            <section className='acceleration header'>Acceleration</section>
+          </div> */}
+
+          {data.map((entry, index) => (
+            <OneTableEntry {...sharedProps} entry={entry} />
+          ))}
+        </div>
       </div>
     )
   } else {
     return (
-      <div className='Entries AllEntriesView'>
+      <div className='Entries TableView'>
         <div className='Entries-loading'>
           <h2><Trans i18nKey={'general.loading'}>Loading...</Trans></h2>
         </div>
@@ -74,6 +90,6 @@ const mapStateToProps = (state, ownProps) => ({
 
 const ConnectedAllEntriesView = connect(
   mapStateToProps
-)(AllEntriesView)
+)(TableView)
 
 export default ConnectedAllEntriesView

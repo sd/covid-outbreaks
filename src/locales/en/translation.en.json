@@ -50,7 +50,8 @@
     "table_trend_label": "Trend",
     "table_deaths_label": "Deaths",
     "table_cases_label": "Cases",
-    "includes_data_for": "Includes data grouped under"
+    "includes_data_for": "Includes data grouped under",
+    "not_available": "n/a"
   },
   "information": {
     "what_do_these_mean": "What do these numbers mean?",

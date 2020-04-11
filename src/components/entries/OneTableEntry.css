@@ -1,0 +1,148 @@
+.TableView {
+  min-width: 200px !important;
+  max-width: 50em !important;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.mobile .TableView {
+  min-width: 200px !important;
+  max-width: 100% !important;
+  margin-left: 0.5em !important;
+  margin-right: 0.5em !important;
+}
+
+.TableView-row {
+  padding-bottom: 1em;
+
+  display: grid;
+
+  grid-template-columns: 18em 6em 12em 6em 1fr ;
+  grid-template-rows: auto;
+  grid-template-areas:
+    "  title   deathsChart  deaths        accelerationChart   outbreakDay     "
+    "  .       deathsChart  latestDaily   accelerationChart   acceleration    ";
+
+  justify-items: stretch;
+  align-items: center;
+}
+.TableView-row > section {
+  line-height: 1.3em;
+  text-align: left;
+}
+
+.mobile .TableView-row {
+  padding-bottom: 1.5em;
+
+  grid-template-columns: 6em 11em 6em 1fr ;
+  grid-template-areas:
+  "  title   title  title title "
+  "  deathsChart  deaths        accelerationChart   outbreakDay "
+  "  deathsChart  latestDaily   accelerationChart   acceleration  ";
+}
+
+.TableView-row > .title {
+  grid-area: title;
+}
+
+.TableView-row > .outbreakDay {
+  grid-area: outbreakDay;
+}
+
+.TableView-row > .deaths {
+  grid-area: deaths;
+}
+
+.TableView-row > .latestDaily {
+  grid-area: latestDaily;
+}
+
+.TableView-row > .acceleration {
+  grid-area: acceleration;
+}
+
+.TableView-row > .deathsChart {
+  grid-area: deathsChart;
+}
+.TableView-row > .accelerationChart {
+  grid-area: accelerationChart;
+}
+
+
+.TableView .title {
+  justify-self: end;
+  text-align: right;
+  align-self: stretch;
+
+  font-size: 120%;
+  font-weight: bold;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+}
+.mobile .TableView .title {
+  justify-self: start;
+  text-align: left;
+  flex-direction: row-reverse;
+  justify-content: flex-end;
+}
+.TableView .title a, .TableView .title a:link, .TableView .title a:visited {
+  color: inherit;
+  text-decoration: none;
+}
+.TableView .title a:hover, .TableView .title a:active {
+  text-decoration: underline;
+}
+
+.TableView .title .name {
+  flex: 1;
+}
+
+.TableView .title .flag {
+  flex: 0;
+  margin-left: 0.5em;
+
+  font-size: 140%;
+  text-shadow: 0 0 0.2em var(--emoji-glow-color);
+}
+
+.mobile .TableView .title .flag {
+  margin-left: 0em;
+  margin-right: 0.2em;
+}
+
+.TableView .deaths {
+  font-size: 110%;
+  font-weight: bold;
+  color: var(--data-deaths-lighter-color);
+}
+
+.mobile .TableView > .deaths {
+  font-size: 100%;
+}
+
+.TableView .latestDaily {
+  text-align: left;
+}
+.TableView .latestDaily > span {
+  padding-right: 0.5em;
+}
+
+.TableView .outbreakDay {
+  font-weight: bold;
+  font-size: 110%;
+  text-align: left;
+}
+
+.TableView .acceleration {
+  text-align: left;
+}
+
+.TableView .deathsChart svg, .TableView .accelerationChart svg {
+  width: 6em;
+}
+
+.mobile .TableView .deathsChart svg, .mobile .TableView .accelerationChart svg {
+  width: 6em;
+}

@@ -52,11 +52,13 @@ const OneEntryView = ({
       isMobile, isTablet, isDesktop
     }
     return (
-      <ListOfEntries {...actualProps} entryComponent={OneSummaryEntry} />
+      <div className='Entries OneEntryView'>
+        <ListOfEntries {...actualProps} entryComponent={OneSummaryEntry} />
+      </div>
     )
   } else {
     return (
-      <div className='Entries'>
+      <div className='Entries OneEntryView'>
         <div className='Entries-loading'>
           <h2><Trans i18nKey={'general.loading'}>Loading...</Trans></h2>
         </div>

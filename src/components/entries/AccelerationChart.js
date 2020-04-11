@@ -42,7 +42,7 @@ const SVG_STYLES = {
 }
 
 const AccelerationChart =  ({
-  entry, dates, ui,
+  entry, dates, ui, simple,
   idPrefix, style,
   comparisonEntry, comparisonOffset,
 }) => {
@@ -84,11 +84,13 @@ const AccelerationChart =  ({
       <svg viewBox={`0 0 ${100 * aspectRatio + SVG_STYLES.canvas.paddingLeft + SVG_STYLES.canvas.paddingRight} ${blockCount * blockHeight + SVG_STYLES.canvas.paddingTop + SVG_STYLES.canvas.paddingBottom}`}>
 
         <CanvasAndGridLines
+          simple={simple}
           dates={dates} lines={lines} aspectRatio={aspectRatio} blockHeight={blockHeight} blockCount={blockCount}
           mondayOffset={mondayOffset} horizontalStep={horizontalStep}
         />
 
         <DataLine
+          simple={simple}
           scaledValues={scaledValues} aspectRatio={aspectRatio} blockHeight={blockHeight} blockCount={blockCount}
           horizontalStep={horizontalStep} idPrefix={idPrefix}
           style={SVG_STYLES.accelerationLine}
@@ -99,7 +101,7 @@ const AccelerationChart =  ({
   )
 }
 
-const DataLine = ({scaledValues, blockHeight, blockCount, horizontalStep, style}) => {
+const DataLine = ({scaledValues, blockHeight, blockCount, horizontalStep, style, simple}) => {
   return scaledValues.map((value, index) => {
     style = style || SVG_STYLES.deathsLine
 
@@ -111,7 +113,7 @@ const DataLine = ({scaledValues, blockHeight, blockCount, horizontalStep, style}
           y1={blockHeight + SVG_STYLES.canvas.paddingTop - value}
           x2={SVG_STYLES.canvas.paddingLeft + ((index + 1 ) * horizontalStep)}
           y2={blockHeight + SVG_STYLES.canvas.paddingTop - scaledValues[index + 1]}
-          strokeWidth={style.strokeWidth}
+          strokeWidth={simple ? 3 * style.strokeWidth : style.strokeWidth}
           stroke={style.stroke}
           strokeLinecap='round'
         />
@@ -122,7 +124,7 @@ const DataLine = ({scaledValues, blockHeight, blockCount, horizontalStep, style}
           key={index}
           cx={SVG_STYLES.canvas.paddingLeft + (index * horizontalStep)}
           cy={blockHeight + SVG_STYLES.canvas.paddingTop - value}
-          r={style.strokeWidth / 2}
+          r={simple ? style.strokeWidth : style.strokeWidth / 2}
           fill={style.stroke}
         />
       )
@@ -132,7 +134,7 @@ const DataLine = ({scaledValues, blockHeight, blockCount, horizontalStep, style}
   })
 }
 
-const CanvasAndGridLines = ({dates, lines, aspectRatio, blockHeight, blockCount, mondayOffset, horizontalStep}) => (
+const CanvasAndGridLines = ({dates, lines, aspectRatio, blockHeight, blockCount, mondayOffset, horizontalStep, simple}) => (
   <>
     {SVG_STYLES.canvas.fill &&
       <rect
@@ -150,21 +152,23 @@ const CanvasAndGridLines = ({dates, lines, aspectRatio, blockHeight, blockCount,
           y1={blockHeight + SVG_STYLES.canvas.paddingTop - value}
           x2={100 * aspectRatio + SVG_STYLES.canvas.paddingLeft}
           y2={blockHeight + SVG_STYLES.canvas.paddingTop - value}
-          strokeWidth={style.strokeWidth}
+          strokeWidth={simple ? 3 * style.strokeWidth : style.strokeWidth}
           stroke={style.stroke}
         />
-        <text
-          key={`gridlabel-${index}`}
-          x={SVG_STYLES.canvas.paddingLeft - labelStyle.paddingRight }
-          y={blockHeight + SVG_STYLES.canvas.paddingTop - value}
-          fontSize={labelStyle.fontSize}
-          fill={labelStyle.fill}
-          textAnchor='end'
-          dominantBaseline='central'
-          fontWeight={labelStyle.fontWeight}
-        >
-          {label}
-        </text>
+        {!simple &&
+          <text
+            key={`gridlabel-${index}`}
+            x={SVG_STYLES.canvas.paddingLeft - labelStyle.paddingRight }
+            y={blockHeight + SVG_STYLES.canvas.paddingTop - value}
+            fontSize={labelStyle.fontSize}
+            fill={labelStyle.fill}
+            textAnchor='end'
+            dominantBaseline='central'
+            fontWeight={labelStyle.fontWeight}
+          >
+            {label}
+          </text>
+        }
       </React.Fragment>
     ))}
 
@@ -176,7 +180,7 @@ const CanvasAndGridLines = ({dates, lines, aspectRatio, blockHeight, blockCount,
           y1={SVG_STYLES.canvas.paddingTop}
           x2={SVG_STYLES.canvas.paddingLeft + (index * horizontalStep)}
           y2={blockCount * blockHeight + SVG_STYLES.canvas.paddingTop}
-          strokeWidth={SVG_STYLES.grid.strokeWidth}
+          strokeWidth={simple ? 2 * SVG_STYLES.grid.strokeWidth : SVG_STYLES.grid.strokeWidth}
           stroke={SVG_STYLES.grid.stroke}
         />
       )

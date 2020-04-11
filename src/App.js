@@ -20,6 +20,7 @@ import AllEntriesView from './components/views/AllEntriesView'
 import OneEntryView from './components/views/OneEntryView'
 import CreditsView from './components/views/CreditsView'
 import ExplainNumbersView from './components/views/ExplainNumbersView'
+import TableView from './components/views/TableView'
 
 class App extends React.Component {
   constructor(props) {
@@ -66,6 +67,8 @@ class App extends React.Component {
               <Switch>
                 <Route exact path="/sources" render={() => <CreditsView {...childProps} />} />
                 <Route exact path="/explain" render={() => <ExplainNumbersView {...childProps} />} />
+
+                <Route exact path="/t"        render={() => <TableView {...childProps} filter="relevant" />} />
 
                 <Route exact path="/"        render={() => <AllEntriesView {...childProps} filter="relevant" />} />
                 <Route exact path="/all"     render={() => <AllEntriesView {...childProps} filter="all" />} />

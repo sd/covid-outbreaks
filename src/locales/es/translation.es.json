@@ -50,7 +50,8 @@
     "table_days_to_tenx_label": "Días para 10x",
     "table_deaths_label": "Muertes",
     "table_cases_label": "Casos",
-    "includes_data_for": "Incluye datos agrupados bajo"
+    "includes_data_for": "Incluye datos agrupados bajo",
+    "not_available": "n/d"
   },
   "information": {
     "what_do_these_mean": "¿Que son estos números?",

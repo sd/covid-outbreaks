@@ -44,73 +44,72 @@ const ListOfEntries = ({
 
   return (
     <TableViewContext.Provider value={{ setEntryHeight }}>
-      <div className='Entries'>
-        {totalsEntry &&
-          <EntryView {...sharedProps} pinEntry={undefined}
-            entry={totalsEntry} index={0} pinned={true} expanded={ui.isExpanded['totals']}
-            sideBySide={!ui.noScaling}
-          />
-        }
 
-        <VariableSizeList
-          height={listHeight}
-          itemCount={data.length + 1}
-          itemSize={getEntryHeight}
-          ref={listRef}
-        >
-          {({ index, style }) => {
-            if (index === 0) {
-              return (
-                <VariableSizeRow style={style} index={index} itemCount={data.length + 1}>
-                  {title && <h2>{title}</h2>}
+      {totalsEntry &&
+        <EntryView {...sharedProps} pinEntry={undefined}
+          entry={totalsEntry} index={0} pinned={true} expanded={ui.isExpanded['totals']}
+          sideBySide={!ui.noScaling}
+        />
+      }
 
-                  <div className='legend'>
-                    <div>
-                      <section className='deaths'>
-                        {' –– '}
-                        <Trans i18nKey='information.legend_deaths'>
-                          Daily deaths
+      <VariableSizeList
+        height={listHeight}
+        itemCount={data.length + 1}
+        itemSize={getEntryHeight}
+        ref={listRef}
+      >
+        {({ index, style }) => {
+          if (index === 0) {
+            return (
+              <VariableSizeRow style={style} index={index} itemCount={data.length + 1}>
+                {title && <h2>{title}</h2>}
+
+                <div className='legend'>
+                  <div>
+                    <section className='deaths'>
+                      {' –– '}
+                      <Trans i18nKey='information.legend_deaths'>
+                        Daily deaths
+                      </Trans>
+                    </section>
+                    <section className='comparedTo'>
+                      {' –– '}
+                      <Trans i18nKey='information.legend_compared'>
+                        Compared to {{name: comparisonEntry[`${i18n.language}Name`] || comparisonEntry.name || comparisonEntry.code}}
+                      </Trans>
+                    </section>
+                    <section className='acceleration'>
+                      {' –– '}
+                      <Trans i18nKey='information.legend_acceleration'>
+                        Acceleration
+                      </Trans>
+                    </section>
+                    <section>
+                      <Link to='/explain'>
+                        <Trans i18nKey='information.explain'>
+                          Explain?
                         </Trans>
-                      </section>
-                      <section className='comparedTo'>
-                        {' –– '}
-                        <Trans i18nKey='information.legend_compared'>
-                          Compared to {{name: comparisonEntry[`${i18n.language}Name`] || comparisonEntry.name || comparisonEntry.code}}
-                        </Trans>
-                      </section>
-                      <section className='acceleration'>
-                        {' –– '}
-                        <Trans i18nKey='information.legend_acceleration'>
-                          Acceleration
-                        </Trans>
-                      </section>
-                      <section>
-                        <Link to='/explain'>
-                          <Trans i18nKey='information.explain'>
-                            Explain?
-                          </Trans>
-                        </Link>
-                      </section>
-                    </div>
+                      </Link>
+                    </section>
                   </div>
-                </VariableSizeRow>
-              )
-            } else {
-              const code = data[index - 1] && data[index - 1].code
-              return (
-                <VariableSizeRow style={style} index={index} itemCount={data.length + 1}>
-                  <EntryView {...sharedProps}
-                    entry={data[index - 1]} pinned={ui.pinPositions[code]} expanded={ui.isExpanded[code]}
-                    ui={ui}
-                    comparisonEntry={comparisonEntry}
-                  />
-                </VariableSizeRow>
-              )
-            }
-          }}
-        </VariableSizeList>
+                </div>
+              </VariableSizeRow>
+            )
+          } else {
+            const code = data[index - 1] && data[index - 1].code
+            return (
+              <VariableSizeRow style={style} index={index} itemCount={data.length + 1}>
+                <EntryView {...sharedProps}
+                  entry={data[index - 1]} pinned={ui.pinPositions[code]} expanded={ui.isExpanded[code]}
+                  ui={ui}
+                  comparisonEntry={comparisonEntry}
+                />
+              </VariableSizeRow>
+            )
+          }
+        }}
+      </VariableSizeList>
 
-      </div>
     </TableViewContext.Provider>
   )
 }

@@ -145,16 +145,20 @@ button:hover {
   left: 0;
   right: 0;
   bottom: 0;
+  padding-top: 8em;
+  padding-bottom: 3em;
 
   overflow: auto;
 }
 
+.mobile .App-content .ScrollView {
+  padding-top: 6em;
+}
+
 .App-content .ScrollView > div {
-  margin-top: 8em;
   max-width: 40em;
   margin-left: auto;
   margin-right: auto;
-  margin-bottom: 3em;
 }
 
 .App-content .information {
