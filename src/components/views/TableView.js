@@ -65,7 +65,7 @@ const TableView = ({
           </div> */}
 
           {data.map((entry, index) => (
-            <OneTableEntry {...sharedProps} entry={entry} />
+            <OneTableEntry key={entry.code} {...sharedProps} entry={entry} />
           ))}
         </div>
       </div>

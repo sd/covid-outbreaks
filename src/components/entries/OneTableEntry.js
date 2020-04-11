@@ -1,8 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
 import numeral from 'numeral'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbtack, faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons'
 import { DateTime } from 'luxon'
 import { Link, useHistory } from 'react-router-dom'
 
@@ -48,7 +46,7 @@ const OneTableEntry = ({
   }
 
   return (
-    <div className={classNames('TableView-row')} onClick={() => history.push(`/${entry.code}`)}>
+    <div className={classNames('TableView-row')} onClick={(event) => { history.push(`/${entry.code}`); event.preventDefault() }}>
       <section className='title'>
         <span className='name'>
           <Link to={`/${entry.code}`}>

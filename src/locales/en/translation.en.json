@@ -32,6 +32,8 @@
     "outbreak_day": "Day {{day}}",
     "days_to_up_tenx": "<0 /> days to go up 10x",
     "days_to_down_tenx": "<0 /> days to go down 10x",
+    "up_tenx": "<0 /> to 10x",
+    "down_tenx": "<0 /> to 1/10ᵗʰ",
     "velocity_description": "Velocity(log) <1 />",
     "deaths_total": "{{total}} deaths",
     "deaths_total_with_latest": "{{total}} deaths (+{{latest}})",
