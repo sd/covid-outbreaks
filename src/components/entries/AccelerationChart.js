@@ -51,7 +51,7 @@ const AccelerationChart =  ({
 
   let aspectRatio = (dates.length / 7) / dailyVerticalScale
 
-  let blockHeight = simple ? 60 : 25
+  let blockHeight = 55
   let blockCount = 1.5
   let accelerationScale = 0.16
 

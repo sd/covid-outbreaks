@@ -145,7 +145,7 @@ const OneSummaryEntry = ({
 
         </div>
 
-        <div className='tools'>
+        {/* <div className='tools'>
           {pinEntry && (
             pinned
             ? <button className='segment activated' onClick={ () => unpinEntry(entry) }>
@@ -169,7 +169,7 @@ const OneSummaryEntry = ({
               </button>
           )}
         </div>
-
+ */}
         {expanded && (
           <div className='more'>
             {entry && (entry.links || entry.population) &&

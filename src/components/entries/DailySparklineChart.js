@@ -9,7 +9,7 @@ import { formatDateMMDD } from '../../utils/dateFormats'
 const SVG_STYLES = {
   deathsLine: {
     stroke: 'var(--data-deaths-color)',
-    strokeWidth: 1.2,
+    strokeWidth: 1.5,
   },
   hospitalizedLine: {
     stroke: 'var(--data-hospitalized-color)',
@@ -17,7 +17,7 @@ const SVG_STYLES = {
   },
   comparableLine: {
     stroke: 'var(--data-comparedDeaths-color)',
-    strokeWidth: 0.8,
+    strokeWidth: 1,
   },
   canvas: {
     paddingTop: 10,
@@ -138,6 +138,7 @@ const DailySparklineChart =  ({
 
         {comparisonValues &&
           <DataLine
+            simple={simple}
             scaledValues={comparisonValues} aspectRatio={aspectRatio}
             strokeScale={strokeScale} radiusScale={radiusScale}
             horizontalStep={horizontalStep} idPrefix={`${idPrefix}-comp`}
@@ -155,6 +156,7 @@ const DailySparklineChart =  ({
         }
 
         <DataLine
+          simple={simple}
           scaledValues={scaledValues} aspectRatio={aspectRatio}
           strokeScale={strokeScale} radiusScale={radiusScale}
           horizontalStep={horizontalStep} idPrefix={idPrefix}
@@ -191,7 +193,7 @@ const DataLine = ({scaledValues, aspectRatio, strokeScale, radiusScale, horizont
           y1={100 + SVG_STYLES.canvas.paddingTop - value}
           x2={SVG_STYLES.canvas.paddingLeft + ((index + 1 ) * horizontalStep)}
           y2={100 + SVG_STYLES.canvas.paddingTop - scaledValues[index + 1]}
-          strokeWidth={style.strokeWidth * strokeScale}
+          strokeWidth={simple ? 3 * style.strokeWidth : style.strokeWidth}
           stroke={style.stroke}
           strokeLinecap='round'
         />
@@ -202,7 +204,7 @@ const DataLine = ({scaledValues, aspectRatio, strokeScale, radiusScale, horizont
           key={index}
           cx={SVG_STYLES.canvas.paddingLeft + (index * horizontalStep)}
           cy={100 + SVG_STYLES.canvas.paddingTop - value}
-          r={style.strokeWidth * strokeScale / 2}
+          r={simple ? style.strokeWidth : style.strokeWidth / 2}
           fill={style.stroke}
         />
       )
