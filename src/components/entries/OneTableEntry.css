@@ -124,6 +124,17 @@
 .TableView-row .title .name {
   flex: 1;
 }
+.TableView-row .title .name.title-xl { font-size: 80%; }
+.TableView-row .title .name.title-l  { font-size: 96%; }
+.TableView-row .title .name.title-m  { font-size: 108%; }
+.TableView-row .title .name.title-s  { font-size: 110%; }
+.TableView-row .title .name.title-xs { font-size: 115%; }
+
+.mobile .TableView-row .title .name.title-xl { font-size: 70%; }
+.mobile .TableView-row .title .name.title-l  { font-size: 80%; }
+.mobile .TableView-row .title .name.title-m  { font-size: 90%; }
+.mobile .TableView-row .title .name.title-s  { font-size: 110%; }
+.mobile .TableView-row .title .name.title-xs { font-size: 110%; }
 
 .TableView-row .title .flag {
   flex: 0;

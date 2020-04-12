@@ -17,6 +17,14 @@ import { AccelerationWithStyles } from '../ui/NumbersWithStyles'
 export const DEATHS_SCALE = 10
 export const CASES_SCALE = 100
 
+const titleSize = (title) => {
+  if (title.length > 30) return 'title-xl';
+  if (title.length > 24) return 'title-l';
+  if (title.length > 19) return 'title-m';
+  if (title.length > 0) return 'title-s';
+  return 'title-xs';
+}
+
 const OneTableEntry = ({
   entry, comparisonEntry, dates, allDates,
   ui, pinned, expanded, permalinked, expandEntry, collapseEntry,
@@ -56,6 +64,8 @@ const OneTableEntry = ({
     }
   }
 
+  const title = entry[`${i18n.language}Name`] || entry.name || entry.code
+
   const clickHandler = (event) => { history.push(`/${entry.code}`); event.preventDefault(); event.stopPropagation() }
   const toggleExpansionHandler = (event) => { expanded ? collapseEntry(entry) : expandEntry(entry); event.preventDefault(); event.stopPropagation() }
 
@@ -66,8 +76,8 @@ const OneTableEntry = ({
         onClick={toggleExpansionHandler}
       >
         <section className='title'>
-          <span className='name'>
-            {entry[`${i18n.language}Name`] || entry.name || entry.code}
+          <span className={classNames('name', titleSize(title))} title={`${titleSize(title)} ${title.length}`}>
+            {title}
           </span>
           <span className='flag' title={entry.code}>{entry.emoji}</span>
         </section>
