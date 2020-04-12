@@ -23,11 +23,7 @@ const OneSummaryEntry = ({
   pinned, expanded, ui,
   pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile, isTablet
 }) => {
-  const { t, i18n } = useTranslation();
-
-  // if (!entry.daily.deaths[dates[dates.length - 1]]) {
-  //   dates = dates.slice(0, dates.length - 1)
-  // }
+  const { i18n } = useTranslation();
 
   let weeksToShow
   if (isMobile) {

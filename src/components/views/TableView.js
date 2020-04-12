@@ -6,6 +6,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import './Entries.css'
 
 import OneTableEntry from '../entries/OneTableEntry'
+import ListOfEntries from '../entries/ListOfEntries'
 
 import { viewOptionsForSorting } from '../../store/sorters'
 import { viewOptionsForFiltering, filterBySearch } from '../../store/filters'
@@ -46,28 +47,19 @@ const TableView = ({
 
     let dates = allDates
 
-    const sharedProps = {
-      ui, dates, allDates, comparisonEntry,
+    const actualProps = {
+      data, dates, allDates, comparisonEntry,
+      viewOptions, ui, pinEntry, unpinEntry, expandEntry, collapseEntry,
+      listRef, listHeight: windowHeight, defaultHeight: 58,
       isMobile, isTablet, isDesktop
     }
 
+    const HeaderComponent = () => (
+      <>{title && <h2>{title}</h2>}</>
+    )
     return (
-      <div className='ScrollView'>
-        {title && <h2>{title}</h2>}
-
-        <div className='Entries TableView'>
-          {/* <div className='TableView-headers TableView-row'>
-            <section className='title header'>Outbreak</section>
-            <section className='outbreakDay header'>Day</section>
-            <section className='deaths header'>Deaths</section>
-            <section className='latestDaily header'>Last 4 days</section>
-            <section className='acceleration header'>Acceleration</section>
-          </div> */}
-
-          {data.map((entry, index) => (
-            <OneTableEntry key={entry.code} {...sharedProps} entry={entry} />
-          ))}
-        </div>
+      <div className='Entries TableView'>
+        <ListOfEntries {...actualProps} entryComponent={OneTableEntry} headerComponent={HeaderComponent} />
       </div>
     )
   } else {

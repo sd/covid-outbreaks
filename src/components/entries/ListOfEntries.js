@@ -1,16 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { VariableSizeList } from 'react-window';
-import { Trans, useTranslation } from 'react-i18next';
 import classNames from 'classnames'
-import { Link } from 'react-router-dom'
 
 import OneSummaryEntry from './OneSummaryEntry'
 
 export const TableViewContext = React.createContext({})
 
 const ListOfEntries = ({
-  entryComponent,
+  entryComponent, headerComponent, defaultHeight,
   data, dates, allDates,
   viewOptions, ui, pinEntry, unpinEntry,
   expandEntry, collapseEntry,
@@ -18,13 +16,7 @@ const ListOfEntries = ({
   listRef, listHeight,
   isMobile, isTablet, isDesktop
 }) => {
-  const { i18n, t } = useTranslation();
   const entryHeights = React.useRef({});
-
-  let title = ''
-  if (viewOptions && viewOptions.filter) {
-    title = t(`filter.description.${viewOptions.filter}`, viewOptions.filterDescription)
-  }
 
   const setEntryHeight = React.useCallback((index, size) => {
     const prev = entryHeights.current[index]
@@ -35,18 +27,19 @@ const ListOfEntries = ({
   }, [listRef])
 
   const getEntryHeight = React.useCallback((index) => {
-    return entryHeights.current[index] || 100
-  }, [])
+    return entryHeights.current[index] || defaultHeight || 100
+  }, [defaultHeight])
 
   const sharedProps = { dates, allDates, pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile, isTablet, isDesktop }
 
-  const EntryView = entryComponent || OneSummaryEntry
+  const Entry = entryComponent || OneSummaryEntry
+  const Header = headerComponent || (() => { return null })
 
   return (
     <TableViewContext.Provider value={{ setEntryHeight }}>
 
       {totalsEntry &&
-        <EntryView {...sharedProps} pinEntry={undefined}
+        <Entry {...sharedProps} pinEntry={undefined}
           entry={totalsEntry} index={0} pinned={true} expanded={ui.isExpanded['totals']}
           sideBySide={!ui.noScaling}
         />
@@ -62,44 +55,14 @@ const ListOfEntries = ({
           if (index === 0) {
             return (
               <VariableSizeRow style={style} index={index} itemCount={data.length + 1}>
-                {title && <h2>{title}</h2>}
-
-                <div className='legend'>
-                  <div>
-                    <section className='deaths'>
-                      {' –– '}
-                      <Trans i18nKey='information.legend_deaths'>
-                        Daily deaths
-                      </Trans>
-                    </section>
-                    <section className='comparedTo'>
-                      {' –– '}
-                      <Trans i18nKey='information.legend_compared'>
-                        Compared to {{name: comparisonEntry[`${i18n.language}Name`] || comparisonEntry.name || comparisonEntry.code}}
-                      </Trans>
-                    </section>
-                    <section className='acceleration'>
-                      {' –– '}
-                      <Trans i18nKey='information.legend_acceleration'>
-                        Acceleration
-                      </Trans>
-                    </section>
-                    <section>
-                      <Link to='/explain'>
-                        <Trans i18nKey='information.explain'>
-                          Explain?
-                        </Trans>
-                      </Link>
-                    </section>
-                  </div>
-                </div>
+                <Header />
               </VariableSizeRow>
             )
           } else {
             const code = data[index - 1] && data[index - 1].code
             return (
               <VariableSizeRow style={style} index={index} itemCount={data.length + 1}>
-                <EntryView {...sharedProps}
+                <Entry {...sharedProps}
                   entry={data[index - 1]} pinned={ui.pinPositions[code]} expanded={ui.isExpanded[code]}
                   ui={ui}
                   comparisonEntry={comparisonEntry}

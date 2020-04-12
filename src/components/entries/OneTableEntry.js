@@ -3,32 +3,31 @@ import classNames from 'classnames'
 import numeral from 'numeral'
 import { DateTime } from 'luxon'
 import { Link, useHistory } from 'react-router-dom'
+import { Trans, useTranslation } from 'react-i18next';
 
 import './OneTableEntry.css'
 
 import DailySparklineChart from './DailySparklineChart'
 import AccelerationChart from './AccelerationChart'
-import { Trans, useTranslation } from 'react-i18next';
+import OutbreakTable from './OutbreakTable'
 import { AccelerationWithStyles } from '../ui/NumbersWithStyles'
 
 export const DEATHS_SCALE = 10
 export const CASES_SCALE = 100
 
 const OneTableEntry = ({
-  entry, comparisonEntry, dates, allDates, ui, isMobile, isTablet
+  entry, comparisonEntry, dates, allDates,
+  ui, pinned, expanded, expandEntry, collapseEntry,
+  isMobile, isTablet
 }) => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const history = useHistory();
-
-  // if (!entry.daily.deaths[dates[dates.length - 1]]) {
-  //   dates = dates.slice(0, dates.length - 1)
-  // }
 
   let weeksToShow
   if (isMobile) {
-    weeksToShow = 4
+    weeksToShow = expanded ? 6 : 4
   } else {
-    weeksToShow = 7
+    weeksToShow = expanded ? 14 : 7
   }
 
   let chartDates = allDates.slice(-(7 * weeksToShow))
@@ -48,85 +47,140 @@ const OneTableEntry = ({
   const clickHandler = (event) => { history.push(`/${entry.code}`); event.preventDefault(); event.stopPropagation() }
 
   return (
-    <div className={classNames('TableView-row')} onClick={clickHandler}>
-      <section className='title'>
-        <span className='name'>
-          <Link to={`/${entry.code}`} onClick={clickHandler}>
-            {entry[`${i18n.language}Name`] || entry.name || entry.code}
-          </Link>
-        </span>
-        <span className='flag' title={entry.code}>{entry.emoji}</span>
-      </section>
+    <div className='TableView-row-outer' >
+      <div
+        className={classNames('TableView-row', { pinned, expanded })}
+        onClick={() => expanded ? collapseEntry(entry) : expandEntry(entry)}
+      >
+        <section className='title'>
+          <span className='name'>
+            <Link to={`/${entry.code}`} onClick={clickHandler}>
+              {entry[`${i18n.language}Name`] || entry.name || entry.code}
+            </Link>
+          </span>
+          <span className='flag' title={entry.code}>{entry.emoji}</span>
+        </section>
 
-      <section className='outbreakDay'>
-        {entry.latestOutbreakDay.deaths
-          ? <Trans i18nKey='entry.outbreak_day'>
-              day {{ day: entry.latestOutbreakDay.deaths }}
-            </Trans>
-          : '-'
-        }
-      </section>
-
-      <section className='deaths'>
-        {entry.latestTotal.deaths > 0
-          ? <Trans i18nKey='entry.deaths_total'>
-              {{total: numeral(entry.latestTotal.deaths).format('0,000')}} deaths
-            </Trans>
-
-          : <Trans i18nKey='entry.deaths_total_no_deaths'>
-              no deaths
-            </Trans>
-        }
-      </section>
-
-      <section className='latestDaily'>
-        {entry.latestDaily.deaths &&
-          dates.slice(-4).reverse().map(date => (
-            <span key={date}>
-              {entry.daily.deaths[date]
-                ? <span>+{numeral(entry.daily.deaths[date]).format('0,000')}</span>
-                : <span><Trans i18nKey='entry.not_available'>n/a</Trans></span>
-              }
-            </span>
-          )
-        )}
-      </section>
-
-      <section className='acceleration'>
-        {entry.latestAcceleration.deaths > 0 &&
-          <div>
-            <section className='velocitySummary acceleration'>
-              <Trans i18nKey='entry.up_tenx'>
-                <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={true} abs={true} format={'0,000'} /> to 10x
+        <section className='outbreakDay'>
+          {entry.latestOutbreakDay.deaths
+            ? <Trans i18nKey='entry.outbreak_day'>
+                day {{ day: entry.latestOutbreakDay.deaths }}
               </Trans>
-            </section>
-          </div>
-        }
-        {entry.latestAcceleration.deaths < 0 &&
-          <div>
-            <section className='velocitySummary acceleration'>
-              <Trans i18nKey='entry.down_tenx'>
-                <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={true} abs={true} format={'0,000'} /> to 1/10<sup>th</sup>
+            : '-'
+          }
+        </section>
+
+        <section className='deaths'>
+          {entry.latestTotal.deaths > 0
+            ? <Trans i18nKey='entry.deaths_total'>
+                {{total: numeral(entry.latestTotal.deaths).format('0,000')}} deaths
               </Trans>
+
+            : <Trans i18nKey='entry.deaths_total_no_deaths'>
+                no deaths
+              </Trans>
+          }
+        </section>
+
+        <section className='latestDaily'>
+          {entry.latestDaily.deaths &&
+            dates.slice(isMobile ? -3 : -4).reverse().map((date, index) => (
+              <span key={date} className={`index-${index + 1}`}>
+                {entry.daily.deaths[date]
+                  ? `+${numeral(entry.daily.deaths[date]).format('0,000')}`
+                  : (
+                      index === 0
+                        ? t('entry.yesterday', 'Yest.')
+                        : t('entry.not_available', 'n/a')
+                    )
+                }
+              </span>
+            )
+          )}
+        </section>
+
+        <section className='acceleration'>
+          {entry.latestAcceleration.deaths > 0 &&
+            <div>
+              <section className='velocitySummary acceleration'>
+                <Trans i18nKey='entry.up_tenx'>
+                  <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={true} abs={true} format={'0,000'} /> days to 10x
+                </Trans>
+              </section>
+            </div>
+          }
+          {entry.latestAcceleration.deaths < 0 &&
+            <div>
+              <section className='velocitySummary acceleration'>
+                <Trans i18nKey='entry.down_tenx'>
+                  <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={true} abs={true} format={'0,000'} /> days to 1/10<sup>th</sup>
+                </Trans>
+              </section>
+            </div>
+          }
+        </section>
+
+        {!expanded &&
+          <>
+            <section className='deathsChart'>
+              <DailySparklineChart
+                simple={true}
+                entry={entry} dates={chartDates} ui={ui}
+                comparisonEntry={comparisonEntry} comparisonOffset={comparisonOffset}
+              />
             </section>
-          </div>
+            <section className='accelerationChart'>
+              <AccelerationChart
+                simple={true}
+                entry={entry} dates={chartDates} ui={ui}
+              />
+            </section>
+          </>
         }
-      </section>
 
-      <section className='deathsChart'>
-        <DailySparklineChart
-          simple={true}
-          entry={entry} dates={chartDates} ui={ui}
-          comparisonEntry={comparisonEntry} comparisonOffset={comparisonOffset}
-        />
-      </section>
-      <section className='accelerationChart'>
-        <AccelerationChart
-          simple={true}
-          entry={entry} dates={chartDates} ui={ui}
-        />
-      </section>
+      </div>
 
+      {expanded &&
+        <div className='expandedInfo'>
+          <section className='deathsChart'>
+            <DailySparklineChart
+              entry={entry} dates={chartDates} ui={ui}
+              comparisonEntry={comparisonEntry} comparisonOffset={comparisonOffset}
+            />
+          </section>
+          <section className='accelerationChart'>
+            <AccelerationChart
+              entry={entry} dates={chartDates} ui={ui}
+            />
+          </section>
+
+          {entry && (entry.links || entry.population) &&
+            <section>
+              {entry.links && (
+                <>
+                  <b><Trans i18nKey='entry.links_label'>Links:</Trans>&nbsp;&nbsp;</b>
+                  {Object.keys(entry.links).map(key =>
+                    <span key={key}><a href={entry.links[key]} target='_blank' rel="noopener noreferrer">{key}</a>&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                  )}
+                </>
+              )}
+              {entry.links && entry.population && <span>&nbsp;&nbsp;&nbsp;&nbsp;</span>}
+              {entry.population && (
+                <>
+                  <b>
+                    <Trans i18nKey='entry.population_label'>Population:</Trans>&nbsp;
+                  </b>
+                  {numeral(entry.population).format('0,000')}M
+                </>
+              )}
+            </section>
+          }
+
+          <section>
+            <OutbreakTable entry={entry} dates={allDates} />
+          </section>
+        </div>
+      }
     </div>
   )
 }

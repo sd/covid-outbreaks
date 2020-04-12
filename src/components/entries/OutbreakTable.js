@@ -70,21 +70,6 @@ const OutbreakTable = ({entry, dates}) => {
                   </div>
                 </>
               }
-
-              <div className='cases totals'>
-                {entry.totals.cases && entry.totals.cases[date] > 0
-                  ? numeral(entry.totals.cases[date]).format('0,000')
-                  : <span>&nbsp;</span>
-                }
-              </div>
-
-              <div className='cases daily'>
-                {entry.daily.cases && entry.totals.cases[date] > 0
-                  ? `+${numeral(entry.daily.cases[date]).format('0,000')}`
-                  : <span>&nbsp;</span>
-                }
-              </div>
-
             </div>
           ))}
         </div>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import { useLocation } from 'react-router-dom'
+import { Link, useLocation } from 'react-router-dom'
 import { Trans, useTranslation } from 'react-i18next';
 
 import './Entries.css'
@@ -19,7 +19,7 @@ const AllEntriesView = ({
   isMobile, isTablet, isDesktop,
   listRef, windowHeight
 }) => {
-  const { i18n } = useTranslation()
+  const { i18n, t } = useTranslation()
   const location = useLocation()
   const query = new URLSearchParams(location.search)
 
@@ -40,6 +40,11 @@ const AllEntriesView = ({
 
     if (data === []) return null
 
+    let title = ''
+    if (viewOptions && viewOptions.filter) {
+      title = t(`filter.description.${viewOptions.filter}`, viewOptions.filterDescription)
+    }
+
     let dates = allDates
 
     const actualProps = {
@@ -49,9 +54,48 @@ const AllEntriesView = ({
       listRef, listHeight: windowHeight,
       isMobile, isTablet, isDesktop
     }
+
+    const AllEntriesHeader = () => {
+      return (
+        <>
+          {title && <h2>{title}</h2>}
+
+          <div className='legend'>
+            <div>
+              <section className='deaths'>
+                {' –– '}
+                <Trans i18nKey='information.legend_deaths'>
+                  Daily deaths
+                </Trans>
+              </section>
+              <section className='comparedTo'>
+                {' –– '}
+                <Trans i18nKey='information.legend_compared'>
+                  Compared to {{name: comparisonEntry[`${i18n.language}Name`] || comparisonEntry.name || comparisonEntry.code}}
+                </Trans>
+              </section>
+              <section className='acceleration'>
+                {' –– '}
+                <Trans i18nKey='information.legend_acceleration'>
+                  Acceleration
+                </Trans>
+              </section>
+              <section>
+                <Link to='/explain'>
+                  <Trans i18nKey='information.explain'>
+                    Explain?
+                  </Trans>
+                </Link>
+              </section>
+            </div>
+          </div>
+        </>
+      )
+    }
+
     return (
       <div className='Entries AllEntriesView'>
-        <ListOfEntries {...actualProps} entryComponent={OneSummaryEntry} />
+        <ListOfEntries {...actualProps} entryComponent={OneSummaryEntry} headerComponent={AllEntriesHeader} />
       </div>
     )
   } else {
@@ -64,6 +108,7 @@ const AllEntriesView = ({
     )
   }
 }
+
 
 const mapStateToProps = (state, ownProps) => ({
   loaded: state.data.loaded,

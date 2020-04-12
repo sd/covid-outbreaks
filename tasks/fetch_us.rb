@@ -56,7 +56,7 @@ class FetchUS
       [[@yesterday_iso, 'current'].join("\t"), ''] \
       + sorted_state_names.collect { |state|
         [
-          real_rows[state][@yesterday_iso] > real_rows[state][@day_before_iso] ? real_rows[state][@yesterday_iso] : nil,
+          real_rows[state][@yesterday_iso] && real_rows[state][@yesterday_iso] > real_rows[state][@day_before_iso] ? real_rows[state][@yesterday_iso] : nil,
           real_rows[state]['now'] && real_rows[state]['now'] > real_rows[state][@yesterday_iso] ? real_rows[state]['now'] : nil
         ].join("\t")
       } \
