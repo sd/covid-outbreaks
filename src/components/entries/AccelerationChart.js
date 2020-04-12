@@ -47,7 +47,7 @@ const AccelerationChart =  ({
   comparisonEntry, comparisonOffset,
 }) => {
   // mimic normal daily chart to get the same aspect ratio per week
-  let dailyVerticalScale = ui.showHospitalized ? 5 : 3.5
+  let dailyVerticalScale = ui.showHospitalized ? 5 : 3.7
 
   let aspectRatio = (dates.length / 7) / dailyVerticalScale
 
