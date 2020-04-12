@@ -33,7 +33,7 @@
     "days_to_up_tenx": "<0 /> days to go up 10x",
     "days_to_down_tenx": "<0 /> days to go down 10x",
     "up_tenx": "<0 /> days to 10x",
-    "down_tenx": "<0 /> dats to 1/10ᵗʰ",
+    "down_tenx": "<0 /> days to 1/10ᵗʰ",
     "velocity_description": "Velocity(log) <1 />",
     "deaths_total": "{{total}} deaths",
     "deaths_total_with_latest": "{{total}} deaths (+{{latest}})",
@@ -54,7 +54,7 @@
     "table_cases_label": "Cases",
     "includes_data_for": "Includes data grouped under",
     "not_available": "n/a",
-    "yesterday": "Yest."
+    "yesterday": "Yesterday"
   },
   "information": {
     "what_do_these_mean": "What do these numbers mean?",

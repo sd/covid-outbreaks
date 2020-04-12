@@ -1,6 +1,8 @@
 import React from 'react'
 import classNames from 'classnames'
 import numeral from 'numeral'
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons'
 import { DateTime } from 'luxon'
 import { Link, useHistory } from 'react-router-dom'
 import { Trans, useTranslation } from 'react-i18next';
@@ -17,7 +19,7 @@ export const CASES_SCALE = 100
 
 const OneTableEntry = ({
   entry, comparisonEntry, dates, allDates,
-  ui, pinned, expanded, expandEntry, collapseEntry,
+  ui, pinned, expanded, permalinked, expandEntry, collapseEntry,
   isMobile, isTablet
 }) => {
   const { i18n, t } = useTranslation();
@@ -31,6 +33,16 @@ const OneTableEntry = ({
   }
 
   let chartDates = allDates.slice(-(7 * weeksToShow))
+  let last4Dates = dates.slice(isMobile ? -3 : -4)
+  let yesterday = false
+  if (entry.daily.deaths[dates[dates.length - 1]] === undefined) {
+    yesterday = true
+    last4Dates = dates.slice(-5, -1)
+  }
+
+  if (isMobile) {
+    last4Dates = last4Dates.slice(-3)
+  }
 
   let comparisonOffset = 0
 
@@ -45,21 +57,40 @@ const OneTableEntry = ({
   }
 
   const clickHandler = (event) => { history.push(`/${entry.code}`); event.preventDefault(); event.stopPropagation() }
+  const toggleExpansionHandler = (event) => { expanded ? collapseEntry(entry) : expandEntry(entry); event.preventDefault(); event.stopPropagation() }
 
   return (
     <div className='TableView-row-outer' >
       <div
         className={classNames('TableView-row', { pinned, expanded })}
-        onClick={() => expanded ? collapseEntry(entry) : expandEntry(entry)}
+        onClick={toggleExpansionHandler}
       >
         <section className='title'>
           <span className='name'>
-            <Link to={`/${entry.code}`} onClick={clickHandler}>
-              {entry[`${i18n.language}Name`] || entry.name || entry.code}
-            </Link>
+            {entry[`${i18n.language}Name`] || entry.name || entry.code}
           </span>
           <span className='flag' title={entry.code}>{entry.emoji}</span>
         </section>
+
+        {expanded && !permalinked &&
+          <section className='tools'>
+            <span className='permalink'>
+              <Link to={`/${entry.code}`} onClick={clickHandler}>
+                <Trans i18nKey='entry.permalink'>permalink</Trans>
+              </Link>
+            </span>
+            <button onClick={toggleExpansionHandler}>
+              <FontAwesomeIcon icon={faMinusSquare} />
+            </button>
+          </section>
+        }
+        {!expanded && !permalinked &&
+          <section className='tools'>
+            <button onClick={toggleExpansionHandler}>
+              <FontAwesomeIcon icon={faPlusSquare} />
+            </button>
+          </section>
+        }
 
         <section className='outbreakDay'>
           {entry.latestOutbreakDay.deaths
@@ -80,19 +111,18 @@ const OneTableEntry = ({
                 no deaths
               </Trans>
           }
+          {yesterday &&
+            <span className='yesterday'><Trans i18nKey='entry.yesterday'>Yesterday</Trans></span>
+          }
         </section>
 
         <section className='latestDaily'>
           {entry.latestDaily.deaths &&
-            dates.slice(isMobile ? -3 : -4).reverse().map((date, index) => (
+            last4Dates.reverse().map((date, index) => (
               <span key={date} className={`index-${index + 1}`}>
                 {entry.daily.deaths[date]
                   ? `+${numeral(entry.daily.deaths[date]).format('0,000')}`
-                  : (
-                      index === 0
-                        ? t('entry.yesterday', 'Yest.')
-                        : t('entry.not_available', 'n/a')
-                    )
+                  : t('entry.not_available', 'n/a')
                 }
               </span>
             )

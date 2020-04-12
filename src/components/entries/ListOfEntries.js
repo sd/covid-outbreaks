@@ -10,7 +10,7 @@ export const TableViewContext = React.createContext({})
 const ListOfEntries = ({
   entryComponent, headerComponent, defaultHeight,
   data, dates, allDates,
-  viewOptions, ui, pinEntry, unpinEntry,
+  viewOptions, ui, pinEntry, unpinEntry, permalink,
   expandEntry, collapseEntry,
   totalsEntry, comparisonEntry,
   listRef, listHeight,
@@ -63,7 +63,9 @@ const ListOfEntries = ({
             return (
               <VariableSizeRow style={style} index={index} itemCount={data.length + 1}>
                 <Entry {...sharedProps}
-                  entry={data[index - 1]} pinned={ui.pinPositions[code]} expanded={ui.isExpanded[code]}
+                  entry={data[index - 1]} pinned={ui.pinPositions[code]}
+                  expanded={ui.isExpanded[code] || code === permalink}
+                  permalinked={code === permalink}
                   ui={ui}
                   comparisonEntry={comparisonEntry}
                 />

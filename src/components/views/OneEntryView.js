@@ -5,7 +5,7 @@ import { Trans, useTranslation } from 'react-i18next';
 import './Entries.css'
 
 import ListOfEntries from '../entries/ListOfEntries'
-import OneSummaryEntry from '../entries/OneSummaryEntry'
+import OneTableEntry from '../entries/OneTableEntry'
 
 import { viewOptionsForSorting } from '../../store/sorters'
 import { filterBySearch } from '../../store/filters'
@@ -37,23 +37,17 @@ const OneEntryView = ({
 
     let dates = allDates
 
-    if (data[0]) {
-      ui = {
-        ...ui,
-        isExpanded: { ...ui.isExpanded, [data[0].code]: true }
-      }
-    }
-
     const actualProps = {
       data, dates, allDates,
       viewOptions, ui, pinEntry, unpinEntry, expandEntry, collapseEntry,
+      permalink: data[0] && data[0].code,
       comparisonEntry,
       listRef, listHeight: windowHeight,
       isMobile, isTablet, isDesktop
     }
     return (
       <div className='Entries OneEntryView'>
-        <ListOfEntries {...actualProps} entryComponent={OneSummaryEntry} />
+        <ListOfEntries {...actualProps} entryComponent={OneTableEntry} />
       </div>
     )
   } else {

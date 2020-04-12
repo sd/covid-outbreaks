@@ -1,8 +1,6 @@
 import React from 'react'
 import classNames from 'classnames'
 import numeral from 'numeral'
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
-import { faThumbtack, faPlusSquare, faMinusSquare } from '@fortawesome/free-solid-svg-icons'
 import { DateTime } from 'luxon'
 import { Link } from 'react-router-dom'
 

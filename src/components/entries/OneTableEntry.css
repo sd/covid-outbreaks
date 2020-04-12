@@ -18,15 +18,33 @@
 
   display: grid;
 
-  grid-template-columns: 1fr 6em 11em 6em 6em ;
+  grid-template-columns: 1fr 6em 11em 6em 8em ;
   grid-template-rows: auto;
   grid-template-areas:
     "  title   deathsChart  deaths        accelerationChart   outbreakDay     "
-    "  .       deathsChart  latestDaily   accelerationChart   acceleration    ";
+    "  tools   deathsChart  latestDaily   accelerationChart   acceleration    "
+    "  .       deathsChart  .             accelerationChart   .               ";
 
   justify-items: stretch;
   align-items: center;
 }
+.mobile .TableView-row {
+  padding-top: 0.75em;
+  padding-bottom: 0.75em;
+
+  grid-template-columns: 1fr 6em 10em ;
+  grid-template-areas:
+  "  title   deathsChart        deaths "
+  "  title   deathsChart        latestDaily "
+  "  tools   deathsChart        . "
+  "  .       accelerationChart  outbreakDay "
+  "  .       accelerationChart  acceleration  "
+  "  .       accelerationChart  .  ";
+
+  justify-items: stretch;
+  align-items: start;
+}
+
 .TableView-row > section {
   line-height: 1.3em;
   text-align: left;
@@ -39,39 +57,32 @@
   background-color: var(--row-hover-color);
 }
 
-.mobile .TableView-row {
-  padding-top: 0.75em;
-  padding-bottom: 0.75em;
-
-  grid-template-columns: 1fr 6em 9em ;
-  grid-template-areas:
-  "  title   deathsChart deaths "
-  "  title   deathsChart latestDaily "
-  "  title   accelerationChart  outbreakDay "
-  "  title   accelerationChart   acceleration  ";
-
-  justify-items: stretch;
-  align-items: start;
-}
-
 .TableView-row > .title {
   grid-area: title;
 }
 
+.TableView-row > .tools {
+  grid-area: tools;
+}
+
 .TableView-row > .outbreakDay {
   grid-area: outbreakDay;
+  white-space: nowrap;
 }
 
 .TableView-row > .deaths {
   grid-area: deaths;
+  white-space: nowrap;
 }
 
 .TableView-row > .latestDaily {
   grid-area: latestDaily;
+  white-space: nowrap;
 }
 
 .TableView-row > .acceleration {
   grid-area: acceleration;
+  white-space: nowrap;
 }
 
 .TableView-row > .deathsChart {
@@ -96,11 +107,11 @@
 }
 .mobile .TableView-row .title {
   font-size: 110%;
-  justify-self: start;
-  text-align: left;
-  flex-direction: column;
+  justify-self: end;
+  text-align: right;
+  flex-direction: row;
   justify-content: flex-end;
-  align-items: start;
+  align-items: center;
 }
 .TableView-row .title a, .TableView-row .title a:link, .TableView-row .title a:visited {
   color: inherit;
@@ -117,16 +128,25 @@
 .TableView-row .title .flag {
   flex: 0;
   margin-left: 0.5em;
+  margin-right: -0.3em;
 
   font-size: 140%;
   text-shadow: 0 0 0.2em var(--emoji-glow-color);
 }
 
 .mobile .TableView-row .title .flag {
-  margin-left: 0em;
-  margin-right: 0.2em;
-  margin-top: 0.3em;
-  font-size: 200%;
+  margin-left: 0.2em;
+  margin-right: -0.3em;
+  font-size: 160%;
+}
+
+.TableView-row .tools {
+  justify-items: flex-end;
+  align-items: flex-end;
+  text-align: right;
+}
+.TableView-row .tools .permalink {
+  margin-right: 2em;
 }
 
 .TableView-row .deaths {
@@ -138,6 +158,15 @@
 .mobile .TableView-row > .deaths {
   font-size: 100%;
 }
+
+.TableView-row .deaths .yesterday {
+  font-size: 60%;
+  font-weight: normal;
+  margin-left: 0.5em;
+  color: var( --text-color);
+  opacity: 0.5;
+}
+
 
 .TableView-row .latestDaily {
   text-align: left;
