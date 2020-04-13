@@ -48,7 +48,7 @@ function filterLatam (a, options) {
 }
 
 function filterEurope (a, options) {
-  return REGIONS.europe.indexOf(a.codeCountry) >= 0
+  return REGIONS.europe.indexOf(a.codeCountry) >= 0 || (a.codeCountry === 'uk' && a.codeSubCountry === 'gb')
 }
 
 function filterMiddleEast (a, options) {
