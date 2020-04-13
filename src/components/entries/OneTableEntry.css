@@ -237,5 +237,7 @@
 
 .mobile .TableView-row-outer .expandedInfo .deathsChart svg,
 .mobile .TableView-row-outer .expandedInfo .accelerationChart svg {
-  width: 24em;
+  width: 100%;
+  margin-left: 1em;
+  margin-right: 1em;
 }

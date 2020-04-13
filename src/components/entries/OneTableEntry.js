@@ -35,7 +35,7 @@ const OneTableEntry = ({
 
   let weeksToShow
   if (isMobile) {
-    weeksToShow = expanded ? 6 : 4
+    weeksToShow = expanded ? 10 : 4
   } else {
     weeksToShow = expanded ? 14 : 7
   }

@@ -31,7 +31,7 @@ function filterAll (a, options) {
 }
 
 function filterRelevant (a, options) {
-  if (a.code === 'us' || a.code === 'it' || a.code === 'fr' || a.code === 'es') return false
+  if (a.code === 'us' || a.code === 'it' || a.code === 'fr' || a.code === 'es' || a.code === 'uk.gb') return false
   return a.latestDaily.deaths >= 20
 }
 

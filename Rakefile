@@ -9,6 +9,7 @@ require './tasks/fetch_csse'
 require './tasks/fetch_datadista'
 require './tasks/fetch_italy'
 require './tasks/fetch_france'
+require './tasks/fetch_uk'
 require './tasks/fetch_us'
 require './tasks/fetch_nyc'
 
@@ -30,6 +31,11 @@ end
 desc 'Fetch France'
 task :fr do
   FetchFrance.new.fetch
+end
+
+desc 'Fetch UK'
+task :uk do
+  FetchUK.new.fetch_all
 end
 
 desc 'Fetch USA'

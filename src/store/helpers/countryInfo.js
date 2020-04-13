@@ -118,6 +118,12 @@ let nameToCodeIndex = {
   'France > La Réunion': 'fr.reu',
   'France > Mayotte': 'fr.may',
   'France > Nouvelle-Calédonie': 'fr.nca',
+
+  'UK > England': 'uk.gb.en',
+  'UK > Northern Ireland': 'uk.gb.nir',
+  'UK > Scotland': 'uk.gb.sc',
+  'UK > Wales': 'uk.gb.wl',
+  'UK': 'uk.gb'
 }
 let codeToNameIndex = {
   'other.diamond_princess': 'Diamond Princess',
@@ -221,6 +227,12 @@ let codeToNameIndex = {
   'fr.reu': 'France: La Réunion',
   'fr.may': 'France: Mayotte',
   'fr.nca': 'France: Nouvelle-Calédonie',
+
+  'uk.gb.en': 'UK: England',
+  'uk.gb.nir': 'UK: Northern Ireland',
+  'uk.gb.sc': 'UK: Scotland',
+  'uk.gb.wl': 'UK: Wales',
+  'uk.gb': 'UK: Great Britain',
 }
 
 countryByAbbreviation.forEach(row => {
@@ -236,7 +248,10 @@ Object.keys(US_STATES_BY_CODE).forEach(key => {
 })
 nameToCodeIndex = {...nameToCodeIndex, ...{ // Overrides post-data loding
   'US > Puerto Rico': 'pr',
-  'US > Guam': 'gu',
+  'US > Guam': 'us.gu',
+  'US > American Samoa': 'us.as',
+  'US > Northern Mariana Islands': 'us.mp',
+  'US > US Virgin Islands': 'us.vi',
   'US > Washington, D.C.': 'us.dc',
   'US > District of Columbia': 'us.dc',
   'US > Virgin Islands, U.S.': 'us.vi',
@@ -248,6 +263,9 @@ codeToNameIndex = {...codeToNameIndex, ...{ // Overrides post-data loding
   'us.ny': 'USA: New York State',
   'us.dc': 'USA: District of Columbia',
   'us.vi': 'USA: Virgin Islands',
+  'us.gu': 'USA: Guam',
+  'us.mp': 'USA: Northern Mariana Islands',
+  'us.as': 'USA: American Samoa'
 }}
 
 let codeToPopulationIndex = {}
@@ -350,7 +368,7 @@ export function attributesForCountry(code) {
     keyDates = {...OUTBREAK_ATTRIBUTES[parts[0]].keyDates}
   }
   if (OUTBREAK_ATTRIBUTES[code]) {
-    attrs.emoji = attrs.emoji || OUTBREAK_ATTRIBUTES[code].emoji
+    attrs.emoji = OUTBREAK_ATTRIBUTES[code].emoji || attrs.emoji
     links = {...OUTBREAK_ATTRIBUTES[code].links}
     keyDates = {...OUTBREAK_ATTRIBUTES[code].keyDates}
   }
