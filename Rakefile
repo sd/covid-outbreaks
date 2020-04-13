@@ -35,7 +35,7 @@ end
 
 desc 'Fetch UK'
 task :uk do
-  FetchUK.new.fetch_all
+  FetchUK.new.fetch
 end
 
 desc 'Fetch USA'
