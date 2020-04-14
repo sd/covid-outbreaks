@@ -22,8 +22,9 @@
   cursor: pointer;
 }
 
-.Navigation .search {
-  color: var(--link-color);
+.Navigation a.active {
+  color: var(--text-color);
+  font-weight: bold;
 }
 
 .Navigation .search input {

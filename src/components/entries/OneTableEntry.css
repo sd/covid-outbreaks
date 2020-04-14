@@ -29,17 +29,18 @@
   align-items: center;
 }
 .mobile .TableView-row {
-  padding-top: 0.75em;
-  padding-bottom: 0.75em;
+  padding-top: 0.5em;
+  padding-bottom: 0.5em;
 
-  grid-template-columns: 1fr 6em 10em ;
+  grid-template-columns: 1fr 4.8em 10em ;
+  grid-template-rows: 1.2em 1em 0.2em 1.5em 1em 0.1em;
   grid-template-areas:
-  "  title   deathsChart        deaths "
-  "  title   deathsChart        latestDaily "
-  "  tools   deathsChart        . "
-  "  .       accelerationChart  outbreakDay "
+  "  title   deathsChart        deaths        "
+  "  title   deathsChart        latestDaily   "
+  "  tools   deathsChart        .             "
+  "  tools   accelerationChart  outbreakDay   "
   "  .       accelerationChart  acceleration  "
-  "  .       accelerationChart  .  ";
+  "  .       accelerationChart  .             ";
 
   justify-items: stretch;
   align-items: start;

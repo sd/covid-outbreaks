@@ -49,7 +49,7 @@ const Navigation = ({sort, setUI, resetUI}) => {
   return (
     <div className='Navigation'>
       <section>
-        <NavLink to="/"><Trans i18nKey='navigation.top'>Top</Trans></NavLink>
+        <NavLink to="/" exact><Trans i18nKey='navigation.top'>Top</Trans></NavLink>
       </section>
       <section>
         <NavLink to="/all"><Trans i18nKey='navigation.all'>All</Trans></NavLink>
