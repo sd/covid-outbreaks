@@ -67,23 +67,30 @@ export const REGIONS = {
     "ax", "al", "ad", "at", "by", "be", "ba", "bg", "hr", "cz", "dk", "ee", "fo", "fi", "fr", "de",
     "gi", "gr", "gg", "va", "hu", "is", "ie", "im", "it", "je", "lv", "li", "lt", "lu", "mt", "md",
     "mc", "me", "nl", "mk", "no", "pl", "pt", "ro", "ru", "sm", "rs", "sk", "si", "es", "sj", "se",
-    "ch", "ua", "gb"
+    "ch", "ua", "gb", "uk"
   ],
   "africa": [
     "dz", "ao", "bj", "bw", "io", "bf", "bi", "cv", "cm", "cf", "td", "km", "cg", "cd", "ci", "dj",
     "eg", "gq", "er", "sz", "et", "tf", "ga", "gm", "gh", "gn", "gw", "ke", "ls", "lr", "ly", "mg",
     "mw", "ml", "mr", "mu", "yt", "ma", "mz", "na", "ne", "ng", "re", "rw", "sh", "st", "sn", "sc",
-    "sl", "so", "za", "ss", "sd", "tz", "tg", "tn", "ug", "eh", "zm", "zw"
+    "sl", "so", "za", "ss", "sd", "tz", "tg", "tn", "ug", "eh", "zm", "zw",
+    "fr.may", "fr.reu"
   ],
   "oceania": [
     "as", "au", "cx", "cc", "ck", "fj", "pf", "gu", "hm", "ki", "mh", "fm", "nr", "nc", "nz", "nu",
-    "nf", "mp", "pw", "pg", "pn", "ws", "sb", "tk", "to", "tv", "um", "vu", "wf"
+    "nf", "mp", "pw", "pg", "pn", "ws", "sb", "tk", "to", "tv", "um", "vu", "wf",
+    "fr.nca"
   ],
   "americas": [
     "ai", "ag", "ar", "aw", "bs", "bb", "bz", "bm", "bo", "bq", "bv", "br", "ca", "ky", "cl", "co",
     "cr", "cu", "cw", "dm", "do", "ec", "sv", "fk", "gf", "gl", "gd", "gp", "gt", "gy", "ht", "hn",
     "jm", "mq", "mx", "ms", "ni", "pa", "py", "pe", "pr", "bl", "kn", "lc", "mf", "pm", "vc", "sx",
-    "gs", "sr", "tt", "tc", "us", "uy", "ve", "vg", "vi"
+    "gs", "sr", "tt", "tc", "us", "uy", "ve", "vg", "vi",
+    "uk.British Virgin Islands", "uk.Anguila", "uk.Montserrat", "uk.Cayman Islands", "uk.Turk and Caicos Islands",
+    "uk.Bermuda",
+    "nl.Curacao", "nl.Bonaire, Sint Eustatius and Saba", "nl.Sint Maarten",
+    "fr.mar", "fr.gua", "fr.sma", "fr.sba",
+    "uk.Falkland Islands (Malvinas)", "fr.guy"
   ],
 
   "middleeast": [
@@ -105,12 +112,14 @@ export const REGIONS = {
   "asia_central": ["kz", "kg", "tj", "tm", "uz"],
 
   "oceania_ausnz": ["au", "cx", "cc", "hm", "nz", "nf"],
-  "oceania_melanesia": ["fj", "nc", "pg", "sb", "vu"],
+  "oceania_melanesia": ["fj", "nc", "pg", "sb", "vu", "fr.nca"],
   "oceania_micronesia": ["gu", "ki", "mh", "fm", "nr", "mp", "pw", "um"],
   "oceania_polynesia": ["as", "ck", "pf", "nu", "pn", "ws", "tk", "to", "tv", "wf"],
 
   "europe_northern": ["ax", "dk", "ee", "fo", "fi", "gg", "is", "ie", "im", "je", "lv", "lt", "no", "sj", "se", "gb"],
-  "europe_southern": ["al", "ad", "ba", "hr", "gi", "gr", "va", "it", "mt", "me", "mk", "pt", "sm", "rs", "si", "es"],
+  "europe_southern": [
+    "al", "ad", "ba", "hr", "gi", "gr", "va", "it", "mt", "me", "mk", "pt", "sm", "rs", "si", "es", "uk.Gibraltar"
+  ],
   "europe_western": ["at", "be", "fr", "de", "li", "lu", "mc", "nl", "ch"],
   "europe_eastern": ["by", "bg", "cz", "hu", "md", "pl", "ro", "ru", "sk", "ua"],
 
@@ -124,9 +133,16 @@ export const REGIONS = {
 
   "america_caribbean": [
     "ai", "ag", "aw", "bs", "bb", "bq", "ky", "cu", "cw", "dm", "do", "gd", "gp", "ht", "jm", "mq",
-    "ms", "pr", "bl", "kn", "lc", "mf", "vc", "sx", "tt", "tc", "vg", "vi"
+    "ms", "pr", "bl", "kn", "lc", "mf", "vc", "sx", "tt", "tc", "vg", "vi",
+    "uk.British Virgin Islands", "uk.Anguila", "uk.Montserrat", "uk.Cayman Islands", "uk.Turk and Caicos Islands",
+    "uk.Bermuda",
+    "nl.Curacao", "nl.Bonaire, Sint Eustatius and Saba", "nl.Sint Maarten",
+    "fr.mar", "fr.gua", "fr.sma", "fr.sba"
   ],
-  "america_south": ["ar", "bo", "bv", "br", "cl", "co", "ec", "fk", "gf", "gy", "py", "pe", "gs", "sr", "uy", "ve"],
+  "america_south": [
+    "ar", "bo", "bv", "br", "cl", "co", "ec", "fk", "gf", "gy", "py", "pe", "gs", "sr", "uy", "ve",
+    "uk.Falkland Islands (Malvinas)", "fr.guy"
+  ],
   "america_central": ["bz", "cr", "sv", "gt", "hn", "mx", "ni", "pa"],
 
   "america_latam": [
@@ -138,7 +154,8 @@ export const REGIONS = {
     "ao", "bj", "bw", "io", "bf", "bi", "cv", "cm", "cf", "td", "km", "cg", "cd", "ci", "dj", "gq",
     "er", "sz", "et", "tf", "ga", "gm", "gh", "gn", "gw", "ke", "ls", "lr", "mg", "mw", "ml", "mr",
     "mu", "yt", "mz", "na", "ne", "ng", "re", "rw", "sh", "st", "sn", "sc", "sl", "so", "za", "ss",
-    "tz", "tg", "ug", "zm", "zw"
+    "tz", "tg", "ug", "zm", "zw",
+    "fr.may", "fr.reu"
   ],
 
   "africa_subsaharan_western": [
@@ -146,6 +163,7 @@ export const REGIONS = {
   ],
   "africa_southern_western": ["bw", "sz", "ls", "na", "za"],
   "africa_subsaharan_eastern": [
-    "io", "bi", "km", "dj", "er", "et", "tf", "ke", "mg", "mw", "mu", "yt", "mz", "re", "rw", "sc", "so", "ss", "tz", "ug", "zm", "zw"
+    "io", "bi", "km", "dj", "er", "et", "tf", "ke", "mg", "mw", "mu", "yt", "mz", "re", "rw", "sc", "so", "ss", "tz", "ug", "zm", "zw",
+    "fr.may", "fr.reu"
   ],
 }

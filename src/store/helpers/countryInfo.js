@@ -22,8 +22,7 @@ let nameToCodeIndex = {
   'Kosovo': 'xk',
   'Fiji': 'fj',
   'Eswatini': 'sz',
-  'United Kingdom': 'gb',
-  'Northern Ireland': 'gb.Northern Ireland',
+  'United Kingdom': 'uk',
   'Libya': 'ly',
   'Burma': 'mm', // Myanmar
 
@@ -138,7 +137,7 @@ let codeToNameIndex = {
   'tl': 'East Timor',
   'xk': 'Kosovo',
   'sz': 'Eswatini',
-  'gb': 'United Kingdom',
+  'uk': 'United Kingdom',
   'ly': 'Libya',
   'cz': 'Czechia',
 
@@ -363,7 +362,7 @@ export function attributesForCountry(code) {
 
   let links = {}, keyDates = {}
   if (OUTBREAK_ATTRIBUTES[parts[0]]) {
-    attrs.emoji = attrs.emoji || OUTBREAK_ATTRIBUTES[parts[0]].emoji
+    attrs.emoji = OUTBREAK_ATTRIBUTES[parts[0]].emoji || attrs.emoji
     links = {...OUTBREAK_ATTRIBUTES[parts[0]].links}
     keyDates = {...OUTBREAK_ATTRIBUTES[parts[0]].keyDates}
   }

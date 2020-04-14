@@ -18,11 +18,23 @@ export const DEATHS_SCALE = 10
 export const CASES_SCALE = 100
 
 const titleSize = (title) => {
-  if (title.length > 30) return 'title-xl';
-  if (title.length > 24) return 'title-l';
-  if (title.length > 19) return 'title-m';
-  if (title.length > 0) return 'title-s';
+  if (title.length > 30) return 'title-xl'
+  if (title.length > 24) return 'title-l'
+  if (title.length > 19) return 'title-m'
+  if (title.length > 0) return 'title-s'
   return 'title-xs';
+}
+
+const accelerationSeverityClass = (acceleration) => {
+  if (acceleration >=  0.1428)  return 'severity-bad-xl'  /* up in 7 days / 1 week */
+  if (acceleration >=  0.0476)  return 'severity-bad-l'   /* up in 21 days / 3 weeks */
+  if (acceleration >=  0.0204)  return 'severity-bad-m'   /* up in 49 days / 7 weeks */
+  if (acceleration >=  0.0119)  return 'severity-bad-s'   /* up in 84 days / 12 weeks */
+  if (acceleration >= -0.0089)  return 'severity-flat'    /* down in 112 days / 16 weeks */
+  if (acceleration >= -0.0143) return 'severity-good-s'   /* down in 70 days / 10 weeks */
+  if (acceleration >= -0.0238) return 'severity-good-m'   /* down in 42 days / 6 weeks */
+  if (acceleration >= -0.0357) return 'severity-good-l'   /* down in 28 days / 4 weeks */
+  return 'severity-good-xl'
 }
 
 const OneTableEntry = ({
@@ -72,7 +84,13 @@ const OneTableEntry = ({
   return (
     <div className='TableView-row-outer' >
       <div
-        className={classNames('TableView-row', { pinned, expanded })}
+        className={
+          classNames(
+            'TableView-row',
+            accelerationSeverityClass(entry.latestAcceleration.deaths),
+            { pinned, expanded }
+          )
+        }
         onClick={toggleExpansionHandler}
       >
         <section className='title'>
@@ -139,24 +157,16 @@ const OneTableEntry = ({
           )}
         </section>
 
-        <section className='acceleration'>
+        <section className={classNames('acceleration', accelerationSeverityClass(entry.latestAcceleration.deaths))}>
           {entry.latestAcceleration.deaths > 0 &&
-            <div>
-              <section className='velocitySummary acceleration'>
-                <Trans i18nKey='entry.up_tenx'>
-                  <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={true} abs={true} format={'0,000'} /> days to 10x
-                </Trans>
-              </section>
-            </div>
+            <Trans i18nKey='entry.up_tenx'>
+              <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={true} abs={true} format={'0,000'} /> days to 10x
+            </Trans>
           }
           {entry.latestAcceleration.deaths < 0 &&
-            <div>
-              <section className='velocitySummary acceleration'>
-                <Trans i18nKey='entry.down_tenx'>
-                  <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={true} abs={true} format={'0,000'} /> days to 1/10<sup>th</sup>
-                </Trans>
-              </section>
-            </div>
+            <Trans i18nKey='entry.down_tenx'>
+              <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={true} abs={true} format={'0,000'} /> days to 1/10<sup>th</sup>
+            </Trans>
           }
         </section>
 

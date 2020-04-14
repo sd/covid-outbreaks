@@ -18,7 +18,7 @@
 
   display: grid;
 
-  grid-template-columns: 1fr 6em 11em 6em 8em ;
+  grid-template-columns: 1fr 6em 11em 6em 8.5em ;
   grid-template-rows: auto;
   grid-template-areas:
     "  title   deathsChart  deaths        accelerationChart   outbreakDay     "
@@ -240,4 +240,64 @@
   width: 100%;
   margin-left: 1em;
   margin-right: 1em;
+}
+
+.TableView-row.severity-bad-xl {
+  background-color: var(--data-severity-bad-xl);
+}
+.TableView-row.severity-bad-l {
+  background-color: var(--data-severity-bad-l);
+}
+.TableView-row.severity-bad-m {
+  background-color: var(--data-severity-bad-m);
+}
+.TableView-row.severity-bad-s {
+  background-color: var(--data-severity-bad-s);
+}
+.TableView-row.severity-flat {
+  background-color: var(--data-severity-flat);
+}
+.TableView-row.severity-good-s {
+  background-color: var(--data-severity-good-s);
+}
+.TableView-row.severity-good-m {
+  background-color: var(--data-severity-good-m);
+}
+.TableView-row.severity-good-l {
+  background-color: var(--data-severity-good-l);
+}
+.TableView-row.severity-good-xl {
+  background-color: var(--data-severity-good-xl);
+}
+
+.TableView-row .acceleration.severity-bad-xl .acceleration {
+  color: var(--lightTheme-data-severity-bad-xl);
+  font-weight: bold;
+}
+.TableView-row .acceleration.severity-bad-l .acceleration {
+  color: var(--lightTheme-data-severity-bad-l);
+  font-weight: bold;
+}
+.TableView-row .acceleration.severity-bad-m .acceleration {
+  color: var(--lightTheme-data-severity-bad-m);
+}
+.TableView-row .acceleration.severity-bad-s .acceleration {
+  color: var(--lightTheme-data-severity-bad-s);
+}
+.TableView-row .acceleration.severity-flat .acceleration {
+  color: var(--lightTheme-data-severity-flat);
+}
+.TableView-row .acceleration.severity-good-s .acceleration {
+  color: var(--lightTheme-data-severity-good-s);
+}
+.TableView-row .acceleration.severity-good-m .acceleration {
+  color: var(--lightTheme-data-severity-good-m);
+}
+.TableView-row .acceleration.severity-good-l .acceleration {
+  color: var(--lightTheme-data-severity-good-l);
+  font-weight: bold;
+}
+.TableView-row .acceleration.severity-good-xl .acceleration {
+  color: var(--lightTheme-data-severity-good-xl);
+  font-weight: bold;
 }

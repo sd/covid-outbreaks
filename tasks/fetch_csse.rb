@@ -102,6 +102,8 @@ class FetchCSSE
         row[:key] = 'France, ignore'
       when 'Italy'
         row[:key] = 'Italy, ignore'
+      when 'United Kingdom'
+        row[:key] = 'United Kingdom, ignore'
       end
     end
 

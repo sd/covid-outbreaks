@@ -22,7 +22,7 @@
   --yellowTheme-link-highlight-color: #00d;
 
   --data-deaths-color: #f33;
-  --data-deaths-lighter-color: #f55;
+  --data-deaths-lighter-color: #da2020;
   --data-comparedDeaths-color: #744;
   --data-hospitalized-color: #663;
 
@@ -51,6 +51,26 @@
   --chart-grid-text-color: #555;
   --chart-axis-color: #777;
   --chart-axis-text-color: #888;
+
+  --data-severity-bad-xl:  #600101;
+  --data-severity-bad-l:   #420909;
+  --data-severity-bad-m:   #341010;
+  --data-severity-bad-s:   #301919;
+  --data-severity-flat:    #262020;
+  --data-severity-good-s:  #192419;
+  --data-severity-good-m:  #122c12;
+  --data-severity-good-l:  #103410;
+  --data-severity-good-xl: #145014;
+
+  --lightTheme-data-severity-bad-xl: #f00;
+  --lightTheme-data-severity-bad-l: #e95050;
+  --lightTheme-data-severity-bad-m: #e66;
+  --lightTheme-data-severity-bad-s: #b77;
+  --lightTheme-data-severity-flat: #aaa;
+  --lightTheme-data-severity-good-s: #393;
+  --lightTheme-data-severity-good-m: #7b7;
+  --lightTheme-data-severity-good-l: #40e040;
+  --lightTheme-data-severity-good-xl: #0f0;
 }
 
 html, body  {
