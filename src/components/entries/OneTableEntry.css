@@ -163,7 +163,7 @@
 .TableView-row .deaths {
   font-size: 110%;
   font-weight: bold;
-  color: var(--data-deaths-lighter-color);
+  /* color: var(--data-deaths-lighter-color); */
 }
 
 .mobile .TableView-row > .deaths {
