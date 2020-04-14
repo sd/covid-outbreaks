@@ -1,8 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { NavLink, useLocation, useHistory } from 'react-router-dom'
-import Popup from 'reactjs-popup'
-import { Trans, useTranslation } from 'react-i18next';
+import { Trans } from 'react-i18next';
 import KeyboardEventHandler from 'react-keyboard-event-handler'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faSearch, faTimes } from '@fortawesome/free-solid-svg-icons'
