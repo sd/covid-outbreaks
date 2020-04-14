@@ -148,9 +148,13 @@ const OneTableEntry = ({
           {entry.latestDaily.deaths &&
             last4Dates.reverse().map((date, index) => (
               <span key={date} className={`index-${index + 1}`}>
-                {entry.daily.deaths[date]
+                {entry.daily.deaths[date] > 0
                   ? `+${numeral(entry.daily.deaths[date]).format('0,000')}`
-                  : t('entry.not_available', 'n/a')
+                  : (
+                    entry.daily.deaths[date] === 0
+                      ? '0'
+                      : t('entry.not_available', 'n/a')
+                  )
                 }
               </span>
             )
