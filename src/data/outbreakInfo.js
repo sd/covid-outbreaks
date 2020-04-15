@@ -31,17 +31,18 @@ export const OUTBREAK_ATTRIBUTES = {
   'us': {
     links: { 'Data: covidtracking.com': 'https://covidtracking.com/data/',
              'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
-             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }
+             'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States'
+           }
   },
   'us.wa': {
     links: { 'WA State Dept. of Health': 'https://www.doh.wa.gov/Emergencies/Coronavirus',
-             'Wikipedia WA': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_Washington_(state)',
-             'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' }
+             'Wikipedia WA': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_Washington_(state)'
+           }
   },
   'us.ca': {
     links: { 'CA Dept. Public of Health': 'https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/nCoV2019.aspx',
-             'Wikipedia CA': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_California',
-             'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' },
+             'Wikipedia CA': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_California'
+           },
     keyDates: {
       localSchoolClosings: '',
       wideSchoolClosings: '3/16/20',
@@ -51,9 +52,10 @@ export const OUTBREAK_ATTRIBUTES = {
     }
   },
   'us.ny': {
-    links: { 'NY Dept. of Health': 'https://www.health.ny.gov/diseases/communicable/coronavirus/',
-             'Wikipedia NY': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_New_York_(state)',
-             'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States' },
+    links: { 'Data: NY Health Tracker': 'https://covid19tracker.health.ny.gov/views/NYS-COVID19-Tracker/NYSDOHCOVID-19Tracker-Fatalities?%3Aembed=yes&%3Atoolbar=no&%3Atabs=n',
+             'NY Health': 'https://www.health.ny.gov/diseases/communicable/coronavirus/',
+             'Wikipedia NY': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_New_York_(state)'
+           },
     keyDates: {
       localSchoolClosings: '3/07/20',
       wideSchoolClosings: '3/14/20',
@@ -65,7 +67,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'us.nyc': {
     links: {
       'John Hopkins University': 'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series',
-      'Data: gh/nychealth': 'https://github.com/nychealth/coronavirus-data',
+      'gh/nychealth': 'https://github.com/nychealth/coronavirus-data',
       'NYC Health': 'https://www1.nyc.gov/site/doh/covid/covid-19-data.page'
     }
   },
@@ -128,7 +130,7 @@ export const OUTBREAK_ATTRIBUTES = {
   'fr': { // France
     links: { 'Data: gh/cedricguadalupe': 'https://github.com/cedricguadalupe/FRANCE-COVID-19',
              'Santé publique France': 'https://www.santepubliquefrance.fr/maladies-et-traumatismes/maladies-et-infections-respiratoires/infection-a-coronavirus/articles/infection-au-nouveau-coronavirus-sars-cov-2-covid-19-france-et-monde',
-             'data.gouv.fr': 'https://www.data.gouv.fr/en/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/',
+             'Data: data.gouv.fr': 'https://www.data.gouv.fr/en/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_France' },
     keyDates: {
       localSchoolClosings: '',
@@ -143,7 +145,7 @@ export const OUTBREAK_ATTRIBUTES = {
     emoji: '🇬🇧',
     links: { 'Gov.uk': 'https://www.gov.uk/guidance/coronavirus-covid-19-information-for-the-public',
              '@DHSCgovuk': 'https://twitter.com/DHSCgovuk',
-             'tomwhite/covid-19-uk-data': 'https://github.com/tomwhite/covid-19-uk-data',
+             'Data: tomwhite/covid-19-uk-data': 'https://github.com/tomwhite/covid-19-uk-data',
              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Kingdom' },
     keyDates: {
       localSchoolClosings: '03/11/20',

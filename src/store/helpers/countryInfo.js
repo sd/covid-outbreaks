@@ -363,13 +363,13 @@ export function attributesForCountry(code) {
   let links = {}, keyDates = {}
   if (OUTBREAK_ATTRIBUTES[parts[0]]) {
     attrs.emoji = OUTBREAK_ATTRIBUTES[parts[0]].emoji || attrs.emoji
-    links = {...OUTBREAK_ATTRIBUTES[parts[0]].links}
-    keyDates = {...OUTBREAK_ATTRIBUTES[parts[0]].keyDates}
+    links = {...OUTBREAK_ATTRIBUTES[parts[0]].links, ...links}
+    keyDates = {...OUTBREAK_ATTRIBUTES[parts[0]].keyDates, ...keyDates}
   }
   if (OUTBREAK_ATTRIBUTES[code]) {
     attrs.emoji = OUTBREAK_ATTRIBUTES[code].emoji || attrs.emoji
-    links = {...OUTBREAK_ATTRIBUTES[code].links}
-    keyDates = {...OUTBREAK_ATTRIBUTES[code].keyDates}
+    links = {...OUTBREAK_ATTRIBUTES[code].links, ...links}
+    keyDates = {...OUTBREAK_ATTRIBUTES[code].keyDates, ...keyDates}
   }
 
   return {
