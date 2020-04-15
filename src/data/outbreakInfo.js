@@ -1,48 +1,48 @@
 export const OUTBREAK_ATTRIBUTES = {
   'cn': { // China
-    links: { 'Official Reports': 'http://en.nhc.gov.cn/news.html',
-            'Wikipedia': 'https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_outbreak_in_mainland_China' }
+    links:  { 'Official Reports': 'http://en.nhc.gov.cn/news.html',
+              'Wikipedia': 'https://en.wikipedia.org/wiki/2019%E2%80%9320_coronavirus_outbreak_in_mainland_China' }
   },
   'tw': { // Taiwan
-    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Taiwan' }
+    links:  { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Taiwan' }
   },
   'jp': { // Japan
-    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Japan' }
+    links:  { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Japan' }
   },
   'kr': { // South Korea
-    links: { 'Official Reports': 'https://www.cdc.go.kr/board/board.es?mid=a30402000000&bid=0030',
-            'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_South_Korea' }
+    links:  { 'Official Reports': 'https://www.cdc.go.kr/board/board.es?mid=a30402000000&bid=0030',
+              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_South_Korea' }
   },
   'sg': { // Singapore
-    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Singapore' }
+    links:  { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Singapore' }
   },
   'my': { // Malasya
-    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Malaysia'}
+    links:  { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Malaysia'}
   },
 
   'in': { // India
-    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_India' }
+    links:  { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_India' }
   },
 
   'ca': { // Canada
-    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Canada' }
+    links:  { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Canada' }
   },
 
   'us': {
-    links: { 'Data: covidtracking.com': 'https://covidtracking.com/data/',
-             'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
-             'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States'
-           }
+    links:  { 'Data: covidtracking.com': 'https://covidtracking.com/data/',
+              'CDC': 'https://www.cdc.gov/coronavirus/2019-ncov/cases-in-us.html',
+              'Wikipedia US': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_States'
+            }
   },
   'us.wa': {
-    links: { 'WA State Dept. of Health': 'https://www.doh.wa.gov/Emergencies/Coronavirus',
-             'Wikipedia WA': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_Washington_(state)'
-           }
+    links:  { 'WA State Dept. of Health': 'https://www.doh.wa.gov/Emergencies/Coronavirus',
+              'Wikipedia WA': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_Washington_(state)'
+            }
   },
   'us.ca': {
-    links: { 'CA Dept. Public of Health': 'https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/nCoV2019.aspx',
-             'Wikipedia CA': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_California'
-           },
+    links:  { 'CA Dept. Public of Health': 'https://www.cdph.ca.gov/Programs/CID/DCDC/Pages/Immunization/nCoV2019.aspx',
+              'Wikipedia CA': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_California'
+            },
     keyDates: {
       localSchoolClosings: '',
       wideSchoolClosings: '3/16/20',
@@ -52,10 +52,10 @@ export const OUTBREAK_ATTRIBUTES = {
     }
   },
   'us.ny': {
-    links: { 'Data: NY Health Tracker': 'https://covid19tracker.health.ny.gov/views/NYS-COVID19-Tracker/NYSDOHCOVID-19Tracker-Fatalities?%3Aembed=yes&%3Atoolbar=no&%3Atabs=n',
-             'NY Health': 'https://www.health.ny.gov/diseases/communicable/coronavirus/',
-             'Wikipedia NY': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_New_York_(state)'
-           },
+    links:  { 'Data: NY Health Tracker': 'https://covid19tracker.health.ny.gov/views/NYS-COVID19-Tracker/NYSDOHCOVID-19Tracker-Fatalities?%3Aembed=yes&%3Atoolbar=no&%3Atabs=n',
+              'NY Health': 'https://www.health.ny.gov/diseases/communicable/coronavirus/',
+              'Wikipedia NY': 'https://en.wikipedia.org/wiki/2020_coronavirus_pandemic_in_New_York_(state)'
+            },
     keyDates: {
       localSchoolClosings: '3/07/20',
       wideSchoolClosings: '3/14/20',
@@ -66,6 +66,7 @@ export const OUTBREAK_ATTRIBUTES = {
   },
   'us.nyc': {
     links: {
+      'Data: NY Health Tracker': 'https://covid19tracker.health.ny.gov/views/NYS-COVID19-Tracker/NYSDOHCOVID-19Tracker-Fatalities?%3Aembed=yes&%3Atoolbar=no&%3Atabs=n',
       'John Hopkins University': 'https://github.com/CSSEGISandData/COVID-19/tree/master/csse_covid_19_data/csse_covid_19_time_series',
       'gh/nychealth': 'https://github.com/nychealth/coronavirus-data',
       'NYC Health': 'https://www1.nyc.gov/site/doh/covid/covid-19-data.page'
@@ -82,28 +83,29 @@ export const OUTBREAK_ATTRIBUTES = {
   },
 
   'ir': { // Iran
-    links: { 'Islamic Republic News Agency': 'https://en.irna.ir/service/news',
-             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iran' }
+    links:  { 'Islamic Republic News Agency': 'https://en.irna.ir/service/news',
+              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iran' }
   },
   'iq': { // Iraq
-    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iraq' }
+    links:  { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Iraq' }
   },
   'ae': { // United Arab Emirates
-    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Arab_Emirates' }
+    links:  { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Arab_Emirates' }
   },
   'eg': { // Egypt
-    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Egypt' }
+    links:  { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Egypt' }
   },
 
   'au': { // Australia
-    links: { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Australia' }
+    links:  { 'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Australia' }
   },
 
   'it': { // Italy
-    links: { 'Data: gh/pcm-dcp': 'https://github.com/pcm-dpc/COVID-19',
-             'Protezione Civile': 'http://www.protezionecivile.gov.it/media-communication/press-release',
-             '@dpcgov': 'https://twitter.com/dpcgov',
-             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy' },
+    links:  { 'Data: gh/pcm-dcp': 'https://github.com/pcm-dpc/COVID-19',
+              'Protezione Civile': 'http://www.protezionecivile.gov.it/media-communication/press-release',
+              '@dpcgov': 'https://twitter.com/dpcgov',
+              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Italy'
+            },
     keyDates: {
       localSchoolClosings: '02/22/20',
       wideSchoolClosings: '03/04/20',
@@ -114,10 +116,11 @@ export const OUTBREAK_ATTRIBUTES = {
   },
 
   'es': { // Spain
-    links: { 'Data: gh/datadista': 'https://github.com/datadista/datasets/tree/master/COVID%2019',
-             'Ministerio de Sanidad': 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm',
-             'RTVE': 'https://www.rtve.es/noticias/20200314/mapa-del-coronavirus-espana/2004681.shtml',
-             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain' },
+    links:  { 'Data: gh/datadista': 'https://github.com/datadista/datasets/tree/master/COVID%2019',
+              'Ministerio de Sanidad': 'https://www.mscbs.gob.es/profesionales/saludPublica/ccayes/alertasActual/nCov-China/situacionActual.htm',
+              'RTVE': 'https://www.rtve.es/noticias/20200314/mapa-del-coronavirus-espana/2004681.shtml',
+              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_Spain'
+            },
     keyDates: {
       localSchoolClosings: '03/09/20',
       wideSchoolClosings: '03/12/20',
@@ -128,10 +131,11 @@ export const OUTBREAK_ATTRIBUTES = {
   },
 
   'fr': { // France
-    links: { 'Data: gh/cedricguadalupe': 'https://github.com/cedricguadalupe/FRANCE-COVID-19',
-             'Santé publique France': 'https://www.santepubliquefrance.fr/maladies-et-traumatismes/maladies-et-infections-respiratoires/infection-a-coronavirus/articles/infection-au-nouveau-coronavirus-sars-cov-2-covid-19-france-et-monde',
-             'Data: data.gouv.fr': 'https://www.data.gouv.fr/en/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/',
-             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_France' },
+    links:  { 'Data: gh/cedricguadalupe': 'https://github.com/cedricguadalupe/FRANCE-COVID-19',
+              'Santé publique France': 'https://www.santepubliquefrance.fr/maladies-et-traumatismes/maladies-et-infections-respiratoires/infection-a-coronavirus/articles/infection-au-nouveau-coronavirus-sars-cov-2-covid-19-france-et-monde',
+              'Data: data.gouv.fr': 'https://www.data.gouv.fr/en/datasets/donnees-hospitalieres-relatives-a-lepidemie-de-covid-19/',
+              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_France'
+            },
     keyDates: {
       localSchoolClosings: '',
       wideSchoolClosings: '03/16/20',
@@ -143,10 +147,11 @@ export const OUTBREAK_ATTRIBUTES = {
 
   'uk': { // United Kingdom
     emoji: '🇬🇧',
-    links: { 'Gov.uk': 'https://www.gov.uk/guidance/coronavirus-covid-19-information-for-the-public',
-             '@DHSCgovuk': 'https://twitter.com/DHSCgovuk',
-             'Data: tomwhite/covid-19-uk-data': 'https://github.com/tomwhite/covid-19-uk-data',
-             'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Kingdom' },
+    links:  { 'Data: tomwhite/covid-19-uk-data': 'https://github.com/tomwhite/covid-19-uk-data',
+              'Gov.uk': 'https://www.gov.uk/guidance/coronavirus-covid-19-information-for-the-public',
+              '@DHSCgovuk': 'https://twitter.com/DHSCgovuk',
+              'Wikipedia': 'https://en.wikipedia.org/wiki/2020_coronavirus_outbreak_in_the_United_Kingdom'
+            },
     keyDates: {
       localSchoolClosings: '03/11/20',
       wideSchoolClosings: '03/20/20',
