@@ -6,6 +6,7 @@ require 'pry-byebug'
 require 'irb'
 
 require './tasks/fetch_csse'
+require './tasks/fetch_worldometers'
 require './tasks/fetch_datadista'
 require './tasks/fetch_italy'
 require './tasks/fetch_france'
@@ -16,6 +17,11 @@ require './tasks/fetch_nyc'
 desc 'Fetch CSSE'
 task :csse do
   FetchCSSE.new.fetch
+end
+
+desc 'Fetch WoM'
+task :wom do
+  FetchWorldometers.new.fetch
 end
 
 desc 'Fetch Datadista'
