@@ -51,7 +51,7 @@ const Navigation = ({sort, setUI, resetUI}) => {
         <NavLink to="/" exact><Trans i18nKey='navigation.top'>Top</Trans></NavLink>
       </section> */}
       <section>
-        <NavLink to="/"><Trans i18nKey='navigation.all'>All</Trans></NavLink>
+        <NavLink to="/" exact><Trans i18nKey='navigation.all'>All</Trans></NavLink>
       </section>
       <section>
         <NavLink to="/euro"><Trans i18nKey='navigation.europe'>Europe</Trans></NavLink>
