@@ -54,7 +54,7 @@ class FetchFrance
       real_rows[region][date_iso] += row['dc'].to_i
     end
 
-    if real_rows[regions[0]][@today_iso] == nil
+    if real_rows[regions[0]][@today_iso].nil?
       puts "NO DATA FOR #{@today_mmdd}!!!"
     else
       data = (
