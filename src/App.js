@@ -69,7 +69,7 @@ class App extends React.Component {
 
                 <Route exact path="/t"        render={() => <TableView {...childProps} filter="relevant" />} />
 
-                <Route exact path="/"        render={() => <TableView {...childProps} filter="relevant" />} />
+                <Route exact path="/"        render={() => <TableView {...childProps} filter="all" />} />
                 <Route exact path="/all"     render={() => <TableView {...childProps} filter="all" />} />
                 <Route exact path="/euro"    render={() => <TableView {...childProps} filter="europe" />} />
                 <Route exact path="/usa"     render={() => <TableView {...childProps} filter="usa" />} />

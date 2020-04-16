@@ -47,11 +47,11 @@ const Navigation = ({sort, setUI, resetUI}) => {
 
   return (
     <div className='Navigation'>
-      <section>
+      {/* <section>
         <NavLink to="/" exact><Trans i18nKey='navigation.top'>Top</Trans></NavLink>
-      </section>
+      </section> */}
       <section>
-        <NavLink to="/all"><Trans i18nKey='navigation.all'>All</Trans></NavLink>
+        <NavLink to="/"><Trans i18nKey='navigation.all'>All</Trans></NavLink>
       </section>
       <section>
         <NavLink to="/euro"><Trans i18nKey='navigation.europe'>Europe</Trans></NavLink>
@@ -84,6 +84,10 @@ const Navigation = ({sort, setUI, resetUI}) => {
           </section>
         }
       </section>
+      <section>
+        <NavLink to="/explain"><Trans i18nKey='navigation.explain'>Explain?</Trans></NavLink>
+      </section>
+
       {/* <section>
         <Popup
           tooltip

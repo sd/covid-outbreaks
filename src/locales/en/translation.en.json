@@ -69,7 +69,8 @@
     "europe": "Europe",
     "usa": "USA",
     "latam": "Latam",
-    "asia": "Asia/Pacific"
+    "asia": "Asia/Pacific",
+    "explain": "Explain?"
   },
   "filter": {
     "description": {
