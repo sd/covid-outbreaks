@@ -57,11 +57,22 @@ const OneTableEntry = ({
   }
 
   let chartDates = allDates.slice(-(7 * weeksToShow))
+
+  let lastDate = dates[dates.length - 1]
   let last4Dates = dates.slice(isMobile ? -3 : -4)
+
+  let deaths = entry.totals.deaths[lastDate]
+  let outbreakDay = entry.outbreakDay.deaths[lastDate]
+  let acceleration = entry.rollingAcceleration.deaths[lastDate]
+
   let yesterday = false
-  if (entry.daily.deaths[dates[dates.length - 1]] === undefined) {
+  if (entry.daily.deaths[lastDate] === undefined) {
     yesterday = true
     last4Dates = dates.slice(-5, -1)
+
+    deaths = entry.latestTotal.deaths
+    outbreakDay = entry.latestOutbreakDay.deaths
+    acceleration = entry.latestAcceleration.deaths
   }
 
   if (isMobile) {
@@ -125,18 +136,18 @@ const OneTableEntry = ({
         }
 
         <section className='outbreakDay'>
-          {entry.latestOutbreakDay.deaths
+          {outbreakDay
             ? <Trans i18nKey='entry.outbreak_day'>
-                day {{ day: entry.latestOutbreakDay.deaths }}
+                day {{ day: outbreakDay }}
               </Trans>
             : '-'
           }
         </section>
 
         <section className='deaths'>
-          {entry.latestTotal.deaths > 0
+          {deaths > 0
             ? <Trans i18nKey='entry.deaths_total'>
-                {{total: numeral(entry.latestTotal.deaths).format('0,000')}} deaths
+                {{total: numeral(deaths).format('0,000')}} deaths
               </Trans>
 
             : <Trans i18nKey='entry.deaths_total_no_deaths'>
@@ -165,10 +176,10 @@ const OneTableEntry = ({
           )}
         </section>
 
-        <section className={classNames('acceleration', accelerationSeverityClass(entry.latestAcceleration.deaths))}>
-          {entry.latestAcceleration &&
+        <section className={classNames('acceleration', accelerationSeverityClass(acceleration))}>
+          {acceleration &&
             <Trans i18nKey='entry.x_per_week'>
-              <AccelerationWithStyles value={accelerationToWeeklyX(entry.latestAcceleration.deaths)} arrows={false} colors={true} format={'0,000.0'} suffix='x' /> per week
+              <AccelerationWithStyles value={accelerationToWeeklyX(acceleration)} arrows={false} colors={true} format={'0,000.0'} suffix='x' /> per week
             </Trans>
           }
         </section>
