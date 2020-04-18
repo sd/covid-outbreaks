@@ -25,7 +25,7 @@ const titleSize = (title) => {
   return 'title-xs';
 }
 
-const accelerationSeverityClass = (acceleration) => {
+export const accelerationSeverityClass = (acceleration) => {
   if (acceleration >=  0.1428)  return 'severity-bad-xl'  /* up in 7 days / 1 week */
   if (acceleration >=  0.0476)  return 'severity-bad-l'   /* up in 21 days / 3 weeks */
   if (acceleration >=  0.0204)  return 'severity-bad-m'   /* up in 49 days / 7 weeks */
@@ -35,6 +35,10 @@ const accelerationSeverityClass = (acceleration) => {
   if (acceleration >= -0.0238) return 'severity-good-m'   /* down in 42 days / 6 weeks */
   if (acceleration >= -0.0357) return 'severity-good-l'   /* down in 28 days / 4 weeks */
   return 'severity-good-xl'
+}
+
+const accelerationToWeeklyX = (acc) => {
+  return Math.pow(Math.pow(10, acc), 7)
 }
 
 const OneTableEntry = ({
@@ -162,14 +166,9 @@ const OneTableEntry = ({
         </section>
 
         <section className={classNames('acceleration', accelerationSeverityClass(entry.latestAcceleration.deaths))}>
-          {entry.latestAcceleration.deaths > 0 &&
-            <Trans i18nKey='entry.up_tenx'>
-              <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={true} abs={true} format={'0,000'} /> days to 10x
-            </Trans>
-          }
-          {entry.latestAcceleration.deaths < 0 &&
-            <Trans i18nKey='entry.down_tenx'>
-              <AccelerationWithStyles value={1 / entry.latestAcceleration.deaths} arrows={false} colors={true} abs={true} format={'0,000'} /> days to 1/10<sup>th</sup>
+          {entry.latestAcceleration &&
+            <Trans i18nKey='entry.x_per_week'>
+              <AccelerationWithStyles value={accelerationToWeeklyX(entry.latestAcceleration.deaths)} arrows={false} colors={true} format={'0,000.0'} suffix='x' /> per week
             </Trans>
           }
         </section>

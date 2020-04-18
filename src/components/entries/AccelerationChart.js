@@ -41,6 +41,10 @@ const SVG_STYLES = {
   }
 }
 
+const accelerationToWeeklyX = (acc) => {
+  return Math.pow(Math.pow(10, acc), 7)
+}
+
 const AccelerationChart =  ({
   entry, dates, ui, simple,
   idPrefix, style,
@@ -53,7 +57,7 @@ const AccelerationChart =  ({
 
   let blockHeight = 55
   let blockCount = 1.5
-  let accelerationScale = 0.16
+  let accelerationScale = 0.16375
 
   idPrefix = [idPrefix, 'acc-chart', entry.code].map(x => x).join('-')
 
@@ -69,9 +73,9 @@ const AccelerationChart =  ({
 
   let horizontalStep = 100 * aspectRatio / (dates.length - 1)
 
-  let gridLevels = [0.16, 0.08, 0, -0.08]
+  let gridLevels = [accelerationScale, accelerationScale / 2, 0, -(accelerationScale / 2)]
   let lines = gridLevels.map(n => ({
-    label: n === 0 ? 'APEX' : numeral(n).format('0.00'), value: n === 0 ? 0 : n / accelerationScale * blockHeight,
+    label: n === 0 ? 'APEX' : numeral(accelerationToWeeklyX(n)).format('0.0') + 'x', value: n === 0 ? 0 : n / accelerationScale * blockHeight,
     style: n === 0 ? SVG_STYLES.axisGrid : SVG_STYLES.grid,
     labelStyle: n === 0 ? SVG_STYLES.axisGridLabel : SVG_STYLES.gridLabel
   }))

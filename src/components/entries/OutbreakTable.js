@@ -1,4 +1,5 @@
 import React from 'react'
+import classNames from 'classnames'
 import { Trans } from 'react-i18next';
 import numeral from 'numeral'
 import Information from '../ui/Information'
@@ -6,8 +7,13 @@ import Information from '../ui/Information'
 import { formatDateWeekdayAbbrDDorFirstOfMonth } from '../../utils/dateFormats'
 
 import { VelocityWithStyles, AccelerationWithStyles } from '../ui/NumbersWithStyles'
+import { accelerationSeverityClass } from './OneTableEntry'
 
 import './OutbreakTable.css'
+
+const accelerationToWeeklyX = (acc) => {
+  return Math.pow(Math.pow(10, acc), 7)
+}
 
 const OutbreakTable = ({entry, dates}) => {
   let reversedDates = [...dates]
@@ -65,8 +71,11 @@ const OutbreakTable = ({entry, dates}) => {
                   <div className='acceleration change' title={`${entry.rollingAcceleration.deaths[date] / entry.rollingAcceleration.deaths[reversedDates[index + 1]]}`}>
                     <AccelerationWithStyles percentChange={true} signs={true} colors={true} arrows={false} format={'0'} value={entry.rollingAcceleration.deaths[date] / entry.rollingAcceleration.deaths[reversedDates[index + 1]]} />
                   </div>
-                  <div className='acceleration' title={`${1 / entry.rollingAcceleration.deaths[date]}`}>
-                    <AccelerationWithStyles value={1 / entry.rollingAcceleration.deaths[date]} arrows={false} colors={false} format={'0,000.0'} />
+                  <div
+                    className={classNames('acceleration', accelerationSeverityClass(entry.rollingAcceleration.deaths[date]))}
+                    title={`${1 / entry.rollingAcceleration.deaths[date]}`}
+                  >
+                    <AccelerationWithStyles value={accelerationToWeeklyX(entry.rollingAcceleration.deaths[date])} arrows={false} colors={false} format={'0,000.0'} suffix='x' />
                   </div>
                 </>
               }
@@ -100,7 +109,7 @@ const OutbreakTable = ({entry, dates}) => {
                   &nbsp;
                 </div>
                 <div className='acceleration'>
-                  <Trans i18nKey='entry.table_days_to_tenx_label'>Days to 10x</Trans>
+                  <Trans i18nKey='entry.table_growth_per_week_label'>Per week</Trans>
                 </div>
               </>
             }

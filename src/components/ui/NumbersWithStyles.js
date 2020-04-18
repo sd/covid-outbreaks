@@ -28,7 +28,7 @@ export const AccelerationWithStyles = (props) => {
 
 export const NumberWithStyles = ({
   value, className, format,
-  arrows = false, signs = false, percentChange = false, colors = false, abs = false
+  arrows = false, signs = false, percentChange = false, colors = false, abs = false, suffix = ''
 }) => {
 
   if (percentChange) {
@@ -52,7 +52,7 @@ export const NumberWithStyles = ({
             {numeral((1 - value) * 100).format(format || '0,000.0')}%
           </span>
         }
-        {!!value && <span>&nbsp;</span>}
+        {!value && <span>&nbsp;</span>}
       </span>
     )
   } else {
@@ -67,7 +67,7 @@ export const NumberWithStyles = ({
         {value > 0 &&
           <span>
             {arrows && <span className='arrow increasing'>▲</span>}
-            {numeral(displayValue).format(format || '0,000.00')}
+            {numeral(displayValue).format(format || '0,000.00')}{suffix}
           </span>
         }
         {value === 0 && <span>0</span>}
@@ -75,7 +75,7 @@ export const NumberWithStyles = ({
         {value < 0 &&
           <span>
             {arrows && <span className='arrow decreasing'>▼</span>}
-            {numeral(displayValue).format(format || '0,000.00')}
+            {numeral(displayValue).format(format || '0,000.00')}{suffix}
           </span>
         }
         {!value && <span>&nbsp;</span>}

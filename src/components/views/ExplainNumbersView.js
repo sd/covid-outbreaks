@@ -59,7 +59,14 @@ export const ExplainNumbersView = () => {
         </p>
 
 
-        <h3>Days to 10x • <span style={{opacity: 1}}><AccelerationWithStyles value={7.1} colors={false} arrows={false} /></span></h3>
+        <h3>Change per Week • <span style={{opacity: 1}}><AccelerationWithStyles value={9.54} colors={false} arrows={false} suffix={'x'} /></span></h3>
+
+        <p>
+          If an outbreak is accelerating at <AccelerationWithStyles value={0.14} /> per day, it means that in the past 7
+          days it increased <tt>9.54 times</tt>. For negative accelerations, change per week is lower than <tt>1</tt>.
+        </p>
+
+        {/* <h3>Days to 10x • <span style={{opacity: 1}}><AccelerationWithStyles value={7.1} colors={false} arrows={false} /></span></h3>
 
         <p>
           If an outbreak is accelerating at <AccelerationWithStyles value={0.14} /> per day, it means that if nothing else
@@ -71,7 +78,7 @@ export const ExplainNumbersView = () => {
         <p>
           This is just another way to understand acceleration data, using units that might make it easier to see the impact
           it has on real world numbers.
-        </p>
+        </p> */}
 
         <h3>DISCLAIMER</h3>
 

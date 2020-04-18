@@ -31,6 +31,7 @@
     "expand_button": "mostrar más",
     "collapse_button": "mostrar menos",
     "outbreak_day": "Día {{day}}",
+    "x_per_week": "<0 /> semanal",
     "days_to_up_tenx": "<0 /> días para subir 10x",
     "days_to_down_tenx": "<0 /> días para bajar 10x",
     "up_tenx": "<0 /> días para 10x",
@@ -50,11 +51,13 @@
     "table_acceleration_label": "Aceleración",
     "table_average_acceleration_label": "Promedio 3 días",
     "table_days_to_tenx_label": "Días para 10x",
+    "table_growth_per_week_label": "Cambio Semanal",
     "table_deaths_label": "Muertes",
     "table_cases_label": "Casos",
     "includes_data_for": "Incluye datos agrupados bajo",
     "not_available": "n/d",
-    "yesterday": "Ayer"
+    "yesterday": "Ayer",
+    "permalink": "permalink"
   },
   "information": {
     "what_do_these_mean": "¿Que son estos números?",
