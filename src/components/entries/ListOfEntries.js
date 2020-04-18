@@ -10,14 +10,14 @@ export const TableViewContext = React.createContext({})
 const ListOfEntries = ({
   entryComponent, headerComponent, defaultHeight,
   data, dates, allDates,
-  viewOptions, ui, pinEntry, unpinEntry, permalink,
-  expandEntry, collapseEntry,
-  totalsEntry, comparisonEntry,
+  ui, permalink,
+  comparisonEntry,
   listRef, listHeight,
   isMobile, isTablet, isDesktop
 }) => {
-  const entryHeights = React.useRef({});
+  const [isExpanded, setIsExpanded] = React.useState({});
 
+  const entryHeights = React.useRef({});
   const setEntryHeight = React.useCallback((index, size) => {
     const prev = entryHeights.current[index]
     entryHeights.current = { ...entryHeights.current, [index]: size }
@@ -30,20 +30,16 @@ const ListOfEntries = ({
     return entryHeights.current[index] || defaultHeight || 100
   }, [defaultHeight])
 
-  const sharedProps = { dates, allDates, pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile, isTablet, isDesktop }
+  const expandEntry = (e) => setIsExpanded({...isExpanded, [e.code]: true})
+  const collapseEntry = (e) => setIsExpanded({...isExpanded, [e.code]: false})
+
+  const sharedProps = { dates, allDates, expandEntry, collapseEntry, isMobile, isTablet, isDesktop }
 
   const Entry = entryComponent || OneSummaryEntry
   const Header = headerComponent || (() => { return null })
 
   return (
     <TableViewContext.Provider value={{ setEntryHeight }}>
-
-      {totalsEntry &&
-        <Entry {...sharedProps} pinEntry={undefined}
-          entry={totalsEntry} index={0} pinned={true} expanded={ui.isExpanded['totals']}
-          sideBySide={!ui.noScaling}
-        />
-      }
 
       <VariableSizeList
         height={listHeight}
@@ -63,8 +59,8 @@ const ListOfEntries = ({
             return (
               <VariableSizeRow style={style} index={index} itemCount={data.length + 1}>
                 <Entry {...sharedProps}
-                  entry={data[index - 1]} pinned={ui.pinPositions[code]}
-                  expanded={ui.isExpanded[code] || code === permalink}
+                  entry={data[index - 1]}
+                  expanded={isExpanded[code] || code === permalink}
                   permalinked={code === permalink}
                   ui={ui}
                   comparisonEntry={comparisonEntry}
@@ -99,22 +95,6 @@ const mapStateToProps = (state, ownProps) => ({
 })
 
 const mapDispatchToProps = (dispatch, props) => ({
-  pinEntry: (entry) => {
-    props.listRef.current.resetAfterIndex(0)
-    dispatch({ type: 'UI.PIN_ENTRY', value: entry.code })
-  },
-  unpinEntry: (entry) => {
-    props.listRef.current.resetAfterIndex(0)
-    dispatch({ type: 'UI.UNPIN_ENTRY', value: entry.code })
-  },
-  expandEntry: (entry) => {
-    props.listRef.current.resetAfterIndex(0)
-    dispatch({ type: 'UI.EXPAND_ENTRY', value: entry.code })
-  },
-  collapseEntry: (entry) => {
-    props.listRef.current.resetAfterIndex(0)
-    dispatch({ type: 'UI.COLLAPSE_ENTRY', value: entry.code })
-  }
 })
 
 const ConnectedListOfEntries = connect(

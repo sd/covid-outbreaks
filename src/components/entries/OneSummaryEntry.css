@@ -131,11 +131,6 @@
 }
 
 
-.pinned .SummaryView-row-inner {
-  border-top: 2px solid var(--link-color);
-  border-bottom: 1px solid var(--link-color);
-}
-
 .SummaryView-row .title {
   text-align: right;
   font-size: 120%;

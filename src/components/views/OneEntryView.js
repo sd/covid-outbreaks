@@ -13,8 +13,6 @@ import { filterBySearch } from '../../store/filters'
 const OneEntryView = ({
   entryName,
   ui, loaded, data, allDates,
-  pinEntry, unpinEntry,
-  expandEntry, collapseEntry,
   isMobile, isTablet, isDesktop,
   listRef, windowHeight
 }) => {
@@ -23,7 +21,7 @@ const OneEntryView = ({
   if (loaded) {
     const comparisonEntry = data.find(entry => entry.code === (ui.compareTo || 'it'))
 
-    let viewOptions = { pinPositions: ui.pinPositions, hideAggregates: ui.hideAggregates }
+    let viewOptions = { hideAggregates: ui.hideAggregates }
     viewOptions = viewOptionsForSorting(ui.sort, viewOptions)
 
     data = data.sort((a, b) => viewOptions.sorter(a, b, viewOptions ))
@@ -39,7 +37,7 @@ const OneEntryView = ({
 
     const actualProps = {
       data, dates, allDates,
-      viewOptions, ui, pinEntry, unpinEntry, expandEntry, collapseEntry,
+      viewOptions, ui,
       permalink: data[0] && data[0].code,
       comparisonEntry,
       listRef, listHeight: windowHeight,

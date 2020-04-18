@@ -14,8 +14,6 @@ import { viewOptionsForFiltering, filterBySearch } from '../../store/filters'
 const AllEntriesView = ({
   loaded, data, allDates,
   ui, filter,
-  pinEntry, unpinEntry,
-  expandEntry, collapseEntry,
   isMobile, isTablet, isDesktop,
   listRef, windowHeight
 }) => {
@@ -26,7 +24,7 @@ const AllEntriesView = ({
   if (loaded) {
     const comparisonEntry = data.find(entry => entry.code === (ui.compareTo || 'it'))
 
-    let viewOptions = { pinPositions: ui.pinPositions, hideAggregates: ui.hideAggregates }
+    let viewOptions = { hideAggregates: ui.hideAggregates }
     viewOptions = viewOptionsForSorting(ui.sort, viewOptions)
     viewOptions = viewOptionsForFiltering(filter, viewOptions)
 
@@ -49,7 +47,7 @@ const AllEntriesView = ({
 
     const actualProps = {
       data, dates, allDates,
-      viewOptions, ui, pinEntry, unpinEntry, expandEntry, collapseEntry,
+      viewOptions, ui,
       comparisonEntry,
       listRef, listHeight: windowHeight,
       isMobile, isTablet, isDesktop

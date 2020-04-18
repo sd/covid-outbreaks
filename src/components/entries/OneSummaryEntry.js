@@ -18,8 +18,8 @@ export const CASES_SCALE = 100
 const OneSummaryEntry = ({
   entry, dates, allDates,
   comparisonEntry,
-  pinned, expanded, ui,
-  pinEntry, unpinEntry, expandEntry, collapseEntry, isMobile, isTablet
+  expanded, ui,
+  isMobile, isTablet
 }) => {
   const { i18n } = useTranslation();
 
@@ -45,7 +45,7 @@ const OneSummaryEntry = ({
   }
 
   return (
-    <div className={classNames('SummaryView-row', { pinned, expanded })}>
+    <div className={classNames('SummaryView-row', { expanded })}>
       <div className='SummaryView-row-inner'>
         <div className='chart'>
           <DailySparklineChart
@@ -139,31 +139,6 @@ const OneSummaryEntry = ({
 
         </div>
 
-        {/* <div className='tools'>
-          {pinEntry && (
-            pinned
-            ? <button className='segment activated' onClick={ () => unpinEntry(entry) }>
-                <FontAwesomeIcon icon={faThumbtack} style={{verticalAlign: 'text-bottom'}} />&nbsp;
-                {t('entry.unpin_button', 'pinned to top')}
-              </button>
-            : <button className='segment' onClick={ () => pinEntry(entry) }>
-                <FontAwesomeIcon icon={faThumbtack} style={{verticalAlign: 'text-bottom'}} />&nbsp;
-                {t('entry.pin_button', 'pinned')}
-              </button>
-          )}
-          { expandEntry && (
-            expanded
-            ? <button className='segment activated' onClick={ () => collapseEntry(entry) }>
-                <FontAwesomeIcon icon={faMinusSquare} style={{verticalAlign: 'text-bottom'}} />&nbsp;
-                {t('entry.collapse_button', 'hide data')}
-              </button>
-            : <button className='segment' onClick={ () => expandEntry(entry) }>
-                <FontAwesomeIcon icon={faPlusSquare} style={{verticalAlign: 'text-bottom'}} />&nbsp;
-                {t('entry.expand_button', 'show more')}
-              </button>
-          )}
-        </div>
- */}
         {expanded && (
           <div className='more'>
             {entry && (entry.links || entry.population) &&

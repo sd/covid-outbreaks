@@ -43,7 +43,7 @@ const accelerationToWeeklyX = (acc) => {
 
 const OneTableEntry = ({
   entry, comparisonEntry, dates, allDates,
-  ui, pinned, expanded, permalinked, expandEntry, collapseEntry,
+  ui, expanded, permalinked, expandEntry, collapseEntry,
   isMobile, isTablet
 }) => {
   const { i18n, t } = useTranslation();
@@ -92,7 +92,7 @@ const OneTableEntry = ({
           classNames(
             'TableView-row',
             accelerationSeverityClass(entry.latestAcceleration.deaths),
-            { pinned, expanded }
+            { expanded }
           )
         }
         onClick={toggleExpansionHandler}

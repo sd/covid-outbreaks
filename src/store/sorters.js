@@ -86,31 +86,15 @@ function defaultSorting(a, b) {
   }
 }
 
-function sortPinFirst(secondarySort) {
-  return (a, b, options) => {
-    const { pinPositions } = options
-
-    if (pinPositions[b.code] &&  pinPositions[a.code]) {
-      return (pinPositions[b.code] - pinPositions[a.code])
-    } else if (pinPositions[a.code]) {
-      return -1
-    } else if (pinPositions[b.code]) {
-      return 1
-    } else {
-      return secondarySort(a, b, options)
-    }
-  }
-}
-
 const SORTERS = {
-  name: sortPinFirst(sortEntriesByName),
-  casesTotal: sortPinFirst(sortEntriesByCasesTotal),
-  casesLatest: sortPinFirst(sortEntriesByCasesLatest),
-  deathsTotal: sortPinFirst(sortEntriesByDeathsTotal),
-  deathsLatest: sortPinFirst(sortEntriesByDeathsLatest),
-  outbreakDay: sortPinFirst(sortEntriesByOutbreakDay),
-  velocity: sortPinFirst(sortEntriesByVelocity),
-  acceleration: sortPinFirst(sortEntriesByAcceleration)
+  name: sortEntriesByName,
+  casesTotal: sortEntriesByCasesTotal,
+  casesLatest: sortEntriesByCasesLatest,
+  deathsTotal: sortEntriesByDeathsTotal,
+  deathsLatest: sortEntriesByDeathsLatest,
+  outbreakDay: sortEntriesByOutbreakDay,
+  velocity: sortEntriesByVelocity,
+  acceleration: sortEntriesByAcceleration
 }
 
 export const SORTER_ALIASES = {
