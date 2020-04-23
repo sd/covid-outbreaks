@@ -35,7 +35,7 @@ class FetchWorldometers
     real_rows = {}
 
     page.css('table#main_table_countries_today tbody > tr').each do |row|
-      values = row.css('td').collect { |td| td.text }
+      values = row.css('td').collect(&:text)
       next if ALIASES[values[0]] == 'ignore'
 
       country = ALIASES[values[0]] || values[0]
