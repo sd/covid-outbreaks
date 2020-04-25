@@ -43,13 +43,13 @@ class FetchUS
       state = US_STATES_BY_CODE[row['state']]
       puts "Unknown state #{row['state']}" if !state
 
-      real_rows[state][date_iso] = row['death']
+      real_rows[state][date_iso] = row['death'].to_i
     end
 
     current_data.each do |row|
       state = US_STATES_BY_CODE[row['state']]
 
-      real_rows[state]['now'] = row['death']
+      real_rows[state]['now'] = row['death'].to_i
     end
 
     data = (
@@ -58,7 +58,7 @@ class FetchUS
         [
           real_rows[state][@yesterday_iso],
           real_rows[state][@yesterday_iso] && real_rows[state][@yesterday_iso] == real_rows[state][@day_before_iso] ? real_rows[state][@yesterday_iso] : nil,
-          real_rows[state]['now'] && real_rows[state]['now'] > real_rows[state][@yesterday_iso] ? real_rows[state]['now'] : nil
+          (real_rows[state]['now'] || 0) > (real_rows[state][@yesterday_iso] || 0) ? real_rows[state]['now'] : nil
         ].join("\t")
       } \
       + [[
