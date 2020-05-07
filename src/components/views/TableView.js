@@ -8,11 +8,12 @@ import './Entries.css'
 import OneTableEntry from '../entries/OneTableEntry'
 import ListOfEntries from '../entries/ListOfEntries'
 
+import { formatDateMonthDD } from '../../utils/dateFormats'
 import { viewOptionsForSorting } from '../../store/sorters'
 import { viewOptionsForFiltering, filterBySearch } from '../../store/filters'
 
 const TableView = ({
-  loaded, data, allDates,
+  loaded, loading, data, allDates,
   ui, filter,
   isMobile, isTablet, isDesktop,
   listRef, windowHeight
@@ -53,7 +54,17 @@ const TableView = ({
     }
 
     const HeaderComponent = () => (
-      <>{title && <h2>{title}</h2>}</>
+      <>
+        {title && <h2>{title}</h2>}
+        <h3>
+        {allDates && (
+          <Trans i18nKey={'view_description.as_of_date'}>
+          As of {{date: formatDateMonthDD(allDates.slice(-1)[0])}}
+          </Trans>
+        )}
+        {loading && <span>&nbsp;<Trans i18nKey={'view_description.loading'}>Loading...</Trans></span>}
+        </h3>
+      </>
     )
     return (
       <div className='Entries TableView'>
@@ -73,6 +84,7 @@ const TableView = ({
 
 const mapStateToProps = (state, ownProps) => ({
   loaded: state.data.loaded,
+  loading: state.data.loading,
   data: state.data.data,
   allDates: state.data.allDates,
   ui: state.ui

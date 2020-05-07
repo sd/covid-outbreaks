@@ -63,6 +63,17 @@
 
 }
 
+.App-content h2 {
+  margin-top: 0em;
+  font-size: 1.4em;
+}
+
+.App-content h3 {
+  margin-bottom: 1em;
+  margin-top: -0.8em;
+  font-size: 1em;
+}
+
 .App-footer {
   position: fixed;
   bottom: 0;
