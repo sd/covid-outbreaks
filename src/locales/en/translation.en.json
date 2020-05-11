@@ -13,7 +13,7 @@
     "view_description": "<0>{{filter}}</0> sorted by <2>{{sort}}</2>",
     "view_and_date_description": "<0 /> <1 />",
     "as_of_date": "As of {{date}}",
-    "loading": "(refrehsing data…)"
+    "loading": "(refreshing data…)"
   },
   "view_controls": {
     "show_label": "Show",
