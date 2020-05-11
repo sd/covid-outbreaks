@@ -11,7 +11,7 @@ class FetchUK
 
   # New instance
   def initialize
-    @now = DateTime.now - 1
+    @now = DateTime.now
     @today_iso = @now.to_time.utc.strftime('%Y-%m-%d')
     @today_mmdd = @now.to_time.utc.strftime('%m/%d/20')
 
