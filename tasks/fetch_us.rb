@@ -12,8 +12,8 @@ class FetchUS
   UPDATE_INFO = 'Continuously'.freeze
 
   # New instance
-  def initialize
-    @now = DateTime.now
+  def initialize(date)
+    @now = date || DateTime.now
     @today_iso = @now.to_time.utc.strftime('%Y-%m-%d')
     @today_mmdd = @now.to_time.utc.strftime('%m/%d/20')
 
@@ -57,14 +57,14 @@ class FetchUS
       + sorted_state_names.collect { |state|
         [
           real_rows[state][@yesterday_iso],
-          real_rows[state][@yesterday_iso] && real_rows[state][@yesterday_iso] == real_rows[state][@day_before_iso] ? real_rows[state][@yesterday_iso] : nil,
-          (real_rows[state]['now'] || 0) > (real_rows[state][@yesterday_iso] || 0) ? real_rows[state]['now'] : nil
+          # real_rows[state][@yesterday_iso] && real_rows[state][@yesterday_iso] == real_rows[state][@day_before_iso] ? real_rows[state][@yesterday_iso] : nil,
+          # (real_rows[state]['now'] || 0) > (real_rows[state][@yesterday_iso] || 0) ? real_rows[state]['now'] : nil
         ].join("\t")
       } \
       + [[
         sorted_state_names.collect { |state| real_rows[state][@yesterday_iso].to_i }.sum,
-        nil,
-        sorted_state_names.collect { |state| real_rows[state]['now'].to_i }.sum
+        # nil,
+        # sorted_state_names.collect { |state| real_rows[state]['now'].to_i }.sum
       ].join("\t")]
     ).join("\n")
 

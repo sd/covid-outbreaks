@@ -10,8 +10,8 @@ class FetchUK
   UPDATE_INFO = '4:30pm GMT+1 (11:30 EDT)'.freeze
 
   # New instance
-  def initialize
-    @now = DateTime.now
+  def initialize(date)
+    @now = date || DateTime.now
     @today_iso = @now.to_time.utc.strftime('%Y-%m-%d')
     @today_mmdd = @now.to_time.utc.strftime('%m/%d/20')
 

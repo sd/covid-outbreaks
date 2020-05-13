@@ -4,15 +4,15 @@ require 'csv'
 require 'pp'
 
 # Fetch data from Datadista
-class FetchDatadista
+class FetchSpain
   LOCAL_FILE = './src/data/other.deaths.csv'.freeze
   DATA_URL = 'https://raw.githubusercontent.com/datadista/datasets/master/COVID%2019/ccaa_covid19_fallecidos.csv'.freeze
 
   UPDATE_INFO = '6am EDT (12pm CEST)'.freeze
 
   # New instance
-  def initialize
-    @now = DateTime.now
+  def initialize(date)
+    @now = date || DateTime.now
     @today_iso = @now.to_time.utc.strftime('%Y-%m-%d')
     @today_mmdd = @now.to_time.utc.strftime('%m/%d/20')
 
@@ -27,7 +27,7 @@ class FetchDatadista
 
   # Main fetch task
   def fetch
-    puts "Reading Datadista Data for #{@today_iso}"
+    puts "Reading Spain Data for #{@today_iso}"
 
     new_data = CSV.new(URI.parse(DATA_URL).open, headers: :first_row).read
 
@@ -37,12 +37,15 @@ class FetchDatadista
       case row[:key]
       when 'Total'
         row[:key] = 'Spain'
+      else
       end
     end
 
-    data = new_data.collect { |row| row[@today_iso] }.join("\n")
+    data = (
+      new_data.collect { |row| row[@today_iso] } + [new_data.collect { |row| row[@today_iso].to_i }.sum]
+    ).join("\n")
 
     IO.popen('pbcopy', 'w') { |f| f << data }
-    puts "Datadista data for #{@today_mmdd} copied to clipboard!!!"
+    puts "Spain data for #{@today_mmdd} copied to clipboard!!!"
   end
 end
