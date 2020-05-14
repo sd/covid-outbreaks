@@ -11,7 +11,7 @@ class FetchSpain
   UPDATE_INFO = '6am EDT (12pm CEST)'.freeze
 
   # New instance
-  def initialize(date)
+  def initialize(date = nil)
     @now = date || DateTime.now
     @today_iso = @now.to_time.utc.strftime('%Y-%m-%d')
     @today_mmdd = @now.to_time.utc.strftime('%m/%d/20')
@@ -37,7 +37,6 @@ class FetchSpain
       case row[:key]
       when 'Total'
         row[:key] = 'Spain'
-      else
       end
     end
 

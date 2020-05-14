@@ -12,7 +12,7 @@ class FetchUS
   UPDATE_INFO = 'Continuously'.freeze
 
   # New instance
-  def initialize(date)
+  def initialize(date = nil)
     @now = date || DateTime.now
     @today_iso = @now.to_time.utc.strftime('%Y-%m-%d')
     @today_mmdd = @now.to_time.utc.strftime('%m/%d/20')
@@ -53,7 +53,9 @@ class FetchUS
     end
 
     data = (
-      [[@yesterday_iso, 'unchanged', 'current'].join("\t"), ''] \
+      [[@yesterday_iso,
+      #  'unchanged', 'current'
+      ].join("\t"), ''] \
       + sorted_state_names.collect { |state|
         [
           real_rows[state][@yesterday_iso],

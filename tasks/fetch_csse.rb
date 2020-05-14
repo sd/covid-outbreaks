@@ -12,7 +12,7 @@ class FetchCSSE
   UPDATE_TIME = '8pm EDT (12am UTC)'.freeze
 
   # New instance
-  def initialize(date)
+  def initialize(date = nil)
     @now = date || DateTime.now
     @today_iso = @now.to_time.utc.strftime('%Y-%m-%d')
     @today_mmdd = @now.to_time.utc.strftime('%m/%d/20')
