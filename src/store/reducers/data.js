@@ -2,7 +2,14 @@ import { csv as d3CSV } from 'd3-fetch'
 import padStart from 'lodash/padStart'
 import sortedUniq from 'lodash/sortedUniq'
 
-import { findAggregateMapping, findOverlayMapping, countryForCSSEName, attributesForCountry } from '../helpers/countryInfo'
+import {
+  findAggregateMapping,
+  findOverlayMapping,
+  findTotalizationMapping,
+  countryForCSSEName,
+  attributesForCountry
+} from '../helpers/countryInfo'
+
 import { setupConsoleTools } from '../../utils/consoleTools'
 
 // import csseCases from '../../data/csse.cases.csv'
@@ -111,7 +118,7 @@ function combineRows (data, combinationMethod, combinationRules) {
         row = rows[targetCode] || {}
         data.dates.forEach(d => {
           if (data.rows[code][d] || data.rows[code][d] === 0) {
-            row[d] = combinationMethod(row[d],data.rows[code][d])
+            row[d] = combinationMethod(row[d], data.rows[code][d])
           }
         })
         data.sources[targetCode] = (data.sources[targetCode] || []).concat(code)
@@ -186,8 +193,10 @@ function prepareEntries (data, fieldName, entries) {
 }
 
 function processOneFile (fieldName, data, entries ) {
-  data = combineRows(data, (a, b) => (a === undefined || b === undefined ? (a || b) : (a || 0) + (b || 0)), findAggregateMapping)
+  data = combineRows(data, (a, b) => ((a || 0) + b), findAggregateMapping)
   data = combineRows(data, (a, b) => Math.max(a || 0, b || 0), findOverlayMapping)
+debugger
+  data = combineRows(data, (a, b) => ((a || 0) + b), findTotalizationMapping)
 
   entries = prepareEntries(data, fieldName, entries)
 

@@ -57,13 +57,16 @@ let nameToCodeIndex = {
   'Canada > Alberta': 'ca.ab',
   'Canada > British Columbia': 'ca.bc',
   'Canada > Manitoba': 'ca.mb',
-  'Canada > Nova Scotia': 'ca.ns',
   'Canada > New Brunswick': 'ca.nb',
   'Canada > Newfoundland and Labrador': 'ca.nl',
+  'Canada > Northwest Territories': 'ca.nt',
+  'Canada > Nova Scotia': 'ca.ns',
+  'Canada > Nunavut': 'ca.nu',
   'Canada > Ontario': 'ca.on',
   'Canada > Prince Edward Island': 'ca.pe',
   'Canada > Quebec': 'ca.qc',
   'Canada > Saskatchewan': 'ca.sk',
+  'Canada > Yukon': 'ca.yt',
 
   'Australia > Northern Territory': 'au.nt',
   'Australia > Western Australia': 'au.wa',
@@ -122,7 +125,25 @@ let nameToCodeIndex = {
   'UK > Northern Ireland': 'uk.gb.nir',
   'UK > Scotland': 'uk.gb.sc',
   'UK > Wales': 'uk.gb.wl',
-  'UK': 'uk.gb'
+  'UK': 'uk.gb',
+
+  'Germany > Baden-Wurttemberg': 'de.bwu',
+  'Germany > Bayern': 'de.bay',
+  'Germany > Berlin': 'de.ber',
+  'Germany > Brandenburg': 'de.bra',
+  'Germany > Bremen': 'de.bre',
+  'Germany > Hamburg': 'de.ham',
+  'Germany > Hessen': 'de.hes',
+  'Germany > Mecklenburg-Vorpommern': 'de.mvo',
+  'Germany > Niedersachsen': 'de.nie',
+  'Germany > Nordrhein-Westfalen': 'de.nwe',
+  'Germany > Rheinland-Pfalz': 'de.rpf',
+  'Germany > Saarland': 'de.saa',
+  'Germany > Sachsen': 'de.sac',
+  'Germany > Sachsen-Anhalt': 'de.san',
+  'Germany > Schleswig-Holstein': 'de.sho',
+  'Germany > Thuringen': 'de.thu',
+  'Germany > Unknown': 'de.unk'
 }
 let codeToNameIndex = {
   'other.diamond_princess': 'Diamond Princess',
@@ -146,13 +167,16 @@ let codeToNameIndex = {
   'ca.ab': 'Canada: Alberta',
   'ca.bc': 'Canada: British Columbia',
   'ca.mb': 'Canada: Manitoba',
-  'ca.ns': 'Canada: Nova Scotia',
   'ca.nb': 'Canada: New Brunswick',
   'ca.nl': 'Canada: Newfoundland and Labrador',
+  'ca.nt': 'Canada: Northwest Territories',
+  'ca.ns': 'Canada: Nova Scotia',
+  'ca.nu': 'Canada: Nunavut',
   'ca.on': 'Canada: Ontario',
   'ca.pe': 'Canada: Prince Edward Island',
   'ca.qc': 'Canada: Quebec',
   'ca.sk': 'Canada: Saskatchewan',
+  'ca.yt': 'Canada: Yukon',
 
   'au.nt':  'Australia: Northern Territory',
   'au.wa':  'Australia: Western Australia',
@@ -232,6 +256,24 @@ let codeToNameIndex = {
   'uk.gb.sc': 'UK: Scotland',
   'uk.gb.wl': 'UK: Wales',
   'uk.gb': 'UK: Great Britain',
+
+  'de.bwu': 'Germany: Baden-Wurttemberg',
+  'de.bay': 'Germany: Bayern',
+  'de.ber': 'Germany: Berlin',
+  'de.bra': 'Germany: Brandenburg',
+  'de.bre': 'Germany: Bremen',
+  'de.ham': 'Germany: Hamburg',
+  'de.hes': 'Germany: Hessen',
+  'de.mvo': 'Germany: Mecklenburg-Vorpommern',
+  'de.nie': 'Germany: Niedersachsen',
+  'de.nwe': 'Germany: Nordrhein-Westfalen',
+  'de.rpf': 'Germany: Rheinland-Pfalz',
+  'de.saa': 'Germany: Saarland',
+  'de.sac': 'Germany: Sachsen',
+  'de.san': 'Germany: Sachsen-Anhalt',
+  'de.sho': 'Germany: Schleswig-Holstein',
+  'de.thu': 'Germany: Thuringen',
+  'de.unk': 'Germany: Unknown',
 }
 
 countryByAbbreviation.forEach(row => {
@@ -275,10 +317,12 @@ countryByPopulation.forEach(row => {
 export const CSSE_AGGREGATE = {
   'other.US > Diamond Princess': 'other.diamond_princess',
   'other.Diamond Princess': 'other.diamond_princess',
-  'ca.Diamond Princess': 'other.diamond_princess',
   'au.From Diamond Princess': 'other.diamond_princess',
   'other.US > Grand Princess': 'other.grand_princess',
-  'ca.Grand Princess': 'other.grand_princess',
+
+  'au.': 'au',
+  // 'ca.': 'ca',
+  'de.': 'de',
 }
 
 /* Rows that started under one name and now continue under another */
@@ -299,6 +343,15 @@ export const CSSE_OVERLAY = {
 
   'dk.Greenland': 'gl',
   'us.Guam': 'gu'
+}
+
+export const CSSE_TOTALIZE = {
+  // 'fr.': 'fr',
+  // 'es.': 'es',
+  // 'it.': 'it',
+  'ca.': 'ca',
+  // 'au.': 'au',
+  // 'de.': 'de',
 }
 
 export function countryForCSSEName(name) {
@@ -379,24 +432,31 @@ export function attributesForCountry(code) {
   }
 }
 
+export function findTotalizationMapping (code) {
+  const parts = code.split('.')
+  if (parts[1]) {
+    return CSSE_TOTALIZE[`${parts[0]}.`] || CSSE_TOTALIZE[code]
+  } else {
+    return CSSE_TOTALIZE[parts[0]]
+  }
+}
 
 export function findAggregateMapping (code) {
-  if (CSSE_AGGREGATE[code]) {
-    return [CSSE_AGGREGATE[code]]
-  } else {
-    let parts
-
-    parts = code && code.match(/cn\.(.*)/)
-    if (parts) {
+if (code.match(/de\./)) debugger
+  const parts = code.split('.')
+  if (parts[1]) {
+    if (parts[0] === 'cn') {
       if (parts[1] === 'hubei') {
         return 'cn.hubei'
       } else {
         return 'cn.other'
       }
+    } else {
+      return CSSE_AGGREGATE[`${parts[0]}.`] || CSSE_AGGREGATE[code]
     }
+  } else {
+    return CSSE_AGGREGATE[parts[0]]
   }
-
-  return false
 }
 
 export function findOverlayMapping (code) {
