@@ -78,7 +78,7 @@ class FetchCSSE
   def load_new_data(date)
     url = DATA_URL.gsub('[date]', date.to_time.utc.strftime('%m-%d-%Y'))
 
-    new_data = CSV.new(URI.parse(url).open, headers: :first_row).read
+    new_data = CSV.new(URI.parse(url).open, headers: :first_row, encoding: "ISO8859-1").read
 
     new_data =  new_data.sort_by { |row|
       [
@@ -112,7 +112,7 @@ class FetchCSSE
 
   # Load current data
   def load_current_data
-    current_data = CSV.read(FetchCSSE::LOCAL_FILE, headers: :first_row)
+    current_data = CSV.read(FetchCSSE::LOCAL_FILE, headers: :first_row, encoding: "ISO8859-1")
 
     current_data.each_with_index do |row, index|
       row[:line] = index + 2
