@@ -40,8 +40,10 @@ class FetchSpain
       end
     end
 
+    new_data = new_data.reject { |row| row[:key] == 'Spain' }.sort_by { |row| row[:key] }
+
     data = (
-      new_data.collect { |row| row[@today_iso] } + [new_data.collect { |row| row[@today_iso].to_i }.sum]
+      new_data.collect { |row| row[@today_iso] } # + [new_data.collect { |row| row[@today_iso].to_i }.sum]
     ).join("\n")
 
     IO.popen('pbcopy', 'w') { |f| f << data }
