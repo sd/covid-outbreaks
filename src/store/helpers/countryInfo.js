@@ -366,6 +366,7 @@ nameToCodeIndex = {...nameToCodeIndex, ...{ // Overrides post-data loding
   'US > United States Virgin Islands': 'us.vi',
   'US > US': 'ignore',
   'Spain > Unknown': 'ignore',
+  'UK > Wales': 'ignore'
 }}
 codeToNameIndex = {...codeToNameIndex, ...{ // Overrides post-data loding
   'us.wa': 'USA: Washington State',
