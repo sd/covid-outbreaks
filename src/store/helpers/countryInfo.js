@@ -394,7 +394,10 @@ export const CSSE_AGGREGATE = {
   'de.': 'de',
   'br.': 'br',
   'cl.': 'cl',
-  'mx.': 'mx'
+  'mx.': 'mx',
+  'co.': 'co',
+  'jp.': 'jp',
+  'pe.': 'pe',
 }
 
 /* Rows that started under one name and now continue under another */
