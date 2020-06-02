@@ -11,6 +11,26 @@ class FetchCSSE
 
   UPDATE_TIME = '8pm EDT (12am UTC)'.freeze
 
+  COUNTRIES_TO_AGGREGATE = [
+    'Australia',
+    'Chile',
+    'China',
+    'Colombia',
+    'Denmark',
+    'France',
+    'Germany',
+    'Japan',
+    'Netherlands',
+    'Russia',
+    'United Kingdom',
+    'Ukraine'
+  ]
+
+  COUNTRIES_TO_IGNORE = [
+    'France',
+    'United Kingdom'
+  ]
+
   # New instance
   def initialize(date = nil)
     @now = date || DateTime.now
@@ -31,6 +51,7 @@ class FetchCSSE
     puts "Reading CSSE Data for #{@yesterday_iso}"
 
     new_data = load_new_data(@yesterday).reject { |row| row['Country_Region'] == 'US' }
+    new_data = aggregate_some_countries(new_data)
 
     current_data = load_current_data.reject { |row| row['Country_Region'] == 'US' }
 
@@ -78,9 +99,9 @@ class FetchCSSE
   def load_new_data(date)
     url = DATA_URL.gsub('[date]', date.to_time.utc.strftime('%m-%d-%Y'))
 
-    new_data = CSV.new(URI.parse(url).open, headers: :first_row, encoding: "ISO8859-1").read
+    new_data = CSV.new(URI.parse(url).open, headers: :first_row, encoding: 'ISO8859-1').read
 
-    new_data =  new_data.sort_by { |row|
+    new_data = new_data.sort_by { |row|
       [
         row['Country_Region'].downcase || '',
         (row['Province_State'] || 'zzz').downcase,
@@ -91,28 +112,50 @@ class FetchCSSE
     new_data.each_with_index do |row, index|
       row[:line] = index + 2
       row[:key] = [row['Country_Region'], row['Province_State'], row['Admin2']].compact.join(', ')
-      case row[:key]
-      when 'Spain'
-        row[:key] = 'Spain, ignore'
-      when 'Canada, Recovered'
-        row[:key] = 'Canada, ignore'
-      when 'France'
-        row[:key] = 'France, ignore'
-      when /France, .*/
-        row[:key] = 'France, ignore'
-      when 'Italy'
-        row[:key] = 'Italy, ignore'
-      when 'United Kingdom'
-        row[:key] = 'United Kingdom, ignore'
-      end
     end
 
     new_data
   end
 
+  # aggregate some countries
+  def aggregate_some_countries(data)
+    accumulator = nil
+    aggregated_data = []
+    data.each do |row|
+      if COUNTRIES_TO_AGGREGATE.include?(row['Country_Region'])
+        if accumulator && accumulator[:key] != row['Country_Region']
+          aggregated_data << accumulator
+          accumulator = nil
+        end
+
+        if accumulator
+          accumulator['Deaths'] += row['Deaths'].to_i
+        else
+          if COUNTRIES_TO_IGNORE.include?(row['Country_Region'])
+            row[:key] = "#{row['Country_Region']}, ignore"
+          else
+            row[:key] = row['Country_Region']
+          end
+
+          row['Province_State'] = ''
+          row['Admin2'] = ''
+          row['Deaths'] = row['Deaths'].to_i
+          accumulator = row
+        end
+      else
+        if accumulator
+          aggregated_data << accumulator
+          accumulator = nil
+        end
+        aggregated_data << row
+      end
+    end
+    aggregated_data
+  end
+
   # Load current data
   def load_current_data
-    current_data = CSV.read(FetchCSSE::LOCAL_FILE, headers: :first_row, encoding: "ISO8859-1")
+    current_data = CSV.read(FetchCSSE::LOCAL_FILE, headers: :first_row, encoding: 'ISO8859-1')
 
     current_data.each_with_index do |row, index|
       row[:line] = index + 2

@@ -177,6 +177,9 @@ let nameToCodeIndex = {
   'Mexico > Veracruz': 'mx.ver',
   'Mexico > Yucatan': 'mx.yuc',
   'Mexico > Zacatecas': 'mx.zac',
+
+  'Russia > *': 'ru',
+  'Ukraine > *': 'ua'
 }
 
 let codeToNameIndex = {
@@ -455,7 +458,9 @@ export function countryForCSSEName(name) {
   }
 
   parts = name.match(/^(.*) > (.*)$/)
-  if (parts && nameToCodeIndex[parts[1]]) {
+  if (parts && nameToCodeIndex[`${parts[1]} > *`]) {
+    return nameToCodeIndex[`${parts[1]} > *`]
+  } else if (parts && nameToCodeIndex[parts[1]]) {
     return `${nameToCodeIndex[parts[1]]}.${parts[2]}`
   }
 
