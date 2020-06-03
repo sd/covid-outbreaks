@@ -131,12 +131,7 @@ class FetchCSSE
         if accumulator
           accumulator['Deaths'] += row['Deaths'].to_i
         else
-          if COUNTRIES_TO_IGNORE.include?(row['Country_Region'])
-            row[:key] = "#{row['Country_Region']}, ignore"
-          else
-            row[:key] = row['Country_Region']
-          end
-
+          row[:key] = row['Country_Region']
           row['Province_State'] = ''
           row['Admin2'] = ''
           row['Deaths'] = row['Deaths'].to_i
