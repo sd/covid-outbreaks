@@ -179,7 +179,8 @@ let nameToCodeIndex = {
   'Mexico > Zacatecas': 'mx.zac',
 
   'Russia > *': 'ru',
-  'Ukraine > *': 'ua'
+  'Ukraine > *': 'ua',
+  'Sweden > *': 'se'
 }
 
 let codeToNameIndex = {

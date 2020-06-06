@@ -23,7 +23,8 @@ class FetchCSSE
     'Netherlands',
     'Russia',
     'United Kingdom',
-    'Ukraine'
+    'Ukraine',
+    'Sweden'
   ]
 
   COUNTRIES_TO_IGNORE = [
