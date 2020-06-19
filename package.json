@@ -1,6 +1,9 @@
 {
   "name": "covidsualizer",
   "version": "0.1.0",
+  "engines": {
+    "node": ">=0.13"
+  },
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^1.2.27",
@@ -12,7 +15,6 @@
     "classnames": "^2.2.6",
     "connected-react-router": "^6.8.0",
     "country-json": "^1.1.0",
-    "d3-fetch": "^1.1.2",
     "i18next": "^19.3.2",
     "i18next-browser-languagedetector": "^4.0.2",
     "i18next-xhr-backend": "^3.2.2",
@@ -40,7 +42,8 @@
     "start": "PORT=3003 react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "data": "node src/store/preprocess"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -56,5 +59,8 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@babel/node": "^7.10.1"
   }
 }

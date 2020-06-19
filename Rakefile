@@ -13,6 +13,7 @@ require './tasks/fetch_france'
 require './tasks/fetch_uk'
 require './tasks/fetch_us'
 require './tasks/fetch_nyc'
+require './tasks/process/summarize'
 
 desc 'Fetch CSSE'
 task :csse do
@@ -95,4 +96,9 @@ task :default do
   FetchItaly.new.fetch
   puts 'Press ENTER to continue'
   gets
+end
+
+desc 'Process'
+task :process do
+  data = DataProcessor.summarize_data
 end
