@@ -6,7 +6,7 @@ import data from './data'
 
 export const createRootReducer = (history) => combineReducers({
   router: connectRouter(history),
-  version: (version) => version || '20200517',
+  version: (version) => version || '20200619-2',
   ui,
   data
 })
