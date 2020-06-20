@@ -31,7 +31,7 @@ export function fetchDataDispatcher (dispatch) {
   dispatch({type: 'DATA.LOAD.BEGIN'})
   debugger
   dispatch({type: 'DATA.LOAD.SUCCESS', values: preprocessedData})
-  setupConsoleTools(preprocessedData, preprocessedData.allDates, dispatch)
+  setupConsoleTools(preprocessedData.data, preprocessedData.allDates, dispatch)
 }
 
 export default reducer
