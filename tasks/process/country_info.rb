@@ -406,7 +406,9 @@ module CountryInfo
     'mx.' => 'mx',
     'co.' => 'co',
     'jp.' => 'jp',
-    'pe.' => 'pe'
+    'pe.' => 'pe',
+    'it.' => 'it',
+    'es.' => 'es'
   }.freeze
 
   # Rows that started under one name and now continue under another
