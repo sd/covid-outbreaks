@@ -20,6 +20,11 @@ task :csse do
   FetchCSSE.new.fetch
 end
 
+desc 'Fetch CSSE'
+task :csse_y do
+  FetchCSSE.new(DateTime.now - 1).fetch
+end
+
 desc 'Fetch WoM'
 task :wom do
   FetchWorldometers.new.fetch
@@ -71,7 +76,7 @@ task :us do
 end
 
 desc 'Fetch US Yesterday'
-task :uS_y do
+task :us_y do
   FetchUS.new(DateTime.now - 1).fetch
 end
 
