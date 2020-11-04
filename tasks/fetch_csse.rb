@@ -106,7 +106,7 @@ class FetchCSSE
 
     new_data = new_data.sort_by { |row|
       [
-        row['Country_Region'].downcase || '',
+        row['Country_Region']&.downcase || '',
         (row['Province_State'] || 'zzz').downcase,
         (row['Admin2'] || 'zzz').downcase
       ]
